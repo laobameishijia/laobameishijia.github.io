@@ -102,7 +102,10 @@ theme: LiveForCode
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  type: git
+  repo:
+    github: 'https://github.com/laobameishijia/laobameishijia.github.io.git'
+  branch: master
 
 
 algolia:
