@@ -13,7 +13,7 @@ timezone: ''
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://laobameishijia.github.io/
+url: https://laobameishijia.github.io/source
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -105,7 +105,7 @@ theme: LiveForCode
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://laobameishijia.github.io/
+  repo: https://github.com/laobameishijia/laobameishijia.github.io.git
   branch: master
 
 # Feed Atom
