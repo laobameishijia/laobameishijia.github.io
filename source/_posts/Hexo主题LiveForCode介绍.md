@@ -12,7 +12,7 @@ about:
 # 文章作者头像 #
 avatar: 
 # 是否开启评论 #
-comments: true
+comments: false
 # 文章标签 #
 tags: Hexo
 # 文章分类 #
