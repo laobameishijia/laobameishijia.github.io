@@ -105,7 +105,7 @@ theme: LiveForCode
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/first19326/first19326.github.io.git
+  repo: https://laobameishijia.github.io/
   branch: master
 
 # Feed Atom
