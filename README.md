@@ -1,2 +1,0 @@
-# laobameishijia.github.io
-HELLO
