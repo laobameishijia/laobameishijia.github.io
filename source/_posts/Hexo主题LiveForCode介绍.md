@@ -20,7 +20,7 @@ categories: Web
 # 文章摘要 #
 description: Hexo主题LiveForCode介绍.
 # 文章置顶 #
-sticky: 10000
+sticky: 
 ---
 
 [Hexo](https://hexo.io/zh-cn/) 是高效的静态站点生成框架，他基于 [Node.js](https://nodejs.org/en/)。通过 Hexo 你可以轻松地使用 [Markdown](https://daringfireball.net/projects/markdown/) 编写文章，除了 Markdown 本身的语法之外，还可以使用 Hexo 提供的 [标签插件](https://hexo.io/zh-cn/docs/tag-plugins.html) 来快速的插入特定形式的内容。在这篇文章中，假定你已经成功安装了 Hexo，并使用 Hexo 提供的命令创建了一个站点。  
