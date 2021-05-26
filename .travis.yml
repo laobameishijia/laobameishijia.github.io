@@ -1,4 +1,20 @@
-language: ruby
-rvm:
- - 2.2
- - jruby
+language: node_js
+node_js: stable
+branches:
+  only:
+  - master
+before_install:
+- npm install -g hexo
+- npm install -g hexo-cli
+install:
+- npm install
+script:
+- hexo clean
+- hexo generate
+after_success:
+- hexo deploy
+notifications: # 设置通知项
+  email: true
+env:
+  global:
+    - GH_REF: github.com/laobameishijia/laobameishijia.github.io
