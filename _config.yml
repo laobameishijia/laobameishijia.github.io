@@ -104,7 +104,7 @@ theme: LiveForCode
 deploy:
   type: git
   repo:
-    github: 'https://github.com/laobameishijia/laobameishijia.github.io.git'
+    github: https://$GH_TOKEN@github.com:laobameishijia/laobameishijia.github.io.git
   branch: master
 
 
