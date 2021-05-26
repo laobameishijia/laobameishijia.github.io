@@ -16,7 +16,7 @@ comments: false
 # 文章标签 #
 tags: 总结
 # 文章分类 #
-categories:待办
+categories: 待办
 # 文章摘要 #
 description: 利用github托管网页，用到的工具总结
 # 文章置顶 #
