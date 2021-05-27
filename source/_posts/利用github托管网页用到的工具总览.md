@@ -30,6 +30,14 @@ sticky: 10000
 - [x] 续费腾讯的对象存储cos，方便传输图片
 - [ ] 将csdn上面的文件转过来
 
+## 每一部分的作用详见首页 文章 Hexo主题LiveForCode介绍
+- Travis 就是方便部署hexo博客，不用每次自己在本地运行hexo deploy在上传GitHub, 检测到设定分支有push操作后，Travis会启动虚拟机帮你完成hexo generate和deploy的操作。关于这部分的配置参数，可以参考main分支的.travis.yml文件
+- LeanCloud 通过api把评论、留言、文章数据统计放到数据库里面，进入博客的时候，会再次请求数据库把这些数据显示在网页上。
+  ![20210527113453](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210527113453.png)
+- Algolia 搜索操作，会统计博客文章的标题和url相对路径。
+  ![20210527113220](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210527113220.png)
+- jsDelivr 免费的cdn加速。
+
 ## 利用github托管网页，用到的工具总结
 
 ### Hexo(博客框架)
