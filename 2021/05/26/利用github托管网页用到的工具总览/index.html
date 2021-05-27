@@ -66,6 +66,12 @@
 <li><input checked="" disabled="" type="checkbox"> 续费腾讯的对象存储cos，方便传输图片</li>
 <li><input disabled="" type="checkbox"> 将csdn上面的文件转过来</li>
 </ul>
+<h2 id="每一部分的作用详见首页-文章-Hexo主题LiveForCode介绍"><a href="#每一部分的作用详见首页-文章-Hexo主题LiveForCode介绍" class="headerlink" title="每一部分的作用详见首页 文章 Hexo主题LiveForCode介绍"></a>每一部分的作用详见首页 文章 Hexo主题LiveForCode介绍</h2><ul>
+<li>Travis 就是方便部署hexo博客，不用每次自己在本地运行hexo deploy在上传GitHub, 检测到设定分支有push操作后，Travis会启动虚拟机帮你完成hexo generate和deploy的操作。关于这部分的配置参数，可以参考main分支的.travis.yml文件</li>
+<li>LeanCloud 通过api把评论、留言、文章数据统计放到数据库里面，进入博客的时候，会再次请求数据库把这些数据显示在网页上。<br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210527113453.png" alt="20210527113453"></li>
+<li>Algolia 搜索操作，会统计博客文章的标题和url相对路径。<br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210527113220.png" alt="20210527113220"></li>
+<li>jsDelivr 免费的cdn加速。</li>
+</ul>
 <h2 id="利用github托管网页，用到的工具总结"><a href="#利用github托管网页，用到的工具总结" class="headerlink" title="利用github托管网页，用到的工具总结"></a>利用github托管网页，用到的工具总结</h2><h3 id="Hexo-博客框架"><a href="#Hexo-博客框架" class="headerlink" title="Hexo(博客框架)"></a>Hexo(博客框架)</h3><p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
 <h3 id="Travis-CI-方便对博客更改，自动渲染"><a href="#Travis-CI-方便对博客更改，自动渲染" class="headerlink" title="Travis CI(方便对博客更改，自动渲染)"></a>Travis CI(方便对博客更改，自动渲染)</h3><p>Travis CI 提供的是持续集成服务（Continuous Integration，简称 CI）。它绑定 Github 上面的项目，只要有新的代码，就会自动抓取。然后，提供一个运行环境，执行测试，完成构建，还能部署到服务器。</p>
 <p>持续集成指的是只要代码有变更，就自动运行构建和测试，反馈运行结果。确保符合预期以后，再将新代码”集成”到主干。</p>
@@ -115,7 +121,7 @@
         
         <div class="article-prev-next">
             
-                <a href="/2021/05/27/hello-world/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/05/27/hello-world/" title="发布于 2021-05-27 03:18">Hello World</a>
+                <a href="/2021/05/27/hello-world/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/05/27/hello-world/" title="发布于 2021-05-27 05:57">Hello World</a>
                 <br>
             
             
