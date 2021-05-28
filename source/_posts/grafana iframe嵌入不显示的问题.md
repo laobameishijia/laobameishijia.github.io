@@ -6,7 +6,7 @@ from:
 # 文章出处链接 #
 url: 
 # 文章作者名称 #
-author:老叭美食家
+author: 老叭美食家
 # 文章作者签名 #
 about: 
 # 文章作者头像 #
@@ -20,7 +20,7 @@ categories: 配置
 # 文章摘要 #
 description: 利用github托管网页，用到的工具总结
 # 文章置顶 #
-sticky: 10000
+sticky: 
 ---
 # grafana iframe嵌入不显示的问题
 

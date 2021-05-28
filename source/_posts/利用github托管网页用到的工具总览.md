@@ -20,6 +20,7 @@ categories: 待办
 # 文章摘要 #
 description: 利用github托管网页，用到的工具总结
 # 文章置顶 #
+# sticky: 10000
 sticky: 10000
 ---
 ## 待做
