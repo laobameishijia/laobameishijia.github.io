@@ -63,11 +63,14 @@
 <li><code>defaults.ini</code> 这个才是grafana服务器真正运行时的配置文件</li>
 <li><code>sample.ini</code> 只是个样例，别改错了</li>
 </ul>
-<h2 id="开启匿名登录"><a href="#开启匿名登录" class="headerlink" title="开启匿名登录"></a>开启匿名登录</h2><p>修改<code>grafana\grafana\conf</code>目录下的<code>defaults.ini</code>文件中的 <code>[auth.anonymous]中的enabled = true</code><br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210528084634.png" alt="20210528084634"></p>
-<h2 id="允许浏览器渲染iframe"><a href="#允许浏览器渲染iframe" class="headerlink" title="允许浏览器渲染iframe"></a>允许浏览器渲染iframe</h2><p>修改上述文件中的<code>allow_embedding = true</code><br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210528085103.png" alt="20210528085103"></p>
+<h2 id="开启匿名登录"><a href="#开启匿名登录" class="headerlink" title="开启匿名登录"></a>开启匿名登录</h2><p>修改<code>grafana\grafana\conf</code>目录下的<code>defaults.ini</code>文件中的 <code>[auth.anonymous]中的enabled = true</code></p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210528084634.png" alt="20210528084634"></p>
+<h2 id="允许浏览器渲染iframe"><a href="#允许浏览器渲染iframe" class="headerlink" title="允许浏览器渲染iframe"></a>允许浏览器渲染iframe</h2><p>修改上述文件中的<code>allow_embedding = true</code></p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210528085103.png" alt="20210528085103"></p>
 <h1 id="windows-server重启grafana服务"><a href="#windows-server重启grafana服务" class="headerlink" title="windows server重启grafana服务"></a>windows server重启grafana服务</h1><p>由于grafana在运行之后已经被当作一个服务，可以在服务管理页面对其进行重启</p>
 <p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210528085716.png" alt="20210528085716"></p>
-<h1 id="不显示的原因"><a href="#不显示的原因" class="headerlink" title="不显示的原因"></a>不显示的原因</h1><p>grafana服务器响应头里面有一个<code>X-Frame-Options:deny</code><br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210528085945.png" alt="20210528085945"></p>
+<h1 id="不显示的原因"><a href="#不显示的原因" class="headerlink" title="不显示的原因"></a>不显示的原因</h1><p>grafana服务器响应头里面有一个<code>X-Frame-Options:deny</code></p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210528085945.png" alt="20210528085945"></p>
 <h2 id="X-Frame-Options"><a href="#X-Frame-Options" class="headerlink" title="X-Frame-Options"></a>X-Frame-Options</h2><p>The X-Frame-Options HTTP 响应头是用来给浏览器 指示允许一个页面 可否在 <code>&lt;frame&gt;, &lt;iframe&gt;, &lt;embed&gt; 或者 &lt;object&gt;</code> 中展现的标记。站点可以通过确保网站没有被嵌入到别人的站点里面，从而避免 clickjacking 攻击。</p>
 <p>有三个可能值</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">X-Frame-Options: deny</span><br><span class="line">X-Frame-Options: sameorigin</span><br><span class="line">X-Frame-Options: allow-from https://example.com/</span><br></pre></td></tr></table></figure>
