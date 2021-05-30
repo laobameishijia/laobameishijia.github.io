@@ -30,11 +30,13 @@ sticky:
 - ```sample.ini``` 只是个样例，别改错了
 
 ## 开启匿名登录
-修改```grafana\grafana\conf```目录下的```defaults.ini```文件中的 ```[auth.anonymous]中的enabled = true``` 
+修改```grafana\grafana\conf```目录下的```defaults.ini```文件中的 ```[auth.anonymous]中的enabled = true```
+
 ![20210528084634](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210528084634.png)
 
 ## 允许浏览器渲染iframe
 修改上述文件中的```allow_embedding = true```
+
 ![20210528085103](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210528085103.png)
 
 # windows server重启grafana服务
@@ -44,6 +46,7 @@ sticky:
 
 # 不显示的原因
 grafana服务器响应头里面有一个```X-Frame-Options:deny```
+
 ![20210528085945](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210528085945.png)
 
 ## X-Frame-Options
