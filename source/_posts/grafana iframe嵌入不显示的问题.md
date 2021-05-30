@@ -18,7 +18,7 @@ tags: grafana
 # 文章分类 #
 categories: 配置
 # 文章摘要 #
-description: 利用github托管网页，用到的工具总结
+description: 
 # 文章置顶 #
 sticky: 
 ---
@@ -30,7 +30,7 @@ sticky:
 - ```sample.ini``` 只是个样例，别改错了
 
 ## 开启匿名登录
-修改```grafana\grafana\conf```目录下的```defaults.ini```文件中的 ````[auth.anonymous]中的enabled = true``` 
+修改```grafana\grafana\conf```目录下的```defaults.ini```文件中的 ```[auth.anonymous]中的enabled = true``` 
 ![20210528084634](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210528084634.png)
 
 ## 允许浏览器渲染iframe
@@ -39,10 +39,10 @@ sticky:
 
 # windows server重启grafana服务
 由于grafana在运行之后已经被当作一个服务，可以在服务管理页面对其进行重启
+
 ![20210528085716](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210528085716.png)
 
 # 不显示的原因
-
 grafana服务器响应头里面有一个```X-Frame-Options:deny```
 ![20210528085945](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210528085945.png)
 
