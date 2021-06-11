@@ -6,7 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    <title>validator使用</title>
+    <title>py如何根据字符串来创建对应的类</title>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@1.0/static/font/LongCang.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@1.0/static/font/Monda.css">
@@ -32,19 +32,19 @@
     <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-subtitle">validator使用</h1>
+                <h1 class="header-subtitle">py如何根据字符串来创建对应的类</h1>
                 <div class="header-subinfo">
                     <p class="article-info-text">
                         <span>
-                            <i class="iconfont icon-time"></i> 发表时间：2021-06-08
+                            <i class="iconfont icon-time"></i> 发表时间：2021-06-11
                         </span>
                         
-                            <span id="/2021/06/08/validator使用/" class="leancloud_visitors" data-flag-title="validator使用">
+                            <span id="/2021/06/11/py如何根据字符串来创建对应的类/" class="leancloud_visitors" data-flag-title="py如何根据字符串来创建对应的类">
                                 <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
                             </span>
                         
                         <span>
-                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/06/08/validator使用/"></span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/06/11/py如何根据字符串来创建对应的类/"></span>
                         </span>  
                     </p>                 
                 </div>
@@ -58,11 +58,44 @@
         <div id="article">
     <div class="toc"></div>
     <div class="article-body">
-        <h1 id="validator使用"><a href="#validator使用" class="headerlink" title="validator使用"></a>validator使用</h1><p>看清楚使用的是哪个包，去找相应的文档就行。</p>
-<p>我使用的是这个validator包 :<a target="_blank" rel="noopener" href="https://github.com/CSenshi/Validator">https://github.com/CSenshi/Validator</a></p>
-<p>网上的教程很多都是 <a target="_blank" rel="noopener" href="https://github.com/mansam/validator.py%EF%BC%8C%E6%89%80%E4%BB%A5%E5%9C%A8%E7%9C%8B%E4%BA%86%E6%96%87%E6%A1%A3%E5%92%8C%E6%BA%90%E7%A0%81%E4%B9%8B%E5%90%8E%EF%BC%8C%E6%8A%8A%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E6%95%B4%E7%90%86%E4%B8%80%E4%B8%8B%E3%80%82">https://github.com/mansam/validator.py，所以在看了文档和源码之后，把使用方法整理一下。</a></p>
-<p>本来是要整理一下，但是发现人家文档写的很清楚了。</p>
-<p>链接：<a target="_blank" rel="noopener" href="https://github.com/CSenshi/Validator">https://github.com/CSenshi/Validator</a></p>
+        <h1 id="py如何根据字符串来创建对应的类"><a href="#py如何根据字符串来创建对应的类" class="headerlink" title="py如何根据字符串来创建对应的类"></a>py如何根据字符串来创建对应的类</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>py的反射原理，简单来说，反射就是能实现动态地调用方法\实例化对象。</p>
+<p>举个例子:<br></p>
+<p>创建一个学生类Student的对象 person1、创建一个老师类Teacher的对象person1</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">person1 = Student(name=<span class="string">&quot;张三&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">or</span></span><br><span class="line"></span><br><span class="line">person1 = Teacher(name=<span class="string">&quot;张三&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>试想一下，假如，你并不是先前(在写程序之前)就知道这个person1的身份到底是学生还是老师，那你该如何创建这个对象？</p>
+<p>或者说你要 <strong>根据这个人的输入: 职业:老师,姓名:张三</strong> 来动态的创建对象。</p>
+<p>这里就要用到py的反射</p>
+<p>对应到web路由可能更容易理解。详细请看 <a target="_blank" rel="noopener" href="https://www.liujiangblog.com/course/python/48">https://www.liujiangblog.com/course/python/48</a></p>
+<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>在本次实训的过程中，由于是基线检查，但是对于每个审查条目的规则(存储在数据库)是不一样的。</p>
+<p>关键的是，所用的validator中预制的规则rule无法满足特定的需求。然后，除了使用他文档中的规则意外，我根据他自定义规则的写法，自定义如下三种规则</p>
+<ul>
+<li>AuditRule-判断前后集合是否一致</li>
+<li>AuditRuleInclude-判断前面集合是否是后面集合的子集</li>
+<li>AuditRuleSame-判断两个字符串是否相等。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AuditRule</span>(<span class="params">Rule</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    TestCode:</span></span><br><span class="line"><span class="string">        rules = &#123;&quot;age&quot;: AuditRule(&#x27;test,test&#x27;)&#125;</span></span><br><span class="line"><span class="string">        req = &#123;&quot;age&quot;: &#x27;test,test&#x27;&#125;</span></span><br><span class="line"><span class="string">        print(validate(req, rules,return_info=True))</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, string: <span class="built_in">str</span></span>):</span></span><br><span class="line">        Rule.__init__(self)</span><br><span class="line">        self.string = string</span><br><span class="line">        self.value = string.split(<span class="string">&#x27;,&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">check</span>(<span class="params">self, arg: <span class="built_in">str</span></span>):</span></span><br><span class="line">        <span class="keyword">if</span> arg <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            arg = <span class="string">&quot;Null&quot;</span></span><br><span class="line">            self.set_error(<span class="string">&quot;excepted get |&quot;</span> + self.string + <span class="string">&quot;| but get |&quot;</span> + arg.replace(<span class="string">&quot;\&quot;&quot;</span>, <span class="string">&quot;&quot;</span>) + <span class="string">&quot;|&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        exit_value_list = arg.split(<span class="string">&#x27;,&#x27;</span>)</span><br><span class="line">        <span class="comment"># 判断两个集合是否一样  前面是否是后面的子集</span></span><br><span class="line">        self.set_error(<span class="string">&quot;excepted get |&quot;</span> + self.string + <span class="string">&quot;| but get |&quot;</span> + arg.replace(<span class="string">&quot;\&quot;&quot;</span>, <span class="string">&quot;&quot;</span>) + <span class="string">&quot;|&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">set</span>(exit_value_list) == <span class="built_in">set</span>(self.value)</span><br></pre></td></tr></table></figure>
+
+<p>其实，我所用的validator这个包，就已经利用了反射。因为他就是根据我输入的字符串，去动态地翻译和创建成对应的类。所以我也想实现根据数据库中存储的规则，来动态地创建。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210611161640.png" alt="20210611161640"></p>
+<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><h3 id="使用的函数"><a href="#使用的函数" class="headerlink" title="使用的函数"></a>使用的函数</h3><p>我就只用到了<strong>getattr</strong>函数。其对应的文档解释如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getattr</span>(<span class="params"><span class="built_in">object</span>, name, default=<span class="literal">None</span></span>):</span> <span class="comment"># known special case of getattr</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    getattr(object, name[, default]) -&gt; value</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Get a named attribute from an object; getattr(x, &#x27;y&#x27;) is equivalent to x.y.</span></span><br><span class="line"><span class="string">    When a default argument is given, it is returned when the attribute doesn&#x27;t</span></span><br><span class="line"><span class="string">    exist; without it, an exception is raised in that case.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="实际操作"><a href="#实际操作" class="headerlink" title="实际操作"></a>实际操作</h3><ul>
+<li><p>创建package rules 将自定义的三个类分别以.py的形式放进去</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210611162135.png" alt="20210611162135"></p>
+</li>
+<li><p>在package中创建rules.py的文件，将自定义类，导入。<strong>第一行不要也可以</strong></p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210611162237.png" alt="20210611162237"></p>
+</li>
+<li><p>在要使用的文件中，以<strong>from rules import rules as Custom</strong>的形式导入</p>
+</li>
+<li><p>编写相应的代码</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> results:</span><br><span class="line"><span class="keyword">if</span> item[<span class="number">3</span>].startswith(<span class="string">&quot;Audit&quot;</span>):</span><br><span class="line">    rules[item[<span class="number">0</span>]] = <span class="built_in">getattr</span>(Custom, item[<span class="number">3</span>])(item[<span class="number">2</span>])</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    rules[item[<span class="number">0</span>]] = item[<span class="number">1</span>] + <span class="string">&quot;:&quot;</span> + item[<span class="number">2</span>]</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>它对应的原理通过debug我猜测如下:<br>通过 <code>from rules import rules as Custom</code> 的方式其实是已经创建了<code>Custom</code>这个对象，其拥有三个自定义类的属性。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210611162753.png" alt="20210611162753"></p>
+<p>然后通过<code>getattr</code>得到字符串对应的属性(类),并通过后面括号里面的字符串进行实例化。</p>
 
         <p class="suffix-end">__END__</p>
         <div class="suffix-box">
@@ -72,7 +105,7 @@
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：老叭美食家
                 <br>
-                <span class="suffix-box-title">文章出处</span>：<a href="/2021/06/08/validator%E4%BD%BF%E7%94%A8/" target="_blank">validator使用</a>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2021/06/11/py%E5%A6%82%E4%BD%95%E6%A0%B9%E6%8D%AE%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9D%A5%E5%88%9B%E5%BB%BA%E5%AF%B9%E5%BA%94%E7%9A%84%E7%B1%BB/" target="_blank">py如何根据字符串来创建对应的类</a>
                 <br>
                 <span class="suffix-box-title">作者签名</span>：I believe I am.
                 <br>
@@ -89,7 +122,7 @@
             <div class="category">
                 分类：
                 
-                    <a href="/category/%E5%8C%85%E4%BD%BF%E7%94%A8/">包使用</a>
+                    <a href="/category/%E5%8F%8D%E5%B0%84/">反射</a>
                 
             </div>
         
@@ -103,15 +136,23 @@
         
         <div class="article-prev-next">
             
-                <a href="/2021/06/08/leetcode2-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/06/08/leetcode2-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/" title="发布于 2021-06-08 12:00">leetcode2-反转链表</a>
+                <a href="/2021/06/11/leetcode4-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E8%8A%82%E7%82%B9/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/06/11/leetcode4-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E8%8A%82%E7%82%B9/" title="发布于 2021-06-11 12:00">leetcode4-删除链表节点</a>
                 <br>
             
             
-                <a href="/2021/06/06/leetcode1-%E5%8D%95%E9%93%BE%E8%A1%A8%E8%BE%93%E5%87%BA%E5%80%92%E6%95%B0%E7%AC%ACk%E4%B8%AA%E8%8A%82%E7%82%B9/" class="next-prefix">» </a> 下一篇：    <a href="/2021/06/06/leetcode1-%E5%8D%95%E9%93%BE%E8%A1%A8%E8%BE%93%E5%87%BA%E5%80%92%E6%95%B0%E7%AC%ACk%E4%B8%AA%E8%8A%82%E7%82%B9/" title="发布于 2021-06-06 12:00">leetcode-1-单链表输出倒数第k个节点</a>
+                <a href="/2021/06/10/leetcode3-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8II/" class="next-prefix">» </a> 下一篇：    <a href="/2021/06/10/leetcode3-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8II/" title="发布于 2021-06-10 12:00">leetcode3-反转链表II</a>
             
         </div>
     </div>
     
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
+    </div>
+
 </div>
 
     </div>
