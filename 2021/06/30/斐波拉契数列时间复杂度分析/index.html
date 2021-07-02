@@ -6,8 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    
-    <title>分类</title>
+    <title>斐波拉契数列时间复杂度分析</title>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@1.0/static/font/LongCang.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@1.0/static/font/Monda.css">
@@ -18,12 +17,13 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@1.0/static/font/Rosario.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@1.0/static/font/UbuntuMono.css">
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@1.0/static/css/page.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@1.0/static/css/post.css">
     
         <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@1.0/static/css/normal.css">
     
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@1.0/static/js/jquery-3.4.1.min.js"></script>
+
 <meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="老叭美食家" type="application/atom+xml">
 </head>
 <body>
@@ -32,10 +32,21 @@
     <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-subtitle">分类</h1>
+                <h1 class="header-subtitle">斐波拉契数列时间复杂度分析</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2021-06-30
+                        </span>
+                        
+                            <span id="/2021/06/30/斐波拉契数列时间复杂度分析/" class="leancloud_visitors" data-flag-title="斐波拉契数列时间复杂度分析">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/06/30/斐波拉契数列时间复杂度分析/"></span>
+                        </span>  
+                    </p>                 
                 </div>
             </div>
         </div>
@@ -44,14 +55,79 @@
 </div>
     <div id="container">
     <div id="content">
-        <div class="categories">
-    <div class="categories-title">
-        目前共计 9 个分类
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <ul>
+<li><a href="#%E6%96%90%E6%B3%A2%E6%8B%89%E5%A5%91%E6%95%B0%E5%88%97%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90">斐波拉契数列时间复杂度分析</a><ul>
+<li><a href="#%E9%80%92%E5%BD%92%E7%89%88">递归版</a><ul>
+<li><a href="#%E8%AF%81%E6%98%8E1">证明1</a></li>
+<li><a href="#%E8%AF%81%E6%98%8E2">证明2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="斐波拉契数列时间复杂度分析"><a href="#斐波拉契数列时间复杂度分析" class="headerlink" title="斐波拉契数列时间复杂度分析"></a>斐波拉契数列时间复杂度分析</h1><h2 id="递归版"><a href="#递归版" class="headerlink" title="递归版"></a>递归版</h2><p>递归版本的时间复杂度分析，真的不知道怎么分析，需要根据<code>f(n) = f(n-1) + f(n-2)</code>推出通解。这显然是个数学问题。<br>不知道为什么他们会给出这结果，难道不管通项公式的后一项了？</p>
+<p>通项公式如下:<br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210630173631.png" alt="20210630173631"></p>
+<h3 id="证明1"><a href="#证明1" class="headerlink" title="证明1"></a>证明1</h3><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210630173802.png" alt="20210630173802"></p>
+<h3 id="证明2"><a href="#证明2" class="headerlink" title="证明2"></a>证明2</h3><p>还是看不太懂，为什么要给加法加个1呢？<br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210630174145.png" alt="20210630174145"></p>
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="https://laobablog-1304292449.cos.ap-nanjing.myqcloud.com/touxiang.png" alt="老叭美食家">
+            </div>
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：老叭美食家
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2021/06/30/%E6%96%90%E6%B3%A2%E6%8B%89%E5%A5%91%E6%95%B0%E5%88%97%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90/" target="_blank">斐波拉契数列时间复杂度分析</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：I believe I am.
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
     </div>
-    <div class="categories-content">
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/category/Web/">Web</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/category/%E5%8C%85%E4%BD%BF%E7%94%A8/">包使用</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/%E5%8F%8D%E5%B0%84/">反射</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/%E5%9B%BD%E4%BF%A1%E5%AE%89%E5%AE%9E%E8%AE%AD/">国信安实训</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/category/%E5%BE%85%E5%8A%9E/">待办</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/%E6%95%B0%E6%8D%AE/">数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/category/%E9%85%8D%E7%BD%AE/">配置</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/%E9%93%BE%E8%A1%A8/">链表</a><span class="category-list-count">7</span></li></ul>
+    <div class="article-footer">
+        
+            <div class="category">
+                分类：
+                
+                    <a href="/category/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+                
+            </div>
+        
+        
+            <div class="tag">
+                标签：
+                
+                    <a href="/tag/%E8%80%83%E7%A0%94/">考研</a>
+                
+            </div>
+        
+        <div class="article-prev-next">
+            
+            
+                <a href="/2021/06/11/leetcode4-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E8%8A%82%E7%82%B9/" class="next-prefix">» </a> 下一篇：    <a href="/2021/06/11/leetcode4-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E8%8A%82%E7%82%B9/" title="发布于 2021-06-11 12:00">leetcode4-删除链表节点</a>
+            
+        </div>
     </div>
+    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
+    </div>
+
 </div>
+
     </div>
 </div>
     <div id="footer"></div>
