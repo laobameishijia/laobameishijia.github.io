@@ -4,16 +4,16 @@
 
 # Site
 title: 老叭美食家
-subtitle: ''
+subtitle: '永远热爱生活'
 description: ''
 keywords:
-author: John Doe
-language: en
+author: 老叭美食家
+language: zh-CN
 timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: https://laobameishijia.github.io/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -24,7 +24,7 @@ pretty_urls:
 source_dir: source
 public_dir: public
 tag_dir: tag
-archive_dir: archive
+archive_dir: archives
 category_dir: category
 code_dir: downloads/code
 i18n_dir: :lang
@@ -43,18 +43,20 @@ render_drafts: false
 post_asset_folder: false
 relative_link: false
 future: true
-highlight:
-  enable: true
-  line_number: true
+
+highlight: # code highlight
+  enable: false
+  line_number: false
   auto_detect: false
   tab_replace: ''
   wrap: true
   hljs: false
-prismjs:
-  enable: false
-  preprocess: true
-  line_number: true
-  tab_replace: ''
+
+prism_plugin:
+  mode: 'preprocess'    # realtime/preprocess
+  theme: 'tomorrow'
+  line_number: false    # default false
+  custom_css:      # optional
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
@@ -97,7 +99,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: LiveForCode
+theme: hexo-theme-matery
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
@@ -118,3 +120,22 @@ feed:
   type: atom
   path: atom.xml
   limit: 10
+
+# 博客主题更新
+# ⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇
+permalink_pinyin:
+  enable: true
+  separator: '-' # default: '-'
+
+postInfo:
+  date: true
+  update: false
+  wordCount: true # 设置文章字数统计为 true.
+  totalCount: true # 设置站点文章总字数统计为 true.
+  min2read: true # 阅读时长.
+  readCount: true # 阅读次数.
+
+search:
+  path: search.xml
+  field: post
+
