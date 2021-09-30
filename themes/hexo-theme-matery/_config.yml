@@ -19,7 +19,7 @@ menu:
   联系:
     url: /contact
     icon: fas fa-comments
-  友联:
+  友链:
     url: /friends
     icon: fas fa-address-book
   # 二级菜单写法如下
@@ -58,7 +58,7 @@ cover:
   autoLoop: true # 是否自动轮播. Whether it is automatically rotated.
   duration: 120 # 切换延迟时间. Switching delay time.
   intervalTime: 5000 # 自动切换下一张的间隔时间. Automatically switch the interval of the next one.
-  useConfig: true # 是否使用配置文件, 在 _data/covers.json 下配置推荐文章, false则使用主题在文章中的配置 cover coverImg
+  useConfig: false # 是否使用配置文件, 在 _data/covers.json 下配置推荐文章, false则使用主题在文章中的配置 cover coverImg
   # useConfig 使用方式: 将主题 hexo-theme-matery/source/_data/covers.json 移动到 my-blog/source/_data/下修改配置即可
 
 # index page dream text,
@@ -581,7 +581,7 @@ icp:
 # 更多关于访问速度优化，请查看：https://blog.sky03.cn/posts/42790.html
 # 注：jsdelivr可以自动帮你生成.min版的js和css，所以你在上面设置js及css路径中可以直接写.min.xxx
 jsDelivr:
-  url: # https://cdn.jsdelivr.net/gh/skyls03/skyls03.github.io
+  url: https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source/
   
 # 网站背景图
 background:
