@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>汇编语言学习-寄存器-2</title>
+      <link href="/2021/10/01/hui-bian-yu-yan-xue-xi-ji-cun-qi-2/"/>
+      <url>/2021/10/01/hui-bian-yu-yan-xue-xi-ji-cun-qi-2/</url>
+      
+        <content type="html"><![CDATA[<h1 id="寄存器-2"><a href="#寄存器-2" class="headerlink" title="寄存器-2"></a>寄存器-2</h1><h2 id="字的存储"><a href="#字的存储" class="headerlink" title="字的存储"></a>字的存储</h2><p>字的存储没什么好说的，注意下低地址就行了</p><h2 id="指令操作单元之间的关系"><a href="#指令操作单元之间的关系" class="headerlink" title="指令操作单元之间的关系"></a>指令操作单元之间的关系</h2><h3 id="mov指令"><a href="#mov指令" class="headerlink" title="mov指令"></a>mov指令</h3><p>  8086CPU不支持将数据直接送入段寄存器的操作。<br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211002102608.png" alt="mov指令数据流向"></p><h3 id="sub、add指令"><a href="#sub、add指令" class="headerlink" title="sub、add指令"></a>sub、add指令</h3><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211002102642.png" alt="指令数据流向"></p><h2 id="jmp指令跳转后，cs-code-segment-会发生变化"><a href="#jmp指令跳转后，cs-code-segment-会发生变化" class="headerlink" title="jmp指令跳转后，cs code segment 会发生变化"></a>jmp指令跳转后，cs <code>code segment</code> 会发生变化</h2><p>  初始情况下 CS=2000H，IP=0，DS=1000H, AX=0, BX=0</p><pre class=" language-text"><code class="language-text">20000H-20002H mov ax,6222H20003H-20007H jmp 0ff0:010020008H-20009H mov bx,ax10000H-10002H mov ax,2000H10003H-10004H mov ds,ax10005H-10007H mov ax,[0008]10008H-1000AH mov ax,[0002]</code></pre><p>  想说的就是，在执行完<code>jmp 0ff0:0100</code>时 <code>CS 2000H-&gt;0FF0H</code> , <code>IP 0003H-&gt; 0100H</code>,而且执行到<code>mov ax,[0002]</code>后不会再跳回来</p><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211002104344.png" alt="汇编执行图"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 研究生预备学习 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 汇编 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>汇编语言学习-寄存器</title>
       <link href="/2021/10/01/hui-bian-yu-yan-xue-xi-ji-cun-qi/"/>
       <url>/2021/10/01/hui-bian-yu-yan-xue-xi-ji-cun-qi/</url>
