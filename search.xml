@@ -4,11 +4,11 @@
   
     
     <entry>
-      <title>汇编语言学习-寄存器</title>
-      <link href="/2021/10/02/hui-bian-yu-yan-xue-xi-ji-cun-qi/"/>
-      <url>/2021/10/02/hui-bian-yu-yan-xue-xi-ji-cun-qi/</url>
+      <title>汇编语言学习-寄存器-3</title>
+      <link href="/2021/10/04/hui-bian-yu-yan-xue-xi-ji-cun-qi-3/"/>
+      <url>/2021/10/04/hui-bian-yu-yan-xue-xi-ji-cun-qi-3/</url>
       
-        <content type="html"><![CDATA[<h1 id="汇编语言"><a href="#汇编语言" class="headerlink" title="汇编语言"></a>汇编语言</h1><h2 id="第二章-寄存器"><a href="#第二章-寄存器" class="headerlink" title="第二章 寄存器"></a>第二章 寄存器</h2><h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h3><ol><li><p><strong>使用debug指令，将上面的程序段写入内存，逐条执行，观察每条指令执行后，CPU中相关寄存器中的内容变化。</strong></p><p> 输入指令<br> <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211001094702.png" alt="20211001094702"></p><p> 修改cs ip 使用r指令<br> <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211001094920.png" alt="20211001094920"></p><p> 执行程序 使用t指令<br> <code>具体的过程就不截图了，是ax bx ip 三个寄存器之间值的变化</code></p></li><li><p><strong>利用了三条指令计算2的八次方</strong></p><pre class=" language-text"><code class="language-text">mov ax,1add ax,axjmp 2000:0003</code></pre><p>也是通过t 命令运行程序并观察寄存器中值的变化。</p></li><li><p><strong>查看内存中的内容</strong><br>查看主板上面的内容，我是没看见。不知道是不是因为使用的是DOSbox的原因<br> <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211001102449.png" alt="20211001102449"></p></li><li><p><strong>向内存从B8100H 开始的单元中填写数据</strong></p><p>我盲猜，作者想让读者观察到的显示是有的内存地址(ROM)不能写，有的内存地址可以写</p><p>按照书上面写的8086PC机内存地址的空间分配图来说，b8100属于显存地址空间。<br>我输入过程中的感觉很奇怪，这里面的数据会自己变化</p><p>这里按道理来说b810:0000这个存储单元中存放的应该是20H才对，不知道为什么为了30H<br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211001103438.png" alt="20211001103438"></p><p>同样都是使用d指令来查询内存中的内容，按道理来说1和2处显示的应该一样才对，3和4就刚好是一样的？？？<br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211001103918.png" alt="20211001103918"></p></li></ol>]]></content>
+        <content type="html"><![CDATA[<h1 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h1><h2 id="基本指令-1-PUSH"><a href="#基本指令-1-PUSH" class="headerlink" title="基本指令 1 PUSH"></a>基本指令 1 PUSH</h2><p>对于push指令的执行</p><ul><li>SP = SP - 2, SS:SP指向当前栈顶前面的单元,以当前栈顶前面的单元为新的栈顶;</li><li>将ax中的内容送入SS:SP指向的内存单元处,SS:SP此时指向新栈顶</li></ul><p>具体的图就不画了</p><h2 id="基本指令-2-POP"><a href="#基本指令-2-POP" class="headerlink" title="基本指令 2 POP"></a>基本指令 2 POP</h2><p>关于pop指令的执行</p><ul><li>将SS:SP指向的内存单元处的数据送入ax中</li><li>SP = SP + 2, SS:SP 指向当前栈顶下面的单元，以当前栈顶下面的单元为新的栈顶。</li></ul><p><strong>注意</strong>: 栈里面的单元是以字为单位的(2个字节),字单元的地址是两个字节地址中的低地址</p><h2 id="栈顶的超界问题"><a href="#栈顶的超界问题" class="headerlink" title="栈顶的超界问题"></a>栈顶的超界问题</h2><p>对于8086CPU不保证对栈的操作不会越界。也就是说,8086CPU只知道栈顶在何出(由SS:SP指示),而不知道我们安排的栈空间有多大。这点好像CPU只知道执行的指令在何出(由CS:IP指示),而不知道要执行的指令有多少。从这两点上我们可以看出8086CPU的工作机理,它只<code>考虑当前的情况:当前的栈顶在何处、当前要执行的指令是哪一条</code></p><h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><h3 id="寄存器清零"><a href="#寄存器清零" class="headerlink" title="寄存器清零"></a>寄存器清零</h3><p>两种方式:</p><ul><li>sub ax,ax 机器码为2个字节</li><li>mov ax,0 机器码为3个字节</li></ul><h3 id="内存空间"><a href="#内存空间" class="headerlink" title="内存空间"></a>内存空间</h3><p>一段内存,可以既是代码的存储空间,又是数据的存储空间,还可以是栈空间,也可以什么也不是.关键在于CPU中寄存器的设置，即CS\IP\SS\SP\DS的指向。</p><p>我们可以用一个段来此存放数据,将它定义为 数据段 </p><p>我们可以用一个段来此存放代码,将它定义为 代码段 </p><p>我们可以用一个段来此存放栈,将它定义为 栈段</p><p>对于数据段，将它的段地址放在DS中，用mov、add、sub等访问内存单元的指令时，CPU就将我们定义的数据段中的内容当作数据来访问。</p><p>对于代码段，将它的段地址放在CS中，将段中第一条指令的偏移地址放在IP中，这样CPU就能指向我们定义的代码段中的指令。</p><p>对于栈段，将它的段地址放在SS中，将栈顶单元的偏移地址放在SP中，这样CPU在需要进行栈操作的时候，就将我们定义的栈段当作栈空间来操作。</p><p>比如我们将10000H - 1001FH 安排为代码段，并在里面存储如下代码：</p><pre class=" language-text"><code class="language-text">mov ax, 1000Hmov ss, axmov sp, 0020Hmov ax, csmov ds, axmov ax, [0]add ax, [2]mov bx, [4]add bx, [6]push axpush bxpop axpop bx</code></pre><p>设置CS = 10000H,IP=0。这段代码将得到执行，可以看到，在这段代码中，我们又将10000H - 1001FH 安排为栈段和数据段。10000H - 1001FH 这段内存，既是代码段，又是栈段和数据段。</p>]]></content>
       
       
       <categories>
@@ -30,10 +30,35 @@
     
     <entry>
       <title>汇编语言学习-寄存器-2</title>
-      <link href="/2021/10/01/hui-bian-yu-yan-xue-xi-ji-cun-qi-2/"/>
-      <url>/2021/10/01/hui-bian-yu-yan-xue-xi-ji-cun-qi-2/</url>
+      <link href="/2021/10/02/hui-bian-yu-yan-xue-xi-ji-cun-qi-2/"/>
+      <url>/2021/10/02/hui-bian-yu-yan-xue-xi-ji-cun-qi-2/</url>
       
         <content type="html"><![CDATA[<h1 id="寄存器-2"><a href="#寄存器-2" class="headerlink" title="寄存器-2"></a>寄存器-2</h1><h2 id="字的存储"><a href="#字的存储" class="headerlink" title="字的存储"></a>字的存储</h2><p>字的存储没什么好说的，注意下低地址就行了</p><h2 id="指令操作单元之间的关系"><a href="#指令操作单元之间的关系" class="headerlink" title="指令操作单元之间的关系"></a>指令操作单元之间的关系</h2><h3 id="mov指令"><a href="#mov指令" class="headerlink" title="mov指令"></a>mov指令</h3><p>  8086CPU不支持将数据直接送入段寄存器的操作。<br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211002102608.png" alt="mov指令数据流向"></p><h3 id="sub、add指令"><a href="#sub、add指令" class="headerlink" title="sub、add指令"></a>sub、add指令</h3><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211002102642.png" alt="指令数据流向"></p><h2 id="jmp指令跳转后，cs-code-segment-会发生变化"><a href="#jmp指令跳转后，cs-code-segment-会发生变化" class="headerlink" title="jmp指令跳转后，cs code segment 会发生变化"></a>jmp指令跳转后，cs <code>code segment</code> 会发生变化</h2><p>  初始情况下 CS=2000H，IP=0，DS=1000H, AX=0, BX=0</p><pre class=" language-text"><code class="language-text">20000H-20002H mov ax,6222H20003H-20007H jmp 0ff0:010020008H-20009H mov bx,ax10000H-10002H mov ax,2000H10003H-10004H mov ds,ax10005H-10007H mov ax,[0008]10008H-1000AH mov ax,[0002]</code></pre><p>  想说的就是，在执行完<code>jmp 0ff0:0100</code>时 <code>CS 2000H-&gt;0FF0H</code> , <code>IP 0003H-&gt; 0100H</code>,而且执行到<code>mov ax,[0002]</code>后不会再跳回来</p><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211002104344.png" alt="汇编执行图"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 研究生预备学习 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 汇编 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>汇编语言学习-寄存器</title>
+      <link href="/2021/10/01/hui-bian-yu-yan-xue-xi-ji-cun-qi/"/>
+      <url>/2021/10/01/hui-bian-yu-yan-xue-xi-ji-cun-qi/</url>
+      
+        <content type="html"><![CDATA[<h1 id="汇编语言"><a href="#汇编语言" class="headerlink" title="汇编语言"></a>汇编语言</h1><h2 id="第二章-寄存器"><a href="#第二章-寄存器" class="headerlink" title="第二章 寄存器"></a>第二章 寄存器</h2><h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h3><ol><li><p><strong>使用debug指令，将上面的程序段写入内存，逐条执行，观察每条指令执行后，CPU中相关寄存器中的内容变化。</strong></p><p> 输入指令<br> <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211001094702.png" alt="20211001094702"></p><p> 修改cs ip 使用r指令<br> <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211001094920.png" alt="20211001094920"></p><p> 执行程序 使用t指令<br> <code>具体的过程就不截图了，是ax bx ip 三个寄存器之间值的变化</code></p></li><li><p><strong>利用了三条指令计算2的八次方</strong></p><pre class=" language-text"><code class="language-text">mov ax,1add ax,axjmp 2000:0003</code></pre><p>也是通过t 命令运行程序并观察寄存器中值的变化。</p></li><li><p><strong>查看内存中的内容</strong><br>查看主板上面的内容，我是没看见。不知道是不是因为使用的是DOSbox的原因<br> <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211001102449.png" alt="20211001102449"></p></li><li><p><strong>向内存从B8100H 开始的单元中填写数据</strong></p><p>我盲猜，作者想让读者观察到的显示是有的内存地址(ROM)不能写，有的内存地址可以写</p><p>按照书上面写的8086PC机内存地址的空间分配图来说，b8100属于显存地址空间。<br>我输入过程中的感觉很奇怪，这里面的数据会自己变化</p><p>这里按道理来说b810:0000这个存储单元中存放的应该是20H才对，不知道为什么为了30H<br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211001103438.png" alt="20211001103438"></p><p>同样都是使用d指令来查询内存中的内容，按道理来说1和2处显示的应该一样才对，3和4就刚好是一样的？？？<br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211001103918.png" alt="20211001103918"></p></li></ol>]]></content>
       
       
       <categories>
