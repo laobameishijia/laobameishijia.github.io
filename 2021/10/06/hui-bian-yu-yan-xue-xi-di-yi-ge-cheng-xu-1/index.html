@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Hello World, 老叭美食家">
+    <meta name="keywords" content="汇编语言学习-第一个程序-1, 老叭美食家">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | 老叭美食家</title>
+    <title>汇编语言学习-第一个程序-1 | 老叭美食家</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/awesome/css/all.css">
@@ -321,12 +321,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://laobablog-1304292449.cos.ap-nanjing.myqcloud.com/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">汇编语言学习-第一个程序-1</h1>
                 </div>
             </div>
         </div>
@@ -440,12 +440,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tag/%E6%B1%87%E7%BC%96/">
+                                <span class="chip bg-color">汇编</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                研究生预备学习
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -454,7 +467,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-01
+                    2021-10-06
                 </div>
                 
 
@@ -468,14 +481,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    73
+                    788
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -495,19 +508,43 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span>
+                <h1 id="关于汇编程序的执行问题"><a href="#关于汇编程序的执行问题" class="headerlink" title="关于汇编程序的执行问题"></a>关于汇编程序的执行问题</h1><p>在DOS中,可执行文件中的程序P1若要运行，必须有一个正在运行的程序p2,将p1从可执行文件中加载入内存,将CPU的控制权交给它.p1才能够运行,当p1运行完毕后,应该将cpu的控制权交还给使她得以运行的程序p2</p>
+<h2 id="思考问题"><a href="#思考问题" class="headerlink" title="思考问题"></a>思考问题</h2><ul>
+<li>在提示符<code>C:\masm</code>后面输入可执行文件的名字”1”,按下回车enter键，这时，思考问题4.1</li>
+<li>1.exe运行</li>
+<li>运行结束后，返回。再次显示提示符<code>C:masm</code>.思考问题4.2</li>
+</ul>
+<h3 id="4-1-此时-有一个正在运行的程序将1-exe中的程序加载入内存，这个正在运行的程序是什么？它将程序加载入内存后，如何使程序得以运行？"><a href="#4-1-此时-有一个正在运行的程序将1-exe中的程序加载入内存，这个正在运行的程序是什么？它将程序加载入内存后，如何使程序得以运行？" class="headerlink" title="4.1 此时,有一个正在运行的程序将1.exe中的程序加载入内存，这个正在运行的程序是什么？它将程序加载入内存后，如何使程序得以运行？"></a>4.1 此时,有一个正在运行的程序将1.exe中的程序加载入内存，这个正在运行的程序是什么？它将程序加载入内存后，如何使程序得以运行？</h3><p>操作系统是由多个功能模块组成的庞大、复杂的软件系统。任何通用的操作系统，都要提供一个成为shell的程序，用户使用这个程序来操作计算机系统进行工作。</p>
+<p>DOS中有一个程序command.com，这个程序在DOS中成为命令解释器，也就是DOS系统的shell。</p>
+<p>DOS启动时，先完成其他重要的初始化工作，然后运行command.com，command.com运行后，执行完其他相关的任务后，在屏幕上显示出当前盘符和当前路径组成的提示符，等待用户输入。</p>
+<p>用户可以输入所要执行的命令，如：cd、dir、type等，这些命令由command执行，command执行完这些命令后，再次显示由当前盘符和当前路径组成的提示符，等待用户输入。</p>
+<p>如果用户要执行一个程序，则输入该程序的可执行文件的名称，command首先根据文件名找到可执行文件，然后将这个可执行文件中的程序加载到内存中，设置CS:IP指向程序的入口。此后command暂时停止运行，CPU运行程序。程序运行结束后，返回到command中，command再次显示出由当前盘符和当前路径组成的提示符，等待用户输入。</p>
+<p>在DOS中，command处理各种输入：命令或要执行的程序的文件名。我们就是用过command来进行工作的。</p>
+<h3 id="4-2-程序运行结束后，返回到了哪里？"><a href="#4-2-程序运行结束后，返回到了哪里？" class="headerlink" title="4.2 程序运行结束后，返回到了哪里？"></a>4.2 程序运行结束后，返回到了哪里？</h3><p>程序运行结束后，返回到了command中。</p>
+<h4 id="汇编程序从写出到执行的过程"><a href="#汇编程序从写出到执行的过程" class="headerlink" title="汇编程序从写出到执行的过程"></a>汇编程序从写出到执行的过程</h4><p>编程 -&gt; 1.asm -&gt; 编译 -&gt; 1.obj -&gt; 链接 -&gt; 1.exe -&gt; 加载 -&gt; 内存中的程序 -&gt; 运行</p>
+<h2 id="观察下面程序执行过程中，寄存器和栈顶元素的变化"><a href="#观察下面程序执行过程中，寄存器和栈顶元素的变化" class="headerlink" title="观察下面程序执行过程中，寄存器和栈顶元素的变化"></a>观察下面程序执行过程中，寄存器和栈顶元素的变化</h2><pre class=" language-text"><code class="language-text">assume cs:codeseg
+
+codeseg segment
+
+start:  mov ax,2000H
+        mov ss,ax
+        mov sp,0
+        pop ax
+        pop bx
+        push ax
+        push bx
+        pop ax
+        pop bx
+    
+    mov ax,4c00H
+    int 21h
+codeseg ends
+end start
+end
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server
-</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate
-</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy
-</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>ax bx 各出入栈。IP和SP指针在变化，其余寄存器没看到变化。栈顶元素最后还是变化到跟初始状态下一致了</p>
+<p>PSP的头两个字节时CD20,其中的内容为</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211006115030.png" alt="PSP"></p>
 
                 
             </div>
@@ -524,7 +561,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">老叭美食家</a>
+                    <a href="/about" rel="external nofollow noreferrer">美食家李老叭</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -534,7 +571,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://laobameishijia.github.io/2021/06/01/hello-world/">https://laobameishijia.github.io/2021/06/01/hello-world/</a>
+                    <a href="https://laobameishijia.github.io/2021/10/06/hui-bian-yu-yan-xue-xi-di-yi-ge-cheng-xu-1/">https://laobameishijia.github.io/2021/10/06/hui-bian-yu-yan-xue-xi-di-yi-ge-cheng-xu-1/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -547,7 +584,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">老叭美食家</a>
+                    <a href="/about" target="_blank">美食家李老叭</a>
                     !
                 </span>
             </div>
@@ -571,7 +608,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tag/%E6%B1%87%E7%BC%96/">
+                                    <span class="chip bg-color">汇编</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -881,46 +922,47 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/06/02/shi-xun-day3/">
+                <a href="/2021/10/06/hui-bian-yu-yan-xue-xi-di-yi-ge-cheng-xu-1/">
                     <div class="card-image">
                         
+                        <img src="https://laobablog-1304292449.cos.ap-nanjing.myqcloud.com/3.jpg" class="responsive-img" alt="汇编语言学习-第一个程序-1">
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/22.jpg" class="responsive-img" alt="实训day3">
-                        
-                        <span class="card-title">实训day3</span>
+                        <span class="card-title">汇编语言学习-第一个程序-1</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            编写完整的汇编语言程序,用编译和连接程序将他们编译链接成为可执行文件
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-02
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-06
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/category/%E5%9B%BD%E4%BF%A1%E5%AE%89%E5%AE%9E%E8%AE%AD/" class="post-category">
-                                    国信安实训
+                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    研究生预备学习
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tag/%E5%AE%9E%E8%AE%AD/">
-                        <span class="chip bg-color">实训</span>
+                    <a href="/tag/%E6%B1%87%E7%BC%96/">
+                        <span class="chip bg-color">汇编</span>
                     </a>
                     
                 </div>
@@ -934,31 +976,30 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/06/01/shi-xun-day1-day2/">
+                <a href="/2021/10/04/hui-bian-yu-yan-xue-xi-ji-cun-qi-3/">
                     <div class="card-image">
                         
+                        <img src="https://laobablog-1304292449.cos.ap-nanjing.myqcloud.com/2.jpg" class="responsive-img" alt="汇编语言学习-寄存器-3">
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/17.jpg" class="responsive-img" alt="实训day1-day2">
-                        
-                        <span class="card-title">实训day1-day2</span>
+                        <span class="card-title">汇编语言学习-寄存器-3</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            CPU提供的栈机制,基本的PUSH\POP指令
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-01
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-04
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/category/%E5%9B%BD%E4%BF%A1%E5%AE%89%E5%AE%9E%E8%AE%AD/" class="post-category">
-                                    国信安实训
+                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    研究生预备学习
                                 </a>
                             
                             
@@ -968,8 +1009,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tag/%E5%AE%9E%E8%AE%AD/">
-                        <span class="chip bg-color">实训</span>
+                    <a href="/tag/%E6%B1%87%E7%BC%96/">
+                        <span class="chip bg-color">汇编</span>
                     </a>
                     
                 </div>
