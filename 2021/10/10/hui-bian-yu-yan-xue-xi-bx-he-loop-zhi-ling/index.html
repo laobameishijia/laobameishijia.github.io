@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="leetcode6-判断链表中是否存在环, 老叭美食家">
+    <meta name="keywords" content="汇编语言学习-[bx]和loop指令, 老叭美食家">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>leetcode6-判断链表中是否存在环 | 老叭美食家</title>
+    <title>汇编语言学习-[bx]和loop指令 | 老叭美食家</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/awesome/css/all.css">
@@ -321,12 +321,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/16.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">leetcode6-判断链表中是否存在环</h1>
+                    <h1 class="description center-align post-title">汇编语言学习-[bx]和loop指令</h1>
                 </div>
             </div>
         </div>
@@ -442,8 +442,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tag/leetcode/">
-                                <span class="chip bg-color">leetcode</span>
+                            <a href="/tag/%E6%B1%87%E7%BC%96/">
+                                <span class="chip bg-color">汇编</span>
                             </a>
                         
                     </div>
@@ -454,8 +454,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/category/%E9%93%BE%E8%A1%A8/" class="post-category">
-                                链表
+                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                研究生预备学习
                             </a>
                         
                     </div>
@@ -467,7 +467,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-14
+                    2021-10-10
                 </div>
                 
 
@@ -481,7 +481,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    638
+                    545
                 </div>
                 
 
@@ -508,47 +508,62 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="leetcode6-判断链表中是否存在环"><a href="#leetcode6-判断链表中是否存在环" class="headerlink" title="leetcode6-判断链表中是否存在环"></a>leetcode6-判断链表中是否存在环</h1><p>这道题感觉很难嗷！ 但是确实是属于简单题的行列( 我是fw )，全程都在看解析。</p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="快慢指针"><a href="#快慢指针" class="headerlink" title="快慢指针"></a>快慢指针</h3><p>本方法需要读者对「Floyd 判圈算法」（又称龟兔赛跑算法）有所了解。</p>
-<p>假想「乌龟」和「兔子」在链表上移动，「兔子」跑得快，「乌龟」跑得慢。当「乌龟」和「兔子」从链表上的同一个节点开始移动时，如果该链表中没有环，那么「兔子」将一直处于「乌龟」的前方；如果该链表中有环，那么「兔子」会先于「乌龟」进入环，并且一直在环内移动。等到「乌龟」进入环时，由于「兔子」的速度快，它一定会在某个时刻与乌龟相遇，即套了「乌龟」若干圈。</p>
-<p>作者：LeetCode-Solution<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/linked-list-cycle/solution/huan-xing-lian-biao-by-leetcode-solution/">https://leetcode-cn.com/problems/linked-list-cycle/solution/huan-xing-lian-biao-by-leetcode-solution/</a><br>来源：力扣（LeetCode）</p>
-<pre class=" language-c"><code class="language-c">bool <span class="token function">hasCycle</span><span class="token punctuation">(</span><span class="token keyword">struct</span> ListNode<span class="token operator">*</span> head<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>head <span class="token operator">==</span> <span class="token constant">NULL</span> <span class="token operator">||</span> head<span class="token operator">-></span>next <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> false<span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-    <span class="token keyword">struct</span> ListNode<span class="token operator">*</span> slow <span class="token operator">=</span> head<span class="token punctuation">;</span>
-    <span class="token keyword">struct</span> ListNode<span class="token operator">*</span> fast <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>slow <span class="token operator">!=</span> fast<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>fast <span class="token operator">==</span> <span class="token constant">NULL</span> <span class="token operator">||</span> fast<span class="token operator">-></span>next <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span> false<span class="token punctuation">;</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-        slow <span class="token operator">=</span> slow<span class="token operator">-></span>next<span class="token punctuation">;</span>
-        fast <span class="token operator">=</span> fast<span class="token operator">-></span>next<span class="token operator">-></span>next<span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> true<span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+                <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="bx"><a href="#bx" class="headerlink" title="[bx]"></a>[bx]</h2><p><code>mov ax,[bx]</code>, bx中存放的数据作为一个偏移地址EA,段地址SA默认在ds中,将SA:EA处的数据送入ax中,<strong>注意这里是字型数据哦！</strong> 即:<code>ax = ds*16 + bx</code></p>
+<p>建议以后再写汇编语言程序的时候,把[bx]前面的段寄存器显式地标注出来,也就是所谓的<strong>段前缀</strong>。</p>
+<h2 id="loop指令"><a href="#loop指令" class="headerlink" title="loop指令"></a>loop指令</h2><p>loop 指令就是一个循环指令，注意cx循环次数,和bx在循环过程中的变化。</p>
+<h2 id="综合应用"><a href="#综合应用" class="headerlink" title="综合应用"></a>综合应用</h2><p>计算ffff:0-ffff:b单元中的数据的和,结果存储在dx中</p>
+<h3 id="数据相加的问题"><a href="#数据相加的问题" class="headerlink" title="数据相加的问题"></a>数据相加的问题</h3><ul>
+<li>dx = dx + 内存中的8位数据 类型不匹配</li>
+<li>dl = dl + 内存中的8位数据 结果越界</li>
+</ul>
+<p>解决方案：利用一个16位的寄存器来做中介。将内存单元中的8位数据赋值到一个16位寄存器ax中<strong>高八位要初始化为0</strong>,再将ax中的数据加到dx上,从而使两个运算对象的类型匹配并且结果不会超界。</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h3 id="1-and-2"><a href="#1-and-2" class="headerlink" title="1 and 2"></a>1 and 2</h3><p>编程 ,向内存 0:200<del>0:23F依次传送数据0</del>63</p>
+<pre class=" language-text"><code class="language-text">  assume cs:codeseg
+
+  codeseg segment
+
+  start: mov ax,0200H    ;这里第一次写成0H了 心里想的确实是0200 不知道怎么弄成0了
+        mov ds,ax
+      
+        mov bx,0H
+        mov cx,40H
+      
+  s:  mov ds:[bx],bl
+      inc bx
+      loop s
+      
+      mov ax,4c00H
+      int 21h
+  codeseg ends
+  end start
+  end
 </code></pre>
-<h4 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><ul>
-<li><p>时间复杂度：<code>O(N)</code>，其中 N 是链表中的节点数。</p>
-<ul>
-<li><p>当链表中不存在环时，快指针将先于慢指针到达链表尾部，链表中每个节点至多被访问两次。</p>
-</li>
-<li><p>当链表中存在环时，每一轮移动后，快慢指针的距离将减小一。而初始距离为环的长度，因此至多移动 N 轮。</p>
-</li>
-</ul>
-</li>
-<li><p>空间复杂度：<code>O(1)</code> 我们只使用了两个指针的额外空间。</p>
-</li>
-</ul>
-<h3 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h3><p>用哈希表来存储所有已经访问过的节点。每次我们到达一个节点，如果该节点已经存在于哈希表中，则说明该链表是环形链表，否则就将该节点加入哈希表中。重复这一过程，直到我们遍历完整个链表即可。</p>
-<p>重要的是哈希表的原理<br>知乎的文章： 具体还是你后面去看看相应的源码，会比较方便一些。</p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/144296454">https://zhuanlan.zhihu.com/p/144296454</a></p>
-<h4 id="复杂度分析-1"><a href="#复杂度分析-1" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><ul>
-<li><p>时间复杂度：<code>O(N)</code>，其中 <code>N</code> 是链表中的节点数。最坏情况下我们需要遍历每个节点一次。</p>
-</li>
-<li><p>空间复杂度：<code>O(N)</code>，其中 <code>N</code> 是链表中的节点数。主要为哈希表的开销，最坏情况下我们需要将每个节点插入到哈希表中一次。</p>
-</li>
-</ul>
+<h3 id="3"><a href="#3" class="headerlink" title="3"></a>3</h3><p>将”mov ax,4c00h”之前的指令复制到内存0:200h处,补全程序,上机调试,跟踪运行结果.</p>
+<pre class=" language-text"><code class="language-text">  assume cs:codeseg
+
+  codeseg segment
+
+  start: mov ax,cs
+      mov ds,ax
+
+      mov ax,0020h
+      mov es,ax
+      mov bx,0
+      mov cx,17h;第一次写的21(10进制),看网上有说18的，感觉不对呀，我17的话就刚刚好是可以复制完的
+      ;还有view里面cpu指令前面的地址是该指令的起始地址 你还要加上这个指令的大小,才算是下一条指令的相对地址,而且别忽略了最初的地址是从零开始算的
+
+  s:  mov al,ds:[bx];标签表示的是相对于段定义起始位置的位置
+      mov es:[bx],al
+      inc bx
+      loop s
+
+      mov ax,4c00h
+      int 21h
+  codeseg ends
+  end start
+  end
+</code></pre>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211010160654.png" alt="运行结果"></p>
 
                 
             </div>
@@ -565,7 +580,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">老叭美食家</a>
+                    <a href="/about" rel="external nofollow noreferrer">美食家李老叭</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -575,7 +590,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://laobameishijia.github.io/2021/06/14/leetcode6-pan-duan-lian-biao-zhong-shi-fou-cun-zai-huan/">https://laobameishijia.github.io/2021/06/14/leetcode6-pan-duan-lian-biao-zhong-shi-fou-cun-zai-huan/</a>
+                    <a href="https://laobameishijia.github.io/2021/10/10/hui-bian-yu-yan-xue-xi-bx-he-loop-zhi-ling/">https://laobameishijia.github.io/2021/10/10/hui-bian-yu-yan-xue-xi-bx-he-loop-zhi-ling/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -588,7 +603,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">老叭美食家</a>
+                    <a href="/about" target="_blank">美食家李老叭</a>
                     !
                 </span>
             </div>
@@ -613,8 +628,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tag/leetcode/">
-                                    <span class="chip bg-color">leetcode</span>
+                                <a href="/tag/%E6%B1%87%E7%BC%96/">
+                                    <span class="chip bg-color">汇编</span>
                                 </a>
                             
                         </div>
@@ -926,46 +941,48 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/06/14/leetcode5-fan-xiang-shu-chu-lian-biao/">
+                <a href="/2021/10/10/hui-bian-yu-yan-xue-xi-bx-he-loop-zhi-ling/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/22.jpg" class="responsive-img" alt="leetcode5-反向输出链表">
+                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/16.jpg" class="responsive-img" alt="汇编语言学习-[bx]和loop指令">
                         
-                        <span class="card-title">leetcode5-反向输出链表</span>
+                        <span class="card-title">汇编语言学习-[bx]和loop指令</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            loop循环指令和[bx]段内偏移的综合应用
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-14
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-10
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/category/%E9%93%BE%E8%A1%A8/" class="post-category">
-                                    链表
+                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    研究生预备学习
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tag/leetcode/">
-                        <span class="chip bg-color">leetcode</span>
+                    <a href="/tag/%E6%B1%87%E7%BC%96/">
+                        <span class="chip bg-color">汇编</span>
                     </a>
                     
                 </div>
@@ -979,31 +996,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/06/11/leetcode4-shan-chu-lian-biao-jie-dian/">
+                <a href="/2021/10/10/hui-bian-yu-yan-xue-xi-bao-han-duo-ge-duan-de-cheng-xu/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/11.jpg" class="responsive-img" alt="leetcode4-删除链表节点">
+                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/2.jpg" class="responsive-img" alt="汇编语言学习-包含多个段的程序">
                         
-                        <span class="card-title">leetcode4-删除链表节点</span>
+                        <span class="card-title">汇编语言学习-包含多个段的程序</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            在同一个段中存放数据、代码、栈 || 将数据、代码、栈放入不同段中
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-10
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/category/%E9%93%BE%E8%A1%A8/" class="post-category">
-                                    链表
+                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    研究生预备学习
                                 </a>
                             
                             
@@ -1013,8 +1030,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tag/leetcode/">
-                        <span class="chip bg-color">leetcode</span>
+                    <a href="/tag/%E6%B1%87%E7%BC%96/">
+                        <span class="chip bg-color">汇编</span>
                     </a>
                     
                 </div>
