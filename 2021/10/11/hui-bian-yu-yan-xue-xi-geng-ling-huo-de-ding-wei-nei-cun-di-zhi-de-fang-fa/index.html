@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="实训day4, 老叭美食家">
+    <meta name="keywords" content="汇编语言学习-更灵活的定位内存地址的方法, 老叭美食家">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>实训day4 | 老叭美食家</title>
+    <title>汇编语言学习-更灵活的定位内存地址的方法 | 老叭美食家</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/awesome/css/all.css">
@@ -326,7 +326,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">实训day4</h1>
+                    <h1 class="description center-align post-title">汇编语言学习-更灵活的定位内存地址的方法</h1>
                 </div>
             </div>
         </div>
@@ -442,8 +442,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tag/%E5%AE%9E%E8%AE%AD/">
-                                <span class="chip bg-color">实训</span>
+                            <a href="/tag/%E6%B1%87%E7%BC%96/">
+                                <span class="chip bg-color">汇编</span>
                             </a>
                         
                     </div>
@@ -454,8 +454,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/category/%E5%9B%BD%E4%BF%A1%E5%AE%89%E5%AE%9E%E8%AE%AD/" class="post-category">
-                                国信安实训
+                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                研究生预备学习
                             </a>
                         
                     </div>
@@ -467,7 +467,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-03
+                    2021-10-11
                 </div>
                 
 
@@ -481,7 +481,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    836
+                    693
                 </div>
                 
 
@@ -508,33 +508,149 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <ul>
-<li><a href="#spring%E5%85%A5%E9%97%A83">Spring入门3</a><ul>
-<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF-mybatis">什么是 MyBatis</a><ul>
-<li><a href="#%E5%8E%9F%E7%90%86%E5%9B%BE">原理图</a></li>
-<li><a href="#mtbatis%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2">MtBatis进行数据查询</a></li>
+                <h1 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h1><h2 id="编程1-将datasg段中每个单词的前四个字母改为大写字母"><a href="#编程1-将datasg段中每个单词的前四个字母改为大写字母" class="headerlink" title="编程1 将datasg段中每个单词的前四个字母改为大写字母"></a>编程1 将datasg段中每个单词的前四个字母改为大写字母</h2><pre class=" language-text"><code class="language-text">assume cs:codesg,ss:stacksg,ds:datasg
+
+stacksg segment
+    dw 0,0,0,0,0,0,0,0
+stacksg ends
+
+datasg segment
+    db '1. display      '
+    db '2. brows        '
+    db '3. replace      '
+    db '4. modify       '
+datasg ends
+
+codesg segment
+
+start:
+    mov ax,stacksg
+    mov ss,ax
+    mov sp,16;初始化栈段
+    
+    mov ax,datasg
+    mov ds,ax;初始化数据段
+    
+    mov bx,0
+    mov cx,4
+s:
+    push cx
+    mov cx,4
+    mov si,0
+s0:
+    mov al,ds:[bx+3+si];这个地方必须要是 bx+(si/di)+(idata)这样的形式,()为可选内容
+    and al,11011111B;01100100 01000100--44  
+    mov ds:[bx+3+si],al
+
+    inc si
+    loop s0
+
+    pop cx
+    add bx,16
+    loop s
+    
+    mov ax,4c00h
+    int 21h
+
+codesg ends
+
+end start
+</code></pre>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211011200251.png" alt="运行截图"></p>
+<h3 id="出现的错误"><a href="#出现的错误" class="headerlink" title="出现的错误"></a>出现的错误</h3><ul>
+<li><code>and al,11011111b</code>少打了一个1</li>
 </ul>
-</li>
-<li><a href="#springboot%E6%9F%A5%E6%89%BE%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E7%9A%84%E9%A1%BA%E5%BA%8F">SpringBoot查找静态资源的顺序</a></li>
-<li><a href="#mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8Bvarchar%E5%92%8Cchar%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%E5%93%AA%E7%A7%8D%E5%AD%97%E6%AE%B5%E7%9A%84%E6%9F%A5%E6%89%BE%E6%95%88%E7%8E%87%E8%A6%81%E9%AB%98%E4%B8%BA%E4%BB%80%E4%B9%88">MySQL数据库中的字段类型varchar和char的主要区别是什么？哪种字段的查找效率要高，为什么</a></li>
+<h2 id="编程2-将datasg中的第一个字符串转换成大写-第二个字符串转成小写"><a href="#编程2-将datasg中的第一个字符串转换成大写-第二个字符串转成小写" class="headerlink" title="编程2 将datasg中的第一个字符串转换成大写,第二个字符串转成小写"></a>编程2 将datasg中的第一个字符串转换成大写,第二个字符串转成小写</h2><pre class=" language-text"><code class="language-text">assume cs:codesg,ds:datasg
+
+datasg segment
+    db 'BaSiC'
+    db 'iNfOrMaTiOn'
+datasg ends
+
+codesg segment
+    start:
+        mov ax,datasg
+        mov ds,ax
+        
+        mov bx,1
+        mov cx,2
+    s:
+        mov al,ds:[bx]
+        and al,11011111b
+        mov ds:[bx],al
+
+        add bx,2
+        loop s
+        
+        mov bx,6;这个bx要定位到 第二个字符串的第一个大写字母啊
+        mov cx,5
+
+    s0:
+        mov al,ds:[bx]
+        or al,00100000b
+        mov ds:[bx],al
+        
+        add bx,2
+        loop s0
+
+        mov ax,4c00h
+        int 21h
+codesg ends
+end start
+</code></pre>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211011203022.png" alt="运行截图"></p>
+<h3 id="出现的错误-1"><a href="#出现的错误-1" class="headerlink" title="出现的错误"></a>出现的错误</h3><ul>
+<li>第二个字符串定位是要在<code>第一个大写字母N</code></li>
 </ul>
-</li>
+<h2 id="编程3-用si和di实现将字母串”welcome-to-masm-”复制到它后面的数据区中"><a href="#编程3-用si和di实现将字母串”welcome-to-masm-”复制到它后面的数据区中" class="headerlink" title="编程3 用si和di实现将字母串”welcome to masm!”复制到它后面的数据区中"></a>编程3 用si和di实现将字母串”welcome to masm!”复制到它后面的数据区中</h2><pre class=" language-text"><code class="language-text">assume  cs:codesg,ds:datasg
+
+datasg segment
+    db 'welcome to masm!'
+    db '................'
+datasg ends
+
+codesg segment
+
+start:
+    mov ax,datasg
+    mov ds,ax
+
+    mov si,0
+    mov di,10h
+
+    mov bx,0
+    mov cx,8 
+
+s: 
+    mov ax,ds:[bx+si]
+    mov ds:[bx+di],ax
+    
+    add si,2
+    add di,2
+    
+    loop s
+
+    mov ax,4c00h
+    int 21h
+
+
+codesg ends
+
+end start
+</code></pre>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211011204256.png" alt="运行截图"></p>
+<h3 id="出现的错误-2"><a href="#出现的错误-2" class="headerlink" title="出现的错误"></a>出现的错误</h3><ul>
+<li><code>assume codesg</code> 和<code>code segment</code> 不匹配</li>
+<li>di寄存器写成bi</li>
 </ul>
-<h1 id="Spring入门3"><a href="#Spring入门3" class="headerlink" title="Spring入门3"></a>Spring入门3</h1><p>Java体系操作数据库的框架：</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这一章中,我们主要讲解了更为灵活的寻址方式的应用和一些编程方法,主要的内容有：</p>
 <ul>
-<li>全ORM: Hibernate，JPA 完全隔离sql语句，不写sql即可实现相应的数据库操作。相对半ORM来说执行速度会慢一点。</li>
-<li>半ORM：Mybatis 隔离sql和java语句，java和 sql是分开的。更适合web项目的开发</li>
+<li>寻址方式 [bx]–编程2[bx+idata] [bx+si]–编程3[bx+si+idata]–编程1</li>
+<li>二重循环问题的处理,处理两个循环loop都使用cx寄存器的时候,会出现冲突的问题.解决的最佳方式就是将cx的值暂时存储到栈空间中,等到再次回到外层循环的时候,再将其出栈,以此实现将互不影响.这里也能体现处在<code>调用函数</code>掉用<code>被调用函数</code>的时候,将各个寄存器的值入栈,等到<code>被调用函数</code>返回时,再将各个寄存器的值初始化到调用<code>被调用函数</code>之前,这样就可以继续执行<code>调用函数</code>,而不产生影响.</li>
+<li>栈的应用</li>
+<li>大小写转换的方法<br>小写转大写 <code>and al,11011111b</code><br>大写转小写 <code>or al,00100000b</code></li>
+<li>and | or 指令</li>
 </ul>
-<h2 id="什么是-MyBatis"><a href="#什么是-MyBatis" class="headerlink" title="什么是 MyBatis"></a>什么是 MyBatis</h2><p>MyBatis 是支持定制化 SQL、存储过程以及高级映射的优秀的持久层框架。MyBatis 避免了几乎所有的 JDBC 代码和手动设置参数以及获取结果集。MyBatis 可以对配置和原生Map使用简单的 XML 或注解，将接口和 Java 的 POJOs(Plain Old Java Objects,普通的 Java对象)映射成数据库中的记录。</p>
-<h3 id="原理图"><a href="#原理图" class="headerlink" title="原理图"></a>原理图</h3><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210603114409.png" alt="20210603114409"></p>
-<h3 id="MtBatis进行数据查询"><a href="#MtBatis进行数据查询" class="headerlink" title="MtBatis进行数据查询"></a>MtBatis进行数据查询</h3><ul>
-<li>导入依赖 maven包</li>
-<li>配置数据源 确定数据库的类型、账号、密码</li>
-<li>Mybatis相关文件的创建</li>
-</ul>
-<p>1.创建实体类<br>数据库中的表 — 类<br>数据库表中的字段  — 类属性<br>数据            – 对象<br>2.创建接口 AdminMapper<br>3.创建对应的映射文件 Xml<br>4.配置mybatis 指定映射文件的位置、打印sql语句等<br>5.扫描接口  在启动类上面扫描<br>6.单元测试 去test目录下的Tests进行</p>
-<h2 id="SpringBoot查找静态资源的顺序"><a href="#SpringBoot查找静态资源的顺序" class="headerlink" title="SpringBoot查找静态资源的顺序"></a>SpringBoot查找静态资源的顺序</h2><p>先从resources &gt; static &gt; public<br>如果在这几个文件夹中任意一个文件中找到静态资源，就不会再去其他的文件夹查找。都没有，就会直接抛出404.</p>
-<h2 id="MySQL数据库中的字段类型varchar和char的主要区别是什么？哪种字段的查找效率要高，为什么"><a href="#MySQL数据库中的字段类型varchar和char的主要区别是什么？哪种字段的查找效率要高，为什么" class="headerlink" title="MySQL数据库中的字段类型varchar和char的主要区别是什么？哪种字段的查找效率要高，为什么"></a>MySQL数据库中的字段类型varchar和char的主要区别是什么？哪种字段的查找效率要高，为什么</h2><p><strong>区别一，定长和变长</strong><br>char 表示定长，长度固定，varchar表示变长，即长度可变，当所插入的字符串超出它们的长度时，视情况来处理，如果是严格模式，则会拒绝插入并提示错误信息，如果是宽松模式，则会截取然后插入。如果插入的字符串长度小于定义长度时，则会以不同的方式来处理，如char（10），表示存储的是10个字符，无论你插入的是多少，都是10个，如果少于10个，则用空格填满。而varchar（10），小于10个的话，则插入多少个字符就存多少个。varchar怎么知道所存储字符串的长度呢？实际上，对于varchar 字段来说，需要使用一个（如果字符串长度小于255）或两个字节（长度大于255）来存储字符串的长度。<br><strong>区别之二</strong><br>存储的容量不同对char来说，最多能存放的字符个数 255，和编码无关。而varchar呢，最多能存放 65532 个字符。VARCHAR的最大有效长度由最大行大小和使用的字符集确定。整体最大长度是65,532 字节，最大有效长度是 65532 字节，在varchar存字符串的时候，第一个字节是空的，不存任何的数据，然后还需要两个字节来存放字符串的长度。所以有效长度就是 65535 - 1 - 2= 65532</p>
 
                 
             </div>
@@ -551,7 +667,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">老叭美食家</a>
+                    <a href="/about" rel="external nofollow noreferrer">美食家李老叭</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -561,7 +677,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://laobameishijia.github.io/2021/06/03/shi-xun-day4/">https://laobameishijia.github.io/2021/06/03/shi-xun-day4/</a>
+                    <a href="https://laobameishijia.github.io/2021/10/11/hui-bian-yu-yan-xue-xi-geng-ling-huo-de-ding-wei-nei-cun-di-zhi-de-fang-fa/">https://laobameishijia.github.io/2021/10/11/hui-bian-yu-yan-xue-xi-geng-ling-huo-de-ding-wei-nei-cun-di-zhi-de-fang-fa/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -574,7 +690,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">老叭美食家</a>
+                    <a href="/about" target="_blank">美食家李老叭</a>
                     !
                 </span>
             </div>
@@ -599,8 +715,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tag/%E5%AE%9E%E8%AE%AD/">
-                                    <span class="chip bg-color">实训</span>
+                                <a href="/tag/%E6%B1%87%E7%BC%96/">
+                                    <span class="chip bg-color">汇编</span>
                                 </a>
                             
                         </div>
@@ -912,46 +1028,48 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/06/04/shi-xun-day5/">
+                <a href="/2021/10/11/hui-bian-yu-yan-xue-xi-geng-ling-huo-de-ding-wei-nei-cun-di-zhi-de-fang-fa/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/0.jpg" class="responsive-img" alt="实训day5">
+                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/23.jpg" class="responsive-img" alt="汇编语言学习-更灵活的定位内存地址的方法">
                         
-                        <span class="card-title">实训day5</span>
+                        <span class="card-title">汇编语言学习-更灵活的定位内存地址的方法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            loop循环指令和[bx]段内偏移的综合应用
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-04
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-11
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/category/%E5%9B%BD%E4%BF%A1%E5%AE%89%E5%AE%9E%E8%AE%AD/" class="post-category">
-                                    国信安实训
+                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    研究生预备学习
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tag/%E5%AE%9E%E8%AE%AD/">
-                        <span class="chip bg-color">实训</span>
+                    <a href="/tag/%E6%B1%87%E7%BC%96/">
+                        <span class="chip bg-color">汇编</span>
                     </a>
                     
                 </div>
@@ -965,31 +1083,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/06/02/shi-xun-day3/">
+                <a href="/2021/10/10/hui-bian-yu-yan-xue-xi-bx-he-loop-zhi-ling/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/22.jpg" class="responsive-img" alt="实训day3">
+                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/16.jpg" class="responsive-img" alt="汇编语言学习-[bx]和loop指令">
                         
-                        <span class="card-title">实训day3</span>
+                        <span class="card-title">汇编语言学习-[bx]和loop指令</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            loop循环指令和[bx]段内偏移的综合应用
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-02
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-10
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/category/%E5%9B%BD%E4%BF%A1%E5%AE%89%E5%AE%9E%E8%AE%AD/" class="post-category">
-                                    国信安实训
+                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    研究生预备学习
                                 </a>
                             
                             
@@ -999,8 +1117,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tag/%E5%AE%9E%E8%AE%AD/">
-                        <span class="chip bg-color">实训</span>
+                    <a href="/tag/%E6%B1%87%E7%BC%96/">
+                        <span class="chip bg-color">汇编</span>
                     </a>
                     
                 </div>

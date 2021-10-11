@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>汇编语言学习-更灵活的定位内存地址的方法</title>
+      <link href="/2021/10/11/hui-bian-yu-yan-xue-xi-geng-ling-huo-de-ding-wei-nei-cun-di-zhi-de-fang-fa/"/>
+      <url>/2021/10/11/hui-bian-yu-yan-xue-xi-geng-ling-huo-de-ding-wei-nei-cun-di-zhi-de-fang-fa/</url>
+      
+        <content type="html"><![CDATA[<h1 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h1><h2 id="编程1-将datasg段中每个单词的前四个字母改为大写字母"><a href="#编程1-将datasg段中每个单词的前四个字母改为大写字母" class="headerlink" title="编程1 将datasg段中每个单词的前四个字母改为大写字母"></a>编程1 将datasg段中每个单词的前四个字母改为大写字母</h2><pre class=" language-text"><code class="language-text">assume cs:codesg,ss:stacksg,ds:datasgstacksg segment    dw 0,0,0,0,0,0,0,0stacksg endsdatasg segment    db '1. display      '    db '2. brows        '    db '3. replace      '    db '4. modify       'datasg endscodesg segmentstart:    mov ax,stacksg    mov ss,ax    mov sp,16;初始化栈段        mov ax,datasg    mov ds,ax;初始化数据段        mov bx,0    mov cx,4s:    push cx    mov cx,4    mov si,0s0:    mov al,ds:[bx+3+si];这个地方必须要是 bx+(si/di)+(idata)这样的形式,()为可选内容    and al,11011111B;01100100 01000100--44      mov ds:[bx+3+si],al    inc si    loop s0    pop cx    add bx,16    loop s        mov ax,4c00h    int 21hcodesg endsend start</code></pre><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211011200251.png" alt="运行截图"></p><h3 id="出现的错误"><a href="#出现的错误" class="headerlink" title="出现的错误"></a>出现的错误</h3><ul><li><code>and al,11011111b</code>少打了一个1</li></ul><h2 id="编程2-将datasg中的第一个字符串转换成大写-第二个字符串转成小写"><a href="#编程2-将datasg中的第一个字符串转换成大写-第二个字符串转成小写" class="headerlink" title="编程2 将datasg中的第一个字符串转换成大写,第二个字符串转成小写"></a>编程2 将datasg中的第一个字符串转换成大写,第二个字符串转成小写</h2><pre class=" language-text"><code class="language-text">assume cs:codesg,ds:datasgdatasg segment    db 'BaSiC'    db 'iNfOrMaTiOn'datasg endscodesg segment    start:        mov ax,datasg        mov ds,ax                mov bx,1        mov cx,2    s:        mov al,ds:[bx]        and al,11011111b        mov ds:[bx],al        add bx,2        loop s                mov bx,6;这个bx要定位到 第二个字符串的第一个大写字母啊        mov cx,5    s0:        mov al,ds:[bx]        or al,00100000b        mov ds:[bx],al                add bx,2        loop s0        mov ax,4c00h        int 21hcodesg endsend start</code></pre><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211011203022.png" alt="运行截图"></p><h3 id="出现的错误-1"><a href="#出现的错误-1" class="headerlink" title="出现的错误"></a>出现的错误</h3><ul><li>第二个字符串定位是要在<code>第一个大写字母N</code></li></ul><h2 id="编程3-用si和di实现将字母串”welcome-to-masm-”复制到它后面的数据区中"><a href="#编程3-用si和di实现将字母串”welcome-to-masm-”复制到它后面的数据区中" class="headerlink" title="编程3 用si和di实现将字母串”welcome to masm!”复制到它后面的数据区中"></a>编程3 用si和di实现将字母串”welcome to masm!”复制到它后面的数据区中</h2><pre class=" language-text"><code class="language-text">assume  cs:codesg,ds:datasgdatasg segment    db 'welcome to masm!'    db '................'datasg endscodesg segmentstart:    mov ax,datasg    mov ds,ax    mov si,0    mov di,10h    mov bx,0    mov cx,8 s:     mov ax,ds:[bx+si]    mov ds:[bx+di],ax        add si,2    add di,2        loop s    mov ax,4c00h    int 21hcodesg endsend start</code></pre><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211011204256.png" alt="运行截图"></p><h3 id="出现的错误-2"><a href="#出现的错误-2" class="headerlink" title="出现的错误"></a>出现的错误</h3><ul><li><code>assume codesg</code> 和<code>code segment</code> 不匹配</li><li>di寄存器写成bi</li></ul><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这一章中,我们主要讲解了更为灵活的寻址方式的应用和一些编程方法,主要的内容有：</p><ul><li>寻址方式 [bx]–编程2[bx+idata] [bx+si]–编程3[bx+si+idata]–编程1</li><li>二重循环问题的处理,处理两个循环loop都使用cx寄存器的时候,会出现冲突的问题.解决的最佳方式就是将cx的值暂时存储到栈空间中,等到再次回到外层循环的时候,再将其出栈,以此实现将互不影响.这里也能体现处在<code>调用函数</code>掉用<code>被调用函数</code>的时候,将各个寄存器的值入栈,等到<code>被调用函数</code>返回时,再将各个寄存器的值初始化到调用<code>被调用函数</code>之前,这样就可以继续执行<code>调用函数</code>,而不产生影响.</li><li>栈的应用</li><li>大小写转换的方法<br>小写转大写 <code>and al,11011111b</code><br>大写转小写 <code>or al,00100000b</code></li><li>and | or 指令</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 研究生预备学习 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 汇编 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>汇编语言学习-[bx]和loop指令</title>
       <link href="/2021/10/10/hui-bian-yu-yan-xue-xi-bx-he-loop-zhi-ling/"/>
       <url>/2021/10/10/hui-bian-yu-yan-xue-xi-bx-he-loop-zhi-ling/</url>
