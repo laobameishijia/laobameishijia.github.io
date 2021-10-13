@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="汇编语言学习-寄存器-3, 老叭美食家">
+    <meta name="keywords" content="汇编语言学习-转移指令原理, 老叭美食家">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>汇编语言学习-寄存器-3 | 老叭美食家</title>
+    <title>汇编语言学习-转移指令原理 | 老叭美食家</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/awesome/css/all.css">
@@ -321,12 +321,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://laobablog-1304292449.cos.ap-nanjing.myqcloud.com/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/20.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">汇编语言学习-寄存器-3</h1>
+                    <h1 class="description center-align post-title">汇编语言学习-转移指令原理</h1>
                 </div>
             </div>
         </div>
@@ -467,7 +467,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-10-04
+                    2021-10-13
                 </div>
                 
 
@@ -481,14 +481,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    754
+                    850
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    4 分
                 </div>
                 
 
@@ -508,47 +508,172 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h1><h2 id="基本指令-1-PUSH"><a href="#基本指令-1-PUSH" class="headerlink" title="基本指令 1 PUSH"></a>基本指令 1 PUSH</h2><p>对于push指令的执行</p>
-<ul>
-<li>SP = SP - 2, SS:SP指向当前栈顶前面的单元,以当前栈顶前面的单元为新的栈顶;</li>
-<li>将ax中的内容送入SS:SP指向的内存单元处,SS:SP此时指向新栈顶</li>
-</ul>
-<p>具体的图就不画了</p>
-<h2 id="基本指令-2-POP"><a href="#基本指令-2-POP" class="headerlink" title="基本指令 2 POP"></a>基本指令 2 POP</h2><p>关于pop指令的执行</p>
-<ul>
-<li>将SS:SP指向的内存单元处的数据送入ax中</li>
-<li>SP = SP + 2, SS:SP 指向当前栈顶下面的单元，以当前栈顶下面的单元为新的栈顶。</li>
-</ul>
-<p><strong>注意</strong>: 栈里面的单元是以字为单位的(2个字节),字单元的地址是两个字节地址中的低地址</p>
-<h2 id="栈顶的超界问题"><a href="#栈顶的超界问题" class="headerlink" title="栈顶的超界问题"></a>栈顶的超界问题</h2><p>对于8086CPU不保证对栈的操作不会越界。也就是说,8086CPU只知道栈顶在何出(由SS:SP指示),而不知道我们安排的栈空间有多大。这点好像CPU只知道执行的指令在何出(由CS:IP指示),而不知道要执行的指令有多少。从这两点上我们可以看出8086CPU的工作机理,它只<code>考虑当前的情况:当前的栈顶在何处、当前要执行的指令是哪一条</code></p>
-<h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><h3 id="寄存器清零"><a href="#寄存器清零" class="headerlink" title="寄存器清零"></a>寄存器清零</h3><p>两种方式:</p>
-<ul>
-<li>sub ax,ax 机器码为2个字节</li>
-<li>mov ax,0 机器码为3个字节</li>
-</ul>
-<h3 id="内存空间"><a href="#内存空间" class="headerlink" title="内存空间"></a>内存空间</h3><p>一段内存,可以既是代码的存储空间,又是数据的存储空间,还可以是栈空间,也可以什么也不是.关键在于CPU中寄存器的设置，即CS\IP\SS\SP\DS的指向。</p>
-<p>我们可以用一个段来此存放数据,将它定义为 数据段 </p>
-<p>我们可以用一个段来此存放代码,将它定义为 代码段 </p>
-<p>我们可以用一个段来此存放栈,将它定义为 栈段</p>
-<p>对于数据段，将它的段地址放在DS中，用mov、add、sub等访问内存单元的指令时，CPU就将我们定义的数据段中的内容当作数据来访问。</p>
-<p>对于代码段，将它的段地址放在CS中，将段中第一条指令的偏移地址放在IP中，这样CPU就能指向我们定义的代码段中的指令。</p>
-<p>对于栈段，将它的段地址放在SS中，将栈顶单元的偏移地址放在SP中，这样CPU在需要进行栈操作的时候，就将我们定义的栈段当作栈空间来操作。</p>
-<p>比如我们将10000H - 1001FH 安排为代码段，并在里面存储如下代码：</p>
-<pre class=" language-text"><code class="language-text">mov ax, 1000H
-mov ss, ax
-mov sp, 0020H
-mov ax, cs
-mov ds, ax
-mov ax, [0]
-add ax, [2]
-mov bx, [4]
-add bx, [6]
-push ax
-push bx
-pop ax
-pop bx
+                <h1 id="转移指令原理"><a href="#转移指令原理" class="headerlink" title="转移指令原理"></a>转移指令原理</h1><h2 id="思维导图"><a href="#思维导图" class="headerlink" title="思维导图"></a>思维导图</h2><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211013193650.png" alt="思维导图"></p>
+<h2 id="根据位移进行转移的意义"><a href="#根据位移进行转移的意义" class="headerlink" title="根据位移进行转移的意义"></a>根据位移进行转移的意义</h2><p>在对应的机器码中不包含转移的目的地址,而包含的是到目的地址的位移。这种设计,方便了程序段在内存中的浮动装配。使程序装在内存中的不同位置都可正确执行,因为在执行时,只涉及到位移,而不是地址。如果是地址的话,程序没有装载到对应的位置,就会造成程序没有办法正确执行。</p>
+<h2 id="综合实验"><a href="#综合实验" class="headerlink" title="综合实验"></a>综合实验</h2><h3 id="实验8-分析一个奇怪的程序"><a href="#实验8-分析一个奇怪的程序" class="headerlink" title="实验8 分析一个奇怪的程序"></a>实验8 分析一个奇怪的程序</h3><p>分析下面的程序,在运行前思考:这个程序可以正确返回吗？</p>
+<pre class=" language-text"><code class="language-text">assume cs:codesg
+codesg segment
+
+    mov ax,4c00h
+    int 21h
+;反正就是刚好利用了jmp 的相对位移的特性.short 8位位移 = 标号处的地址-jmp指令后的第一个字节地址
+start:
+    mov ax,0
+s:
+    nop
+    nop
+    mov di,offset s
+    mov si,offset s2
+    mov ax,cs:[si]
+    mov cs:[di],ax
+s0:
+    jmp short s
+s1:
+    mov ax,0
+    int 21h
+    mov ax,0
+s2:
+    jmp short s1
+    nop
+codesg ends
+end start
 </code></pre>
-<p>设置CS = 10000H,IP=0。这段代码将得到执行，可以看到，在这段代码中，我们又将10000H - 1001FH 安排为栈段和数据段。10000H - 1001FH 这段内存，既是代码段，又是栈段和数据段。</p>
+<p>可以正确返回,刚好利用了jmp 的相对位移的特性.short 8位位移 = 标号处的地址-jmp指令后的第一个字节地址。当程序再次跳回到s标号处执行时,其第一条指令为 EBF6,就刚好是往上面跳到了 <code>mov ax,4c00h</code></p>
+<h4 id="运行截图"><a href="#运行截图" class="headerlink" title="运行截图"></a>运行截图</h4><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211013194841.png" alt="实验8"></p>
+<h3 id="实验9"><a href="#实验9" class="headerlink" title="实验9"></a>实验9</h3><p>在屏幕中间分别显示绿色\绿底红色\白底蓝色的字符串”welcome to masm!”.</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><p>感觉这个没用到这章讲的东西啊??!!，还是因为我水平不行？？</p>
+<p><strong>我是真的憨憨,第一开始没有注意到题目中说的是要在屏幕中间显示</strong></p>
+<h5 id="改进前-写了三个循环"><a href="#改进前-写了三个循环" class="headerlink" title="改进前,写了三个循环"></a>改进前,写了三个循环</h5><pre class=" language-text"><code class="language-text">
+assume cs:codesg,ds:datasg
+
+datasg segment
+    db 'welcome to masm!'
+datasg ends
+
+codesg segment
+
+start:
+    mov ax,datasg
+    mov ds,ax
+
+    mov ax,0B800H
+    mov es,ax
+;1    
+    mov bx,6E0H
+    mov si,0
+    mov di,80
+    mov cx,16
+
+s:  
+    mov al,ds:[si]
+    mov es:[bx+di],al
+    mov byte ptr es:[bx+di+1],02H
+    add di,2
+    add si,1
+    loop s
+;2
+    mov bx,780H
+    mov si,0
+    mov di,80
+    mov cx,16
+
+s1:  
+    mov al,ds:[si]
+    mov es:[bx+di],al
+    mov byte ptr es:[bx+di+1],24H
+    add di,2
+    add si,1
+    loop s1
+;3
+    mov bx,820H
+    mov si,0
+    mov di,80
+    mov cx,16
+
+s2:  
+    mov al,ds:[si]
+    mov es:[bx+di],al
+    mov byte ptr es:[bx+di+1],71H
+    add di,2
+    add si,1
+    loop s2
+
+    mov ax,4c00h
+    int 21h
+codesg ends
+end start
+</code></pre>
+<h5 id="改进后-写成了一个循环"><a href="#改进后-写成了一个循环" class="headerlink" title="改进后,写成了一个循环"></a>改进后,写成了一个循环</h5><pre class=" language-text"><code class="language-text">assume cs:codesg,ds:datasg
+
+datasg segment
+    db 'welcome to masm!'
+    db 02H,24H,71H
+datasg ends
+
+codesg segment
+
+start:
+    mov ax,datasg
+    mov ds,ax
+
+    mov ax,0B800H
+    mov es,ax
+;1    
+    mov bx,6E0H
+    mov cx,3
+    mov bp,0
+all:
+    push cx
+    mov si,0
+    mov di,80
+    mov cx,16
+
+    s:  
+        mov al,ds:[si]
+        mov es:[bx+di],al
+        mov al,ds:[bp+16]
+        mov es:[bx+di+1],al
+        add di,2
+        add si,1
+        loop s
+    add bp,1
+    add bx,160
+    pop cx
+    loop all
+; ;2
+;     mov bx,780H
+;     mov si,0
+;     mov di,80
+;     mov cx,16
+
+; s1:  
+;     mov al,ds:[si]
+;     mov es:[bx+di],al
+;     mov byte ptr es:[bx+di+1],24H
+;     add di,2
+;     add si,1
+;     loop s1
+; ;3
+;     mov bx,820H
+;     mov si,0
+;     mov di,80
+;     mov cx,16
+
+; s2:  
+;     mov al,ds:[si]
+;     mov es:[bx+di],al
+;     mov byte ptr es:[bx+di+1],71H
+;     add di,2
+;     add si,1
+;     loop s2
+
+    mov ax,4c00h
+    int 21h
+codesg ends
+end start
+</code></pre>
+<h4 id="运行截图-1"><a href="#运行截图-1" class="headerlink" title="运行截图"></a>运行截图</h4><p>这个运行结果，怎么有的时候行有的时候不行？之前运行的时候，第一行的welcome 显示成了 celcome或是1/4elcome很奇怪。但是后面就又正常了<br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211013201157.png" alt="实验九"></p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211013205518.png" alt="改正后"></p>
 
                 
             </div>
@@ -575,7 +700,7 @@ pop bx
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://laobameishijia.github.io/2021/10/04/hui-bian-yu-yan-xue-xi-ji-cun-qi-3/">https://laobameishijia.github.io/2021/10/04/hui-bian-yu-yan-xue-xi-ji-cun-qi-3/</a>
+                    <a href="https://laobameishijia.github.io/2021/10/13/hui-bian-yu-yan-xue-xi-zhuan-yi-zhi-ling-yuan-li/">https://laobameishijia.github.io/2021/10/13/hui-bian-yu-yan-xue-xi-zhuan-yi-zhi-ling-yuan-li/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -930,23 +1055,24 @@ pop bx
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/10/06/hui-bian-yu-yan-xue-xi-di-yi-ge-cheng-xu-1/">
+                <a href="/2021/10/13/hui-bian-yu-yan-xue-xi-shu-ju-chu-li-de-liang-ge-ji-ben-wen-ti/">
                     <div class="card-image">
                         
-                        <img src="https://laobablog-1304292449.cos.ap-nanjing.myqcloud.com/3.jpg" class="responsive-img" alt="汇编语言学习-第一个程序-1">
                         
-                        <span class="card-title">汇编语言学习-第一个程序-1</span>
+                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/19.jpg" class="responsive-img" alt="汇编语言学习-数据处理的两个基本问题">
+                        
+                        <span class="card-title">汇编语言学习-数据处理的两个基本问题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            编写完整的汇编语言程序,用编译和连接程序将他们编译链接成为可执行文件
+                            要处理的数据在什么地方\要处理的数据的大小
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-06
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-13
                         </span>
                         <span class="publish-author">
                             
@@ -978,23 +1104,24 @@ pop bx
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/10/02/hui-bian-yu-yan-xue-xi-ji-cun-qi-2/">
+                <a href="/2021/10/11/hui-bian-yu-yan-xue-xi-geng-ling-huo-de-ding-wei-nei-cun-di-zhi-de-fang-fa/">
                     <div class="card-image">
                         
-                        <img src="https://laobablog-1304292449.cos.ap-nanjing.myqcloud.com/6.jpg" class="responsive-img" alt="汇编语言学习-寄存器-2">
                         
-                        <span class="card-title">汇编语言学习-寄存器-2</span>
+                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/23.jpg" class="responsive-img" alt="汇编语言学习-更灵活的定位内存地址的方法">
+                        
+                        <span class="card-title">汇编语言学习-更灵活的定位内存地址的方法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            字的存储、段寄存器、mov|sub|add 指令
+                            loop循环指令和[bx]段内偏移的综合应用
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-02
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-11
                             </span>
                         <span class="publish-author">
                             
