@@ -4,6 +4,181 @@
   
     
     <entry>
+      <title>汇编语言学习-call和ret指令</title>
+      <link href="/2021/10/16/hui-bian-yu-yan-xue-xi-call-he-ret-zhi-ling/"/>
+      <url>/2021/10/16/hui-bian-yu-yan-xue-xi-call-he-ret-zhi-ling/</url>
+      
+        <content type="html"><![CDATA[<h1 id="call和ret指令"><a href="#call和ret指令" class="headerlink" title="call和ret指令"></a>call和ret指令</h1><h2 id="思维导图"><a href="#思维导图" class="headerlink" title="思维导图"></a>思维导图</h2><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211016111954.png" alt="思维导图"></p><p>关于使用栈来传递参数并用ret返回的实际例子还是需要多看才行。</p><h2 id="综合实验"><a href="#综合实验" class="headerlink" title="综合实验"></a>综合实验</h2><h3 id="显示字符串"><a href="#显示字符串" class="headerlink" title="显示字符串"></a>显示字符串</h3><pre class=" language-text"><code class="language-text">名称：show_str功能：在指定的位置,用指定的颜色,显示一个用0结束的字符串参数：dh 行号(0-24), dl 列号 0-79, cl颜色, ds:si指向字符串的首地址返回: 无应用举例：在屏幕的8行3列,用绿色显示出data段中的字符串</code></pre><h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><pre class=" language-text"><code class="language-text">assume cs:codedata segment    db 'Welcome to masm!',0data endscode segmentstart:    mov dh,8    mov dl,3    mov cl,2    mov ax,data    mov ds,ax    mov si,0    call show_str        mov ax,4c00h    int 21hshow_str:    push es    push bp    push bx    mov ax,0B800H    mov es,ax    ;找行号对应的内存地址    mov al,160    mul dh    mov bp,ax    sub bp,160    ;找列对应的内存地址    mov al,2    mul dl    mov di,ax    sub di,2    ;把颜色转移一下    mov bl,cl    push cxs:     mov cl,ds:[si]    mov ch,0    jcxz ok    mov es:[bp+di],cl    mov es:[bp+di+1],bl    add di,2    add si,1    jmp short sok:    pop cx    pop bx    pop bp    pop es    retcode endsend start</code></pre><h4 id="运行截图"><a href="#运行截图" class="headerlink" title="运行截图"></a>运行截图</h4><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211016112701.png" alt="显示字符串"></p><h3 id="解决除法溢出的问题"><a href="#解决除法溢出的问题" class="headerlink" title="解决除法溢出的问题"></a>解决除法溢出的问题</h3><p>用div指令做出发的时候可能产生除法溢出,比如:1000000/10就不能用div指令来算</p><pre class=" language-text"><code class="language-text">名称：divdw功能：进行不会产生溢出的除法运算,被除数为dword,除数为word.结果为dword参数: ax dword的低16位 | dx dword高16位 | cx除数返回: dx 结果的高16位, ax 结果的低16位, cx 余数应用举例：计算 1000000/10(F4240H/0AH)结果: dx = 0001H  ax = 86A0H cx = 0</code></pre><h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><pre class=" language-text"><code class="language-text">assume cs:codesgdatasg segmentdatasg endscodesg segmentstart:    mov ax,4240H    mov dx,000FH    mov cx,0AH    call divdw    mov ax,4c00h    int 21h;这里面就是因为 div 被除数默认放在ax | dx(高)和ax(低)中,所以比较麻烦;除数可以放在寄存器里也可以放在内存单元里，有8/16两种, 8-AL商 AH余数 || 16-AX商 DX余数;再就是因为数据运算要符合相同的类型,同为16或同为8,在寄存器里面换来换去的就比较麻烦divdw:    push ax    mov ax,dx    div cl    mov bl,al    mov bh,00H    mov al,ah    mov ah,00H;bx保留商,ax保留余数    pop si    mov dx,si    mov dx,ax    mov ax,si    div cx;32/16 ax余数,dx商    mov si,bx    mov bx,dx    mov dx,si    mov cx,bx    retcodesg endsend start</code></pre><h4 id="运行截图-1"><a href="#运行截图-1" class="headerlink" title="运行截图"></a>运行截图</h4><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211016113513.png" alt="解决除法溢出的问题"></p><h3 id="数值显示"><a href="#数值显示" class="headerlink" title="数值显示"></a>数值显示</h3><p>将12666以字符串的形式显示到显示器上</p><pre class=" language-text"><code class="language-text">名称：dtoc功能：将word型数据转变为十进制的字符串,字符串以0为结尾符参数：ax word型数据    ds:si指向字符串的首地址返回：无应用举例: 将12666以十进制的形式在屏幕的8行3列,用绿色显示出来</code></pre><h4 id="改进前代码"><a href="#改进前代码" class="headerlink" title="改进前代码"></a>改进前代码</h4><p>改进前,主要是利用在内存中的位置,来对字符串进行逆向的输出。因为算余数的话,顺序是66621得倒过来才行</p><pre class=" language-text"><code class="language-text">assume cs:code,ds:datadata segment    db 10 dup(0)data endscode segmentstart:    mov ax,12666    mov bx,data    mov ds,bx    mov si,0    call dtoc        mov dh,8    mov dl,3    mov cl,2    call show_str    mov ax,4c00h    int 21hdtoc:    mov dx,00    mov bh,00    mov bl,10;感觉逻辑没问题啊,商越界了 得用32/16的    div bx ;为什么会在这里卡住呢,感觉像是无限循环？？？    mov ch,00h    mov cl,dl    jcxz ok    add byte ptr cx,0030H    mov ds:[si],cx    inc si    jmp dtocok:    ;也不是不能操作栈,在之前push进去的,在这里都pop出来就不会有问题,要不然回影响ret指令pop IP    ;后面你可以再试试,这个程序还是有问题    sub si,1;运行完之后si=5,然而ds[si]此时刚好是0,所以你得减去个1才行    retshow_str:    push es    push bp    push bx    mov ax,0B800H    mov es,ax    ;找行号对应的内存地址    mov ah,00    mov al,160    mul dh    mov bp,ax    sub bp,160    ;找列对应的内存地址    mov ah,00    mov al,2    mul dl    mov di,ax    sub di,2    ;把颜色转移一下    mov bl,cl    push cxs:     mov cl,ds:[si]    mov ch,0    jcxz ok1    mov es:[bp+di],cl    mov es:[bp+di+1],bl    add di,2    sub si,1    jmp short sok1:    pop cx    pop bx    pop bp    pop es    ret        code endsend start</code></pre><h4 id="改进后代码"><a href="#改进后代码" class="headerlink" title="改进后代码"></a>改进后代码</h4><p>改进之后,利用了栈的特性,先将算出来的余数入栈,然后再出栈写到内存里.这样就刚好倒过来了。不过需要注意的是,<code>在子程序中push进去的,在ret之前都要pop出来哦！</code></p><pre class=" language-text"><code class="language-text">assume cs:code,ds:datadata segment    db 10 dup(0)data endscode segmentstart:    mov ax,12666    mov bx,data    mov ds,bx    mov si,0    call dtoc        mov dh,8    mov dl,3    mov cl,2    call show_str    mov ax,4c00h    int 21hdtoc:    mov dx,00    mov bh,00    mov bl,10;感觉逻辑没问题啊,商越界了 得用32/16的    div bx ;为什么会在这里卡住呢,感觉像是无限循环？？？    mov ch,00h    mov cl,dl    jcxz ok    add byte ptr cx,0030H    mov ds:[si],cx    inc si    jmp dtocok:    ;也不是不能操作栈,在之前push进去的,在这里都pop出来就不会有问题,要不然回影响ret指令pop IP    ;后面你可以再试试,这个程序还是有问题    sub si,1;运行完之后si=5,然而ds[si]此时刚好是0,所以你得减去个1才行    retshow_str:    push es    push bp    push bx    mov ax,0B800H    mov es,ax    ;找行号对应的内存地址    mov ah,00    mov al,160    mul dh    mov bp,ax    sub bp,160    ;找列对应的内存地址    mov ah,00    mov al,2    mul dl    mov di,ax    sub di,2    ;把颜色转移一下    mov bl,cl    push cxs:     mov cl,ds:[si]    mov ch,0    jcxz ok1    mov es:[bp+di],cl    mov es:[bp+di+1],bl    add di,2    sub si,1    jmp short sok1:    pop cx    pop bx    pop bp    pop es    ret        code endsend start</code></pre><h4 id="运行截图-2"><a href="#运行截图-2" class="headerlink" title="运行截图"></a>运行截图</h4><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211016114256.png" alt="数值显示"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 研究生预备学习 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 汇编 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>美食篇-1-汉堡店</title>
+      <link href="/2021/10/16/mei-shi-pian-1-han-bao-dian/"/>
+      <url>/2021/10/16/mei-shi-pian-1-han-bao-dian/</url>
+      
+        <content type="html"><![CDATA[<h1 id="美食"><a href="#美食" class="headerlink" title="美食"></a>美食</h1><p>这次是跟舍友去吃的一个汉堡店,本来是想着能有那种美食视频上面看到的那样,有那种一口都塞不下的汉堡。地点就在川大望江校区地铁站的周边。</p><p>最终要是比较贵，我和室友一共花了<code>148</code>,就点了<code>两个汉堡</code>(具体价钱给忘了)`一盘鸡翅`(6个/32)</p><h2 id="汉堡"><a href="#汉堡" class="headerlink" title="汉堡"></a>汉堡</h2><p>结果这汉堡并不是很大,口感的话,我是觉得就一般,牛肉饼反而有一种腥味在。总体感觉就一般。</p><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/D5181D27FB0D2ABF12A801D3EEE3666A.jpg" alt="汉堡1"></p><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/C7B2046D0B0F24404CDB4355A0113227.jpg" alt="汉堡2"></p><h2 id="鸡翅"><a href="#鸡翅" class="headerlink" title="鸡翅"></a>鸡翅</h2><p>鸡翅的话,还凑合把,主要是有蜂蜜芥末的酱。个人比较喜欢</p><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/C7B2046D0B0F24404CDB4355A0113227.jpg" alt="鸡翅"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 美食 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 成都 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>美食篇-2-美国烤肉</title>
+      <link href="/2021/10/16/mei-shi-pian-2-mei-guo-kao-rou/"/>
+      <url>/2021/10/16/mei-shi-pian-2-mei-guo-kao-rou/</url>
+      
+        <content type="html"><![CDATA[<h1 id="美食"><a href="#美食" class="headerlink" title="美食"></a>美食</h1><p>这次由我室友和我还有另外两个同学一同前往，这个也是贵,最后人均花了105,不过体验还算可以。点了四个菜？名字忘了,大体就是烤肉串、意面、洋葱炒牛绒外加那种饼可以卷起来吃、烤肉三拼(鸡肉、牛肉、猪肉)</p><p>也是想体验一把视频里大口吃肉的感觉,但是回想起来,之前寒假的时候,我爸炖了好多排骨,同样是大口吃肉,为什么当时我就没有胃口吃呢？<br>为了弥补之前的遗憾,下一个寒假,我一定要将烤肉吃腻。大院子加上碳烤,想想就很过瘾。</p><h1 id="照骗"><a href="#照骗" class="headerlink" title="照骗"></a>照骗</h1><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/6DFA58B31EAAC59588475432A6AC93D7.jpg" alt="1"><br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/6DFA58B31EAAC59588475432A6AC93D7.jpg" alt="这个意面真的贵！"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 美食 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 成都 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>美食篇-3-鸡毛店</title>
+      <link href="/2021/10/16/mei-shi-pian-3-ji-mao-dian/"/>
+      <url>/2021/10/16/mei-shi-pian-3-ji-mao-dian/</url>
+      
+        <content type="html"><![CDATA[<h1 id="美食"><a href="#美食" class="headerlink" title="美食"></a>美食</h1><p>这次由我室友和我还有另外两个同学一同前往，这个还算可以,最后人均花了65? 点了 酸菜鱼？毛血旺？其他的忘了,这都是后面整理的了。</p><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/QQ%E5%9B%BE%E7%89%8720211016180849.jpg" alt="照骗1"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 美食 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 成都 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>美食篇-4-东北菜</title>
+      <link href="/2021/10/16/mei-shi-pian-4-dong-bei-cai/"/>
+      <url>/2021/10/16/mei-shi-pian-4-dong-bei-cai/</url>
+      
+        <content type="html"><![CDATA[<h1 id="美食"><a href="#美食" class="headerlink" title="美食"></a>美食</h1><p>这次由我和我的两个舍友,这家店相对来说比较实惠,个人感觉也比较好吃。可能是因为自己家乡也在北方的原因。</p><ul><li>地三鲜</li><li>锅包肉—感觉跟我爸弄得差不多~~~</li><li>饺子</li><li>炸茄盒</li><li><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/QQ%E5%9B%BE%E7%89%8720211016181146.jpg" alt="东北菜"></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 美食 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 成都 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>美食篇-5-麦当劳</title>
+      <link href="/2021/10/16/mei-shi-pian-5-mai-dang-lao/"/>
+      <url>/2021/10/16/mei-shi-pian-5-mai-dang-lao/</url>
+      
+        <content type="html"><![CDATA[<h1 id="美食"><a href="#美食" class="headerlink" title="美食"></a>美食</h1><p>这次是所有的舍友了,毕竟一个舍友请客,点的麦当劳,有汉堡、可乐、炸鸡、小龙虾和粉条、薯条、披萨~~ 如果要是硬要算人均的话,应该在50左右</p><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/QQ%E5%9B%BE%E7%89%8720211016181638.jpg" alt="麦当劳"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 美食 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 成都 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>美食篇-6-陶德砂锅</title>
+      <link href="/2021/10/16/mei-shi-pian-6-tao-de-sha-guo/"/>
+      <url>/2021/10/16/mei-shi-pian-6-tao-de-sha-guo/</url>
+      
+        <content type="html"><![CDATA[<h1 id="美食"><a href="#美食" class="headerlink" title="美食"></a>美食</h1><p>这次是舍友和我外加上两个大寝的舍友,这次的菜也非常好吃，人均55? 可惜照骗我只有一张了。有一个鲫鱼饺子、红烧猪蹄、还有一个肥肠、还有虾仁米线,还点了一些包子。</p><p>本来想尝尝肥肠的,因为之前看别人在视频里面吃的时候,我感觉很香。结果吃了一口,差点原地~~</p><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/1E5077B3A17D99CD7EDF42E4F291B254.jpg" alt="照片"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 美食 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 成都 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>汇编语言学习-数据处理的两个基本问题</title>
       <link href="/2021/10/13/hui-bian-yu-yan-xue-xi-shu-ju-chu-li-de-liang-ge-ji-ben-wen-ti/"/>
       <url>/2021/10/13/hui-bian-yu-yan-xue-xi-shu-ju-chu-li-de-liang-ge-ji-ben-wen-ti/</url>
