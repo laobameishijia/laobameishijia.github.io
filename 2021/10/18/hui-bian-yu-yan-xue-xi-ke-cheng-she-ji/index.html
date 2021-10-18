@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="实训day1-day2, 老叭美食家">
+    <meta name="keywords" content="汇编语言学习-课程设计, 老叭美食家">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>实训day1-day2 | 老叭美食家</title>
+    <title>汇编语言学习-课程设计 | 老叭美食家</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/awesome/css/all.css">
@@ -321,12 +321,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">实训day1-day2</h1>
+                    <h1 class="description center-align post-title">汇编语言学习-课程设计</h1>
                 </div>
             </div>
         </div>
@@ -442,8 +442,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tag/%E5%AE%9E%E8%AE%AD/">
-                                <span class="chip bg-color">实训</span>
+                            <a href="/tag/%E6%B1%87%E7%BC%96/">
+                                <span class="chip bg-color">汇编</span>
                             </a>
                         
                     </div>
@@ -454,8 +454,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/category/%E5%9B%BD%E4%BF%A1%E5%AE%89%E5%AE%9E%E8%AE%AD/" class="post-category">
-                                国信安实训
+                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                研究生预备学习
                             </a>
                         
                     </div>
@@ -467,7 +467,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-01
+                    2021-10-18
                 </div>
                 
 
@@ -481,14 +481,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    2.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    11 分
                 </div>
                 
 
@@ -508,76 +508,487 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="实训day1-day2"><a href="#实训day1-day2" class="headerlink" title="实训day1-day2"></a>实训day1-day2</h1><p>目录:</p>
+                <h1 id="课程设计"><a href="#课程设计" class="headerlink" title="课程设计"></a>课程设计</h1><p>在整个课程中,我们一共有两个课程设计,编写两个比较综合的程序,这是第一个。任务:将实验7中的power idea公司的数据按照图10.2所示的格式在屏幕上显示出来。</p>
+<p><strong>效果</strong><br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211018160247.png" alt="20211018160247"></p>
+<h2 id="难点"><a href="#难点" class="headerlink" title="难点"></a>难点</h2><ul>
+<li>从数字转换成字符串–通过除以10来不断获取余数,在加上30,最后再逆向输出</li>
+<li>因为程序要显示的数据有些已经大于65535,应该编写一个新的数据到字符串转换的子程序,完成dword型到字符串的转换</li>
+<li>在循环中如何选择寄存器(组合)来实现对有规律数据的复制</li>
+<li>对数据存储结构和控制移位的寄存器值的变化的控制</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>虽然实现了效果,但是在思路上还是比较凌乱,尤其是在整体的思路上面.还是改不了边写边改的毛病.</p>
 <ul>
-<li><a href="#%E5%AE%9E%E8%AE%ADday1-day2">实训day1-day2</a><ul>
-<li><a href="#git%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8">git工具的使用</a><ul>
-<li><a href="#%E5%85%B3%E4%BA%8Egit%E7%9A%84%E5%8E%9F%E7%90%86">关于git的原理</a></li>
-<li><a href="#git-%E5%B7%A5%E4%BD%9C%E6%B5%81">git 工作流</a></li>
-<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%9C%A8push%E4%B9%8B%E5%89%8D%E9%9C%80%E8%A6%81%E8%BF%9B%E8%A1%8Cpull">为什么在<code>push</code>之前需要进行<code>pull</code></a></li>
-<li><a href="#git%E5%A4%84%E7%90%86%E5%86%B2%E7%AA%81">git处理冲突</a></li>
+<li><input disabled="" type="checkbox"> 后面还是要不断的把代码再优化优化</li>
 </ul>
-</li>
-<li><a href="#spring%E9%A1%B9%E7%9B%AE%E5%85%A5%E9%97%A8">spring项目入门</a><ul>
-<li><a href="#java%E5%8F%8D%E5%B0%84">java反射</a></li>
-<li><a href="#%E6%80%9D%E8%80%83">思考</a><ul>
-<li><a href="#spring-ioc">Spring IOC</a></li>
-<li><a href="#spring-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5di">Spring 依赖注入DI</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="git工具的使用"><a href="#git工具的使用" class="headerlink" title="git工具的使用"></a>git工具的使用</h2><h3 id="关于git的原理"><a href="#关于git的原理" class="headerlink" title="关于git的原理"></a>关于git的原理</h3><p>找到了一篇博客对于git的原理以及存储讲解的非常清楚</p>
-<p><a target="_blank" rel="noopener" href="https://zhaohuabing.com/post/2019-01-21-git/">https://zhaohuabing.com/post/2019-01-21-git/</a></p>
-<h3 id="git-工作流"><a href="#git-工作流" class="headerlink" title="git 工作流"></a>git 工作流</h3><p>你的本地仓库由 git 维护的三棵“树”组成。第一个是你的 <code>工作目录</code>，它持有实际文件；第二个是 <code>缓存区（Index）</code>，它像个缓存区域，临时保存你的改动；最后是 <code>HEAD</code>，指向你最近一次提交后的结果。</p>
-<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210601113100.png" alt="20210601113100"></p>
-<h3 id="为什么在push之前需要进行pull"><a href="#为什么在push之前需要进行pull" class="headerlink" title="为什么在push之前需要进行pull"></a>为什么在<code>push</code>之前需要进行<code>pull</code></h3><p>如果项目只有一个人，那无所谓。但是一般情况下，项目中都会有许多项目成员，在我们将自己的<code>分支 1</code> 合并到 <code>主分支 master</code>时，<code>主分支master</code>有可能已经发生改变(即成员2将自己的<code>分支2</code>合并到<code>主分支 master</code>之后<code>push</code>),此时如果直接<code>push</code>，会导致成员2所修改的部分被覆盖。</p>
-<p>而在这之前进行<code>pull</code>操作，会把远程分支于本地分支进行合并。然后再进行<code>push</code></p>
-<p>git可能会在这种情况下，禁止你进行push操作</p>
-<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210601113613.png" alt="20210601113613"></p>
-<h3 id="git处理冲突"><a href="#git处理冲突" class="headerlink" title="git处理冲突"></a>git处理冲突</h3><p>git并不能智能化地解决不同开发者修改同一个文件的情况。如果不同开发者对同一文件进行了修改，那么这个冲突的过程，必须要手动解决，然后再次提交。</p>
-<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210601114236.png" alt="20210601114236"></p>
-<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210601114412.png" alt="20210601114412"></p>
-<p>日志</p>
-<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210601114336.png" alt="20210601114336"></p>
-<h2 id="spring项目入门"><a href="#spring项目入门" class="headerlink" title="spring项目入门"></a>spring项目入门</h2><p>  基础的创建项目+运行web项目 没什么可以说的</p>
-<h3 id="java反射"><a href="#java反射" class="headerlink" title="java反射"></a>java反射</h3><p>具体去看博客:<a target="_blank" rel="noopener" href="https://www.cnblogs.com/chanshuyi/p/head_first_of_reflection.html">https://www.cnblogs.com/chanshuyi/p/head_first_of_reflection.html</a></p>
-<p><strong>反射就是在运行时才知道要操作的类是什么，并且可以在运行时获取类的完整构造，并调用对应的方法。</strong><br>一般情况下，我们使用某个类时必定知道它是什么类，是用来做什么的。于是我们直接对这个类进行实例化，之后使用这个类对象进行操作。</p>
-<pre class=" language-java"><code class="language-java">Apple apple <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Apple</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//直接初始化，「正射」</span>
-apple<span class="token punctuation">.</span><span class="token function">setPrice</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<h2 id="整理"><a href="#整理" class="headerlink" title="整理"></a>整理</h2><h3 id="寄存器寻址组合"><a href="#寄存器寻址组合" class="headerlink" title="寄存器寻址组合"></a>寄存器寻址组合</h3><p>已知的是 di+bp / bx+si / bx+di 这几种可以用来在内存中遍历数据,在用之前,需要搞清楚,数据元素的确定最少需要几个变化的值来定位。</p>
+<h3 id="条件指令的转移范围"><a href="#条件指令的转移范围" class="headerlink" title="条件指令的转移范围"></a>条件指令的转移范围</h3><p>条件指令的转移范围只能是从(-128-127),如果想要跳转的位置超过了这个范围,可以先跳到附近的位置,再在附近的位置利用无条件指令跳到想跳到的位置。</p>
+<h3 id="汇编语言清除屏幕输出"><a href="#汇编语言清除屏幕输出" class="headerlink" title="汇编语言清除屏幕输出"></a>汇编语言清除屏幕输出</h3><pre class=" language-text"><code class="language-text">    mov ah,15
+    int 10h
+    mov ah,0
+    int 10h
 </code></pre>
-<p>而反射则是一开始并不知道我要初始化的类对象是什么，自然也无法使用 new 关键字来创建对象了。<br>这时候，我们使用 JDK 提供的反射 API 进行反射调用：</p>
-<pre class=" language-java"><code class="language-java">Class <span class="token class-name">clz</span> <span class="token operator">=</span> Class<span class="token punctuation">.</span><span class="token function">forName</span><span class="token punctuation">(</span><span class="token string">"com.chenshuyi.reflect.Apple"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-Method method <span class="token operator">=</span> clz<span class="token punctuation">.</span><span class="token function">getMethod</span><span class="token punctuation">(</span><span class="token string">"setPrice"</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-Constructor constructor <span class="token operator">=</span> clz<span class="token punctuation">.</span><span class="token function">getConstructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-Object object <span class="token operator">=</span> constructor<span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-method<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>object<span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<p>上面两段代码的执行结果，其实是完全一样的。但是其思路完全不一样，第一段代码在未运行时就已经确定了要运行的类（Apple），而第二段代码则是在运行时通过字符串值才得知要运行的类（com.chenshuyi.reflect.Apple）</p>
-<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>为什么在浏览器中输入<a target="_blank" rel="noopener" href="http://localhost:8080/index%E5%B0%B1%E8%83%BD%E5%A4%9F%E8%AE%BF%E9%97%AE%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84IndexController%E4%B8%AD%E7%9A%84index%E6%96%B9%E6%B3%95%EF%BC%9F">http://localhost:8080/index就能够访问到对应的IndexController中的index方法？</a></p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">IndexController</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<h3 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h3><ul>
+<li>哪些寄存器在循环的过程中需要变化,哪些寄存器需要在下一次循环或者调用子程序之前初始化,这些都要搞清楚</li>
+<li>再利用div等有范围和大小限制的指令时,考虑一下是否会有溢出的情况</li>
+<li>jmp和je等条件跳转指令如何实现循环的过程</li>
+</ul>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><pre class=" language-text"><code class="language-text">
+;TODO 
+;1.现在 char段前面四个字节的年份复制完成了 √
+;2.着手将收入转换位为字符串并存在char段中  √
+;3.下一步是 将雇员数转换为字符串存在char段中,这个应该不用divdw了 √
+;4.最后一步就是显示了,不过应该也是比较头疼的把 √
 
-    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/index"</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> String <span class="token function">index</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token string">"Lakers win"</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+;整理TODO
+;1.整理一下到底哪几个寄存器可以组合起来用来寻址,我快疯了~~~
+;已知的是di+bp/bx+si/bx+di
+assume cs:codesg,ds:data
+data segment
+    ;0
+    db '1975','1976','1977','1978','1979','1980','1981','1982','1983'
+    db '1984','1985','1986','1987','1988','1989','1990','1991','1992'
+    db '1993','1994','1995'
+
+    ;54H
+    dd 16,22,382,1356,2390,8000,160000,24486,50065,97479,140417,197514
+    dd 345980,590827,803530,1183000,1843000,2759000,3753000,4649000,5937000
+    
+    ;A8H
+    dw 3,7,9,13,28,38,130,220,476,778,1001,1442,2258,2793,4037,5635,8226
+    dw 11542,14430,15257,17800
+data ends
+
+table segment
+    db 21 dup ('year summ ne ?? ')
+table ends
+
+char segment
+    db 672 dup(0) ;672 = 32*21 每一年的数据占23个字节(取个整数刚好是32个字节-16的倍数), 一共有21年
+    ;00 XXXX
+    ;03 XXXX
+    ;06 XXXX
+    ;09 XXXX
+    ;年份 1997          4字节
+    ;空格               1字节-5
+    ;收入 max = 5937000 7个字节
+    ;空格               1字节-13    
+    ;雇员数 max = 17800 5个字节
+    ;空格               1字节-19
+    ;人均收入 max = 333  3个字节
+    ;空格               1字节
+char ends
+
+testsg segment
+    db 1680 dup(0) 
+testsg segment
+
+codesg segment
+
+start:
+    mov ah,15
+    int 10h
+    mov ah,0
+    int 10h
+
+    mov ax,data
+    mov ds,ax
+
+    mov ax,table
+    mov es,ax
+
+    call calculate_income
+
+    mov ax,table
+    mov ds,ax
+
+    mov ax,char
+    mov es,ax
+    call duplicate_year
+    
+    call num_char
+    call employees_char
+    call average_salary_char
+    call show_str
+    
+    mov ax,4c00h
+    int 21h
+;将数据存入显存当中
+show_str:
+    mov ax,char
+    mov ds,ax
+    mov ax,0B800H
+    mov es,ax
+    
+    mov dh,4;行号
+    mov dl,0;列号
+    mov cl,2;颜色
+    mov bx,0
+    show_str_year:
+        push dx
+        ;找行号对应的内存地址
+        mov ah,00
+        mov al,160
+        mul dh
+        mov bp,ax
+        ;找列对应的内存地址
+        mov ah,00
+        mov al,2
+        mul dl
+        mov di,ax
+        
+        ; ;找行号对应的内存地址--数据段
+        ; mov ah,00
+        ; mov al,10H
+        ; mov dl,dh
+        ; mov dh,0
+        ; mul dx
+        ; mov bx,ax
+        ;把颜色转移一下
+        mov al,cl
+        push cx
+        mov si,0
+        show_str_year_loop:
+            mov cl,ds:[bx+si]
+            mov ch,0
+            jcxz show_str_year_loop_ok
+            mov es:[bp+di],cl
+            mov es:[bp+di+1],al
+
+            add di,2
+            add si,1
+            jmp short  show_str_year_loop
+        show_str_year_loop_ok:
+            pop cx
+            mov dl,10;列号
+            ;更新下一个列地址
+            mov ah,00
+            mov al,2
+            mul dl
+            mov di,ax
+            ;把颜色再设置回来
+            mov al,cl
+        
+        push cx
+        mov si,0
+        show_str_income_loop:
+            mov cl,ds:[bx+si+5]
+            mov ch,0
+            jcxz show_str_income_loop_ok
+            mov es:[bp+di],cl
+            mov es:[bp+di+1],al
+
+            add di,2
+            add si,1
+            jmp short  show_str_income_loop
+        show_str_income_loop_ok:
+            pop cx
+            mov dl,20;列号
+            ;更新下一个列地址
+            mov ah,00
+            mov al,2
+            mul dl
+            mov di,ax
+            ;把颜色再设置回来
+            mov al,cl
+        
+        push cx
+        mov si,0
+        show_str_employees_loop:
+            mov cl,ds:[bx+si+13]
+            mov ch,0
+            jcxz show_str_employees_loop_ok
+            mov es:[bp+di],cl
+            mov es:[bp+di+1],al
+
+            add di,2
+            add si,1
+            jmp short  show_str_employees_loop
+        show_str_employees_loop_ok:
+            pop cx
+            mov dl,30;列号
+            ;更新下一个列地址
+            mov ah,00
+            mov al,2
+            mul dl
+            mov di,ax
+            ;把颜色再设置回来
+            mov al,cl
+        push cx
+        mov si,0
+        show_str_average_loop:
+            mov cl,ds:[bx+si+19]
+            mov ch,0
+            jcxz show_str_average_loop_ok
+            mov es:[bp+di],cl
+            mov es:[bp+di+1],al
+
+            add di,2
+            add si,1
+            jmp short  show_str_average_loop
+        show_str_average_loop_ok:
+            pop cx
+            mov dl,40;列号
+            ;更新下一个列地址
+            mov ah,00
+            mov al,2
+            mul dl
+            mov di,ax
+            ;把颜色再设置回来
+            mov al,cl       
+        
+        pop dx
+        add bx,20H
+        add dh,1;行号加一
+        mov dl,0;列号清零
+        mov ax,21
+        sub al,dh
+        cmp byte ptr al,0
+        ; cmp byte ptr dh,21
+        ;je show_str_ok;这很明显不相等啊,为什么还跳转了？
+        ;你应该是跳转到循环里才对,如果不是跳到循环里,它其实没有发生跳转,只是按顺序往下执行刚好到下面了
+        je show_str_ok;这样写也跳转了。。？？
+        show_str_year_relay:
+            jmp show_str_year
+    show_str_ok:
+        ret
+;把人均工资部分转换成字符串
+average_salary_char:
+    mov bx,0
+    mov di,0
+    mov cx,21
+    average_salary_char_all:
+        push cx
+        mov ax,ds:[bx+0DH]
+        mov dx,0
+        mov si,0
+        mov bp,10
+        average_salary_char_one:    
+            div bp
+            cmp ax,0
+            je average_salary_char_one_ok
+            push dx
+            mov dx,0
+            inc si
+            jmp average_salary_char_one
+        average_salary_char_one_ok:
+            push dx
+            inc si            
+            mov cx,si
+            mov si,0
+            mov bp,0
+            average_salary_char_one_ok_loop:
+                pop ax
+                add al,30H
+                mov es:[di+bp+19],al
+                inc bp
+                loop average_salary_char_one_ok_loop
+        pop cx
+        add bx,10H
+        add di,20H
+        loop average_salary_char_all
+    ret
+;把雇员数部分转换成字符串
+employees_char:
+    mov bx,0
+    mov di,0
+    mov cx,21
+    employees_char_all:
+        push cx
+        mov ax,ds:[bx+0AH]
+        mov dx,0
+        mov si,0
+        mov bp,10
+        employees_char_one:    
+            div bp
+            cmp ax,0
+            je employees_char_one_ok
+            push dx
+            mov dx,0
+            inc si
+            jmp employees_char_one
+        employees_char_one_ok:
+            push dx
+            inc si            
+            mov cx,si
+            mov si,0
+            mov bp,0
+            employees_char_one_ok_loop:
+                pop ax
+                add al,30H
+                mov es:[di+bp+13],al
+                inc bp
+                loop employees_char_one_ok_loop
+        pop cx
+        add bx,10H
+        add di,20H
+        loop employees_char_all
+    ret
+;把收入部分的数字转换为字符串存储到内存当中
+num_char:
+    mov bx,0
+    mov cx,21
+    num_char_loop:
+        push cx
+        
+        mov si,0
+        mov di,0
+        mov ax,ds:[bx+5H]
+        mov dx,ds:[bx+7H]
+        mov cx,0AH
+        ;具体的一个数转换为字符
+        num_char_loop_div:
+            call divdw
+            mov bp,0
+            ;如果dx和ax都为零说明该数转换完成
+            mov bp,dx
+            or bp,ax
+            cmp bp,0
+            je num_char_loop_div_ok
+            push cx;余数入栈
+            inc si
+            mov cx,0AH;每次跳回去之前要把cx再设置为零
+            jmp num_char_loop_div
+            num_char_loop_div_ok:
+                ;最后一个商小于10,上面没办法入栈了
+                push cx;在这里把这个入栈
+                inc si
+
+                mov cx,si;si中保留着这个具体数的所有余数
+                mov bp,0
+                mov ax,2H
+                mul bx 
+                mov di,ax 
+                num_char_loop_div_ok_loop:    
+                    pop ax
+                    add ax,30H
+                    mov es:[di+5H+bp],al
+                    add bp,1
+                    loop num_char_loop_div_ok_loop
+                ; ;填了个空格
+                ; mov al,' '
+                ; mov es:[di+5H+bp],al
+        pop cx
+        add bx,10H
+        loop num_char_loop
+;把data段中的年份复制到char段里面去
+duplicate_year:
+    mov bx,0
+    mov si,0
+    mov di,0
+    mov cx,21
+    duplicate_year_all:
+        push cx
+        mov cx,2
+        mov bx,0
+        duplicate_year_year:
+            mov ax,ds:[di+bx]
+            mov es:[si+bx],ax
+            add bx,2
+            loop duplicate_year_year
+        ; ;添个空格 
+        ; mov al,' '
+        ; mov es:[si+bx],al
+
+        add si,20H
+        add di,10H
+        pop cx
+        loop duplicate_year_all
+
+    ret
+
+;刚好是之前计算人均收入程序
+calculate_income:
+
+    mov bx,0;bx定位data段,bx year和收入都是四个字节可以公用,但是雇员数是两个字节的没办法公用
+    mov bp,0;bp定位es段
+    mov di,0;di用来在循环中服务于雇员数,因为它是两个字节,没办法跟year和outcome公用一个递增寄存器
+    mov cx,21
+
+    overall:
+        push cx
+
+        mov cx,2
+        mov si,0
+        year:
+            ;年份的4字节---两个字
+            mov ax,ds:[bx+si]
+            mov es:[bp+si],ax
+            add si,2
+            loop year
+
+        mov cx,2
+        mov si,0
+        outcome:
+            ;收入的4字节---两个字
+            mov ax,ds:[bx+54H+si]
+            mov es:[bp+5H+si],ax
+            add si,2
+            loop outcome
+
+        ;雇员数---一个字
+        mov ax,ds:[di+0A8H]
+        mov es:[bp+0AH],ax
+
+        ;计算人均收入
+        mov ax,es:[bp+5H];计算人均收入的,要用es的定位,那偏移量就得按照es的来。最开始写成ds的定位了[bx+54H]了
+        mov dx,es:[bp+5H+2]
+        div word ptr es:[bp+0AH]
+        mov es:[bp+0DH],ax
+
+        ;所有的空格
+        ;第一次没有考虑到空格是一个字节,这里不应该用16位的,应该用8位的
+        mov al,' '
+        mov es:[bp+4H],al
+        mov es:[bp+9H],al
+        mov es:[bp+0FH],al
+
+        pop cx
+        add di,2
+        add bx,4
+        add bp,16
+        loop overall
+    ret
+
+
+;名称：divdw
+;功能：进行不会产生溢出的除法运算,被除数为dword,除数为word.结果为dword
+;参数: ax dword的低16位 | dx dword高16位 | cx除数16位
+;返回: dx 结果的高16位, ax 结果的低16位, cx 余数
+;应用举例：计算 1000000/10(F4240H/0AH)
+;结果: dx = 0001H  ax = 86A0H cx = 0
+divdw:
+    push si
+    push bx
+
+    push ax
+    mov ax,dx
+    div cl
+    mov bl,al
+    mov bh,00H
+    mov al,ah
+    mov ah,00H;bx保留商,ax保留余数
+
+    pop si
+    mov dx,si
+
+    mov dx,ax
+    mov ax,si
+    div cx;32/16 ax余数,dx商
+
+    mov si,bx
+    mov bx,dx
+    mov dx,si
+
+    mov cx,bx
+
+    pop bx
+    pop si
+    ret
+
+
+codesg ends
+end start
 </code></pre>
-<p>简单来说，就是在运行时，浏览器通过获取<code>/index</code>找到了IndexController这个类（可能是Spring容器在启动之前或者之后创建好的），然后调用方法index，向前端返回 Lakers win</p>
-<h4 id="Spring-IOC"><a href="#Spring-IOC" class="headerlink" title="Spring IOC"></a>Spring IOC</h4><p>详见博客：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ysocean/p/7466217.html">https://www.cnblogs.com/ysocean/p/7466217.html</a></p>
-<p>IOC-Inversion of Control，即控制反转。它不是什么技术，而是一种设计思想。</p>
-<p>&emsp;&emsp;传统的创建对象的方法是直接通过 new 关键字，而 spring 则是通过 IOC 容器来创建对象，也就是说我们将创建对象的控制权交给了 IOC 容器。我们可以用一句话来概括 IOC：</p>
-<p>&emsp;&emsp;IOC 让程序员不在关注怎么去创建对象，而是关注与对象创建之后的操作，把对象的创建、初始化、销毁等工作交给spring容器来做。</p>
-<p>项目加载时会扫描有注解<code>@RestController、@Controller、@Service、@Component</code>的类，通过反射创建这些类的对象放入Spring的容器 **(hashMap:key =》value —–indexController 名字 =》indexController的对象)**，需要使用的时候通过key直接取出来使用。</p>
-<h4 id="Spring-依赖注入DI"><a href="#Spring-依赖注入DI" class="headerlink" title="Spring 依赖注入DI"></a>Spring 依赖注入DI</h4><p>详见：<a target="_blank" rel="noopener" href="http://c.biancheng.net/view/4253.html">http://c.biancheng.net/view/4253.html</a></p>
-<p>依赖注入（Dependency Injection，DI）和控制反转含义相同，它们是从两个角度描述的同一个概念。</p>
-<p>当某个 Java 实例需要另一个 Java 实例时，传统的方法是由调用者创建被调用者的实例（例如，使用 new 关键字获得被调用者实例），而使用 Spring 框架后，被调用者的实例不再由调用者创建，而是由 Spring 容器创建，这称为控制反转。</p>
-<p>Spring 容器在创建被调用者的实例时，会自动将调用者需要的对象实例注入给调用者，这样，调用者通过 Spring 容器获得被调用者实例，这称为依赖注入。</p>
-<p>依赖注入主要有两种实现方式，分别是属性 setter 注入和构造方法注入。</p>
 
                 
             </div>
@@ -594,7 +1005,7 @@ method<span class="token punctuation">.</span><span class="token function">invok
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">老叭美食家</a>
+                    <a href="/about" rel="external nofollow noreferrer">美食家李老叭</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -604,7 +1015,7 @@ method<span class="token punctuation">.</span><span class="token function">invok
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://laobameishijia.github.io/2021/06/01/shi-xun-day1-day2/">https://laobameishijia.github.io/2021/06/01/shi-xun-day1-day2/</a>
+                    <a href="https://laobameishijia.github.io/2021/10/18/hui-bian-yu-yan-xue-xi-ke-cheng-she-ji/">https://laobameishijia.github.io/2021/10/18/hui-bian-yu-yan-xue-xi-ke-cheng-she-ji/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -617,7 +1028,7 @@ method<span class="token punctuation">.</span><span class="token function">invok
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">老叭美食家</a>
+                    <a href="/about" target="_blank">美食家李老叭</a>
                     !
                 </span>
             </div>
@@ -642,8 +1053,8 @@ method<span class="token punctuation">.</span><span class="token function">invok
                     
                         <div class="article-tag">
                             
-                                <a href="/tag/%E5%AE%9E%E8%AE%AD/">
-                                    <span class="chip bg-color">实训</span>
+                                <a href="/tag/%E6%B1%87%E7%BC%96/">
+                                    <span class="chip bg-color">汇编</span>
                                 </a>
                             
                         </div>
@@ -955,36 +1366,50 @@ method<span class="token punctuation">.</span><span class="token function">invok
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/06/01/hello-world/">
+                <a href="/2021/10/18/hui-bian-yu-yan-xue-xi-ke-cheng-she-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/23.jpg" class="responsive-img" alt="汇编语言学习-课程设计">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">汇编语言学习-课程设计</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            编写完整的汇编语言程序,用编译和连接程序将他们编译链接成为可执行文件
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-01
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-18
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            老叭美食家
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    研究生预备学习
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tag/%E6%B1%87%E7%BC%96/">
+                        <span class="chip bg-color">汇编</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -996,31 +1421,31 @@ method<span class="token punctuation">.</span><span class="token function">invok
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/05/28/lan-qiu-bi-sai-shu-ju-tong-ji/">
+                <a href="/2021/10/16/hui-bian-yu-yan-xue-xi-call-he-ret-zhi-ling/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/4.jpg" class="responsive-img" alt="篮球比赛数据统计">
+                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/15.jpg" class="responsive-img" alt="汇编语言学习-call和ret指令">
                         
-                        <span class="card-title">篮球比赛数据统计</span>
+                        <span class="card-title">汇编语言学习-call和ret指令</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            call和ret指令都是转移指令,都修改ip或同时修改cs和ip
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-16
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/category/%E6%95%B0%E6%8D%AE/" class="post-category">
-                                    数据
+                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    研究生预备学习
                                 </a>
                             
                             
@@ -1030,8 +1455,8 @@ method<span class="token punctuation">.</span><span class="token function">invok
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tag/%E5%A4%A7%E5%AD%A6%E7%AF%AE%E7%90%83/">
-                        <span class="chip bg-color">大学篮球</span>
+                    <a href="/tag/%E6%B1%87%E7%BC%96/">
+                        <span class="chip bg-color">汇编</span>
                     </a>
                     
                 </div>
