@@ -30,7 +30,7 @@
     <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/jquery/jquery.min.js"></script>
 
 <meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="老叭美食家" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+</head>
 
 
 
@@ -474,21 +474,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-18
+                    2021-10-19
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    522
+                    653
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    3 分
                 </div>
                 
 
@@ -503,6 +503,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/prism/prism.css">
+        
 
         
 
@@ -513,30 +516,30 @@
 <li>再根据节点个数和k得到目标节点的正向序号</li>
 <li>遍历链表找到该节点</li>
 </ul>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><h4 id="单链表版"><a href="#单链表版" class="headerlink" title="单链表版"></a>单链表版</h4><pre class=" language-C"><code class="language-C">
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><h4 id="单链表版"><a href="#单链表版" class="headerlink" title="单链表版"></a>单链表版</h4><pre class="line-numbers language-C" data-language="C"><code class="language-C">
 struct ListNode &#123;
     int val;
     struct ListNode* next;
 &#125;;
 
 struct ListNode* getKthFromEnd(struct ListNode* head, int k) &#123;
-    int all = 0;
-    ListNode* temp = head;
-    while (temp->next)
+    int all &#x3D; 0;
+    ListNode* temp &#x3D; head;
+    while (temp-&gt;next)
     &#123;
         all++;
-        temp = temp->next;
+        temp &#x3D; temp-&gt;next;
     &#125;
-    all = all + 1;//加上最后一个节点
+    all &#x3D; all + 1;&#x2F;&#x2F;加上最后一个节点
 
-    int num = all - k + 1;
-    if (num < 1) return NULL;
+    int num &#x3D; all - k + 1;
+    if (num &lt; 1) return NULL;
     else
     &#123;
-        temp = head;
-        while (num != 1)
+        temp &#x3D; head;
+        while (num !&#x3D; 1)
         &#123;
-            temp = temp->next;
+            temp &#x3D; temp-&gt;next;
             num--;
         &#125;
         return temp;
@@ -546,58 +549,58 @@ struct ListNode* getKthFromEnd(struct ListNode* head, int k) &#123;
 int main()
 &#123;
     ListNode *ahead, *after, *head, *result, *temp;
-    ahead = (struct ListNode*)malloc(sizeof(ListNode));
-    ahead->val = 1;
-    head = ahead;
-    for (int i = 1; i < 7; i=i+1) &#123;
-        after = (struct ListNode*)malloc(sizeof(ListNode));
-        after->val = i + 1;
-        after->next = NULL;
+    ahead &#x3D; (struct ListNode*)malloc(sizeof(ListNode));
+    ahead-&gt;val &#x3D; 1;
+    head &#x3D; ahead;
+    for (int i &#x3D; 1; i &lt; 7; i&#x3D;i+1) &#123;
+        after &#x3D; (struct ListNode*)malloc(sizeof(ListNode));
+        after-&gt;val &#x3D; i + 1;
+        after-&gt;next &#x3D; NULL;
 
-        ahead->next = after;
-        ahead = after;
+        ahead-&gt;next &#x3D; after;
+        ahead &#x3D; after;
     &#125;
-    temp = head;
+    temp &#x3D; head;
     while (1) &#123;
-        printf_s("%d->", temp->val);
-        if (temp->next==NULL) &#123;
-            printf_s("\n%s", "跳出循环");
+        printf_s(&quot;%d-&gt;&quot;, temp-&gt;val);
+        if (temp-&gt;next&#x3D;&#x3D;NULL) &#123;
+            printf_s(&quot;\n%s&quot;, &quot;跳出循环&quot;);
             break;
         &#125;
-        temp = temp->next;
+        temp &#x3D; temp-&gt;next;
     &#125;
     
-    result = getKthFromEnd(head, 1);
-    if (result->next) &#123;
-        printf_s("\n%d->%d", result->val, result->next->val);//这里有可能result没有next节点
+    result &#x3D; getKthFromEnd(head, 1);
+    if (result-&gt;next) &#123;
+        printf_s(&quot;\n%d-&gt;%d&quot;, result-&gt;val, result-&gt;next-&gt;val);&#x2F;&#x2F;这里有可能result没有next节点
     &#125;
     else 
-        printf_s("\n%d", result->val);
+        printf_s(&quot;\n%d&quot;, result-&gt;val);
 
 
-&#125;
-</code></pre>
-<h4 id="双链表版"><a href="#双链表版" class="headerlink" title="双链表版"></a>双链表版</h4><pre class=" language-C"><code class="language-C">//双向链表版
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="双链表版"><a href="#双链表版" class="headerlink" title="双链表版"></a>双链表版</h4><pre class="line-numbers language-C" data-language="C"><code class="language-C">&#x2F;&#x2F;双向链表版
 struct ListNode &#123;
     int val;
-    struct ListNode* next;//前向指针
-    struct ListNode* previous;//后向指针
+    struct ListNode* next;&#x2F;&#x2F;前向指针
+    struct ListNode* previous;&#x2F;&#x2F;后向指针
 &#125;;
 
 struct ListNode* getKthFromEnd(struct ListNode* head, int k) &#123;
 
-    ListNode* temp = head;
-    while (temp->next)
+    ListNode* temp &#x3D; head;
+    while (temp-&gt;next)
     &#123;
-        temp = temp->next;
+        temp &#x3D; temp-&gt;next;
     &#125;
 
-    if (k < 1) return NULL;
+    if (k &lt; 1) return NULL;
     else
     &#123;
-        while (k != 1)
+        while (k !&#x3D; 1)
         &#123;
-            temp = temp->previous;
+            temp &#x3D; temp-&gt;previous;
             k--;
         &#125;
         return temp;
@@ -607,60 +610,58 @@ struct ListNode* getKthFromEnd(struct ListNode* head, int k) &#123;
 int main()
 &#123;
     ListNode* ahead, * after, * head, * result, * temp;
-    ahead = (struct ListNode*)malloc(sizeof(ListNode));
-    ahead->val = 1;
-    ahead->previous = NULL;
+    ahead &#x3D; (struct ListNode*)malloc(sizeof(ListNode));
+    ahead-&gt;val &#x3D; 1;
+    ahead-&gt;previous &#x3D; NULL;
 
-    head = ahead;
-    //temp = ahead;
-    for (int i = 1; i < 7; i = i + 1) &#123;
-        after = (struct ListNode*)malloc(sizeof(ListNode));
-        after->val = i + 1;
-        after->next = NULL;
-        after->previous = ahead;
+    head &#x3D; ahead;
+    &#x2F;&#x2F;temp &#x3D; ahead;
+    for (int i &#x3D; 1; i &lt; 7; i &#x3D; i + 1) &#123;
+        after &#x3D; (struct ListNode*)malloc(sizeof(ListNode));
+        after-&gt;val &#x3D; i + 1;
+        after-&gt;next &#x3D; NULL;
+        after-&gt;previous &#x3D; ahead;
         
-        ahead->next = after;
-        ahead = after;
+        ahead-&gt;next &#x3D; after;
+        ahead &#x3D; after;
     &#125;
-    temp = head;
+    temp &#x3D; head;
     while (1) &#123;
-        printf_s("%d->", temp->val);
-        if (temp->next == NULL) &#123;
-            printf_s("\n%s", "跳出循环");
+        printf_s(&quot;%d-&gt;&quot;, temp-&gt;val);
+        if (temp-&gt;next &#x3D;&#x3D; NULL) &#123;
+            printf_s(&quot;\n%s&quot;, &quot;跳出循环&quot;);
             break;
         &#125;
-        temp = temp->next;
+        temp &#x3D; temp-&gt;next;
     &#125;
 
-    result = getKthFromEnd(head, 2);
-    if (result->next) &#123;
-        printf_s("\n%d->%d", result->val, result->next->val);//这里有可能result没有next节点
+    result &#x3D; getKthFromEnd(head, 2);
+    if (result-&gt;next) &#123;
+        printf_s(&quot;\n%d-&gt;%d&quot;, result-&gt;val, result-&gt;next-&gt;val);&#x2F;&#x2F;这里有可能result没有next节点
     &#125;
     else
-        printf_s("\n%d", result->val);
+        printf_s(&quot;\n%d&quot;, result-&gt;val);
 
-&#125;
-</code></pre>
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="优秀解题思路"><a href="#优秀解题思路" class="headerlink" title="优秀解题思路"></a>优秀解题思路</h2><ul>
 <li>初始化两个指针a,b 指向头节点</li>
 <li>b指针先往前走k个节点</li>
 <li>a,b指针同时向前走，直到b为空指针</li>
 </ul>
-<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><pre class=" language-C"><code class="language-C">struct ListNode* getKthFromEnd(struct ListNode* head, int k)&#123;
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><pre class="line-numbers language-C" data-language="C"><code class="language-C">struct ListNode* getKthFromEnd(struct ListNode* head, int k)&#123;
     struct ListNode *prev, *cur;
-    prev = head;
-    cur = head;
-    for(k=k-1;k>0;k--)&#123;
-        cur = cur->next;
+    prev &#x3D; head;
+    cur &#x3D; head;
+    for(k&#x3D;k-1;k&gt;0;k--)&#123;
+        cur &#x3D; cur-&gt;next;
     &#125;
-    while(cur->next != NULL)&#123;
-        prev = prev->next;
-        cur = cur->next;
+    while(cur-&gt;next !&#x3D; NULL)&#123;
+        prev &#x3D; prev-&gt;next;
+        cur &#x3D; cur-&gt;next;
     &#125;
     return prev;
-&#125;
-</code></pre>
-
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -1276,7 +1277,7 @@ int main()
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">28.1k</span>
+                        class="white-color">29.3k</span>
             
             
             

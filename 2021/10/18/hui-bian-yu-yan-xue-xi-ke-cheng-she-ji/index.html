@@ -30,7 +30,7 @@
     <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/jquery/jquery.min.js"></script>
 
 <meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="老叭美食家" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+</head>
 
 
 
@@ -474,7 +474,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-18
+                    2021-10-19
                 </div>
                 
 
@@ -503,6 +503,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/prism/prism.css">
+        
 
         
 
@@ -522,17 +525,17 @@
 </ul>
 <h2 id="整理"><a href="#整理" class="headerlink" title="整理"></a>整理</h2><h3 id="寄存器寻址组合"><a href="#寄存器寻址组合" class="headerlink" title="寄存器寻址组合"></a>寄存器寻址组合</h3><p>已知的是 di+bp / bx+si / bx+di 这几种可以用来在内存中遍历数据,在用之前,需要搞清楚,数据元素的确定最少需要几个变化的值来定位。</p>
 <h3 id="条件指令的转移范围"><a href="#条件指令的转移范围" class="headerlink" title="条件指令的转移范围"></a>条件指令的转移范围</h3><p>条件指令的转移范围只能是从(-128-127),如果想要跳转的位置超过了这个范围,可以先跳到附近的位置,再在附近的位置利用无条件指令跳到想跳到的位置。</p>
-<h3 id="汇编语言清除屏幕输出"><a href="#汇编语言清除屏幕输出" class="headerlink" title="汇编语言清除屏幕输出"></a>汇编语言清除屏幕输出</h3><pre class=" language-text"><code class="language-text">    mov ah,15
-    int 10h
-    mov ah,0
-    int 10h
-</code></pre>
+<h3 id="汇编语言清除屏幕输出"><a href="#汇编语言清除屏幕输出" class="headerlink" title="汇编语言清除屏幕输出"></a>汇编语言清除屏幕输出</h3><pre class="line-numbers language-text" data-language="text"><code class="language-text">mov ah,15
+int 10h
+mov ah,0
+int 10h<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h3><ul>
 <li>哪些寄存器在循环的过程中需要变化,哪些寄存器需要在下一次循环或者调用子程序之前初始化,这些都要搞清楚</li>
 <li>再利用div等有范围和大小限制的指令时,考虑一下是否会有溢出的情况</li>
 <li>jmp和je等条件跳转指令如何实现循环的过程</li>
 </ul>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><pre class=" language-text"><code class="language-text">
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><pre class="line-numbers language-text" data-language="text"><code class="language-text">
 ;TODO 
 ;1.现在 char段前面四个字节的年份复制完成了 √
 ;2.着手将收入转换位为字符串并存在char段中  √
@@ -988,8 +991,7 @@ divdw:
 
 codesg ends
 end start
-</code></pre>
-
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -1421,31 +1423,31 @@ end start
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/10/16/hui-bian-yu-yan-xue-xi-call-he-ret-zhi-ling/">
+                <a href="/2021/10/18/jie-jue-zhu-ti-dai-ma-kuai-mei-you-xing-hao-de-wen-ti/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/15.jpg" class="responsive-img" alt="汇编语言学习-call和ret指令">
+                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/17.jpg" class="responsive-img" alt="解决主题代码块没有行号的问题">
                         
-                        <span class="card-title">汇编语言学习-call和ret指令</span>
+                        <span class="card-title">解决主题代码块没有行号的问题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            call和ret指令都是转移指令,都修改ip或同时修改cs和ip
+                            强迫症,显示不出来就有点难受
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-16
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-18
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    研究生预备学习
+                            <a href="/category/hexo%E4%B8%BB%E9%A2%98/" class="post-category">
+                                    hexo主题
                                 </a>
                             
                             
@@ -1455,8 +1457,8 @@ end start
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tag/%E6%B1%87%E7%BC%96/">
-                        <span class="chip bg-color">汇编</span>
+                    <a href="/tag/%E4%BB%A3%E7%A0%81%E5%9D%97%E8%A1%8C%E6%95%B0/">
+                        <span class="chip bg-color">代码块行数</span>
                     </a>
                     
                 </div>
@@ -1607,7 +1609,7 @@ end start
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">28.1k</span>
+                        class="white-color">29.3k</span>
             
             
             

@@ -30,7 +30,7 @@
     <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/jquery/jquery.min.js"></script>
 
 <meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="老叭美食家" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+</head>
 
 
 
@@ -474,7 +474,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-18
+                    2021-10-19
                 </div>
                 
 
@@ -503,12 +503,15 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h1><h2 id="编程1-将datasg段中每个单词的前四个字母改为大写字母"><a href="#编程1-将datasg段中每个单词的前四个字母改为大写字母" class="headerlink" title="编程1 将datasg段中每个单词的前四个字母改为大写字母"></a>编程1 将datasg段中每个单词的前四个字母改为大写字母</h2><pre class=" language-text"><code class="language-text">assume cs:codesg,ss:stacksg,ds:datasg
+                <h1 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h1><h2 id="编程1-将datasg段中每个单词的前四个字母改为大写字母"><a href="#编程1-将datasg段中每个单词的前四个字母改为大写字母" class="headerlink" title="编程1 将datasg段中每个单词的前四个字母改为大写字母"></a>编程1 将datasg段中每个单词的前四个字母改为大写字母</h2><pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:codesg,ss:stacksg,ds:datasg
 
 stacksg segment
     dw 0,0,0,0,0,0,0,0
@@ -554,13 +557,13 @@ s0:
 
 codesg ends
 
-end start
-</code></pre>
+end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211011200251.png" alt="运行截图"></p>
 <h3 id="出现的错误"><a href="#出现的错误" class="headerlink" title="出现的错误"></a>出现的错误</h3><ul>
 <li><code>and al,11011111b</code>少打了一个1</li>
 </ul>
-<h2 id="编程2-将datasg中的第一个字符串转换成大写-第二个字符串转成小写"><a href="#编程2-将datasg中的第一个字符串转换成大写-第二个字符串转成小写" class="headerlink" title="编程2 将datasg中的第一个字符串转换成大写,第二个字符串转成小写"></a>编程2 将datasg中的第一个字符串转换成大写,第二个字符串转成小写</h2><pre class=" language-text"><code class="language-text">assume cs:codesg,ds:datasg
+<h2 id="编程2-将datasg中的第一个字符串转换成大写-第二个字符串转成小写"><a href="#编程2-将datasg中的第一个字符串转换成大写-第二个字符串转成小写" class="headerlink" title="编程2 将datasg中的第一个字符串转换成大写,第二个字符串转成小写"></a>编程2 将datasg中的第一个字符串转换成大写,第二个字符串转成小写</h2><pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:codesg,ds:datasg
 
 datasg segment
     db 'BaSiC'
@@ -596,13 +599,13 @@ codesg segment
         mov ax,4c00h
         int 21h
 codesg ends
-end start
-</code></pre>
+end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211011203022.png" alt="运行截图"></p>
 <h3 id="出现的错误-1"><a href="#出现的错误-1" class="headerlink" title="出现的错误"></a>出现的错误</h3><ul>
 <li>第二个字符串定位是要在<code>第一个大写字母N</code></li>
 </ul>
-<h2 id="编程3-用si和di实现将字母串”welcome-to-masm-”复制到它后面的数据区中"><a href="#编程3-用si和di实现将字母串”welcome-to-masm-”复制到它后面的数据区中" class="headerlink" title="编程3 用si和di实现将字母串”welcome to masm!”复制到它后面的数据区中"></a>编程3 用si和di实现将字母串”welcome to masm!”复制到它后面的数据区中</h2><pre class=" language-text"><code class="language-text">assume  cs:codesg,ds:datasg
+<h2 id="编程3-用si和di实现将字母串”welcome-to-masm-”复制到它后面的数据区中"><a href="#编程3-用si和di实现将字母串”welcome-to-masm-”复制到它后面的数据区中" class="headerlink" title="编程3 用si和di实现将字母串”welcome to masm!”复制到它后面的数据区中"></a>编程3 用si和di实现将字母串”welcome to masm!”复制到它后面的数据区中</h2><pre class="line-numbers language-text" data-language="text"><code class="language-text">assume  cs:codesg,ds:datasg
 
 datasg segment
     db 'welcome to masm!'
@@ -636,8 +639,8 @@ s:
 
 codesg ends
 
-end start
-</code></pre>
+end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211011204256.png" alt="运行截图"></p>
 <h3 id="出现的错误-2"><a href="#出现的错误-2" class="headerlink" title="出现的错误"></a>出现的错误</h3><ul>
 <li><code>assume codesg</code> 和<code>code segment</code> 不匹配</li>
@@ -1267,7 +1270,7 @@ end start
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">28.1k</span>
+                        class="white-color">29.3k</span>
             
             
             

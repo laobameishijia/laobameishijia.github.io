@@ -30,7 +30,7 @@
     <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/jquery/jquery.min.js"></script>
 
 <meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="老叭美食家" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+</head>
 
 
 
@@ -474,7 +474,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-18
+                    2021-10-19
                 </div>
                 
 
@@ -503,6 +503,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/prism/prism.css">
+        
 
         
 
@@ -512,7 +515,7 @@
 <h2 id="综合实验"><a href="#综合实验" class="headerlink" title="综合实验"></a>综合实验</h2><p>编程,将data段中的数据按如下格式写入到table段中,并计算21年中的人均收入(取整),结果也按照下面的格式保存在table段中。<br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211013102611.png" alt="题干1"><br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211013102632.png" alt="题干2"></p>
 <h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>  具体的思路就是,利用内外循环,大循环循环00-10H-20H这样每一行的数据,小循环循环每个数据项</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>中具体的字节\字。同时利用idata和si</p>
-<pre class=" language-text"><code class="language-text">assume cs:codesg,ds:data
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:codesg,ds:data
 
 data segment
     ;0
@@ -597,9 +600,7 @@ start:
     mov ax,4c00h
     int 21h
 codesg ends
-end start
-</code></pre>
-
+end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -1215,7 +1216,7 @@ end start
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">28.1k</span>
+                        class="white-color">29.3k</span>
             
             
             

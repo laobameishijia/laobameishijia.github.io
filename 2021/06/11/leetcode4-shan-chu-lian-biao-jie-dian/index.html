@@ -30,7 +30,7 @@
     <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/jquery/jquery.min.js"></script>
 
 <meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="老叭美食家" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+</head>
 
 
 
@@ -474,21 +474,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-18
+                    2021-10-19
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    484
+                    515
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -503,13 +503,16 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="leecode4-删除链表节点"><a href="#leecode4-删除链表节点" class="headerlink" title="leecode4-删除链表节点"></a>leecode4-删除链表节点</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>说明：文章中的优秀思路均来自优秀题解的第一个，之所以截图是因为懒。。</p>
-<pre class=" language-C"><code class="language-C">给定单向链表的头指针和一个要删除的节点的值，定义一个函数删除该节点。
+<pre class="line-numbers language-C" data-language="C"><code class="language-C">给定单向链表的头指针和一个要删除的节点的值，定义一个函数删除该节点。
 
 返回删除后的链表的头节点。
 
@@ -517,41 +520,41 @@
 
 示例 1:
 
-输入: head = [4,5,1,9], val = 5
+输入: head &#x3D; [4,5,1,9], val &#x3D; 5
 输出: [4,1,9]
-解释: 给定你链表中值为 5 的第二个节点，那么在调用了你的函数之后，该链表应变为 4 -> 1 -> 9.
+解释: 给定你链表中值为 5 的第二个节点，那么在调用了你的函数之后，该链表应变为 4 -&gt; 1 -&gt; 9.
 示例 2:
 
-输入: head = [4,5,1,9], val = 1
+输入: head &#x3D; [4,5,1,9], val &#x3D; 1
 输出: [4,5,9]
-解释: 给定你链表中值为 1 的第三个节点，那么在调用了你的函数之后，该链表应变为 4 -> 5 -> 9.
+解释: 给定你链表中值为 1 的第三个节点，那么在调用了你的函数之后，该链表应变为 4 -&gt; 5 -&gt; 9.
 
 来源：力扣（LeetCode）
-链接：https://leetcode-cn.com/problems/shan-chu-lian-biao-de-jie-dian-lcof
-著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-</code></pre>
+链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;problems&#x2F;shan-chu-lian-biao-de-jie-dian-lcof
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>这里借鉴了前面看到优秀思路中的<strong>虚拟节点 virtualNode</strong> ,即在头节点head前再增加一个虚拟节点，可以避免讨论 <strong>tag</strong> 节点是否是头节点的情况。最后统一返回 <strong>virtualNode-&gt;next</strong></p>
 <ul>
 <li>遍历链表找到值相等的节点</li>
 <li>保留节点的前驱节点 <strong>prev</strong></li>
 <li>前驱节点 <strong>prev</strong> 指向删除节点 <strong>tag</strong> 的下一节点</li>
 </ul>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre class=" language-C"><code class="language-C">struct ListNode* deleteNode(struct ListNode* head, int val) &#123;
-    struct ListNode* tag = head, * prev=NULL;
-    struct ListNode* virtualNode = (ListNode*)malloc(sizeof(ListNode));
-    virtualNode->next = head;
-    virtualNode->val = -1;
-    prev = virtualNode;
-    while (tag->next)
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre class="line-numbers language-C" data-language="C"><code class="language-C">struct ListNode* deleteNode(struct ListNode* head, int val) &#123;
+    struct ListNode* tag &#x3D; head, * prev&#x3D;NULL;
+    struct ListNode* virtualNode &#x3D; (ListNode*)malloc(sizeof(ListNode));
+    virtualNode-&gt;next &#x3D; head;
+    virtualNode-&gt;val &#x3D; -1;
+    prev &#x3D; virtualNode;
+    while (tag-&gt;next)
     &#123;
-        if (tag->val == val) break;
-        prev = tag;
-        tag = tag->next;
+        if (tag-&gt;val &#x3D;&#x3D; val) break;
+        prev &#x3D; tag;
+        tag &#x3D; tag-&gt;next;
     &#125;
-    prev->next = tag->next;
-    return virtualNode->next;
-&#125;
-</code></pre>
+    prev-&gt;next &#x3D; tag-&gt;next;
+    return virtualNode-&gt;next;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="优秀思路"><a href="#优秀思路" class="headerlink" title="优秀思路"></a>优秀思路</h2><h3 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h3><p>如果理解递归很困难，可以采用一种叫做<strong>坚定信念</strong>的理解方式。即假设<strong>deleteNode返回的值就是对应节点的下一个节点</strong>，那下面这个java版的递归就不难理解了。</p>
 <p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210611093444.png" alt="20210611093444"></p>
 
@@ -1170,7 +1173,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">28.1k</span>
+                        class="white-color">29.3k</span>
             
             
             

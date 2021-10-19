@@ -30,7 +30,7 @@
     <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/jquery/jquery.min.js"></script>
 
 <meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="老叭美食家" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+</head>
 
 
 
@@ -474,14 +474,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-18
+                    2021-10-19
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    344
+                    404
                 </div>
                 
 
@@ -503,25 +503,28 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="反转链表"><a href="#反转链表" class="headerlink" title="反转链表"></a>反转链表</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>定义一个函数，输入一个链表的头节点，反转该链表并输出反转后链表的头节点。</p>
-<pre class=" language-c"><code class="language-c">示例<span class="token punctuation">:</span>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">示例:
 
-输入<span class="token punctuation">:</span> <span class="token number">1</span><span class="token operator">-></span><span class="token number">2</span><span class="token operator">-></span><span class="token number">3</span><span class="token operator">-></span><span class="token number">4</span><span class="token operator">-></span><span class="token number">5</span><span class="token operator">-></span><span class="token constant">NULL</span>
-输出<span class="token punctuation">:</span> <span class="token number">5</span><span class="token operator">-></span><span class="token number">4</span><span class="token operator">-></span><span class="token number">3</span><span class="token operator">-></span><span class="token number">2</span><span class="token operator">-></span><span class="token number">1</span><span class="token operator">-></span><span class="token constant">NULL</span>
- 
+输入: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL
+输出: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL
+ 
 
 限制：
 
-<span class="token number">0</span> <span class="token operator">&lt;=</span> 节点个数 <span class="token operator">&lt;=</span> <span class="token number">5000</span>
+0 &lt;&#x3D; 节点个数 &lt;&#x3D; 5000
 
 来源：力扣（LeetCode）
-链接：https<span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>leetcode<span class="token operator">-</span>cn<span class="token punctuation">.</span>com<span class="token operator">/</span>problems<span class="token operator">/</span>fan<span class="token operator">-</span>zhuan<span class="token operator">-</span>lian<span class="token operator">-</span>biao<span class="token operator">-</span>lcof
-</code></pre>
+链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;problems&#x2F;fan-zhuan-lian-biao-lcof<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
 <li>链表没有节点</li>
 <li>链表只有一个节点</li>
@@ -532,40 +535,41 @@
 <h3 id="时间复杂度分析"><a href="#时间复杂度分析" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h3><p>由于只用遍历一遍链 <br><br>时间复杂度为<strong>O(n) n 为链表的长度</strong> <br><br>以上代码，<strong>分配的空间不会随着处理数据量的变化而变化，因此得到空间复杂度为 O空间复杂度为O(1</strong>)</p>
 <h2 id="优秀思路"><a href="#优秀思路" class="headerlink" title="优秀思路"></a>优秀思路</h2><p>这次优秀思路其实跟我思路差不多，但是优秀思路的代码写的要更简洁。</p>
 <p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210608172423.png" alt="20210608172423"></p>
-<h2 id="我思路的代码"><a href="#我思路的代码" class="headerlink" title="我思路的代码"></a>我思路的代码</h2><pre class=" language-C"><code class="language-C">struct ListNode* reverseList(struct ListNode* head) &#123;
+<h2 id="我思路的代码"><a href="#我思路的代码" class="headerlink" title="我思路的代码"></a>我思路的代码</h2><pre class="line-numbers language-C" data-language="C"><code class="language-C">struct ListNode* reverseList(struct ListNode* head) &#123;
     ListNode* first,*second,*third;
     
-    // 0个节点
-    if (head == NULL) return NULL;
-    // 1个节点
-    if (head->next == NULL) return head;
-    // 2个节点
-    if (head->next->next == NULL) &#123;
-        first = head;
-        second = head->next;
-        first->next = NULL;
-        second->next = first;
+    &#x2F;&#x2F; 0个节点
+    if (head &#x3D;&#x3D; NULL) return NULL;
+    &#x2F;&#x2F; 1个节点
+    if (head-&gt;next &#x3D;&#x3D; NULL) return head;
+    &#x2F;&#x2F; 2个节点
+    if (head-&gt;next-&gt;next &#x3D;&#x3D; NULL) &#123;
+        first &#x3D; head;
+        second &#x3D; head-&gt;next;
+        first-&gt;next &#x3D; NULL;
+        second-&gt;next &#x3D; first;
         return second;
     &#125;
-    // 3个以上的节点
-    first = head;
-    second = head->next;
-    third = head->next->next;
+    &#x2F;&#x2F; 3个以上的节点
+    first &#x3D; head;
+    second &#x3D; head-&gt;next;
+    third &#x3D; head-&gt;next-&gt;next;
     
     while (1) &#123;
-        second->next = first;
-        if (third == NULL) break;
+        second-&gt;next &#x3D; first;
+        if (third &#x3D;&#x3D; NULL) break;
 
-        first = second;
-        second = third;
-        third = third->next;
+        first &#x3D; second;
+        second &#x3D; third;
+        third &#x3D; third-&gt;next;
     &#125;
-    //把第一个节点的next指向null
-    head->next = NULL;
-    //返回头节点
+    &#x2F;&#x2F;把第一个节点的next指向null
+    head-&gt;next &#x3D; NULL;
+    &#x2F;&#x2F;返回头节点
     return second;
-&#125;
-</code></pre>
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
 
                 
             </div>
@@ -1182,7 +1186,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">28.1k</span>
+                        class="white-color">29.3k</span>
             
             
             

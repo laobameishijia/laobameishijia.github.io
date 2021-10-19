@@ -30,7 +30,7 @@
     <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/jquery/jquery.min.js"></script>
 
 <meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="老叭美食家" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+</head>
 
 
 
@@ -474,14 +474,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-18
+                    2021-10-19
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    781
+                    853
                 </div>
                 
 
@@ -503,6 +503,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/prism/prism.css">
+        
 
         
 
@@ -511,12 +514,12 @@
                 <h1 id="py如何根据字符串来创建对应的类"><a href="#py如何根据字符串来创建对应的类" class="headerlink" title="py如何根据字符串来创建对应的类"></a>py如何根据字符串来创建对应的类</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>py的反射原理，简单来说，反射就是能实现动态地调用方法\实例化对象。</p>
 <p>举个例子:<br></p>
 <p>创建一个学生类Student的对象 person1、创建一个老师类Teacher的对象person1</p>
-<pre class=" language-py"><code class="language-py">person1 = Student(name="张三")
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">person1 &#x3D; Student(name&#x3D;&quot;张三&quot;)
 
 or
 
-person1 = Teacher(name="张三")
-</code></pre>
+person1 &#x3D; Teacher(name&#x3D;&quot;张三&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>试想一下，假如，你并不是先前(在写程序之前)就知道这个person1的身份到底是学生还是老师，那你该如何创建这个对象？</p>
 <p>或者说你要 <strong>根据这个人的输入: 职业:老师,姓名:张三</strong> 来动态的创建对象。</p>
 <p>这里就要用到py的反射</p>
@@ -528,42 +531,42 @@ person1 = Teacher(name="张三")
 <li>AuditRuleInclude-判断前面集合是否是后面集合的子集</li>
 <li>AuditRuleSame-判断两个字符串是否相等。</li>
 </ul>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">AuditRule</span><span class="token punctuation">(</span>Rule<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token triple-quoted-string string">"""
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">class AuditRule(Rule):
+    &quot;&quot;&quot;
     TestCode:
-        rules = &amp;#123;"age": AuditRule('test,test')&amp;#125;
-        req = &amp;#123;"age": 'test,test'&amp;#125;
-        print(validate(req, rules,return_info=True))
-    """</span>
+        rules &#x3D; &#123;&quot;age&quot;: AuditRule(&#39;test,test&#39;)&#125;
+        req &#x3D; &#123;&quot;age&quot;: &#39;test,test&#39;&#125;
+        print(validate(req, rules,return_info&#x3D;True))
+    &quot;&quot;&quot;
 
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> string<span class="token punctuation">:</span> str<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        Rule<span class="token punctuation">.</span>__init__<span class="token punctuation">(</span>self<span class="token punctuation">)</span>
-        self<span class="token punctuation">.</span>string <span class="token operator">=</span> string
-        self<span class="token punctuation">.</span>value <span class="token operator">=</span> string<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">','</span><span class="token punctuation">)</span>
+    def __init__(self, string: str):
+        Rule.__init__(self)
+        self.string &#x3D; string
+        self.value &#x3D; string.split(&#39;,&#39;)
 
-    <span class="token keyword">def</span> <span class="token function">check</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> arg<span class="token punctuation">:</span> str<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">if</span> arg <span class="token keyword">is</span> None<span class="token punctuation">:</span>
-            arg <span class="token operator">=</span> <span class="token string">"Null"</span>
-            self<span class="token punctuation">.</span>set_error<span class="token punctuation">(</span><span class="token string">"excepted get |"</span> <span class="token operator">+</span> self<span class="token punctuation">.</span>string <span class="token operator">+</span> <span class="token string">"| but get |"</span> <span class="token operator">+</span> arg<span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">"\""</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"|"</span><span class="token punctuation">)</span>
-            <span class="token keyword">return</span> <span class="token boolean">False</span>
-        exit_value_list <span class="token operator">=</span> arg<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">','</span><span class="token punctuation">)</span>
-        <span class="token comment" spellcheck="true"># 判断两个集合是否一样  前面是否是后面的子集</span>
-        self<span class="token punctuation">.</span>set_error<span class="token punctuation">(</span><span class="token string">"excepted get |"</span> <span class="token operator">+</span> self<span class="token punctuation">.</span>string <span class="token operator">+</span> <span class="token string">"| but get |"</span> <span class="token operator">+</span> arg<span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">"\""</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"|"</span><span class="token punctuation">)</span>
-        <span class="token keyword">return</span> set<span class="token punctuation">(</span>exit_value_list<span class="token punctuation">)</span> <span class="token operator">==</span> set<span class="token punctuation">(</span>self<span class="token punctuation">.</span>value<span class="token punctuation">)</span>
-</code></pre>
+    def check(self, arg: str):
+        if arg is None:
+            arg &#x3D; &quot;Null&quot;
+            self.set_error(&quot;excepted get |&quot; + self.string + &quot;| but get |&quot; + arg.replace(&quot;\&quot;&quot;, &quot;&quot;) + &quot;|&quot;)
+            return False
+        exit_value_list &#x3D; arg.split(&#39;,&#39;)
+        # 判断两个集合是否一样  前面是否是后面的子集
+        self.set_error(&quot;excepted get |&quot; + self.string + &quot;| but get |&quot; + arg.replace(&quot;\&quot;&quot;, &quot;&quot;) + &quot;|&quot;)
+        return set(exit_value_list) &#x3D;&#x3D; set(self.value)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>其实，我所用的validator这个包，就已经利用了反射。因为他就是根据我输入的字符串，去动态地翻译和创建成对应的类。所以我也想实现根据数据库中存储的规则，来动态地创建。</p>
 <p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210611161640.png" alt="20210611161640"></p>
 <h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><h3 id="使用的函数"><a href="#使用的函数" class="headerlink" title="使用的函数"></a>使用的函数</h3><p>我就只用到了<strong>getattr</strong>函数。其对应的文档解释如下:</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">getattr</span><span class="token punctuation">(</span>object<span class="token punctuation">,</span> name<span class="token punctuation">,</span> default<span class="token operator">=</span>None<span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment" spellcheck="true"># known special case of getattr</span>
-    <span class="token triple-quoted-string string">"""
-    getattr(object, name[, default]) -> value
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">def getattr(object, name, default&#x3D;None): # known special case of getattr
+    &quot;&quot;&quot;
+    getattr(object, name[, default]) -&gt; value
     
-    Get a named attribute from an object; getattr(x, 'y') is equivalent to x.y.
-    When a default argument is given, it is returned when the attribute doesn't
+    Get a named attribute from an object; getattr(x, &#39;y&#39;) is equivalent to x.y.
+    When a default argument is given, it is returned when the attribute doesn&#39;t
     exist; without it, an exception is raised in that case.
-    """</span>
-    <span class="token keyword">pass</span>
-</code></pre>
+    &quot;&quot;&quot;
+    pass<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="实际操作"><a href="#实际操作" class="headerlink" title="实际操作"></a>实际操作</h3><ul>
 <li><p>创建package rules 将自定义的三个类分别以.py的形式放进去</p>
 <p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210611162135.png" alt="20210611162135"></p>
@@ -574,13 +577,11 @@ person1 = Teacher(name="张三")
 <li><p>在要使用的文件中，以<strong>from rules import rules as Custom</strong>的形式导入</p>
 </li>
 <li><p>编写相应的代码</p>
-<pre class=" language-py"><code class="language-py">  for item in results:
-  if item[3].startswith("Audit"):
-      rules[item[0]] = getattr(Custom, item[3])(item[2])
-  else:
-      rules[item[0]] = item[1] + ":" + item[2]
-</code></pre>
-</li>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">for item in results:
+if item[3].startswith(&quot;Audit&quot;):
+    rules[item[0]] &#x3D; getattr(Custom, item[3])(item[2])
+else:
+    rules[item[0]] &#x3D; item[1] + &quot;:&quot; + item[2]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>它对应的原理通过debug我猜测如下:<br>通过 <code>from rules import rules as Custom</code> 的方式其实是已经创建了<code>Custom</code>这个对象，其拥有三个自定义类的属性。</p>
 <p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210611162753.png" alt="20210611162753"></p>
@@ -1201,7 +1202,7 @@ person1 = Teacher(name="张三")
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">28.1k</span>
+                        class="white-color">29.3k</span>
             
             
             

@@ -30,7 +30,7 @@
     <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/jquery/jquery.min.js"></script>
 
 <meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="老叭美食家" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+</head>
 
 
 
@@ -474,7 +474,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-18
+                    2021-10-19
                 </div>
                 
 
@@ -502,6 +502,9 @@
         </div>
         <hr class="clearfix">
 
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/prism/prism.css">
         
 
         
@@ -534,7 +537,7 @@
 <p>对于代码段，将它的段地址放在CS中，将段中第一条指令的偏移地址放在IP中，这样CPU就能指向我们定义的代码段中的指令。</p>
 <p>对于栈段，将它的段地址放在SS中，将栈顶单元的偏移地址放在SP中，这样CPU在需要进行栈操作的时候，就将我们定义的栈段当作栈空间来操作。</p>
 <p>比如我们将10000H - 1001FH 安排为代码段，并在里面存储如下代码：</p>
-<pre class=" language-text"><code class="language-text">mov ax, 1000H
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">mov ax, 1000H
 mov ss, ax
 mov sp, 0020H
 mov ax, cs
@@ -546,8 +549,8 @@ add bx, [6]
 push ax
 push bx
 pop ax
-pop bx
-</code></pre>
+pop bx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>设置CS = 10000H,IP=0。这段代码将得到执行，可以看到，在这段代码中，我们又将10000H - 1001FH 安排为栈段和数据段。10000H - 1001FH 这段内存，既是代码段，又是栈段和数据段。</p>
 
                 
@@ -1163,7 +1166,7 @@ pop bx
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">28.1k</span>
+                        class="white-color">29.3k</span>
             
             
             

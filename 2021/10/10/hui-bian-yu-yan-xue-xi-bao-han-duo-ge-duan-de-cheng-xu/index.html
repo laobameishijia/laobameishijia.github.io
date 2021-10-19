@@ -30,7 +30,7 @@
     <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/jquery/jquery.min.js"></script>
 
 <meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="老叭美食家" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+</head>
 
 
 
@@ -474,7 +474,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-18
+                    2021-10-19
                 </div>
                 
 
@@ -503,13 +503,16 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="在代码段中使用数据"><a href="#在代码段中使用数据" class="headerlink" title="在代码段中使用数据"></a>在代码段中使用数据</h1><p>代码结构</p>
-<pre class=" language-text"><code class="language-text">assume cs:code
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:code
 code segment
       ··
       ··
@@ -524,10 +527,10 @@ start:
       ··
 code ends
 
-end start
-</code></pre>
+end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h1 id="在代码段中使用栈"><a href="#在代码段中使用栈" class="headerlink" title="在代码段中使用栈"></a>在代码段中使用栈</h1><p>代码结构跟上面的差不多,就是要在start中初始化段指针(SS\SP)</p>
-<h1 id="将数据、代码、栈放入不同的段"><a href="#将数据、代码、栈放入不同的段" class="headerlink" title="将数据、代码、栈放入不同的段"></a>将数据、代码、栈放入不同的段</h1><h2 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h2><pre class=" language-text"><code class="language-text">assume cs:code, ds:data, ss:stack
+<h1 id="将数据、代码、栈放入不同的段"><a href="#将数据、代码、栈放入不同的段" class="headerlink" title="将数据、代码、栈放入不同的段"></a>将数据、代码、栈放入不同的段</h1><h2 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h2><pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:code, ds:data, ss:stack
 
 data segment
     ··
@@ -548,113 +551,112 @@ start:
 code ends
 
 end start
-</code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>结构是这个结构,但是在代码段中,仍然需要使用初始化指令来将相应的ds\ss\sp寄存器初始化才可以。总而言之，cpu到底如何处理我们定义的段的中的内容,是当作指令执行，还是当作数据访问，还是当作栈空间,完全是靠程序中具体的汇编指令,和汇编指令对cs:ip、ss:sp、ds等寄存器的设置来决定的。</p>
 <h1 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h1><p>前面几个都是给出程序来调试观察的。就不列举出来了</p>
 <h2 id="5"><a href="#5" class="headerlink" title="5"></a>5</h2><p>编写code总的代码段,将a段和b段中的数据依次相加,将结果保存在c段中。</p>
-<pre class=" language-text"><code class="language-text">  assume cs:code
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:code
 
-  a segment
-      db 1,2,3,4,5,6,7,8
-  a ends
+a segment
+    db 1,2,3,4,5,6,7,8
+a ends
 
-  b segment
-      db 1,2,3,4,5,6,7,8
-  b ends
+b segment
+    db 1,2,3,4,5,6,7,8
+b ends
 
-  c segment
-      db 0,0,0,0,0,0,0,0
-  c ends
+c segment
+    db 0,0,0,0,0,0,0,0
+c ends
 
-  ;把a 、b段中的数据相加，结果存储到c段当中
-  code segment
+;把a 、b段中的数据相加，结果存储到c段当中
+code segment
 
-  start: mov ax,a
-      mov ds,ax
-      
-      mov ax,b
-      mov es,ax
+start: mov ax,a
+    mov ds,ax
+    
+    mov ax,b
+    mov es,ax
 
-    mov ax,c
-    mov ss,ax
-    mov sp,8
-      
-      mov bx,0
-      mov cx,7 ;方法1
+  mov ax,c
+  mov ss,ax
+  mov sp,8
+    
+    mov bx,0
+    mov cx,7 ;方法1
 
 
-  ; 这样的话解决不了最后08+08的情况, 栈顶指针刚好是0001-> FFFF 这样10放高地址就恰好被溢出了。
-  ; 所以我觉得,还有一种方式是最后一个元素，用al，其他的用ah, 按照栈元素来说，这样做的是对的
+; 这样的话解决不了最后08+08的情况, 栈顶指针刚好是0001-> FFFF 这样10放高地址就恰好被溢出了。
+; 所以我觉得,还有一种方式是最后一个元素，用al，其他的用ah, 按照栈元素来说，这样做的是对的
 
-  ; 代做: 这样做很麻烦倒是,更好的方式应该是分别计算两个字节的，然后组成一个字，同时push进去，这样的话就不用处理最后一个栈顶元素的问题了
-  ; 方法1-------是个错误的方法，解决不了栈顶最初始的元素
-  s: mov ah,ds:[bx]
-    add ah,es:[bx]
+; 代做: 这样做很麻烦倒是,更好的方式应该是分别计算两个字节的，然后组成一个字，同时push进去，这样的话就不用处理最后一个栈顶元素的问题了
+; 方法1-------是个错误的方法，解决不了栈顶最初始的元素
+s: mov ah,ds:[bx]
+  add ah,es:[bx]
+  push ax
+  add sp,1
+;    mov c:[bx],al
+  inc bx
+  loop s
+
+;处理最后一个元素
+    mov al,ds:[bx]
+    add al,es:[bx]
     push ax
-    add sp,1
-  ;    mov c:[bx],al
-    inc bx
+
+;方法二------推荐--正确
+    ; mov cx,4 ;方法2
+; s: mov ah,ds:[bx]
+;    add ah,es:[bx]
+;    add bx,1   
+
+;    mov al,ds:[bx]
+;    add al,es:[bx]
+;    add bx,1
+
+;    push ax
+;    loop s
+
+    mov ax,4c00h
+    int 21h
+
+code ends
+
+end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="6"><a href="#6" class="headerlink" title="6"></a>6</h2><p>编写code中的代码,用push指令将a段中的前八个字型数据,逆序存储到b段中。</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:code
+
+a segment
+    dw 1,2,3,4,5,6,7,8,9,0ah,0bh,0ch,0dh,0eh,0fh,0ffh
+a ends
+
+b segment
+    dw 0,0,0,0,0,0,0,0
+b ends
+
+code segment
+
+start: mov ax,b
+    mov ss,ax
+    mov sp,10h;8个字型数据,栈顶指针的大小应该是10h哦！
+    
+    mov ax,a
+    mov es,ax
+    
+    mov bx,0
+    mov cx,8
+
+s: push es:[bx]
+    add bx,2;bx这里要自增2哦！
     loop s
 
-  ;处理最后一个元素
-      mov al,ds:[bx]
-      add al,es:[bx]
-      push ax
+    mov ax,4c00h
+    int 21h
 
-  ;方法二------推荐--正确
-      ; mov cx,4 ;方法2
-  ; s: mov ah,ds:[bx]
-  ;    add ah,es:[bx]
-  ;    add bx,1   
-
-  ;    mov al,ds:[bx]
-  ;    add al,es:[bx]
-  ;    add bx,1
-
-  ;    push ax
-  ;    loop s
-
-      mov ax,4c00h
-      int 21h
-
-  code ends
-
-  end start
-</code></pre>
-<h2 id="6"><a href="#6" class="headerlink" title="6"></a>6</h2><p>编写code中的代码,用push指令将a段中的前八个字型数据,逆序存储到b段中。</p>
-<pre class=" language-text"><code class="language-text">  assume cs:code
-
-  a segment
-      dw 1,2,3,4,5,6,7,8,9,0ah,0bh,0ch,0dh,0eh,0fh,0ffh
-  a ends
-
-  b segment
-      dw 0,0,0,0,0,0,0,0
-  b ends
-
-  code segment
-
-  start: mov ax,b
-      mov ss,ax
-      mov sp,10h;8个字型数据,栈顶指针的大小应该是10h哦！
-      
-      mov ax,a
-      mov es,ax
-      
-      mov bx,0
-      mov cx,8
-
-  s: push es:[bx]
-      add bx,2;bx这里要自增2哦！
-      loop s
-
-      mov ax,4c00h
-      int 21h
-
-  code ends
-  end start
-</code></pre>
-
+code ends
+end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -1269,7 +1271,7 @@ end start
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">28.1k</span>
+                        class="white-color">29.3k</span>
             
             
             

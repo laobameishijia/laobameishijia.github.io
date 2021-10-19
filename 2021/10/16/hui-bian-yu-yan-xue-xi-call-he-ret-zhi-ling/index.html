@@ -30,7 +30,7 @@
     <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/jquery/jquery.min.js"></script>
 
 <meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="老叭美食家" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+</head>
 
 
 
@@ -474,7 +474,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-18
+                    2021-10-19
                 </div>
                 
 
@@ -503,6 +503,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/prism/prism.css">
+        
 
         
 
@@ -510,13 +513,13 @@
             <div id="articleContent">
                 <h1 id="call和ret指令"><a href="#call和ret指令" class="headerlink" title="call和ret指令"></a>call和ret指令</h1><h2 id="思维导图"><a href="#思维导图" class="headerlink" title="思维导图"></a>思维导图</h2><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211016111954.png" alt="思维导图"></p>
 <p>关于使用栈来传递参数并用ret返回的实际例子还是需要多看才行。</p>
-<h2 id="综合实验"><a href="#综合实验" class="headerlink" title="综合实验"></a>综合实验</h2><h3 id="显示字符串"><a href="#显示字符串" class="headerlink" title="显示字符串"></a>显示字符串</h3><pre class=" language-text"><code class="language-text">名称：show_str
+<h2 id="综合实验"><a href="#综合实验" class="headerlink" title="综合实验"></a>综合实验</h2><h3 id="显示字符串"><a href="#显示字符串" class="headerlink" title="显示字符串"></a>显示字符串</h3><pre class="line-numbers language-text" data-language="text"><code class="language-text">名称：show_str
 功能：在指定的位置,用指定的颜色,显示一个用0结束的字符串
 参数：dh 行号(0-24), dl 列号 0-79, cl颜色, ds:si指向字符串的首地址
 返回: 无
-应用举例：在屏幕的8行3列,用绿色显示出data段中的字符串
-</code></pre>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><pre class=" language-text"><code class="language-text">assume cs:code
+应用举例：在屏幕的8行3列,用绿色显示出data段中的字符串<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:code
 
 data segment
     db 'Welcome to masm!',0
@@ -575,18 +578,18 @@ ok:
     pop es
     ret
 code ends
-end start
-</code></pre>
+end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h4 id="运行截图"><a href="#运行截图" class="headerlink" title="运行截图"></a>运行截图</h4><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211016112701.png" alt="显示字符串"></p>
 <h3 id="解决除法溢出的问题"><a href="#解决除法溢出的问题" class="headerlink" title="解决除法溢出的问题"></a>解决除法溢出的问题</h3><p>用div指令做出发的时候可能产生除法溢出,比如:1000000/10就不能用div指令来算</p>
-<pre class=" language-text"><code class="language-text">名称：divdw
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">名称：divdw
 功能：进行不会产生溢出的除法运算,被除数为dword,除数为word.结果为dword
 参数: ax dword的低16位 | dx dword高16位 | cx除数
 返回: dx 结果的高16位, ax 结果的低16位, cx 余数
 应用举例：计算 1000000/10(F4240H/0AH)
-结果: dx = 0001H  ax = 86A0H cx = 0
-</code></pre>
-<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><pre class=" language-text"><code class="language-text">assume cs:codesg
+结果: dx = 0001H  ax = 86A0H cx = 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:codesg
 
 datasg segment
 
@@ -629,19 +632,19 @@ divdw:
     ret
 
 codesg ends
-end start
-</code></pre>
+end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h4 id="运行截图-1"><a href="#运行截图-1" class="headerlink" title="运行截图"></a>运行截图</h4><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211016113513.png" alt="解决除法溢出的问题"></p>
 <h3 id="数值显示"><a href="#数值显示" class="headerlink" title="数值显示"></a>数值显示</h3><p>将12666以字符串的形式显示到显示器上</p>
-<pre class=" language-text"><code class="language-text">名称：dtoc
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">名称：dtoc
 功能：将word型数据转变为十进制的字符串,字符串以0为结尾符
 参数：ax word型数据
     ds:si指向字符串的首地址
 返回：无
-应用举例: 将12666以十进制的形式在屏幕的8行3列,用绿色显示出来
-</code></pre>
+应用举例: 将12666以十进制的形式在屏幕的8行3列,用绿色显示出来<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h4 id="改进前代码"><a href="#改进前代码" class="headerlink" title="改进前代码"></a>改进前代码</h4><p>改进前,主要是利用在内存中的位置,来对字符串进行逆向的输出。因为算余数的话,顺序是66621得倒过来才行</p>
-<pre class=" language-text"><code class="language-text">
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">
 assume cs:code,ds:data
 
 data segment
@@ -727,9 +730,10 @@ ok1:
     
 code ends
 end start
-</code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h4 id="改进后代码"><a href="#改进后代码" class="headerlink" title="改进后代码"></a>改进后代码</h4><p>改进之后,利用了栈的特性,先将算出来的余数入栈,然后再出栈写到内存里.这样就刚好倒过来了。不过需要注意的是,<code>在子程序中push进去的,在ret之前都要pop出来哦！</code></p>
-<pre class=" language-text"><code class="language-text">assume cs:code,ds:data
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:code,ds:data
 
 data segment
     db 10 dup(0)
@@ -813,8 +817,8 @@ ok1:
     ret    
     
 code ends
-end start
-</code></pre>
+end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h4 id="运行截图-2"><a href="#运行截图-2" class="headerlink" title="运行截图"></a>运行截图</h4><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211016114256.png" alt="数值显示"></p>
 
                 
@@ -1197,19 +1201,19 @@ end start
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/10/18/hui-bian-yu-yan-xue-xi-ke-cheng-she-ji/">
+                <a href="/2021/10/18/jie-jue-zhu-ti-dai-ma-kuai-mei-you-xing-hao-de-wen-ti/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/23.jpg" class="responsive-img" alt="汇编语言学习-课程设计">
+                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//medias/featureimages/17.jpg" class="responsive-img" alt="解决主题代码块没有行号的问题">
                         
-                        <span class="card-title">汇编语言学习-课程设计</span>
+                        <span class="card-title">解决主题代码块没有行号的问题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            编写完整的汇编语言程序,用编译和连接程序将他们编译链接成为可执行文件
+                            强迫症,显示不出来就有点难受
                         
                     </div>
                     <div class="publish-info">
@@ -1220,8 +1224,8 @@ end start
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    研究生预备学习
+                            <a href="/category/hexo%E4%B8%BB%E9%A2%98/" class="post-category">
+                                    hexo主题
                                 </a>
                             
                             
@@ -1231,8 +1235,8 @@ end start
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tag/%E6%B1%87%E7%BC%96/">
-                        <span class="chip bg-color">汇编</span>
+                    <a href="/tag/%E4%BB%A3%E7%A0%81%E5%9D%97%E8%A1%8C%E6%95%B0/">
+                        <span class="chip bg-color">代码块行数</span>
                     </a>
                     
                 </div>
@@ -1432,7 +1436,7 @@ end start
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">28.1k</span>
+                        class="white-color">29.3k</span>
             
             
             

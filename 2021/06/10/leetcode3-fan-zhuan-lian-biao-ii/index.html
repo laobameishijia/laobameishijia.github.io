@@ -30,7 +30,7 @@
     <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/jquery/jquery.min.js"></script>
 
 <meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="老叭美食家" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+</head>
 
 
 
@@ -474,21 +474,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-18
+                    2021-10-19
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    5 分
                 </div>
                 
 
@@ -502,6 +502,9 @@
         </div>
         <hr class="clearfix">
 
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/prism/prism.css">
         
 
         
@@ -533,26 +536,26 @@
 </ul>
 </li>
 </ul>
-<h1 id="反转链表II"><a href="#反转链表II" class="headerlink" title="反转链表II"></a>反转链表II</h1><h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><pre><code>给你单链表的头指针 head 和两个整数 left 和 right ，其中 left &lt;= right 。请你反转从位置 left 到位置 right 的链表节点，返回 反转后的链表 。
+<h1 id="反转链表II"><a href="#反转链表II" class="headerlink" title="反转链表II"></a>反转链表II</h1><h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><pre class="line-numbers language-none"><code class="language-none">给你单链表的头指针 head 和两个整数 left 和 right ，其中 left &lt;&#x3D; right 。请你反转从位置 left 到位置 right 的链表节点，返回 反转后的链表 。
  
 
 示例 1：
 
-输入：head = [1,2,3,4,5], left = 2, right = 4
+输入：head &#x3D; [1,2,3,4,5], left &#x3D; 2, right &#x3D; 4
 输出：[1,4,3,2,5]
 示例 2：
 
-输入：head = [5], left = 1, right = 1
+输入：head &#x3D; [5], left &#x3D; 1, right &#x3D; 1
 输出：[5]
  
 
 提示：
 
 链表中节点数目为 n
-1 &lt;= n &lt;= 500
--500 &lt;= Node.val &lt;= 500
-1 &lt;= left &lt;= right &lt;= n
-</code></pre>
+1 &lt;&#x3D; n &lt;&#x3D; 500
+-500 &lt;&#x3D; Node.val &lt;&#x3D; 500
+1 &lt;&#x3D; left &lt;&#x3D; right &lt;&#x3D; n<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
 <li>左端节点不是起始节点</li>
 </ol>
@@ -572,116 +575,116 @@
 <li>左端节点 <strong>leftpointer</strong> 的next指向右端点的下一个节点 <strong>rightpointer_1</strong></li>
 <li><strong>返回右端节点 <strong>prev</strong></strong></li>
 </ul>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre class=" language-C"><code class="language-C">struct ListNode* reverseBetween(struct ListNode* head, int left, int right) &#123;
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre class="line-numbers language-C" data-language="C"><code class="language-C">struct ListNode* reverseBetween(struct ListNode* head, int left, int right) &#123;
     struct ListNode* leftpointer_1, * rightpointer_1;
-    leftpointer_1 = rightpointer_1 = head;
-    int leftmove = left - 2;
-    int rigthmove = right - left;
-    int temp = rigthmove;
-    if (temp == 0 || temp < 0) return head;
-    if (leftmove == -1) leftpointer_1 = NULL;
+    leftpointer_1 &#x3D; rightpointer_1 &#x3D; head;
+    int leftmove &#x3D; left - 2;
+    int rigthmove &#x3D; right - left;
+    int temp &#x3D; rigthmove;
+    if (temp &#x3D;&#x3D; 0 || temp &lt; 0) return head;
+    if (leftmove &#x3D;&#x3D; -1) leftpointer_1 &#x3D; NULL;
     else
     &#123;
-        while (leftmove > 0 && leftpointer_1->next)
+        while (leftmove &gt; 0 &amp;&amp; leftpointer_1-&gt;next)
         &#123;
-            leftpointer_1 = leftpointer_1->next;
+            leftpointer_1 &#x3D; leftpointer_1-&gt;next;
             leftmove--;
         &#125;
     &#125;
-    struct ListNode* prev = leftpointer_1;
+    struct ListNode* prev &#x3D; leftpointer_1;
     struct ListNode* curr, * leftpointer;
-    if (leftpointer_1)     curr = leftpointer = leftpointer_1->next;
-    else curr = leftpointer = head;
-    while (curr && temp >= 0) &#123;
-        struct ListNode* next = curr->next;
-        curr->next = prev;
-        prev = curr;
-        curr = next;
+    if (leftpointer_1)     curr &#x3D; leftpointer &#x3D; leftpointer_1-&gt;next;
+    else curr &#x3D; leftpointer &#x3D; head;
+    while (curr &amp;&amp; temp &gt;&#x3D; 0) &#123;
+        struct ListNode* next &#x3D; curr-&gt;next;
+        curr-&gt;next &#x3D; prev;
+        prev &#x3D; curr;
+        curr &#x3D; next;
         temp--;
-        rightpointer_1 = curr;
+        rightpointer_1 &#x3D; curr;
     &#125;
     if (leftpointer_1) &#123;
-        leftpointer_1->next = prev;
-        leftpointer->next = rightpointer_1;
+        leftpointer_1-&gt;next &#x3D; prev;
+        leftpointer-&gt;next &#x3D; rightpointer_1;
         return head;
     &#125;
     else &#123;
-        leftpointer->next = rightpointer_1;
+        leftpointer-&gt;next &#x3D; rightpointer_1;
         return prev;
     &#125;
-&#125;
-</code></pre>
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>时间复杂度 O(N) 其中 N 是链表总节点数。最坏情况下，需要遍历整个链表。<br>空间复杂度 O(1) 只使用到常数个变量</p>
 <h2 id="优秀思路"><a href="#优秀思路" class="headerlink" title="优秀思路"></a>优秀思路</h2><h3 id="方法1"><a href="#方法1" class="headerlink" title="方法1:"></a>方法1:</h3><p>与我们的方法非常类似，但在编码的过程中，采用了虚拟头节点的方式，避免了左端点是否是起始点的分类讨论。</p>
 <p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210610143526.png" alt="20210610143526"></p>
-<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><pre class=" language-C"><code class="language-C">struct ListNode *reverseBetween(struct ListNode *head, int left, int right) &#123;
-    // 因为头节点有可能发生变化，使用虚拟头节点可以避免复杂的分类讨论
-    struct ListNode *dummyNode = malloc(sizeof(struct ListNode));
-    dummyNode->val = -1;
-    dummyNode->next = head;
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><pre class="line-numbers language-C" data-language="C"><code class="language-C">struct ListNode *reverseBetween(struct ListNode *head, int left, int right) &#123;
+    &#x2F;&#x2F; 因为头节点有可能发生变化，使用虚拟头节点可以避免复杂的分类讨论
+    struct ListNode *dummyNode &#x3D; malloc(sizeof(struct ListNode));
+    dummyNode-&gt;val &#x3D; -1;
+    dummyNode-&gt;next &#x3D; head;
 
-    struct ListNode *pre = dummyNode;
-    // 第 1 步：从虚拟头节点走 left - 1 步，来到 left 节点的前一个节点
-    // 建议写在 for 循环里，语义清晰
-    for (int i = 0; i < left - 1; i++) &#123;
-        pre = pre->next;
+    struct ListNode *pre &#x3D; dummyNode;
+    &#x2F;&#x2F; 第 1 步：从虚拟头节点走 left - 1 步，来到 left 节点的前一个节点
+    &#x2F;&#x2F; 建议写在 for 循环里，语义清晰
+    for (int i &#x3D; 0; i &lt; left - 1; i++) &#123;
+        pre &#x3D; pre-&gt;next;
     &#125;
 
-    // 第 2 步：从 pre 再走 right - left + 1 步，来到 right 节点
-    struct ListNode *rightNode = pre;
-    for (int i = 0; i < right - left + 1; i++) &#123;
-        rightNode = rightNode->next;
+    &#x2F;&#x2F; 第 2 步：从 pre 再走 right - left + 1 步，来到 right 节点
+    struct ListNode *rightNode &#x3D; pre;
+    for (int i &#x3D; 0; i &lt; right - left + 1; i++) &#123;
+        rightNode &#x3D; rightNode-&gt;next;
     &#125;
 
-    // 第 3 步：切断出一个子链表（截取链表）
-    struct ListNode *leftNode = pre->next;
-    struct ListNode *curr = rightNode->next;
+    &#x2F;&#x2F; 第 3 步：切断出一个子链表（截取链表）
+    struct ListNode *leftNode &#x3D; pre-&gt;next;
+    struct ListNode *curr &#x3D; rightNode-&gt;next;
 
-    // 注意：切断链接
-    pre->next = NULL;
-    rightNode->next = NULL;
+    &#x2F;&#x2F; 注意：切断链接
+    pre-&gt;next &#x3D; NULL;
+    rightNode-&gt;next &#x3D; NULL;
 
-    // 第 4 步：同第 206 题，反转链表的子区间
+    &#x2F;&#x2F; 第 4 步：同第 206 题，反转链表的子区间
     reverseLinkedList(leftNode);
 
-    // 第 5 步：接回到原来的链表中
-    pre->next = rightNode;
-    leftNode->next = curr;
-    return dummyNode->next;
+    &#x2F;&#x2F; 第 5 步：接回到原来的链表中
+    pre-&gt;next &#x3D; rightNode;
+    leftNode-&gt;next &#x3D; curr;
+    return dummyNode-&gt;next;
 &#125;
 
 作者：LeetCode-Solution
-链接：https://leetcode-cn.com/problems/reverse-linked-list-ii/solution/fan-zhuan-lian-biao-ii-by-leetcode-solut-teyq/
-来源：力扣（LeetCode）
-</code></pre>
+链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;problems&#x2F;reverse-linked-list-ii&#x2F;solution&#x2F;fan-zhuan-lian-biao-ii-by-leetcode-solut-teyq&#x2F;
+来源：力扣（LeetCode）<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h4 id="时间复杂度分析"><a href="#时间复杂度分析" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h4><p>时间复杂度 O(N) 其中 N 是链表总节点数。最坏情况下，需要遍历整个链表。<br>空间复杂度 O(1) 只使用到常数个变量</p>
 <h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210610144049.png" alt="20210610144049"></p>
-<h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><pre class=" language-C"><code class="language-C">struct ListNode *reverseBetween(struct ListNode *head, int left, int right) &#123;
-    // 因为头节点有可能发生变化，使用虚拟头节点可以避免复杂的分类讨论
-    struct ListNode *dummyNode = malloc(sizeof(struct ListNode));
-    dummyNode->val = -1;
-    dummyNode->next = head;
+<h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><pre class="line-numbers language-C" data-language="C"><code class="language-C">struct ListNode *reverseBetween(struct ListNode *head, int left, int right) &#123;
+    &#x2F;&#x2F; 因为头节点有可能发生变化，使用虚拟头节点可以避免复杂的分类讨论
+    struct ListNode *dummyNode &#x3D; malloc(sizeof(struct ListNode));
+    dummyNode-&gt;val &#x3D; -1;
+    dummyNode-&gt;next &#x3D; head;
 
-    struct ListNode *pre = dummyNode;
-    for (int i = 0; i < left - 1; i++) &#123;
-        pre = pre->next;
+    struct ListNode *pre &#x3D; dummyNode;
+    for (int i &#x3D; 0; i &lt; left - 1; i++) &#123;
+        pre &#x3D; pre-&gt;next;
     &#125;
-    struct ListNode *cur = pre->next;
+    struct ListNode *cur &#x3D; pre-&gt;next;
     struct ListNode *next;
-    for (int i = 0; i < right - left; i++) &#123;
-        next = cur->next;
-        cur->next = next->next;
-        next->next = pre->next;
-        pre->next = next;
+    for (int i &#x3D; 0; i &lt; right - left; i++) &#123;
+        next &#x3D; cur-&gt;next;
+        cur-&gt;next &#x3D; next-&gt;next;
+        next-&gt;next &#x3D; pre-&gt;next;
+        pre-&gt;next &#x3D; next;
     &#125;
-    return dummyNode->next;
+    return dummyNode-&gt;next;
 &#125;
 
 作者：LeetCode-Solution
-链接：https://leetcode-cn.com/problems/reverse-linked-list-ii/solution/fan-zhuan-lian-biao-ii-by-leetcode-solut-teyq/
+链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;problems&#x2F;reverse-linked-list-ii&#x2F;solution&#x2F;fan-zhuan-lian-biao-ii-by-leetcode-solut-teyq&#x2F;
 来源：力扣（LeetCode）
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
-</code></pre>
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h4 id="时间复杂度分析-1"><a href="#时间复杂度分析-1" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h4><p>时间复杂度 O(N) 其中 N 是链表总节点数。最坏情况下，需要遍历整个链表。<br>空间复杂度 O(1) 只使用到常数个变量</p>
 
                 
@@ -1299,7 +1302,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">28.1k</span>
+                        class="white-color">29.3k</span>
             
             
             

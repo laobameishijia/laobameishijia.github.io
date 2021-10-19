@@ -30,7 +30,7 @@
     <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/jquery/jquery.min.js"></script>
 
 <meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="老叭美食家" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+</head>
 
 
 
@@ -474,21 +474,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-18
+                    2021-10-19
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    644
+                    700
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    3 分
                 </div>
                 
 
@@ -502,6 +502,9 @@
         </div>
         <hr class="clearfix">
 
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/prism/prism.css">
         
 
         
@@ -539,53 +542,52 @@
 <li><p>如果不相交且链表长度相等: 那么一个指针走A,一个指针走B，它俩同时走到NULL，相等，跳出循环</p>
 </li>
 </ul>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre class=" language-C"><code class="language-C">struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *headB) &#123;
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre class="line-numbers language-C" data-language="C"><code class="language-C">struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *headB) &#123;
     struct ListNode* A, * B;
-    A = headA;
-    B = headB;
-    while(A!=B)&#123;
-        A = A == NULL ? headB : A->next;
-        B = B == NULL ? headA : B->next;
+    A &#x3D; headA;
+    B &#x3D; headB;
+    while(A!&#x3D;B)&#123;
+        A &#x3D; A &#x3D;&#x3D; NULL ? headB : A-&gt;next;
+        B &#x3D; B &#x3D;&#x3D; NULL ? headA : B-&gt;next;
     &#125;
     return A;
-&#125;
-</code></pre>
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>时间复杂度 <code>O(N)</code> 最差依次访问一遍 <code>A+B</code> 中的所有节点 <br><br>空间复杂度 <code>O(1)</code> 就用两个指针</p>
-<h1 id="leetcode8-合并有序链表"><a href="#leetcode8-合并有序链表" class="headerlink" title="leetcode8-合并有序链表"></a>leetcode8-合并有序链表</h1><h2 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h2><pre class=" language-C"><code class="language-C">输入两个递增排序的链表，合并这两个链表并使新链表中的节点仍然是递增排序的。
+<h1 id="leetcode8-合并有序链表"><a href="#leetcode8-合并有序链表" class="headerlink" title="leetcode8-合并有序链表"></a>leetcode8-合并有序链表</h1><h2 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h2><pre class="line-numbers language-C" data-language="C"><code class="language-C">输入两个递增排序的链表，合并这两个链表并使新链表中的节点仍然是递增排序的。
 
 示例1：
 
-输入：1->2->4, 1->3->4
-输出：1->1->2->3->4->4
+输入：1-&gt;2-&gt;4, 1-&gt;3-&gt;4
+输出：1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4
 
 来源：力扣（LeetCode）
-链接：https://leetcode-cn.com/problems/he-bing-liang-ge-pai-xu-de-lian-biao-lcof
-著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-</code></pre>
+链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;problems&#x2F;he-bing-liang-ge-pai-xu-de-lian-biao-lcof
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h2><p>leetcode的题解</p>
 <p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210615164632.png" alt="20210615164632"></p>
-<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><pre class=" language-C"><code class="language-C">struct ListNode* mergeTwoLists(struct ListNode* l1, struct ListNode* l2)&#123;
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><pre class="line-numbers language-C" data-language="C"><code class="language-C">struct ListNode* mergeTwoLists(struct ListNode* l1, struct ListNode* l2)&#123;
     struct ListNode* a, *b,*c,*d;
-    a = l1;
-    b = l2;
-    d = c = (struct ListNode*)malloc(sizeof(struct ListNode));
-    while(a&&b)&#123;
-        if(a->val < b->val) &#123;
-            c->next = a;
-            a = a->next;
-            c = c->next;
+    a &#x3D; l1;
+    b &#x3D; l2;
+    d &#x3D; c &#x3D; (struct ListNode*)malloc(sizeof(struct ListNode));
+    while(a&amp;&amp;b)&#123;
+        if(a-&gt;val &lt; b-&gt;val) &#123;
+            c-&gt;next &#x3D; a;
+            a &#x3D; a-&gt;next;
+            c &#x3D; c-&gt;next;
         &#125;
-        else if(a->val>=b->val)&#123;
-            c->next = b;
-            b = b->next;
-            c = c->next;
+        else if(a-&gt;val&gt;&#x3D;b-&gt;val)&#123;
+            c-&gt;next &#x3D; b;
+            b &#x3D; b-&gt;next;
+            c &#x3D; c-&gt;next;
         &#125;
     &#125;
-    if(a == NULL) c->next = b;
-    else c->next = a;
-    return d->next;
-&#125;
-</code></pre>
+    if(a &#x3D;&#x3D; NULL) c-&gt;next &#x3D; b;
+    else c-&gt;next &#x3D; a;
+    return d-&gt;next;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="复杂度分析-1"><a href="#复杂度分析-1" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>时间复杂度 <code>O(M+N)</code> M为l1链表的长度 N为l2链表的长度 <br><br>空间复杂度 O(1)</p>
 
                 
@@ -1203,7 +1205,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">28.1k</span>
+                        class="white-color">29.3k</span>
             
             
             

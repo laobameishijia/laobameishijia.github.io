@@ -30,7 +30,7 @@
     <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/jquery/jquery.min.js"></script>
 
 <meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="老叭美食家" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+</head>
 
 
 
@@ -474,7 +474,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-18
+                    2021-10-19
                 </div>
                 
 
@@ -503,6 +503,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/prism/prism.css">
+        
 
         
 
@@ -522,7 +525,7 @@
 <p>在DOS中，command处理各种输入：命令或要执行的程序的文件名。我们就是用过command来进行工作的。</p>
 <h3 id="4-2-程序运行结束后，返回到了哪里？"><a href="#4-2-程序运行结束后，返回到了哪里？" class="headerlink" title="4.2 程序运行结束后，返回到了哪里？"></a>4.2 程序运行结束后，返回到了哪里？</h3><p>程序运行结束后，返回到了command中。</p>
 <h4 id="汇编程序从写出到执行的过程"><a href="#汇编程序从写出到执行的过程" class="headerlink" title="汇编程序从写出到执行的过程"></a>汇编程序从写出到执行的过程</h4><p>编程 -&gt; 1.asm -&gt; 编译 -&gt; 1.obj -&gt; 链接 -&gt; 1.exe -&gt; 加载 -&gt; 内存中的程序 -&gt; 运行</p>
-<h2 id="观察下面程序执行过程中，寄存器和栈顶元素的变化"><a href="#观察下面程序执行过程中，寄存器和栈顶元素的变化" class="headerlink" title="观察下面程序执行过程中，寄存器和栈顶元素的变化"></a>观察下面程序执行过程中，寄存器和栈顶元素的变化</h2><pre class=" language-text"><code class="language-text">assume cs:codeseg
+<h2 id="观察下面程序执行过程中，寄存器和栈顶元素的变化"><a href="#观察下面程序执行过程中，寄存器和栈顶元素的变化" class="headerlink" title="观察下面程序执行过程中，寄存器和栈顶元素的变化"></a>观察下面程序执行过程中，寄存器和栈顶元素的变化</h2><pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:codeseg
 
 codeseg segment
 
@@ -540,8 +543,8 @@ start:  mov ax,2000H
     int 21h
 codeseg ends
 end start
-end
-</code></pre>
+end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>ax bx 各出入栈。IP和SP指针在变化，其余寄存器没看到变化。栈顶元素最后还是变化到跟初始状态下一致了</p>
 <p>PSP的头两个字节时CD20,其中的内容为</p>
 <p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211006115030.png" alt="PSP"></p>
@@ -1160,7 +1163,7 @@ end
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">28.1k</span>
+                        class="white-color">29.3k</span>
             
             
             

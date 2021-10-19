@@ -30,7 +30,7 @@
     <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/jquery/jquery.min.js"></script>
 
 <meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="老叭美食家" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+</head>
 
 
 
@@ -474,14 +474,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-18
+                    2021-10-19
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    246
+                    280
                 </div>
                 
 
@@ -503,75 +503,77 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@2.0/themes/hexo-theme-matery/source//libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="反向输出链表"><a href="#反向输出链表" class="headerlink" title="反向输出链表"></a>反向输出链表</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><pre><code>输入一个链表的头节点，从尾到头反过来返回每个节点的值（用数组返回）。
+                <h1 id="反向输出链表"><a href="#反向输出链表" class="headerlink" title="反向输出链表"></a>反向输出链表</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><pre class="line-numbers language-none"><code class="language-none">输入一个链表的头节点，从尾到头反过来返回每个节点的值（用数组返回）。
 
  
 
 示例 1：
 
-输入：head = [1,3,2]
+输入：head &#x3D; [1,3,2]
 输出：[2,3,1]
  
 
 限制：
 
-0 &lt;= 链表长度 &lt;= 10000
-</code></pre>
+0 &lt;&#x3D; 链表长度 &lt;&#x3D; 10000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ul>
 <li>第一遍遍历找到一共的个数</li>
 <li>malloc</li>
 <li>倒序赋值</li>
 </ul>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre class=" language-C"><code class="language-C">//反序打印链表
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre class="line-numbers language-C" data-language="C"><code class="language-C">&#x2F;&#x2F;反序打印链表
 int* reversePrint(struct ListNode* head, int* returnSize) &#123;
-    //第一遍遍历获取数目
-    int num = 0;
-    struct ListNode* temp = head;
+    &#x2F;&#x2F;第一遍遍历获取数目
+    int num &#x3D; 0;
+    struct ListNode* temp &#x3D; head;
     while (temp)
     &#123;
         num++;
-        temp = temp->next;
+        temp &#x3D; temp-&gt;next;
 
     &#125;
-    int* ret = (int*)malloc(num * sizeof(int));
+    int* ret &#x3D; (int*)malloc(num * sizeof(int));
     memset(ret, -1, num * sizeof(int));
     
-    temp = head;
-    int i = 1;
+    temp &#x3D; head;
+    int i &#x3D; 1;
     while (temp)
     &#123;
-        ret[num - i] = temp->val;
+        ret[num - i] &#x3D; temp-&gt;val;
         i++;
-        temp = temp->next;
+        temp &#x3D; temp-&gt;next;
     &#125;
-    *returnSize = num;
+    *returnSize &#x3D; num;
     return ret;
-&#125;
-</code></pre>
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>时间复杂度 O(n)<br>空间复杂度 O(n)</p>
 <h2 id="优秀思路"><a href="#优秀思路" class="headerlink" title="优秀思路"></a>优秀思路</h2><p>差不多跟我一样</p>
-<pre class=" language-C"><code class="language-C">int* reversePrint(struct ListNode* head, int* returnSize)&#123;
-    struct ListNode *p = head;
-    int n = 0;
-    while(p != NULL) &#123;
-        p = p->next;
+<pre class="line-numbers language-C" data-language="C"><code class="language-C">int* reversePrint(struct ListNode* head, int* returnSize)&#123;
+    struct ListNode *p &#x3D; head;
+    int n &#x3D; 0;
+    while(p !&#x3D; NULL) &#123;
+        p &#x3D; p-&gt;next;
         n++;
     &#125;
-    int *arr = (int *)malloc(sizeof(int) * n);
-    struct ListNode *q = head;
-    *returnSize = n;
-    for(int i = n - 1; i >= 0; i--)&#123;
-        arr[i] = q->val;
-        q = q->next;
+    int *arr &#x3D; (int *)malloc(sizeof(int) * n);
+    struct ListNode *q &#x3D; head;
+    *returnSize &#x3D; n;
+    for(int i &#x3D; n - 1; i &gt;&#x3D; 0; i--)&#123;
+        arr[i] &#x3D; q-&gt;val;
+        q &#x3D; q-&gt;next;
     &#125;
     return arr;
-&#125;
-</code></pre>
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -1188,7 +1190,7 @@ int* reversePrint(struct ListNode* head, int* returnSize) &#123;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">28.1k</span>
+                        class="white-color">29.3k</span>
             
             
             
