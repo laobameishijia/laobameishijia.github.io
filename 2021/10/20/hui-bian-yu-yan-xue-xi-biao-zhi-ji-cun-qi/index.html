@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="实训day1-day2, 老叭美食家">
+    <meta name="keywords" content="汇编语言学习-标志寄存器, 老叭美食家">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>实训day1-day2 | 老叭美食家</title>
+    <title>汇编语言学习-标志寄存器 | 老叭美食家</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/awesome/css/all.css">
@@ -321,12 +321,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">实训day1-day2</h1>
+                    <h1 class="description center-align post-title">汇编语言学习-标志寄存器</h1>
                 </div>
             </div>
         </div>
@@ -442,8 +442,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tag/%E5%AE%9E%E8%AE%AD/">
-                                <span class="chip bg-color">实训</span>
+                            <a href="/tag/%E6%B1%87%E7%BC%96/">
+                                <span class="chip bg-color">汇编</span>
                             </a>
                         
                     </div>
@@ -454,8 +454,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/category/%E5%9B%BD%E4%BF%A1%E5%AE%89%E5%AE%9E%E8%AE%AD/" class="post-category">
-                                国信安实训
+                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                研究生预备学习
                             </a>
                         
                     </div>
@@ -467,7 +467,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-01
+                    2021-10-20
                 </div>
                 
 
@@ -481,14 +481,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    452
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    1 分
                 </div>
                 
 
@@ -511,77 +511,48 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="实训day1-day2"><a href="#实训day1-day2" class="headerlink" title="实训day1-day2"></a>实训day1-day2</h1><p>目录:</p>
-<ul>
-<li><a href="#%E5%AE%9E%E8%AE%ADday1-day2">实训day1-day2</a><ul>
-<li><a href="#git%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8">git工具的使用</a><ul>
-<li><a href="#%E5%85%B3%E4%BA%8Egit%E7%9A%84%E5%8E%9F%E7%90%86">关于git的原理</a></li>
-<li><a href="#git-%E5%B7%A5%E4%BD%9C%E6%B5%81">git 工作流</a></li>
-<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%9C%A8push%E4%B9%8B%E5%89%8D%E9%9C%80%E8%A6%81%E8%BF%9B%E8%A1%8Cpull">为什么在<code>push</code>之前需要进行<code>pull</code></a></li>
-<li><a href="#git%E5%A4%84%E7%90%86%E5%86%B2%E7%AA%81">git处理冲突</a></li>
+                <h1 id="标志寄存器"><a href="#标志寄存器" class="headerlink" title="标志寄存器"></a>标志寄存器</h1><h2 id="思维导图"><a href="#思维导图" class="headerlink" title="思维导图"></a>思维导图</h2><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211020165355.png" alt="思维导图"></p>
+<h2 id="计算机是如何知道到底是按有符号数处理还是按无符号数处理"><a href="#计算机是如何知道到底是按有符号数处理还是按无符号数处理" class="headerlink" title="计算机是如何知道到底是按有符号数处理还是按无符号数处理"></a>计算机是如何知道到底是按有符号数处理还是按无符号数处理</h2><p>CPU在执行add等指令的时候,就包含了两种含义:无符号数运算和有符号数运算。对于无符号数运算,CPU用CF位来记录是否产生了进位;对于有符号数运算,CPU用OF位来记录是否产生了溢出,当然,还要用SF位记录结果的符号。CF和OF所表示的进位和溢出,是分别对无符号数和有符号数运算而言的,他们之间没有任何关系。</p>
+<p>也就是说,本身就是有两层含义都在,但具体看作哪一种,取决于写程序的你怎么处理这些变换的标志位。如何利用这些标志位和运算结果来正确的表达你想要的计算方式。</p>
+<h2 id="实验11"><a href="#实验11" class="headerlink" title="实验11"></a>实验11</h2><blockquote>
+<p>编写一个子程序,将包含任意字符,以0结尾的字符串中的小写字母转变成大写字母,描述如下。<br>名称：letterc<br>功能：将以0为结尾的字符串中的小写字母转变成大写字母<br>参数：ds:si指向字符串首地址</p>
+</blockquote>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>判断所取到的字节数据是不是0,是的话结束,不是的话,继续判断</li>
+<li>判断取到的字节数据是不是小写字母。是的话,转变成大写字母；不是的话,就不变</li>
 </ul>
-</li>
-<li><a href="#spring%E9%A1%B9%E7%9B%AE%E5%85%A5%E9%97%A8">spring项目入门</a><ul>
-<li><a href="#java%E5%8F%8D%E5%B0%84">java反射</a></li>
-<li><a href="#%E6%80%9D%E8%80%83">思考</a><ul>
-<li><a href="#spring-ioc">Spring IOC</a></li>
-<li><a href="#spring-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5di">Spring 依赖注入DI</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="git工具的使用"><a href="#git工具的使用" class="headerlink" title="git工具的使用"></a>git工具的使用</h2><h3 id="关于git的原理"><a href="#关于git的原理" class="headerlink" title="关于git的原理"></a>关于git的原理</h3><p>找到了一篇博客对于git的原理以及存储讲解的非常清楚</p>
-<p><a target="_blank" rel="noopener" href="https://zhaohuabing.com/post/2019-01-21-git/">https://zhaohuabing.com/post/2019-01-21-git/</a></p>
-<h3 id="git-工作流"><a href="#git-工作流" class="headerlink" title="git 工作流"></a>git 工作流</h3><p>你的本地仓库由 git 维护的三棵“树”组成。第一个是你的 <code>工作目录</code>，它持有实际文件；第二个是 <code>缓存区（Index）</code>，它像个缓存区域，临时保存你的改动；最后是 <code>HEAD</code>，指向你最近一次提交后的结果。</p>
-<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210601113100.png" alt="20210601113100"></p>
-<h3 id="为什么在push之前需要进行pull"><a href="#为什么在push之前需要进行pull" class="headerlink" title="为什么在push之前需要进行pull"></a>为什么在<code>push</code>之前需要进行<code>pull</code></h3><p>如果项目只有一个人，那无所谓。但是一般情况下，项目中都会有许多项目成员，在我们将自己的<code>分支 1</code> 合并到 <code>主分支 master</code>时，<code>主分支master</code>有可能已经发生改变(即成员2将自己的<code>分支2</code>合并到<code>主分支 master</code>之后<code>push</code>),此时如果直接<code>push</code>，会导致成员2所修改的部分被覆盖。</p>
-<p>而在这之前进行<code>pull</code>操作，会把远程分支于本地分支进行合并。然后再进行<code>push</code></p>
-<p>git可能会在这种情况下，禁止你进行push操作</p>
-<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210601113613.png" alt="20210601113613"></p>
-<h3 id="git处理冲突"><a href="#git处理冲突" class="headerlink" title="git处理冲突"></a>git处理冲突</h3><p>git并不能智能化地解决不同开发者修改同一个文件的情况。如果不同开发者对同一文件进行了修改，那么这个冲突的过程，必须要手动解决，然后再次提交。</p>
-<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210601114236.png" alt="20210601114236"></p>
-<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210601114412.png" alt="20210601114412"></p>
-<p>日志</p>
-<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210601114336.png" alt="20210601114336"></p>
-<h2 id="spring项目入门"><a href="#spring项目入门" class="headerlink" title="spring项目入门"></a>spring项目入门</h2><p>  基础的创建项目+运行web项目 没什么可以说的</p>
-<h3 id="java反射"><a href="#java反射" class="headerlink" title="java反射"></a>java反射</h3><p>具体去看博客:<a target="_blank" rel="noopener" href="https://www.cnblogs.com/chanshuyi/p/head_first_of_reflection.html">https://www.cnblogs.com/chanshuyi/p/head_first_of_reflection.html</a></p>
-<p><strong>反射就是在运行时才知道要操作的类是什么，并且可以在运行时获取类的完整构造，并调用对应的方法。</strong><br>一般情况下，我们使用某个类时必定知道它是什么类，是用来做什么的。于是我们直接对这个类进行实例化，之后使用这个类对象进行操作。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">Apple apple &#x3D; new Apple(); &#x2F;&#x2F;直接初始化，「正射」
-apple.setPrice(4);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:codesg
 
-<p>而反射则是一开始并不知道我要初始化的类对象是什么，自然也无法使用 new 关键字来创建对象了。<br>这时候，我们使用 JDK 提供的反射 API 进行反射调用：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">Class clz &#x3D; Class.forName(&quot;com.chenshuyi.reflect.Apple&quot;);
-Method method &#x3D; clz.getMethod(&quot;setPrice&quot;, int.class);
-Constructor constructor &#x3D; clz.getConstructor();
-Object object &#x3D; constructor.newInstance();
-method.invoke(object, 4);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+datasg segment
+    db "Beginner's All-purpose Symbolic Instruction Code.",0
+datasg ends
 
-<p>上面两段代码的执行结果，其实是完全一样的。但是其思路完全不一样，第一段代码在未运行时就已经确定了要运行的类（Apple），而第二段代码则是在运行时通过字符串值才得知要运行的类（com.chenshuyi.reflect.Apple）</p>
-<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>为什么在浏览器中输入<a target="_blank" rel="noopener" href="http://localhost:8080/index%E5%B0%B1%E8%83%BD%E5%A4%9F%E8%AE%BF%E9%97%AE%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84IndexController%E4%B8%AD%E7%9A%84index%E6%96%B9%E6%B3%95%EF%BC%9F">http://localhost:8080/index就能够访问到对应的IndexController中的index方法？</a></p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">@RestController
-public class IndexController &#123;
+codesg segment
+    begin:
+        mov ax,datasg
+        mov ds,ax
+        mov si,0
+        call letterc
+        mov ax,4c00h
+        int 21h
 
-    @RequestMapping(&quot;&#x2F;index&quot;)
-    public String index()&#123;
-        return &quot;Lakers win&quot;;
-    &#125;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>简单来说，就是在运行时，浏览器通过获取<code>/index</code>找到了IndexController这个类（可能是Spring容器在启动之前或者之后创建好的），然后调用方法index，向前端返回 Lakers win</p>
-<h4 id="Spring-IOC"><a href="#Spring-IOC" class="headerlink" title="Spring IOC"></a>Spring IOC</h4><p>详见博客：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ysocean/p/7466217.html">https://www.cnblogs.com/ysocean/p/7466217.html</a></p>
-<p>IOC-Inversion of Control，即控制反转。它不是什么技术，而是一种设计思想。</p>
-<p>&emsp;&emsp;传统的创建对象的方法是直接通过 new 关键字，而 spring 则是通过 IOC 容器来创建对象，也就是说我们将创建对象的控制权交给了 IOC 容器。我们可以用一句话来概括 IOC：</p>
-<p>&emsp;&emsp;IOC 让程序员不在关注怎么去创建对象，而是关注与对象创建之后的操作，把对象的创建、初始化、销毁等工作交给spring容器来做。</p>
-<p>项目加载时会扫描有注解<code>@RestController、@Controller、@Service、@Component</code>的类，通过反射创建这些类的对象放入Spring的容器 **(hashMap:key =》value —–indexController 名字 =》indexController的对象)**，需要使用的时候通过key直接取出来使用。</p>
-<h4 id="Spring-依赖注入DI"><a href="#Spring-依赖注入DI" class="headerlink" title="Spring 依赖注入DI"></a>Spring 依赖注入DI</h4><p>详见：<a target="_blank" rel="noopener" href="http://c.biancheng.net/view/4253.html">http://c.biancheng.net/view/4253.html</a></p>
-<p>依赖注入（Dependency Injection，DI）和控制反转含义相同，它们是从两个角度描述的同一个概念。</p>
-<p>当某个 Java 实例需要另一个 Java 实例时，传统的方法是由调用者创建被调用者的实例（例如，使用 new 关键字获得被调用者实例），而使用 Spring 框架后，被调用者的实例不再由调用者创建，而是由 Spring 容器创建，这称为控制反转。</p>
-<p>Spring 容器在创建被调用者的实例时，会自动将调用者需要的对象实例注入给调用者，这样，调用者通过 Spring 容器获得被调用者实例，这称为依赖注入。</p>
-<p>依赖注入主要有两种实现方式，分别是属性 setter 注入和构造方法注入。</p>
-
+letterc:
+    mov ch,00
+    mov cl,ds:[si]
+    jcxz ok
+    cmp cx,97
+    jb next
+    cmp cx,122
+    ja next
+    sub cx,32
+    mov ds:[si],cl
+next:
+    inc si
+    jmp letterc
+ok: 
+    ret
+codesg ends
+end begin<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -597,7 +568,7 @@ public class IndexController &#123;
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">老叭美食家</a>
+                    <a href="/about" rel="external nofollow noreferrer">美食家李老叭</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -607,7 +578,7 @@ public class IndexController &#123;
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://laobameishijia.github.io/2021/06/01/shi-xun-day1-day2/">https://laobameishijia.github.io/2021/06/01/shi-xun-day1-day2/</a>
+                    <a href="https://laobameishijia.github.io/2021/10/20/hui-bian-yu-yan-xue-xi-biao-zhi-ji-cun-qi/">https://laobameishijia.github.io/2021/10/20/hui-bian-yu-yan-xue-xi-biao-zhi-ji-cun-qi/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -620,7 +591,7 @@ public class IndexController &#123;
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">老叭美食家</a>
+                    <a href="/about" target="_blank">美食家李老叭</a>
                     !
                 </span>
             </div>
@@ -645,8 +616,8 @@ public class IndexController &#123;
                     
                         <div class="article-tag">
                             
-                                <a href="/tag/%E5%AE%9E%E8%AE%AD/">
-                                    <span class="chip bg-color">实训</span>
+                                <a href="/tag/%E6%B1%87%E7%BC%96/">
+                                    <span class="chip bg-color">汇编</span>
                                 </a>
                             
                         </div>
@@ -958,36 +929,50 @@ public class IndexController &#123;
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/06/01/hello-world/">
+                <a href="/2021/10/20/hui-bian-yu-yan-xue-xi-biao-zhi-ji-cun-qi/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/13.jpg" class="responsive-img" alt="汇编语言学习-标志寄存器">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">汇编语言学习-标志寄存器</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            falg寄存器-标志寄存器每一位都有专门的含义,记录特定的信息
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-01
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-20
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            老叭美食家
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    研究生预备学习
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tag/%E6%B1%87%E7%BC%96/">
+                        <span class="chip bg-color">汇编</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -999,31 +984,31 @@ public class IndexController &#123;
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/05/28/lan-qiu-bi-sai-shu-ju-tong-ji/">
+                <a href="/2021/10/19/jie-jue-zhu-ti-dai-ma-kuai-mei-you-xing-hao-de-wen-ti/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/4.jpg" class="responsive-img" alt="篮球比赛数据统计">
+                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/17.jpg" class="responsive-img" alt="解决主题代码块没有行号的问题">
                         
-                        <span class="card-title">篮球比赛数据统计</span>
+                        <span class="card-title">解决主题代码块没有行号的问题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            强迫症,显示不出来就有点难受
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-19
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/category/%E6%95%B0%E6%8D%AE/" class="post-category">
-                                    数据
+                            <a href="/category/hexo%E4%B8%BB%E9%A2%98/" class="post-category">
+                                    hexo主题
                                 </a>
                             
                             
@@ -1033,8 +1018,8 @@ public class IndexController &#123;
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tag/%E5%A4%A7%E5%AD%A6%E7%AF%AE%E7%90%83/">
-                        <span class="chip bg-color">大学篮球</span>
+                    <a href="/tag/%E4%BB%A3%E7%A0%81%E5%9D%97%E8%A1%8C%E6%95%B0/">
+                        <span class="chip bg-color">代码块行数</span>
                     </a>
                     
                 </div>
