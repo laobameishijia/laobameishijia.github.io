@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="汇编语言学习-[bx]和loop指令, 老叭美食家">
+    <meta name="keywords" content="汇编语言学习-内中断, 老叭美食家">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>汇编语言学习-[bx]和loop指令 | 老叭美食家</title>
+    <title>汇编语言学习-内中断 | 老叭美食家</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/awesome/css/all.css">
@@ -321,12 +321,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/20.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">汇编语言学习-[bx]和loop指令</h1>
+                    <h1 class="description center-align post-title">汇编语言学习-内中断</h1>
                 </div>
             </div>
         </div>
@@ -467,7 +467,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-10-10
+                    2021-10-21
                 </div>
                 
 
@@ -481,14 +481,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    545
+                    1.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    4 分
                 </div>
                 
 
@@ -511,63 +511,95 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="bx"><a href="#bx" class="headerlink" title="[bx]"></a>[bx]</h2><p><code>mov ax,[bx]</code>, bx中存放的数据作为一个偏移地址EA,段地址SA默认在ds中,将SA:EA处的数据送入ax中,<strong>注意这里是字型数据哦！</strong> 即:<code>ax = ds*16 + bx</code></p>
-<p>建议以后再写汇编语言程序的时候,把[bx]前面的段寄存器显式地标注出来,也就是所谓的<strong>段前缀</strong>。</p>
-<h2 id="loop指令"><a href="#loop指令" class="headerlink" title="loop指令"></a>loop指令</h2><p>loop 指令就是一个循环指令，注意cx循环次数,和bx在循环过程中的变化。</p>
-<h2 id="综合应用"><a href="#综合应用" class="headerlink" title="综合应用"></a>综合应用</h2><p>计算ffff:0-ffff:b单元中的数据的和,结果存储在dx中</p>
-<h3 id="数据相加的问题"><a href="#数据相加的问题" class="headerlink" title="数据相加的问题"></a>数据相加的问题</h3><ul>
-<li>dx = dx + 内存中的8位数据 类型不匹配</li>
-<li>dl = dl + 内存中的8位数据 结果越界</li>
+                <h1 id="标志寄存器"><a href="#标志寄存器" class="headerlink" title="标志寄存器"></a>标志寄存器</h1><h2 id="思维导图"><a href="#思维导图" class="headerlink" title="思维导图"></a>思维导图</h2><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211021105626.png" alt="思维导图"></p>
+<h2 id="debug单步执行命令的原理"><a href="#debug单步执行命令的原理" class="headerlink" title="debug单步执行命令的原理"></a>debug单步执行命令的原理</h2><p>基本上,CPU在执行完一条指令之后,如果检测到标志寄存器的TF位为1,则产生单步中断,引发中断的过程。单步中断的中断类型码为1,则它引发的中断过程如下:</p>
+<ul>
+<li>取得中断码类型1</li>
+<li>标志寄存器入栈,TF\IF设置为0</li>
+<li>CS、IP入栈</li>
+<li>IP=(1<em>4),CS=(1</em>4+2)</li>
 </ul>
-<p>解决方案：利用一个16位的寄存器来做中介。将内存单元中的8位数据赋值到一个16位寄存器ax中<strong>高八位要初始化为0</strong>,再将ax中的数据加到dx上,从而使两个运算对象的类型匹配并且结果不会超界。</p>
-<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h3 id="1-and-2"><a href="#1-and-2" class="headerlink" title="1 and 2"></a>1 and 2</h3><p>编程 ,向内存 0:200<del>0:23F依次传送数据0</del>63</p>
-<pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:codeseg
+<p>首先Debug提供了单步中断的中断处理程序,功能为显示所有寄存器中的内容后等待输入命令。然后,在使用t命令执行执行时,Debug将TF设置为1,使得CPU工作于中断方式下,则在CPU执行完这条指令后就引发单步中断,执行单步中断的中断处理程序,所有寄存器中的内容将被显示在屏幕上，并且等待输入命令。</p>
+<p>在进入中断处理程序之前,设置TF=0。从而避免CPU在执行中断处理程序的时候发生单步中断。这就是为什么在终端过程中有TF=0这一步。</p>
+<p>最后,CPU提供单步中断功能的原因就是，为单步跟踪程序的执行过程，提供实现机制</p>
+<h2 id="响应中断的特殊情况"><a href="#响应中断的特殊情况" class="headerlink" title="响应中断的特殊情况"></a>响应中断的特殊情况</h2><p>一般情况下,CPU在执行完当前指令后，如果检测到中断信息，就响应中断，引发中断过程。可是，在有些情况下，CPU在执行完当前指令后，即便是发生中断，也不会相响应。对于这些情况，下面列举其中一种情况来进行说明。</p>
+<p>在执行完向ss寄存器传送数据的指令后，即便是发生中断，CPU也不会相应。这样做的主要原因是，SS:SP联合指向栈顶，而对它们的设置应该连续完成。如果在设置完ss的指令后，CPU响应中断，引发中断过程，要在栈中压入标志寄存器，cs和ip的值。而ss改变，sp并未改变，ss：sp指向的不是正确的栈顶，将引起出错误。所以CPU在执行完设置ss 的指令后，不响应中断。</p>
+<p>所以我们应该利用这个特性，将设置ss和sp的指令连续存放。</p>
+<h2 id="实验12"><a href="#实验12" class="headerlink" title="实验12"></a>实验12</h2><blockquote>
+<p>编写0号中断的处理程序,使得在除法溢出发生时,在屏幕中间显示字符串”divide error!”,然后返回到DOS</p>
+</blockquote>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>编写能显示divide error！的0号中断处理程序</li>
+<li>将终端服务程序移动到0000:0200处</li>
+<li>修改中断向量表中的0号中断的入口地址,使其指向0000:0200</li>
+</ul>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><blockquote>
+<p>一些注意事项和问题就写到注释里面了,后面忘了的话记得看看</p>
+</blockquote>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:code
 
-codeseg segment
+code segment
 
-start: mov ax,0200H    ;这里第一次写成0H了 心里想的确实是0200 不知道怎么弄成0了
-      mov ds,ax
-    
-      mov bx,0H
-      mov cx,40H
-    
-s:  mov ds:[bx],bl
-    inc bx
-    loop s
-    
-    mov ax,4c00H
-    int 21h
-codeseg ends
-end start
-end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="3"><a href="#3" class="headerlink" title="3"></a>3</h3><p>将”mov ax,4c00h”之前的指令复制到内存0:200h处,补全程序,上机调试,跟踪运行结果.</p>
-<pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:codeseg
-
-codeseg segment
-
-start: mov ax,cs
+start:
+;清屏
+    mov ah,15
+    int 10h
+    mov ah,0
+    int 10h
+;将do0送入内存0000:0200处
+    ;ds:si传送的原始位置
+    mov ax,code
     mov ds,ax
-
-    mov ax,0020h
+    mov si,offset do0
+    ;es:di传送的目的位置
+    mov ax,0000
     mov es,ax
-    mov bx,0
-    mov cx,17h;第一次写的21(10进制),看网上有说18的，感觉不对呀，我17的话就刚刚好是可以复制完的
-    ;还有view里面cpu指令前面的地址是该指令的起始地址 你还要加上这个指令的大小,才算是下一条指令的相对地址,而且别忽略了最初的地址是从零开始算的
+    mov di,0200h;！！！！0200后面要加h啊！！ 
+    ;传送的长度
+    mov cx,offset do0end - offset do0
+    ;传送的方向 正向传送
+    cld
+    rep movsb
+;将do0的入口地址0000:0200存储在中断向量表0号表项中
+    mov ax,0000
+    mov es,ax
+    mov word ptr es:[0],0200h ;！！！！在没有寄存器显示指示操作的数据大小的时候,一定要用word或者byte显式指明
+    mov word ptr es:[2],0000h ;另外你只用写往里面存的数就行了,不用按照高低字节改变,他自己会改变的
 
-s:  mov al,ds:[bx];标签表示的是相对于段定义起始位置的位置
-    mov es:[bx],al
-    inc bx
-    loop s
-
+    mov ax,1000
+    mov bh,1
+    div bh
+    mov ax,4c00h
+    int 21
+;可以显示 overflow的中断处理程序 do0
+do0:
+    jmp do0start
+    db 'divide error!'
+do0start:
+    mov ax,cs
+    mov ds,ax
+    mov si,0202h ;设置ds:si指向字符串
+    
+    mov ax,0B800H
+    mov es,ax
+    mov di,12*160+36*2 ;设置es:di指向字符串
+    
+    ;明白为什么这里它不用这个rep的命令了把,因为显存里面的结构是 要显示的字符+颜色背景啥的,但是这个只能是一个一个的加
+    mov cx,13;设置字符串长度
+    ; cld;设置传输方向
+    ; rep movsb
+    s:
+        mov al,[si]
+        mov es:[di],al
+        inc si
+        add di,2;为什么不用rep命令的原因就在这
+        loop s
     mov ax,4c00h
     int 21h
-codeseg ends
-end start
-end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211010160654.png" alt="运行结果"></p>
-
+do0end:
+    nop
+code ends
+end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -593,7 +625,7 @@ end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://laobameishijia.github.io/2021/10/10/hui-bian-yu-yan-xue-xi-bx-he-loop-zhi-ling/">https://laobameishijia.github.io/2021/10/10/hui-bian-yu-yan-xue-xi-bx-he-loop-zhi-ling/</a>
+                    <a href="https://laobameishijia.github.io/2021/10/21/hui-bian-yu-yan-xue-xi-nei-zhong-duan/">https://laobameishijia.github.io/2021/10/21/hui-bian-yu-yan-xue-xi-nei-zhong-duan/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -944,29 +976,30 @@ end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/10/11/hui-bian-yu-yan-xue-xi-geng-ling-huo-de-ding-wei-nei-cun-di-zhi-de-fang-fa/">
+                <a href="/2021/10/21/hui-bian-yu-yan-xue-xi-nei-zhong-duan/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/23.jpg" class="responsive-img" alt="汇编语言学习-更灵活的定位内存地址的方法">
+                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/20.jpg" class="responsive-img" alt="汇编语言学习-内中断">
                         
-                        <span class="card-title">汇编语言学习-更灵活的定位内存地址的方法</span>
+                        <span class="card-title">汇编语言学习-内中断</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            loop循环指令和[bx]段内偏移的综合应用
+                            中断信息是要求cpu马上进行某种处理,并向所要进行的该种处理提供必备的参数的通知信息
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-11
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-21
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -979,6 +1012,7 @@ end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -997,24 +1031,24 @@ end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/10/10/hui-bian-yu-yan-xue-xi-bao-han-duo-ge-duan-de-cheng-xu/">
+                <a href="/2021/10/20/hui-bian-yu-yan-xue-xi-biao-zhi-ji-cun-qi/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/2.jpg" class="responsive-img" alt="汇编语言学习-包含多个段的程序">
+                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/13.jpg" class="responsive-img" alt="汇编语言学习-标志寄存器">
                         
-                        <span class="card-title">汇编语言学习-包含多个段的程序</span>
+                        <span class="card-title">汇编语言学习-标志寄存器</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            在同一个段中存放数据、代码、栈 || 将数据、代码、栈放入不同段中
+                            falg寄存器-标志寄存器每一位都有专门的含义,记录特定的信息
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-10
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-20
                             </span>
                         <span class="publish-author">
                             
