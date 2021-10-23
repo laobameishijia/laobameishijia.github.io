@@ -20,7 +20,7 @@ tags:
 
 ## 思维导图
 
-![20211023100523](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211023100523.png)
+![思维导图](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211023100523.png)
 
 ## BIOS和DOS中断例程的安装过程
 
