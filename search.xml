@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>汇编语言学习-外中断</title>
+      <link href="/2021/10/24/hui-bian-yu-yan-xue-xi-wai-zhong-duan/"/>
+      <url>/2021/10/24/hui-bian-yu-yan-xue-xi-wai-zhong-duan/</url>
+      
+        <content type="html"><![CDATA[<h1 id="外中断"><a href="#外中断" class="headerlink" title="外中断"></a>外中断</h1><h2 id="关于DOS-box是否真的操作硬件和内存的疑惑"><a href="#关于DOS-box是否真的操作硬件和内存的疑惑" class="headerlink" title="关于DOS-box是否真的操作硬件和内存的疑惑"></a>关于DOS-box是否真的操作硬件和内存的疑惑</h2><p>DOSBox is a <code>DOS-emulator</code> that uses the <code>SDL-library</code>which makes DOSBox very easy to port to different platforms. DOSBox has already been ported to many different platforms, such as Windows, BeOS, Linux, MacOS X…</p><p><code>Simple DirectMedia Layer is a cross-platform development library designed to provide low level access to audio, keyboard, mouse, joystick, and graphics hardware via OpenGL and Direct3D.</code>It is used by video playback software, emulators, and popular games including Valve’s award winning catalog and many Humble Bundle games.</p><p>SDL officially supports Windows, Mac OS X, Linux, iOS, and Android. Support for other platforms may be found in the source code.</p><p>SDL is written in C, works natively with C++, and there are bindings available for several other languages, including C# and Python.</p><h2 id="为什么有这个疑惑呢？"><a href="#为什么有这个疑惑呢？" class="headerlink" title="为什么有这个疑惑呢？"></a>为什么有这个疑惑呢？</h2><p>在之前的实验中，我们在中断向量表0000:0200至0000:02FF的部分增添了新的0号中断例程，并且修改了0号表项的入口地址，这样做，是不是影响了后续的程序呢？后面的程序是不是也会同样会收到影响呢？</p><p>好像是没有的,因为后面程序在<code>div指令溢出后</code>总是跑到一个循环里出不来</p><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211024105838.png" alt="1句"></p><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211024105726.png" alt="2，3句"></p><p><strong>难道每次模拟的时候都会初始化？？也不是没有可能</strong></p><blockquote><p>通过本次实验的效果来看的话，上面的这个猜想是对的，也就是说DOS-box在每次重新打开的时候都会初始化，但是如果你不关闭这个DOS环境的话，它还是会影响下面的</p></blockquote><h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>安装一个新的int 9中断例程</p><blockquote><p>功能: 在DOS下，按下‘A’键后，除非不再松开，如果松开就显示全屏的A，其他键照常使用</p></blockquote><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul><li>编写新的int 9 中断例程</li><li>保存原有的int 9 地址</li><li>安装新的int 9 中断例程</li></ul><blockquote><p>感觉整个章节的思路比较有借鉴意义，当我没有不太想重新写一个函数，但是又要改善原有函数的功能的话，可以在新函数中去调用原函数，以屏蔽掉繁琐的步骤，更好的完善自己改善的功能。</p></blockquote><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:codestack segment    db 128 dup(0)stack endscode segmentstart:    mov ax,stack    mov ss,ax    mov sp,128    push cs    pop ds    mov ax,0    mov es,ax    mov si,offset int9    mov di,204h    mov cx,offset int9end-offset int9    cld    rep movsb    push es:[9*4]    pop es:[200h]    push es:[9*4+2]    pop es:[202h]    cli    mov word ptr es:[9*4],204h    mov word ptr es:[9*4+2],0    sti;     mov ax,0b800h;     mov es,ax;     mov ah,'a'; s:;     mov es:[160*12+40*2],ah;     call delay;     inc ah;     cmp ah,'z';     jna s    mov ax,4c00h    int 21hint9:    push ax    push bx    push cx    push es    in al,60h        pushf    call dword ptr cs:[200h]    cmp al,1eh+80h    je printA    jmp int9retprintA:    ;if loose A    mov ax,0b800h    mov es,ax    mov bx,0    mov cx,2000s2:     mov byte ptr es:[bx],'A'    add bx,2    loop s2int9ret:    pop es    pop cx    pop bx    pop ax    iretint9end:    nopcode endsend start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><strong>得先运行程序,然后在按下a就会有全屏A的效果了</strong></p><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211024204149.png" alt="20211024204149"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 研究生预备学习 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 汇编 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>汇编语言学习-端口</title>
       <link href="/2021/10/23/hui-bian-yu-yan-xue-xi-duan-kou/"/>
       <url>/2021/10/23/hui-bian-yu-yan-xue-xi-duan-kou/</url>

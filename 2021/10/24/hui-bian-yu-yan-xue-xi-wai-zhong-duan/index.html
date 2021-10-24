@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="leetcode6-判断链表中是否存在环, 老叭美食家">
+    <meta name="keywords" content="汇编语言学习-外中断, 老叭美食家">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>leetcode6-判断链表中是否存在环 | 老叭美食家</title>
+    <title>汇编语言学习-外中断 | 老叭美食家</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/awesome/css/all.css">
@@ -321,12 +321,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">leetcode6-判断链表中是否存在环</h1>
+                    <h1 class="description center-align post-title">汇编语言学习-外中断</h1>
                 </div>
             </div>
         </div>
@@ -442,8 +442,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tag/leetcode/">
-                                <span class="chip bg-color">leetcode</span>
+                            <a href="/tag/%E6%B1%87%E7%BC%96/">
+                                <span class="chip bg-color">汇编</span>
                             </a>
                         
                     </div>
@@ -454,8 +454,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/category/%E9%93%BE%E8%A1%A8/" class="post-category">
-                                链表
+                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                研究生预备学习
                             </a>
                         
                     </div>
@@ -467,7 +467,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-14
+                    2021-10-24
                 </div>
                 
 
@@ -481,14 +481,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    649
+                    721
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    3 分
                 </div>
                 
 
@@ -511,47 +511,118 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="leetcode6-判断链表中是否存在环"><a href="#leetcode6-判断链表中是否存在环" class="headerlink" title="leetcode6-判断链表中是否存在环"></a>leetcode6-判断链表中是否存在环</h1><p>这道题感觉很难嗷！ 但是确实是属于简单题的行列( 我是fw )，全程都在看解析。</p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="快慢指针"><a href="#快慢指针" class="headerlink" title="快慢指针"></a>快慢指针</h3><p>本方法需要读者对「Floyd 判圈算法」（又称龟兔赛跑算法）有所了解。</p>
-<p>假想「乌龟」和「兔子」在链表上移动，「兔子」跑得快，「乌龟」跑得慢。当「乌龟」和「兔子」从链表上的同一个节点开始移动时，如果该链表中没有环，那么「兔子」将一直处于「乌龟」的前方；如果该链表中有环，那么「兔子」会先于「乌龟」进入环，并且一直在环内移动。等到「乌龟」进入环时，由于「兔子」的速度快，它一定会在某个时刻与乌龟相遇，即套了「乌龟」若干圈。</p>
-<p>作者：LeetCode-Solution<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/linked-list-cycle/solution/huan-xing-lian-biao-by-leetcode-solution/">https://leetcode-cn.com/problems/linked-list-cycle/solution/huan-xing-lian-biao-by-leetcode-solution/</a><br>来源：力扣（LeetCode）</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">bool hasCycle(struct ListNode* head) &#123;
-    if (head &#x3D;&#x3D; NULL || head-&gt;next &#x3D;&#x3D; NULL) &#123;
-        return false;
-    &#125;
-    struct ListNode* slow &#x3D; head;
-    struct ListNode* fast &#x3D; head-&gt;next;
-    while (slow !&#x3D; fast) &#123;
-        if (fast &#x3D;&#x3D; NULL || fast-&gt;next &#x3D;&#x3D; NULL) &#123;
-            return false;
-        &#125;
-        slow &#x3D; slow-&gt;next;
-        fast &#x3D; fast-&gt;next-&gt;next;
-    &#125;
-    return true;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <h1 id="外中断"><a href="#外中断" class="headerlink" title="外中断"></a>外中断</h1><h2 id="关于DOS-box是否真的操作硬件和内存的疑惑"><a href="#关于DOS-box是否真的操作硬件和内存的疑惑" class="headerlink" title="关于DOS-box是否真的操作硬件和内存的疑惑"></a>关于DOS-box是否真的操作硬件和内存的疑惑</h2><p>DOSBox is a <code>DOS-emulator</code> that uses the <code>SDL-library</code>which makes DOSBox very easy to port to different platforms. DOSBox has already been ported to many different platforms, such as Windows, BeOS, Linux, MacOS X…</p>
+<p><code>Simple DirectMedia Layer is a cross-platform development library designed to provide low level access to audio, keyboard, mouse, joystick, and graphics hardware via OpenGL and Direct3D.</code>It is used by video playback software, emulators, and popular games including Valve’s award winning catalog and many Humble Bundle games.</p>
+<p>SDL officially supports Windows, Mac OS X, Linux, iOS, and Android. Support for other platforms may be found in the source code.</p>
+<p>SDL is written in C, works natively with C++, and there are bindings available for several other languages, including C# and Python.</p>
+<h2 id="为什么有这个疑惑呢？"><a href="#为什么有这个疑惑呢？" class="headerlink" title="为什么有这个疑惑呢？"></a>为什么有这个疑惑呢？</h2><p>在之前的实验中，我们在中断向量表0000:0200至0000:02FF的部分增添了新的0号中断例程，并且修改了0号表项的入口地址，这样做，是不是影响了后续的程序呢？后面的程序是不是也会同样会收到影响呢？</p>
+<p>好像是没有的,因为后面程序在<code>div指令溢出后</code>总是跑到一个循环里出不来</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211024105838.png" alt="1句"></p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211024105726.png" alt="2，3句"></p>
+<p><strong>难道每次模拟的时候都会初始化？？也不是没有可能</strong></p>
+<blockquote>
+<p>通过本次实验的效果来看的话，上面的这个猜想是对的，也就是说DOS-box在每次重新打开的时候都会初始化，但是如果你不关闭这个DOS环境的话，它还是会影响下面的</p>
+</blockquote>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>安装一个新的int 9中断例程</p>
+<blockquote>
+<p>功能: 在DOS下，按下‘A’键后，除非不再松开，如果松开就显示全屏的A，其他键照常使用</p>
+</blockquote>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>编写新的int 9 中断例程</li>
+<li>保存原有的int 9 地址</li>
+<li>安装新的int 9 中断例程</li>
+</ul>
+<blockquote>
+<p>感觉整个章节的思路比较有借鉴意义，当我没有不太想重新写一个函数，但是又要改善原有函数的功能的话，可以在新函数中去调用原函数，以屏蔽掉繁琐的步骤，更好的完善自己改善的功能。</p>
+</blockquote>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:code
 
-<h4 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><ul>
-<li><p>时间复杂度：<code>O(N)</code>，其中 N 是链表中的节点数。</p>
-<ul>
-<li><p>当链表中不存在环时，快指针将先于慢指针到达链表尾部，链表中每个节点至多被访问两次。</p>
-</li>
-<li><p>当链表中存在环时，每一轮移动后，快慢指针的距离将减小一。而初始距离为环的长度，因此至多移动 N 轮。</p>
-</li>
-</ul>
-</li>
-<li><p>空间复杂度：<code>O(1)</code> 我们只使用了两个指针的额外空间。</p>
-</li>
-</ul>
-<h3 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h3><p>用哈希表来存储所有已经访问过的节点。每次我们到达一个节点，如果该节点已经存在于哈希表中，则说明该链表是环形链表，否则就将该节点加入哈希表中。重复这一过程，直到我们遍历完整个链表即可。</p>
-<p>重要的是哈希表的原理<br>知乎的文章： 具体还是你后面去看看相应的源码，会比较方便一些。</p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/144296454">https://zhuanlan.zhihu.com/p/144296454</a></p>
-<h4 id="复杂度分析-1"><a href="#复杂度分析-1" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><ul>
-<li><p>时间复杂度：<code>O(N)</code>，其中 <code>N</code> 是链表中的节点数。最坏情况下我们需要遍历每个节点一次。</p>
-</li>
-<li><p>空间复杂度：<code>O(N)</code>，其中 <code>N</code> 是链表中的节点数。主要为哈希表的开销，最坏情况下我们需要将每个节点插入到哈希表中一次。</p>
-</li>
-</ul>
+stack segment
+    db 128 dup(0)
+stack ends
+
+code segment
+start:
+    mov ax,stack
+    mov ss,ax
+    mov sp,128
+
+    push cs
+    pop ds
+
+    mov ax,0
+    mov es,ax
+
+    mov si,offset int9
+    mov di,204h
+    mov cx,offset int9end-offset int9
+    cld
+    rep movsb
+
+    push es:[9*4]
+    pop es:[200h]
+    push es:[9*4+2]
+    pop es:[202h]
+
+    cli
+    mov word ptr es:[9*4],204h
+    mov word ptr es:[9*4+2],0
+    sti
+
+;     mov ax,0b800h
+;     mov es,ax
+;     mov ah,'a'
+; s:
+;     mov es:[160*12+40*2],ah
+;     call delay
+;     inc ah
+;     cmp ah,'z'
+;     jna s
+
+    mov ax,4c00h
+    int 21h
+
+int9:
+    push ax
+    push bx
+    push cx
+    push es
+
+    in al,60h
+    
+    pushf
+    call dword ptr cs:[200h]
+
+    cmp al,1eh+80h
+    je printA
+    jmp int9ret
+printA:
+    ;if loose A
+    mov ax,0b800h
+    mov es,ax
+    mov bx,0
+    mov cx,2000
+s2: 
+    mov byte ptr es:[bx],'A'
+    add bx,2
+    loop s2
+
+
+int9ret:
+    pop es
+    pop cx
+    pop bx
+    pop ax
+    iret
+
+int9end:
+    nop
+
+code ends
+end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><strong>得先运行程序,然后在按下a就会有全屏A的效果了</strong></p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211024204149.png" alt="20211024204149"></p>
 
                 
             </div>
@@ -568,7 +639,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">老叭美食家</a>
+                    <a href="/about" rel="external nofollow noreferrer">美食家李老叭</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -578,7 +649,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://laobameishijia.github.io/2021/06/14/leetcode6-pan-duan-lian-biao-zhong-shi-fou-cun-zai-huan/">https://laobameishijia.github.io/2021/06/14/leetcode6-pan-duan-lian-biao-zhong-shi-fou-cun-zai-huan/</a>
+                    <a href="https://laobameishijia.github.io/2021/10/24/hui-bian-yu-yan-xue-xi-wai-zhong-duan/">https://laobameishijia.github.io/2021/10/24/hui-bian-yu-yan-xue-xi-wai-zhong-duan/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -591,7 +662,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">老叭美食家</a>
+                    <a href="/about" target="_blank">美食家李老叭</a>
                     !
                 </span>
             </div>
@@ -616,8 +687,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tag/leetcode/">
-                                    <span class="chip bg-color">leetcode</span>
+                                <a href="/tag/%E6%B1%87%E7%BC%96/">
+                                    <span class="chip bg-color">汇编</span>
                                 </a>
                             
                         </div>
@@ -929,46 +1000,48 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/06/14/leetcode5-fan-xiang-shu-chu-lian-biao/">
+                <a href="/2021/10/24/hui-bian-yu-yan-xue-xi-wai-zhong-duan/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/22.jpg" class="responsive-img" alt="leetcode5-反向输出链表">
+                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/13.jpg" class="responsive-img" alt="汇编语言学习-外中断">
                         
-                        <span class="card-title">leetcode5-反向输出链表</span>
+                        <span class="card-title">汇编语言学习-外中断</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            来自于CPU外部，当CPU外部有需要处理的事情发生的时候，相关芯片将向CPU发出相应的中断信息
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-14
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-24
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/category/%E9%93%BE%E8%A1%A8/" class="post-category">
-                                    链表
+                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    研究生预备学习
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tag/leetcode/">
-                        <span class="chip bg-color">leetcode</span>
+                    <a href="/tag/%E6%B1%87%E7%BC%96/">
+                        <span class="chip bg-color">汇编</span>
                     </a>
                     
                 </div>
@@ -982,31 +1055,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/06/11/leetcode4-shan-chu-lian-biao-jie-dian/">
+                <a href="/2021/10/23/hui-bian-yu-yan-xue-xi-duan-kou/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/11.jpg" class="responsive-img" alt="leetcode4-删除链表节点">
+                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/13.jpg" class="responsive-img" alt="汇编语言学习-端口">
                         
-                        <span class="card-title">leetcode4-删除链表节点</span>
+                        <span class="card-title">汇编语言学习-端口</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            和CPU直接相连的各种接口卡/主板上面的接口芯片/其他芯片,这些芯片中都有寄存器,CPU把它们当作端口处理,对他们进行统一编址.
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-23
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/category/%E9%93%BE%E8%A1%A8/" class="post-category">
-                                    链表
+                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    研究生预备学习
                                 </a>
                             
                             
@@ -1016,8 +1089,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tag/leetcode/">
-                        <span class="chip bg-color">leetcode</span>
+                    <a href="/tag/%E6%B1%87%E7%BC%96/">
+                        <span class="chip bg-color">汇编</span>
                     </a>
                     
                 </div>
