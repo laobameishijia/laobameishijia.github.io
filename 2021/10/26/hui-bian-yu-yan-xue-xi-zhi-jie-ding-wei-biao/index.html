@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="汇编语言学习-包含多个段的程序, 老叭美食家">
+    <meta name="keywords" content="汇编语言学习-直接定位表, 老叭美食家">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>汇编语言学习-包含多个段的程序 | 老叭美食家</title>
+    <title>汇编语言学习-直接定位表 | 老叭美食家</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/awesome/css/all.css">
@@ -321,12 +321,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">汇编语言学习-包含多个段的程序</h1>
+                    <h1 class="description center-align post-title">汇编语言学习-直接定位表</h1>
                 </div>
             </div>
         </div>
@@ -467,7 +467,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-10-10
+                    2021-10-26
                 </div>
                 
 
@@ -481,14 +481,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    753
+                    1.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    8 分
                 </div>
                 
 
@@ -511,152 +511,285 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="在代码段中使用数据"><a href="#在代码段中使用数据" class="headerlink" title="在代码段中使用数据"></a>在代码段中使用数据</h1><p>代码结构</p>
-<pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:code
+                <h1 id="直接定址表"><a href="#直接定址表" class="headerlink" title="直接定址表"></a>直接定址表</h1><h2 id="描述了单元长度的标号"><a href="#描述了单元长度的标号" class="headerlink" title="描述了单元长度的标号"></a>描述了单元长度的标号</h2><p>以前我们多采用后面不带冒号的形式进行编程</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">assume:code
+
 code segment
-      ··
-      ··
-      数据
-      ··
-      ··
+
+    a: db 1,2,3,4,5,6,7,8
+    b: dw 0
+
 start:
-      ··
-      ··
-      代码
-      ··
-      ··
-code ends
-
-end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h1 id="在代码段中使用栈"><a href="#在代码段中使用栈" class="headerlink" title="在代码段中使用栈"></a>在代码段中使用栈</h1><p>代码结构跟上面的差不多,就是要在start中初始化段指针(SS\SP)</p>
-<h1 id="将数据、代码、栈放入不同的段"><a href="#将数据、代码、栈放入不同的段" class="headerlink" title="将数据、代码、栈放入不同的段"></a>将数据、代码、栈放入不同的段</h1><h2 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h2><pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:code, ds:data, ss:stack
-
-data segment
-    ··
-data ends
-
-stack segment
-    ··
-stack ends
-
-
-code segment
-start:
-      ··
-      ··
-      代码
-      ··
-      ··
-code ends
-
-end start
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>结构是这个结构,但是在代码段中,仍然需要使用初始化指令来将相应的ds\ss\sp寄存器初始化才可以。总而言之，cpu到底如何处理我们定义的段的中的内容,是当作指令执行，还是当作数据访问，还是当作栈空间,完全是靠程序中具体的汇编指令,和汇编指令对cs:ip、ss:sp、ds等寄存器的设置来决定的。</p>
-<h1 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h1><p>前面几个都是给出程序来调试观察的。就不列举出来了</p>
-<h2 id="5"><a href="#5" class="headerlink" title="5"></a>5</h2><p>编写code总的代码段,将a段和b段中的数据依次相加,将结果保存在c段中。</p>
-<pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:code
-
-a segment
-    db 1,2,3,4,5,6,7,8
-a ends
-
-b segment
-    db 1,2,3,4,5,6,7,8
-b ends
-
-c segment
-    db 0,0,0,0,0,0,0,0
-c ends
-
-;把a 、b段中的数据相加，结果存储到c段当中
-code segment
-
-start: mov ax,a
-    mov ds,ax
-    
-    mov ax,b
-    mov es,ax
-
-  mov ax,c
-  mov ss,ax
-  mov sp,8
-    
-    mov bx,0
-    mov cx,7 ;方法1
-
-
-; 这样的话解决不了最后08+08的情况, 栈顶指针刚好是0001-> FFFF 这样10放高地址就恰好被溢出了。
-; 所以我觉得,还有一种方式是最后一个元素，用al，其他的用ah, 按照栈元素来说，这样做的是对的
-
-; 代做: 这样做很麻烦倒是,更好的方式应该是分别计算两个字节的，然后组成一个字，同时push进去，这样的话就不用处理最后一个栈顶元素的问题了
-; 方法1-------是个错误的方法，解决不了栈顶最初始的元素
-s: mov ah,ds:[bx]
-  add ah,es:[bx]
-  push ax
-  add sp,1
-;    mov c:[bx],al
-  inc bx
-  loop s
-
-;处理最后一个元素
-    mov al,ds:[bx]
-    add al,es:[bx]
-    push ax
-
-;方法二------推荐--正确
-    ; mov cx,4 ;方法2
-; s: mov ah,ds:[bx]
-;    add ah,es:[bx]
-;    add bx,1   
-
-;    mov al,ds:[bx]
-;    add al,es:[bx]
-;    add bx,1
-
-;    push ax
-;    loop s
-
-    mov ax,4c00h
-    int 21h
-
-code ends
-
-end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="6"><a href="#6" class="headerlink" title="6"></a>6</h2><p>编写code中的代码,用push指令将a段中的前八个字型数据,逆序存储到b段中。</p>
-<pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:code
-
-a segment
-    dw 1,2,3,4,5,6,7,8,9,0ah,0bh,0ch,0dh,0eh,0fh,0ffh
-a ends
-
-b segment
-    dw 0,0,0,0,0,0,0,0
-b ends
-
-code segment
-
-start: mov ax,b
-    mov ss,ax
-    mov sp,10h;8个字型数据,栈顶指针的大小应该是10h哦！
-    
-    mov ax,a
-    mov es,ax
-    
-    mov bx,0
+    mov si,offset a
+    mov bx,offset b
     mov cx,8
-
-s: push es:[bx]
-    add bx,2;bx这里要自增2哦！
+s:
+    mov al,cs:[si]
+    mov ah,0
+    add cs:[bx],ax
+    inc si
     loop s
 
     mov ax,4c00h
     int 21h
-
 code ends
-end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>But the mark only represent the address of the memory. We still have another form of the mark that does not have the colon. For example.</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">assume:code
+
+code segment
+
+    a db 1,2,3,4,5,6,7,8
+    b dw 0
+
+start:
+    mov si,offset a
+    mov bx,offset b
+    mov cx,8
+s:
+    mov al,a:[si]
+    mov ah,0
+    add bs,ax
+    inc si
+    loop s
+
+    mov ax,4c00h
+    int 21h
+code ends
+end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>mov al,a[si]</code> equal to <code>mov al,cs:0[si]</code></p>
+<p>So, we could find  the way helps us access the address of memory in a neat form. We call it data-mark.他标记了存储数据的单元的地址和长度，它不同于仅仅表示地址的标号。</p>
+<h2 id="在其他段使用数据标号"><a href="#在其他段使用数据标号" class="headerlink" title="在其他段使用数据标号"></a>在其他段使用数据标号</h2><p>一般来说，我们不在代码段中定义数据，而是将数据定义到其他段中，在其他段中，我们也可以使用数据标号来描述数据单元的地址和长度。</p>
+<p><strong>注意：在后面加有‘：’的地址只能在代码段中使用，不能在其他段使用。</strong></p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>安装一个新的int 7ch中断例程</p>
+<blockquote>
+<p>功能: 1.clear the screen<br>2.set the foreground<br>3.set the background<br>4.move up one row</p>
+</blockquote>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>编写新的int 7ch 中断例程</li>
+<li>安装新的int 7ch 中断例程</li>
+</ul>
+<blockquote>
+<p>这个实验过程的代码出了很多问题，到最后终于改好了。</p>
+</blockquote>
+<h4 id="初期的改错思路"><a href="#初期的改错思路" class="headerlink" title="初期的改错思路"></a>初期的改错思路</h4><p>the major problem 是中断例程中<code>table dw sub1,sub2,sub3,sub4</code>无法正常运作。<br>给人的感觉好像，不能在程序中用一样.按照这种形式写的话，后面的set标号无法被正确的编译。不知道为什么都变成了table标号下面的??</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211025211433.png" alt="问题1"></p>
+<p>改成这种形式之后，才能在debug中的cpu看到正确的汇编代码，虽然代码段中把它们这些地址解析成了汇编指令</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211025210841.png" alt="问题2"></p>
+<p>通过后续的观察发现,其实代码是被正确解析了的，只是在cpu版块的显示上table段中的存放的数据被当作了指令。但是为什么程序不执行呢？</p>
+<blockquote>
+<p>这也是为什么要把jmp命令放在前面的原因，就是为了不让table段存放的数据被当作指令执行，这样的话，肯定有问题的</p>
+</blockquote>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211025212251.png" alt="改变写法后的对比图"></p>
+<h4 id="后期的改错思路"><a href="#后期的改错思路" class="headerlink" title="后期的改错思路"></a>后期的改错思路</h4><p>先整理一下初期思路中出错的原因，再分析一下是哪些基础的知识没有掌握好，导致我们这么长时间一直在纠错</p>
+<p><strong>初期思路：</strong></p>
+<ul>
+<li><p>1.jmp命令放在前面的原因，就是为了防止我们存储的数据被当作指令执行，这也是为什么你在debug模块中的cpu看汇编代码的时候，看起来好像很奇怪。但是它们都是正常的指令。<br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211026164553.png" alt="cpu视角下的汇编代码"></p>
+</li>
+<li><p>2.<code>tabledata dw sub1,sub2,sub3,sub4;</code>无论是tabledata 还是 sub1，sub2 这些地址都是相对于最开始运行的CS段而言的，而我们想要的是中断例程，也就是执行中断例程的时候的CS段。这样去调用的话，肯定会出错。说成白话的话就是，本来一棵树距离图书馆35米，但是现在要问你，这棵树举例教学楼多少米，你要是还说35米。那是不是有点刻舟求剑的意思了。<strong>所以，真正要采用的是相对地址，还得加上0200h才行！</strong>    这样才行<code>tabledata dw offset sub1 - offset interupt + 0200h,offset sub2 - offset interupt+0200h,offset sub3 - offset interupt+0200h,offset sub4 - offset interupt+0200h</code></p>
+</li>
+<li><ol start="3">
+<li><code>call word ptr [bx]</code>这样默认的访问地址是 <code>ds+bx</code>，而你想要的是<code>cs:[bx]</code>所以要把寄存器显式的标注出来啊</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>虽然中断例程处，确实没有办法通过<code>F7</code>进入，但是可以通过看<code>0000:0200h</code>内存中代码，就可以发现到底是不是你想要的了。<br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211026165549.png" alt="0000:0200处的代码"></li>
+</ol>
+</li>
+<li><ol start="5">
+<li>int指令和iret指令的作用，如果真的能很好的掌握这两个指令，也犯不着这么长时间才找到问题的源头。</li>
+</ol>
+</li>
+</ul>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:code
+
+code segment
+
+start:
+
+    mov ax,cs
+    mov ds,ax
+    mov si,offset interupt; set the ds:si point to the source address
+    mov ax,0
+    mov es,ax
+    mov di,0200h; set the es:di point to the destination address
+    mov cx,offset interuptend-offset interupt; cx the length of transmisson
+    cld ; the sequence of the transmit
+    rep movsb
+
+    mov ax,0
+    mov es,ax
+
+    cli
+    mov word ptr es:[7ch*4],0200h
+    mov word ptr es:[7ch*4+2],0
+    sti
+
+    ;调用之前的设置你需要再看一下要求是怎么设置的
+    mov ah,2
+    mov al,3
+    
+    int 7ch; 这里怎么跳到了4002h
+    ; call interupt
+
+    mov ax,4c00h
+    int 21h
+
+;所以程序大体上是没有问题的
+;但是加上table sub1,sub2,sub3,sub4之后就显的怪怪的
+;通过调试程序来看的话,只有mov bl,ah之后的程序是正常的
+;前面的程序好像都是错的一样,--通过CPU反汇编的指令来看的话,前面的几句都不对
+
+;我如果去掉table直接调用函数的话,就不会出现上述问题
+;对前面的简单程序进行操作后发现,这个table dw sub1,sub2,sub3,sub4不能在标号里面
+
+;也不是因为jmp short set语句和tabledata dw......两个语句的顺序问题
+;书上说
+interupt:
+    jmp short set
+
+    ;并不是写法是错的，而是你用错了
+    ;按道理来说,程序的执行CS IP 本来在code段
+    ;现在你引发了中断以后就跑到 中断例程中的CS IP了,但是此时 tabledata中保存的仍然是最开始的CS IP 这样一跳转的话,z
+    ; tabledata dw sub1,sub2,sub3,sub4;这种写法是错误的
+    ;写成下面这种形式的话，set标号就会重新显示出来
+    tabledata dw offset sub1 - offset interupt + 0200h,offset sub2 - offset interupt+0200h,offset sub3 - offset interupt+0200h,offset sub4 - offset interupt+0200h
+    ; tabledata dw offset sub1 - offset interupt + 0200h,offset sub2 - offset interupt + 0200h,offset sub3 - offset interupt + 0200h,offset sub4 - offset interupt + 0200h
+
+set:
+    push bx
+    push es
+    push cx
+    cmp ah,3;判读功能号是否大于3
+    ja sret
+    mov bl,ah
+    mov bh,0
+    add bx,bx;根据ah中的功能号计算对应子程序在table表中的偏移
+    add bx,offset tabledata-offset interupt + 0200h
+    ; call word ptr (offset tabledata-offset interupt)[bx+0200h];调用对应的功能子程序这句话有问题 
+    ; 上面这条指令错就错在 这样隐含的寄存器是ds 也就是 访问的是ds:[...]但是我们想要的是cs:[bx]
+    call word ptr cs:[bx]
+    ; add bx,7e02h
+    ; jmp cs:[bx]
+
+sret:
+    pop cx
+    pop es
+    pop bx
+    ; ret
+    iret
+
+;make the screen empty
+sub1:
+    push bx
+    push cx
+    push es
+
+    mov bx,0b800h
+    mov es,bx
+    mov bx,0
+    mov cx,2000
+sub1s:
+    mov byte ptr es:[bx],' '
+    add bx,2
+    loop sub1s
+
+    pop es
+    pop cx
+    pop bx
+    ret
+    ; jmp sret
+
+; set the foreground
+sub2:
+    push bx
+    push cx
+    push es
+
+    mov bx,0b800h
+    mov es,bx
+    mov bx,1
+    mov cx,2000
+sub2s:
+    and byte ptr es:[bx],11111000B
+    or es:[bx],al
+    add bx,2
+    loop sub2s
+
+    pop es
+    pop cx
+    pop bx
+    ret
+;set the background color
+sub3:
+    push bx
+    push cx
+    push es
+
+    mov cl,4
+    shl al,cl
+    mov bx,0b800h
+    mov es,bx
+    mov bx,1
+    mov cx,2000
+sub3s:
+    and byte ptr es:[bx],10001111B
+    or es:[bx],al
+    add bx,2
+    loop sub3s
+
+    pop es
+    pop cx
+    pop bx
+    ret
+;scroll up one line
+sub4:
+    push cx
+    push si
+    push di
+    push es
+    push ds
+
+    mov si,0b800h
+    mov es,si
+    mov ds,si
+    mov si,160;ds:si指向第n+1行
+    mov di,0;es:di指向第n行
+    cld
+    mov cx,24;共复制24行
+sub4s:
+    push cx
+    mov cx,160
+    rep movsb
+    pop cx
+    loop sub4s
+
+    mov cx,80
+    mov si,0
+sub4s1:
+    mov byte ptr [160*24+si],' ';最后一行清空
+    add si,2
+    loop sub4s1
+
+    pop ds
+    pop es
+    pop di
+    pop si
+    pop cx
+    ret
+
+interuptend:
+    nop
+code ends
+end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211026170129.png" alt="清屏"></p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211026170158.png" alt="设置前景色"></p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211026170051.png" alt="设置背景色"></p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211026170240.png" alt="向上滚动一行"></p>
+
                 
             </div>
             <hr/>
@@ -682,7 +815,7 @@ end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://laobameishijia.github.io/2021/10/10/hui-bian-yu-yan-xue-xi-bao-han-duo-ge-duan-de-cheng-xu/">https://laobameishijia.github.io/2021/10/10/hui-bian-yu-yan-xue-xi-bao-han-duo-ge-duan-de-cheng-xu/</a>
+                    <a href="https://laobameishijia.github.io/2021/10/26/hui-bian-yu-yan-xue-xi-zhi-jie-ding-wei-biao/">https://laobameishijia.github.io/2021/10/26/hui-bian-yu-yan-xue-xi-zhi-jie-ding-wei-biao/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1033,29 +1166,30 @@ end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/10/10/hui-bian-yu-yan-xue-xi-bx-he-loop-zhi-ling/">
+                <a href="/2021/10/26/hui-bian-yu-yan-xue-xi-zhi-jie-ding-wei-biao/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/16.jpg" class="responsive-img" alt="汇编语言学习-[bx]和loop指令">
+                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/13.jpg" class="responsive-img" alt="汇编语言学习-直接定位表">
                         
-                        <span class="card-title">汇编语言学习-[bx]和loop指令</span>
+                        <span class="card-title">汇编语言学习-直接定位表</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            loop循环指令和[bx]段内偏移的综合应用
+                            讨论如何有效合理地组织数据，以及相关的编程技术
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-10
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-26
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1068,6 +1202,7 @@ end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -1086,23 +1221,24 @@ end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/10/06/hui-bian-yu-yan-xue-xi-di-yi-ge-cheng-xu-1/">
+                <a href="/2021/10/24/hui-bian-yu-yan-xue-xi-wai-zhong-duan/">
                     <div class="card-image">
                         
-                        <img src="https://laobablog-1304292449.cos.ap-nanjing.myqcloud.com/3.jpg" class="responsive-img" alt="汇编语言学习-第一个程序-1">
                         
-                        <span class="card-title">汇编语言学习-第一个程序-1</span>
+                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/13.jpg" class="responsive-img" alt="汇编语言学习-外中断">
+                        
+                        <span class="card-title">汇编语言学习-外中断</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            编写完整的汇编语言程序,用编译和连接程序将他们编译链接成为可执行文件
+                            来自于CPU外部，当CPU外部有需要处理的事情发生的时候，相关芯片将向CPU发出相应的中断信息
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-06
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-24
                             </span>
                         <span class="publish-author">
                             
