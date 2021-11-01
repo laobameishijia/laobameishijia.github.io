@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="leetcode4-删除链表节点, 老叭美食家">
+    <meta name="keywords" content="动漫-斗破苍穹, 老叭美食家">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>leetcode4-删除链表节点 | 老叭美食家</title>
+    <title>动漫-斗破苍穹 | 老叭美食家</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/awesome/css/all.css">
@@ -321,12 +321,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">leetcode4-删除链表节点</h1>
+                    <h1 class="description center-align post-title">动漫-斗破苍穹</h1>
                 </div>
             </div>
         </div>
@@ -442,8 +442,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tag/leetcode/">
-                                <span class="chip bg-color">leetcode</span>
+                            <a href="/tag/%E6%96%97%E7%A0%B4%E8%8B%8D%E7%A9%B9/">
+                                <span class="chip bg-color">斗破苍穹</span>
                             </a>
                         
                     </div>
@@ -454,8 +454,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/category/%E9%93%BE%E8%A1%A8/" class="post-category">
-                                链表
+                            <a href="/category/%E5%8A%A8%E6%BC%AB/" class="post-category">
+                                动漫
                             </a>
                         
                     </div>
@@ -467,7 +467,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-11
+                    2021-10-31
                 </div>
                 
 
@@ -481,14 +481,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    515
+                    941
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    3 分
                 </div>
                 
 
@@ -511,52 +511,22 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="leecode4-删除链表节点"><a href="#leecode4-删除链表节点" class="headerlink" title="leecode4-删除链表节点"></a>leecode4-删除链表节点</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>说明：文章中的优秀思路均来自优秀题解的第一个，之所以截图是因为懒。。</p>
-<pre class="line-numbers language-C" data-language="C"><code class="language-C">给定单向链表的头指针和一个要删除的节点的值，定义一个函数删除该节点。
-
-返回删除后的链表的头节点。
-
-注意：此题对比原题有改动
-
-示例 1:
-
-输入: head &#x3D; [4,5,1,9], val &#x3D; 5
-输出: [4,1,9]
-解释: 给定你链表中值为 5 的第二个节点，那么在调用了你的函数之后，该链表应变为 4 -&gt; 1 -&gt; 9.
-示例 2:
-
-输入: head &#x3D; [4,5,1,9], val &#x3D; 1
-输出: [4,5,9]
-解释: 给定你链表中值为 1 的第三个节点，那么在调用了你的函数之后，该链表应变为 4 -&gt; 5 -&gt; 9.
-
-来源：力扣（LeetCode）
-链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;problems&#x2F;shan-chu-lian-biao-de-jie-dian-lcof
-著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>这里借鉴了前面看到优秀思路中的<strong>虚拟节点 virtualNode</strong> ,即在头节点head前再增加一个虚拟节点，可以避免讨论 <strong>tag</strong> 节点是否是头节点的情况。最后统一返回 <strong>virtualNode-&gt;next</strong></p>
-<ul>
-<li>遍历链表找到值相等的节点</li>
-<li>保留节点的前驱节点 <strong>prev</strong></li>
-<li>前驱节点 <strong>prev</strong> 指向删除节点 <strong>tag</strong> 的下一节点</li>
-</ul>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre class="line-numbers language-C" data-language="C"><code class="language-C">struct ListNode* deleteNode(struct ListNode* head, int val) &#123;
-    struct ListNode* tag &#x3D; head, * prev&#x3D;NULL;
-    struct ListNode* virtualNode &#x3D; (ListNode*)malloc(sizeof(ListNode));
-    virtualNode-&gt;next &#x3D; head;
-    virtualNode-&gt;val &#x3D; -1;
-    prev &#x3D; virtualNode;
-    while (tag-&gt;next)
-    &#123;
-        if (tag-&gt;val &#x3D;&#x3D; val) break;
-        prev &#x3D; tag;
-        tag &#x3D; tag-&gt;next;
-    &#125;
-    prev-&gt;next &#x3D; tag-&gt;next;
-    return virtualNode-&gt;next;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="优秀思路"><a href="#优秀思路" class="headerlink" title="优秀思路"></a>优秀思路</h2><h3 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h3><p>如果理解递归很困难，可以采用一种叫做<strong>坚定信念</strong>的理解方式。即假设<strong>deleteNode返回的值就是对应节点的下一个节点</strong>，那下面这个java版的递归就不难理解了。</p>
-<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210611093444.png" alt="20210611093444"></p>
+                <h1 id="三年之约"><a href="#三年之约" class="headerlink" title="三年之约"></a>三年之约</h1><p>三年之约真的拍了三年，虽然没有看过小说，但随着慢慢地在看动漫以后，内心里也真正喜欢上了萧炎。可能动漫中确实有些夸张的地方，但还是能从中得到些许关于生活的感悟。</p>
+<p>在第四季的结尾，萧炎临上云岚宗的那份淡然与宁静。他想到的是这三年间，帮助过他的人，自己经历过的事情。配上动漫的场景，的确看的出来制作方的确很用心。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211031212833.png" alt="临上云岚宗"></p>
+<p>在忍受退婚之后，他一直以打败纳兰嫣然为目标，不断地去磨砺自己，增强自己的本领。但直到药老因为耗尽灵魂力量而进入沉睡状态的时候，萧炎才真正地明白：原来他是那么依赖药老。从那之后，他开始独自面对复杂的情况，准备唤醒药老的丹药。</p>
+<p>萧炎也曾说，三年之约不过是给过去三年的一个交代。他真的是放下了，真正地专注于自己，而不是要打败谁。在经历了如此多的事情之后，他的内心真的已经很强大了。有的时候，我真觉得生活也是这样。我以前在高中的学习生活中，经常要以谁谁为目标，要在考试中超过他。但却总是事与愿违。经常因此灰心丧气许久。或者就是因为在打球的过程中，经常会有人嘲笑我，我就要非常努力地练球，证明给他们看。</p>
+<p>可以说，前期的这些的确给了我很大的学习动力，但我因此浪费了很多不必要的精力和时间。因为我可能并没有想清楚自己想要活成什么样子。真正改变我的，就是复读的那一年。从现在的角度上来看，复读真的锻炼了我心理。几乎永远都在教室的最后面，老师不记得我的名字，同学只认识舍友，几乎没有任何娱乐活动。在那段日子里，我真的感觉自己每天都在进步，也或许正是从那个时候开始，我才明白我是要做我自己，不需要去看别人。正是这些经历，我在上大学之后，就一直锻炼自己的一个人生活的能力。</p>
+<p>我再也不需要什么目标了，真正要做的就是不断地去完善自己。我不会左手，我就在寒假中努力的练习左手运球。我不会投三分，我就练深蹲和平板支撑锻炼自己的核心。并不是为了超越谁谁谁，也不是为了去赢得别人在球场上对我的赞美。就单纯地只是在完善自己。在家里没有球馆，没有场地，就自己去找没人的地方练习。令我很庆幸的是，路过的路人并没有嘲笑我。他们反而再说我是专业打球的。这真的令我很惭愧，也很高兴。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/QQ%E5%9B%BE%E7%89%8720211031215440.jpg" alt="在家时训练的场地"></p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/QQ%E5%9B%BE%E7%89%8720211031215449.jpg" alt="夕阳"></p>
+<p>在学习上也是这样，虽然的确跟很多优秀的同学实在是没法比较，但我也习惯了这种巨大的差距。并不是躺平，我只是不想因为别人，而改变了我自己前进的方向。</p>
+<p>就像片尾曲所唱的那样(<code>角色</code>)</p>
+<blockquote>
+<p>只需要 记得<br>从前现在 都要坚持 自我</p>
+</blockquote>
+<p>这文笔实在是差，写着写着就不知道写啥了。~~~~😀</p>
+<p>以后我也想把这里当成个日记。想写的就随便写，反正也没人认识我。也没什么人可以看到。</p>
 
                 
             </div>
@@ -573,7 +543,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">老叭美食家</a>
+                    <a href="/about" rel="external nofollow noreferrer">美食家李老叭</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -583,7 +553,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://laobameishijia.github.io/2021/06/11/leetcode4-shan-chu-lian-biao-jie-dian/">https://laobameishijia.github.io/2021/06/11/leetcode4-shan-chu-lian-biao-jie-dian/</a>
+                    <a href="https://laobameishijia.github.io/2021/10/31/dong-man-dou-po-cang-qiong/">https://laobameishijia.github.io/2021/10/31/dong-man-dou-po-cang-qiong/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -596,7 +566,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">老叭美食家</a>
+                    <a href="/about" target="_blank">美食家李老叭</a>
                     !
                 </span>
             </div>
@@ -621,8 +591,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tag/leetcode/">
-                                    <span class="chip bg-color">leetcode</span>
+                                <a href="/tag/%E6%96%97%E7%A0%B4%E8%8B%8D%E7%A9%B9/">
+                                    <span class="chip bg-color">斗破苍穹</span>
                                 </a>
                             
                         </div>
@@ -934,46 +904,48 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/06/14/leetcode6-pan-duan-lian-biao-zhong-shi-fou-cun-zai-huan/">
+                <a href="/2021/10/31/dong-man-dou-po-cang-qiong/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/6.jpg" class="responsive-img" alt="leetcode6-判断链表中是否存在环">
+                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/3.jpg" class="responsive-img" alt="动漫-斗破苍穹">
                         
-                        <span class="card-title">leetcode6-判断链表中是否存在环</span>
+                        <span class="card-title">动漫-斗破苍穹</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            看了三年之约,又碰上球队出线,真是happy~~
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-14
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-31
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/category/%E9%93%BE%E8%A1%A8/" class="post-category">
-                                    链表
+                            <a href="/category/%E5%8A%A8%E6%BC%AB/" class="post-category">
+                                    动漫
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tag/leetcode/">
-                        <span class="chip bg-color">leetcode</span>
+                    <a href="/tag/%E6%96%97%E7%A0%B4%E8%8B%8D%E7%A9%B9/">
+                        <span class="chip bg-color">斗破苍穹</span>
                     </a>
                     
                 </div>
@@ -987,31 +959,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/06/11/py-ru-he-gen-ju-zi-fu-chuan-lai-chuang-jian-dui-ying-de-lei/">
+                <a href="/2021/10/26/hui-bian-yu-yan-xue-xi-zhi-jie-ding-wei-biao/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/12.jpg" class="responsive-img" alt="py如何根据字符串来创建对应的类">
+                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/13.jpg" class="responsive-img" alt="汇编语言学习-直接定位表">
                         
-                        <span class="card-title">py如何根据字符串来创建对应的类</span>
+                        <span class="card-title">汇编语言学习-直接定位表</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            讨论如何有效合理地组织数据，以及相关的编程技术
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-26
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/category/%E5%8F%8D%E5%B0%84/" class="post-category">
-                                    反射
+                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    研究生预备学习
                                 </a>
                             
                             
@@ -1021,8 +993,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tag/python/">
-                        <span class="chip bg-color">python</span>
+                    <a href="/tag/%E6%B1%87%E7%BC%96/">
+                        <span class="chip bg-color">汇编</span>
                     </a>
                     
                 </div>
