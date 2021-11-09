@@ -11,9 +11,9 @@ password:
 toc: true
 mathjax: false
 summary: 基本的入门
-categories: 财经
+categories: 研究生预备学习
 tags:
-  - 基金
+  - Vue
 ---
 
 # 第一个Vue.js应用
