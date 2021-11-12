@@ -73,6 +73,89 @@ tags:
 
 > 通过我的观察发现，父组件中套用子组件，子组件在使用`$emit`向父组件传递数据的时候，一般都是触发的父组件中的函数或者是将父组件中实现的函数绑定在子组件的事件中。
 
+## 内容分发
+
+使用`<slot>`标签作为承载分发内容的出口，当需要混合父组件的内容和子组件的模板时，就会用到`slot`。换句话说就是当组件的内容由父组件决定时，就会使用`slot`。
+
+> emmmm....从效果的角度上面讲，和**父组件传递数据到子组件**是一样的，但是从代码的角度上面看的话，内容分发要简洁很多。
+
+### 单个插槽
+
+在子组件中使用特殊的`slot`元素就可以为这个子组件开启一个`slot`。父组件模板中，插入在子组件标签内的所有内容将代替子组件的`slot`标签和内容。
+
+### 具名插槽
+
+如果一个组件中有多个部分的内容是动态的,则需要为`slot`元素指定一个name属性，具有name属性的插槽称为具名插槽。具名插槽可以分发多个内容，也可以与单个插槽共存。
+
+### 作用域插槽
+
+使用`slot`元素后，子组件可向父组件传递数据，从而实现与父级的通信。Vue还提供了另外一种通信方式。在父级中，具有特殊属性`scope`的`template`元素被称为作用域插槽模板。`scope`的值对应一个临时变量名,此变量用于接受从子组件中传递的props对象。
+
+>这个例子不是很好理解，所以我把代码和效果贴上来了
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+ <meta charset="utf-8">
+ <title></title>
+</head>
+
+<body>
+ <h3>作用域插槽</h3>
+ <div id="app">
+  <my-component>
+   <template scope="myProps">
+    <p><span style="color:read;">{{myProps.text}}</span></p>
+   </template>
+  </my-component>
+ </div>
+ <script src="../../js/vue.js"" type=" text/javascript" charset="utf-8"></script>
+ <script type="text/javascript">
+  Vue.component('my-component', {
+   template: `
+   <div class="container">
+    <slot text="hello from child"></slot>
+   </div>
+ `,
+  })
+  new Vue({
+   el: '#app'
+  })
+ </script>
+</body>
+
+</html>
+```
+
+![效果](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211112111517.png)
+
+> 在上述代码中，slot元素的text属性被赋值为hello from child，在父组件中使用了作用域插槽模板，在template中使用了scope属性对应的变量myProps接受子组件数据,并通过{{myProps.text}}，将子组件的数据显示出来
+
+#### 作用域插槽2
+
+```html
+
+```
+![注释掉template之后](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211112113724.png)
+
+![没注释template之前](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211112113805.png)
+
+要是把这部分的template的部分注释掉的话,网页中就显示不出来之前的内容了
+
+因为slot本身是要父组件把内容分发给子组件的，这个temlpate的过程就相当于是
+
+- 先利用props将数据传递给子组件
+- 再利用scope把子组件中的props传递给父组件
+- 最后在template中将内容分发给子组件
+
+**至于这里面的循环是怎么实现的我就不是很清楚了**
+
+## 动态组件
+
+通过使用保留的componet元素动态地绑定到其is特性上，可以使多个组件匹配到一个挂载点，并动态进行切换。简直就是天然的Tab标签页面之间的转换。
+
 ## 作业
 
 ### 思路
