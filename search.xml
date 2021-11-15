@@ -29,7 +29,32 @@
     
     
     <entry>
-      <title>财经-基金</title>
+      <title>逆向工程核心原理-2-运行时压缩测试</title>
+      <link href="/2021/11/14/ni-xiang-gong-cheng-he-xin-yuan-li-3-yun-xing-shi-ya-suo-ce-shi/"/>
+      <url>/2021/11/14/ni-xiang-gong-cheng-he-xin-yuan-li-3-yun-xing-shi-ya-suo-ce-shi/</url>
+      
+        <content type="html"><![CDATA[<h1 id="运行时压缩测试"><a href="#运行时压缩测试" class="headerlink" title="运行时压缩测试"></a>运行时压缩测试</h1><p>运行时压缩器是针对PE文件而言的，可执行文件内部含有解压缩代码，文件在运行瞬间于内存中解压缩后执行。</p><h2 id="压缩器"><a href="#压缩器" class="headerlink" title="压缩器"></a>压缩器</h2><p><strong>使用目的</strong>: </p><ul><li>缩减PE文件大小</li><li>隐藏PE文件内部代码和资源</li></ul><h2 id="保护器"><a href="#保护器" class="headerlink" title="保护器"></a>保护器</h2><p><strong>使用目的</strong>：</p><ul><li>防止破解</li><li>保护代码与资源</li></ul><p>尤其游戏，防止你做外挂。</p><h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>就按照书上面给出的UPX压缩器做测试了。</p><p>具体的过程我是这么理解的，UPX给代码做了一个压缩，都放到<code>.UPX1</code>段中，加载入内存后，先运行<code>.UPX1段</code>中的解压缩代码，将文件中的压缩代码放到<code>.UPX0段</code>中。在解压缩过程完成后，跳转到源程序的执行入口执行程序。<br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211115113255.png" alt="UPX压缩后的结构对比"></p><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211115111250.png" alt="压缩前后的PEview"></p><p>至于最后是否是还原成跟压缩前的程序一致(其他的代码段和结构等等)，这我就有点不太清楚了。用debug工具调试，最后确实跳转到了程序入口，该入口与调试源程序的入口保持一致。</p><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211115111627.png" alt="debug工具调试"></p><blockquote><p>通过观察内存中的数据，对比发现，解压缩之后程序没有包含原来<code>.text</code>中的<code>IMPORT Hints/Names &amp; DLL Names</code><br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211115112308.png" alt="IMPORT Hints/Names &amp; DLL Names"><br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211115112433.png" alt="内存中的数据对比"></p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 研究生预备学习 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 逆向工程核心原理 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>财经-基金-2</title>
       <link href="/2021/11/13/cai-jing-ji-jin-2/"/>
       <url>/2021/11/13/cai-jing-ji-jin-2/</url>
       
