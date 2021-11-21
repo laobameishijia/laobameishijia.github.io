@@ -549,26 +549,26 @@
 <h2 id="spring项目入门"><a href="#spring项目入门" class="headerlink" title="spring项目入门"></a>spring项目入门</h2><p>  基础的创建项目+运行web项目 没什么可以说的</p>
 <h3 id="java反射"><a href="#java反射" class="headerlink" title="java反射"></a>java反射</h3><p>具体去看博客:<a target="_blank" rel="noopener" href="https://www.cnblogs.com/chanshuyi/p/head_first_of_reflection.html">https://www.cnblogs.com/chanshuyi/p/head_first_of_reflection.html</a></p>
 <p><strong>反射就是在运行时才知道要操作的类是什么，并且可以在运行时获取类的完整构造，并调用对应的方法。</strong><br>一般情况下，我们使用某个类时必定知道它是什么类，是用来做什么的。于是我们直接对这个类进行实例化，之后使用这个类对象进行操作。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">Apple apple &#x3D; new Apple(); &#x2F;&#x2F;直接初始化，「正射」
-apple.setPrice(4);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Apple</span> apple <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Apple</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//直接初始化，「正射」</span>
+apple<span class="token punctuation">.</span><span class="token function">setPrice</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>而反射则是一开始并不知道我要初始化的类对象是什么，自然也无法使用 new 关键字来创建对象了。<br>这时候，我们使用 JDK 提供的反射 API 进行反射调用：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">Class clz &#x3D; Class.forName(&quot;com.chenshuyi.reflect.Apple&quot;);
-Method method &#x3D; clz.getMethod(&quot;setPrice&quot;, int.class);
-Constructor constructor &#x3D; clz.getConstructor();
-Object object &#x3D; constructor.newInstance();
-method.invoke(object, 4);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Class</span> clz <span class="token operator">=</span> <span class="token class-name">Class</span><span class="token punctuation">.</span><span class="token function">forName</span><span class="token punctuation">(</span><span class="token string">"com.chenshuyi.reflect.Apple"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Method</span> method <span class="token operator">=</span> clz<span class="token punctuation">.</span><span class="token function">getMethod</span><span class="token punctuation">(</span><span class="token string">"setPrice"</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Constructor</span> constructor <span class="token operator">=</span> clz<span class="token punctuation">.</span><span class="token function">getConstructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Object</span> object <span class="token operator">=</span> constructor<span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+method<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>object<span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>上面两段代码的执行结果，其实是完全一样的。但是其思路完全不一样，第一段代码在未运行时就已经确定了要运行的类（Apple），而第二段代码则是在运行时通过字符串值才得知要运行的类（com.chenshuyi.reflect.Apple）</p>
 <h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>为什么在浏览器中输入<a target="_blank" rel="noopener" href="http://localhost:8080/index%E5%B0%B1%E8%83%BD%E5%A4%9F%E8%AE%BF%E9%97%AE%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84IndexController%E4%B8%AD%E7%9A%84index%E6%96%B9%E6%B3%95%EF%BC%9F">http://localhost:8080/index就能够访问到对应的IndexController中的index方法？</a></p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">@RestController
-public class IndexController &#123;
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">IndexController</span> <span class="token punctuation">&#123;</span>
 
-    @RequestMapping(&quot;&#x2F;index&quot;)
-    public String index()&#123;
-        return &quot;Lakers win&quot;;
-    &#125;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/index"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">index</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token string">"Lakers win"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>简单来说，就是在运行时，浏览器通过获取<code>/index</code>找到了IndexController这个类（可能是Spring容器在启动之前或者之后创建好的），然后调用方法index，向前端返回 Lakers win</p>
 <h4 id="Spring-IOC"><a href="#Spring-IOC" class="headerlink" title="Spring IOC"></a>Spring IOC</h4><p>详见博客：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ysocean/p/7466217.html">https://www.cnblogs.com/ysocean/p/7466217.html</a></p>
@@ -1185,7 +1185,7 @@ public class IndexController &#123;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">54.4k</span>
+                        class="white-color">53.9k</span>
             
             
             

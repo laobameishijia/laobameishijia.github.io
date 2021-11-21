@@ -541,26 +541,26 @@
 <p>看到后面还得需要去在补前面的<code>Code Coverage</code>的定义😱😱😱😱</p>
 <hr>
 <h2 id="已补完😀😀"><a href="#已补完😀😀" class="headerlink" title="已补完😀😀"></a>已补完😀😀</h2><p>在知道这个Code Coverage之后呢, 我们就可以把<strong>通过检测以及Code Coverage有上升/或者从未出现过</strong>的fuzz字符串保存下来.</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">class MutationCoverageFuzzer(MutationFuzzer):
-    def reset(self):
-        super().reset()
-        self.coverages_seen &#x3D; set()
-        # Now empty; we fill this with seed in the first fuzz runs
-        self.population &#x3D; []
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">MutationCoverageFuzzer</span><span class="token punctuation">(</span>MutationFuzzer<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">reset</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>reset<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>coverages_seen <span class="token operator">=</span> <span class="token builtin">set</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token comment"># Now empty; we fill this with seed in the first fuzz runs</span>
+        self<span class="token punctuation">.</span>population <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
 
-    def run(self, runner):
-        &quot;&quot;&quot;Run function(inp) while tracking coverage.
+    <span class="token keyword">def</span> <span class="token function">run</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> runner<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token triple-quoted-string string">"""Run function(inp) while tracking coverage.
            If we reach new coverage,
            add inp to population and its coverage to population_coverage
-        &quot;&quot;&quot;
-        result, outcome &#x3D; super().run(runner)
-        new_coverage &#x3D; frozenset(runner.coverage())
-        if outcome &#x3D;&#x3D; Runner.PASS and new_coverage not in self.coverages_seen:
-            # We have new coverage
-            self.population.append(self.inp)
-            self.coverages_seen.add(new_coverage)
+        """</span>
+        result<span class="token punctuation">,</span> outcome <span class="token operator">=</span> <span class="token builtin">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>run<span class="token punctuation">(</span>runner<span class="token punctuation">)</span>
+        new_coverage <span class="token operator">=</span> <span class="token builtin">frozenset</span><span class="token punctuation">(</span>runner<span class="token punctuation">.</span>coverage<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> outcome <span class="token operator">==</span> Runner<span class="token punctuation">.</span>PASS <span class="token keyword">and</span> new_coverage <span class="token keyword">not</span> <span class="token keyword">in</span> self<span class="token punctuation">.</span>coverages_seen<span class="token punctuation">:</span>
+            <span class="token comment"># We have new coverage</span>
+            self<span class="token punctuation">.</span>population<span class="token punctuation">.</span>append<span class="token punctuation">(</span>self<span class="token punctuation">.</span>inp<span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>coverages_seen<span class="token punctuation">.</span>add<span class="token punctuation">(</span>new_coverage<span class="token punctuation">)</span>
 
-        return result<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+        <span class="token keyword">return</span> result<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <blockquote>
 <p>The nice thing about this strategy is that, applied to larger programs, it will happily explore one path after the other – covering functionality after functionality. All that is needed is a means to capture the coverage.</p>
@@ -1204,7 +1204,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">54.4k</span>
+                        class="white-color">53.9k</span>
             
             
             

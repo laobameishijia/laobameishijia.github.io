@@ -481,7 +481,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    853
+                    785
                 </div>
                 
 
@@ -531,41 +531,41 @@ person1 &#x3D; Teacher(name&#x3D;&quot;张三&quot;)<span aria-hidden="true" cla
 <li>AuditRuleInclude-判断前面集合是否是后面集合的子集</li>
 <li>AuditRuleSame-判断两个字符串是否相等。</li>
 </ul>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">class AuditRule(Rule):
-    &quot;&quot;&quot;
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">AuditRule</span><span class="token punctuation">(</span>Rule<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
     TestCode:
-        rules &#x3D; &#123;&quot;age&quot;: AuditRule(&#39;test,test&#39;)&#125;
-        req &#x3D; &#123;&quot;age&quot;: &#39;test,test&#39;&#125;
-        print(validate(req, rules,return_info&#x3D;True))
-    &quot;&quot;&quot;
+        rules = &#123;"age": AuditRule('test,test')&#125;
+        req = &#123;"age": 'test,test'&#125;
+        print(validate(req, rules,return_info=True))
+    """</span>
 
-    def __init__(self, string: str):
-        Rule.__init__(self)
-        self.string &#x3D; string
-        self.value &#x3D; string.split(&#39;,&#39;)
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> string<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        Rule<span class="token punctuation">.</span>__init__<span class="token punctuation">(</span>self<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>string <span class="token operator">=</span> string
+        self<span class="token punctuation">.</span>value <span class="token operator">=</span> string<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">','</span><span class="token punctuation">)</span>
 
-    def check(self, arg: str):
-        if arg is None:
-            arg &#x3D; &quot;Null&quot;
-            self.set_error(&quot;excepted get |&quot; + self.string + &quot;| but get |&quot; + arg.replace(&quot;\&quot;&quot;, &quot;&quot;) + &quot;|&quot;)
-            return False
-        exit_value_list &#x3D; arg.split(&#39;,&#39;)
-        # 判断两个集合是否一样  前面是否是后面的子集
-        self.set_error(&quot;excepted get |&quot; + self.string + &quot;| but get |&quot; + arg.replace(&quot;\&quot;&quot;, &quot;&quot;) + &quot;|&quot;)
-        return set(exit_value_list) &#x3D;&#x3D; set(self.value)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">def</span> <span class="token function">check</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> arg<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> arg <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+            arg <span class="token operator">=</span> <span class="token string">"Null"</span>
+            self<span class="token punctuation">.</span>set_error<span class="token punctuation">(</span><span class="token string">"excepted get |"</span> <span class="token operator">+</span> self<span class="token punctuation">.</span>string <span class="token operator">+</span> <span class="token string">"| but get |"</span> <span class="token operator">+</span> arg<span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">"\""</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"|"</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> <span class="token boolean">False</span>
+        exit_value_list <span class="token operator">=</span> arg<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">','</span><span class="token punctuation">)</span>
+        <span class="token comment"># 判断两个集合是否一样  前面是否是后面的子集</span>
+        self<span class="token punctuation">.</span>set_error<span class="token punctuation">(</span><span class="token string">"excepted get |"</span> <span class="token operator">+</span> self<span class="token punctuation">.</span>string <span class="token operator">+</span> <span class="token string">"| but get |"</span> <span class="token operator">+</span> arg<span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">"\""</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"|"</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token builtin">set</span><span class="token punctuation">(</span>exit_value_list<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token builtin">set</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>value<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>其实，我所用的validator这个包，就已经利用了反射。因为他就是根据我输入的字符串，去动态地翻译和创建成对应的类。所以我也想实现根据数据库中存储的规则，来动态地创建。</p>
 <p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210611161640.png" alt="20210611161640"></p>
 <h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><h3 id="使用的函数"><a href="#使用的函数" class="headerlink" title="使用的函数"></a>使用的函数</h3><p>我就只用到了<strong>getattr</strong>函数。其对应的文档解释如下:</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">def getattr(object, name, default&#x3D;None): # known special case of getattr
-    &quot;&quot;&quot;
-    getattr(object, name[, default]) -&gt; value
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">getattr</span><span class="token punctuation">(</span><span class="token builtin">object</span><span class="token punctuation">,</span> name<span class="token punctuation">,</span> default<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># known special case of getattr</span>
+    <span class="token triple-quoted-string string">"""
+    getattr(object, name[, default]) -> value
     
-    Get a named attribute from an object; getattr(x, &#39;y&#39;) is equivalent to x.y.
-    When a default argument is given, it is returned when the attribute doesn&#39;t
+    Get a named attribute from an object; getattr(x, 'y') is equivalent to x.y.
+    When a default argument is given, it is returned when the attribute doesn't
     exist; without it, an exception is raised in that case.
-    &quot;&quot;&quot;
-    pass<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    """</span>
+    <span class="token keyword">pass</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="实际操作"><a href="#实际操作" class="headerlink" title="实际操作"></a>实际操作</h3><ul>
 <li><p>创建package rules 将自定义的三个类分别以.py的形式放进去</p>
@@ -577,11 +577,11 @@ person1 &#x3D; Teacher(name&#x3D;&quot;张三&quot;)<span aria-hidden="true" cla
 <li><p>在要使用的文件中，以<strong>from rules import rules as Custom</strong>的形式导入</p>
 </li>
 <li><p>编写相应的代码</p>
-<pre class="line-numbers language-py" data-language="py"><code class="language-py">for item in results:
-if item[3].startswith(&quot;Audit&quot;):
-    rules[item[0]] &#x3D; getattr(Custom, item[3])(item[2])
-else:
-    rules[item[0]] &#x3D; item[1] + &quot;:&quot; + item[2]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token keyword">for</span> item <span class="token keyword">in</span> results<span class="token punctuation">:</span>
+<span class="token keyword">if</span> item<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span>startswith<span class="token punctuation">(</span><span class="token string">"Audit"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    rules<span class="token punctuation">[</span>item<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">getattr</span><span class="token punctuation">(</span>Custom<span class="token punctuation">,</span> item<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">(</span>item<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">else</span><span class="token punctuation">:</span>
+    rules<span class="token punctuation">[</span>item<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> item<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">":"</span> <span class="token operator">+</span> item<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>它对应的原理通过debug我猜测如下:<br>通过 <code>from rules import rules as Custom</code> 的方式其实是已经创建了<code>Custom</code>这个对象，其拥有三个自定义类的属性。</p>
 <p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20210611162753.png" alt="20210611162753"></p>
@@ -1202,7 +1202,7 @@ else:
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">54.4k</span>
+                        class="white-color">53.9k</span>
             
             
             

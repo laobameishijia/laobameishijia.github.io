@@ -521,8 +521,8 @@
 <h3 id="下载主题"><a href="#下载主题" class="headerlink" title="下载主题"></a>下载主题</h3><p>如果你熟悉 Git，建议你使用 <code>克隆最新版本</code> 的方式，之后的更新可以通过 <code>git pull</code> 来快速更新，而不用再次下载压缩包替换。  </p>
 <ol>
 <li><p>克隆最新版本<br>在终端窗口下，定位到 Hexo 站点目录下。使用 Git Checkout 代码：  </p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">cd your-hexo-site
-git clone https:&#x2F;&#x2F;github.com&#x2F;first19326&#x2F;hexo-liveforcode<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token builtin class-name">cd</span> your-hexo-site
+<span class="token function">git</span> clone https://github.com/first19326/hexo-liveforcode<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>将克隆下来的文件夹中的 <code>LiveForCode</code> 文件夹移动至站点的 <code>themes</code> 目录下，并将 <code>source</code> 文件夹中的 <code>about</code>、<code>category</code>、<code>comment</code>、<code>donate</code>、<code>friend</code> 以及 <code>tag</code> 文件夹移动至 Hexo 站点目录下的 <code>source</code> 文件夹中。这些文件夹分别对应着 <strong>关于</strong> 、 <strong>标签</strong> 、 <strong>留言板</strong> 、 <strong>赞赏</strong> 、 <strong>友情链接</strong> 以及 <strong>分类</strong> 页面，其中的 <code>index.md</code> 中的内容为各个页面显示的内容，大家可以根据自己的情况进行修改。  </p>
 </li>
 <li><p>下载稳定版本<br>前往 LiveForCode 版本发布页面。<br>选择你所需要的版本，下载 Download 区域下的 Source Code (zip) 到本地。<br>解压所下载的压缩包，并将解压后的文件夹中的 <code>LiveForCode</code> 文件夹移动至站点的 <code>themes</code> 目录下，并将 <code>source</code> 文件夹中的 <code>about</code>、<code>category</code>、<code>comment</code>、<code>donate</code>、<code>friend</code> 以及 <code>tag</code> 文件夹移动至 Hexo 站点目录下的 <code>source</code> 文件夹中。这些文件夹分别对应着 <strong>关于</strong> 、 <strong>标签</strong> 、 <strong>留言板</strong> 、 <strong>赞赏</strong> 、 <strong>友情链接</strong> 以及 <strong>分类</strong> 页面，其中的 <code>index.md</code> 中的内容为各个页面显示的内容，大家可以根据自己的情况进行修改。  </p>
@@ -548,7 +548,7 @@ category_dir: category<span aria-hidden="true" class="line-numbers-rows"><span><
 
 
 <h2 id="第三方服务"><a href="#第三方服务" class="headerlink" title="第三方服务"></a>第三方服务</h2><h3 id="Algolia-Search"><a href="#Algolia-Search" class="headerlink" title="Algolia Search"></a>Algolia Search</h3><p>1.前往 <a target="_blank" rel="noopener" href="https://www.algolia.com/">Algolia</a> 注册页面，注册一个新账户。 可以使用 GitHub 或者 Google 账户直接登录，注册后的 14 天内拥有所有功能（包括收费类别的）。之后若未续费会自动降级为免费账户，免费账户总共有 10,000 条记录，每月有 100,000 的可以操作数。注册完成后，创建一个新的 Index，这个 Index 将在后面使用。<br>2.Index 创建完成后，此时这个 Index 里未包含任何数据。 接下来需要安装 <code>Hexo Algolia</code> 扩展，这个扩展的功能是搜集站点的内容并通过 API 发送给 Algolia。前往站点根目录，执行命令安装：  </p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">npm install --save hexo-algolia<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">npm</span> <span class="token function">install</span> --save hexo-algolia<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>3.编辑 <strong>站点配置文件</strong> ，新增以下配置：  </p>
 <pre class="line-numbers language-yml" data-language="yml"><code class="language-yml">algolia:
@@ -557,7 +557,7 @@ category_dir: category<span aria-hidden="true" class="line-numbers-rows"><span><
   indexName: &#39;...&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>注：这里的 applicationID 为 <code>Search-Only API Key</code><br>4.当配置完成，在站点根目录下执行一下命令更新 Index。请注意观察命令的输出。  </p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">export HEXO_ALGOLIA_INDEXING_KEY&#x3D;Admin API Key
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token builtin class-name">export</span> <span class="token assign-left variable">HEXO_ALGOLIA_INDEXING_KEY</span><span class="token operator">=</span>Admin API Key
 hexo algolia<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>5.Hexo Algolia 命令设置选项  </p>
@@ -569,10 +569,10 @@ hexo algolia<span aria-hidden="true" class="line-numbers-rows"><span></span><spa
   --layouts       A comma-separated list of page layouts to index (default: &quot;page&quot;).<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>说明：<br><code>--flush</code> 如果是 <code>false</code> 则每一次都会直接添加内容到 Algolia 相关的 Index 中，如果不是第一次提交，则将其设置为 <code>true</code><br><code>--layouts</code> 如果使用默认设置，提交的时候会将分类归档、标签归档、赞赏、留言板等页面内容提交到 Algolia， 在搜索的时候，将会搜索到分类归档、标签归档、赞赏、留言板等页面内容，建议使用时将其设置为 <code>post</code>。  </p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">hexo algolia --flush true --layouts post<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">hexo algolia --flush <span class="token boolean">true</span> --layouts post<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h3 id="设置-RSS"><a href="#设置-RSS" class="headerlink" title="设置 RSS"></a>设置 RSS</h3><p>1.安装 <code>Hexo-Feed</code> 插件。前往站点根目录，执行命令安装：  </p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">npm install --save hexo-generator-feed<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">npm</span> <span class="token function">install</span> --save hexo-generator-feed<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>2.根据个人需求，编辑 <strong>站点配置文件</strong> ：  </p>
 <pre class="line-numbers language-yml" data-language="yml"><code class="language-yml">feed:
@@ -1227,7 +1227,7 @@ hexo algolia<span aria-hidden="true" class="line-numbers-rows"><span></span><spa
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">54.4k</span>
+                        class="white-color">53.9k</span>
             
             
             
