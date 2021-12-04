@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Vue学习-5-过渡和动画, 老叭美食家">
+    <meta name="keywords" content="毕设-Fuzz-6, 老叭美食家">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Vue学习-5-过渡和动画 | 老叭美食家</title>
+    <title>毕设-Fuzz-6 | 老叭美食家</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/awesome/css/all.css">
@@ -321,12 +321,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211106094659.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211119142134.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Vue学习-5-过渡和动画</h1>
+                    <h1 class="description center-align post-title">毕设-Fuzz-6</h1>
                 </div>
             </div>
         </div>
@@ -442,8 +442,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tag/Vue/">
-                                <span class="chip bg-color">Vue</span>
+                            <a href="/tag/Fuzz/">
+                                <span class="chip bg-color">Fuzz</span>
                             </a>
                         
                     </div>
@@ -454,8 +454,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                研究生预备学习
+                            <a href="/category/%E6%AF%95%E8%AE%BE/" class="post-category">
+                                毕设
                             </a>
                         
                     </div>
@@ -467,7 +467,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-11-16
+                    2021-12-03
                 </div>
                 
 
@@ -481,14 +481,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    847
+                    1.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    5 分
                 </div>
                 
 
@@ -511,159 +511,106 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="过渡和动画"><a href="#过渡和动画" class="headerlink" title="过渡和动画"></a>过渡和动画</h1><p>Vue.js过渡可以使页面元素在出现和消失时实现多种过渡效果。Vue在插入、更新或者移除DOM时，提供了多种方式的应用过渡效果。开发者可以使用transition组件,结合CSS的动画Animation、过渡Transition或者js来操作DOM使元素动起来。</p>
-<h2 id="CSS过渡"><a href="#CSS过渡" class="headerlink" title="CSS过渡"></a>CSS过渡</h2><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211116183654.png" alt="过渡实现过程"></p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span>
- <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>utf-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style"><span class="token language-css">
-   <span class="token selector">.fade-enter, .fade-leave-to</span> <span class="token punctuation">&#123;</span>
-    <span class="token property">opacity</span><span class="token punctuation">:</span> 0
-  <span class="token punctuation">&#125;</span>
-  <span class="token selector">.fade-enter-active, .fade-leave-active</span> <span class="token punctuation">&#123;</span>
-    <span class="token property">transition</span><span class="token punctuation">:</span> opacity .5s
-  <span class="token punctuation">&#125;</span>
-  </span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>
- <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
- <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
-
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>demo<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name"><span class="token namespace">v-on:</span>click</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>show = !show<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-    切换按钮
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>transition</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>fade<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">v-if</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>show<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>hello<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>transition</span><span class="token punctuation">></span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>../../js/vue.js<span class="token punctuation">"</span></span><span class="token attr-name">"</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>utf-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
-   <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-    el<span class="token operator">:</span> <span class="token string">'#demo'</span><span class="token punctuation">,</span>
-    data<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-     show<span class="token operator">:</span> <span class="token boolean">true</span>
-    <span class="token punctuation">&#125;</span>
-   <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-  </span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
-
- <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="CSS动画"><a href="#CSS动画" class="headerlink" title="CSS动画"></a>CSS动画</h2><p>CSS动画的用法与CSS过渡的用法相同，其区别是，在CSS动画中，v-enter类名在节点插入DOM后不会立即删除，而是在animationend事件触发时删除。</p>
+                <h1 id="NoteBook阅读"><a href="#NoteBook阅读" class="headerlink" title="NoteBook阅读"></a>NoteBook阅读</h1><h2 id="GrammarFuzzer"><a href="#GrammarFuzzer" class="headerlink" title="GrammarFuzzer"></a>GrammarFuzzer</h2><p>这一小节讲的是, 将字符串的表现形式变成了树结构. 方便查找和更改</p>
+<p>并且呢, 我们优化了之前根据语法生成数据的方法, ***(按照之前的方法生成测试数据,会发现大部分测试数据非常长,并没有很大的意义) *** 因为 <strong>如果不对非终止符的最大和最小值进行限制的话, 会分别导致无限循环和测试数据种类不全的问题</strong>.</p>
+<p>之前算法的问题:</p>
+<p>The problem of potentially infinite expansion is only one of the problems with <code>simple_grammar_fuzzer()</code>.  More problems include:</p>
+<ol>
+<li><p><em>It is inefficient</em>.  With each iteration, this fuzzer would go search the string produced so far for symbols to expand.  This becomes inefficient as the production string grows.— 效率比较低, 因为每次扩展的时候, 要搜素字符串去寻找相应的扩展symbol-(<code>前面算法里面加了很多正则匹配提取字符串的</code>), 字符串一长效率自然就低下来了. 不过, python中存储字符串的结构是什么? 应该是列表, 这样的话 肯定是不如树的遍历来的快一些.-(<code>不是很清楚到底是因为什么原因导致了, 生成测试字符串效率变高, 但无疑从结果的角度上面看的话, 改进之后的遍历方式确实要比之前快多了</code>)</p>
+</li>
+<li><p><em>It is hard to control.</em>  Even while limiting the number of symbols, it is still possible to obtain very long strings – and even infinitely long ones, as discussed above.—很难控制, 容易生成很长的字符串</p>
+</li>
+</ol>
+<p>统一生成50个测试数据的话:</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211204154412.png" alt="改进前-Average time: 0.24"></p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211204154543.png" alt="改进后-Average time: 0.06"></p>
 <blockquote>
-<p>这个看的不是很懂，后面用到再说吧</p>
+<p>就感觉这一小节都在讲如何构建这个树结构, 以及采用何种策略拓展节点.(在设置的最大最小值的范围内)</p>
 </blockquote>
-<h2 id="JS过渡"><a href="#JS过渡" class="headerlink" title="JS过渡"></a>JS过渡</h2><p>Js过渡是使用javascript钩子函数实现的过渡效果，这些钩子函数可以结合CSS的transition/animations使用，也可以单独使用。</p>
-<p>感觉用js这个从结构上面看的话，就清楚很多了</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>transition</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>fade<span class="token punctuation">"</span></span> <span class="token attr-name">@before-enter</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>beforeEnter<span class="token punctuation">"</span></span> <span class="token attr-name">@enter</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>enter<span class="token punctuation">"</span></span> <span class="token attr-name">@after-enter</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>afterEnter<span class="token punctuation">"</span></span> <span class="token attr-name">@before-leave</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>beforeLeave<span class="token punctuation">"</span></span>
- <span class="token attr-name">@leave</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>leave<span class="token punctuation">"</span></span> <span class="token attr-name">@after-leave</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>afterLeave<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
- <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">v-show</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>show<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>transition</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>The key idea in this chapter, namely expanding until a limit of symbols is reached, and then always choosing the shortest path, stems from Luke</strong></p>
+<h3 id="Lessons-Learned"><a href="#Lessons-Learned" class="headerlink" title="Lessons Learned"></a>Lessons Learned</h3><ul>
+<li><em>Derivation trees</em> are important for expressing input structure</li>
+<li><em>Grammar fuzzing based on derivation trees</em> <ol>
+<li>is much more efficient than string-based grammar fuzzing,</li>
+<li>gives much better control over input generation, and</li>
+<li>effectively avoids running into infinite expansions.</li>
+</ol>
+</li>
+</ul>
+<h3 id="BNF语法"><a href="#BNF语法" class="headerlink" title="BNF语法"></a>BNF语法</h3><p>在上一小节中同样也用过BNF还有EBNF(BNF的一种增强型)</p>
+<p>作者：不是Zoe<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/27051306/answer/579820547">https://www.zhihu.com/question/27051306/answer/579820547</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>BNF是John Backus 在20世纪90年代提出的用以简洁描述一种编程语言的语言。</p>
+<p>基本结构为：<code>&lt;non-terminal&gt; ::= &lt;replacement&gt;</code> non-terminal意为非终止符，就是说我们还没有定义完的东西，还可以继续由右边的replacement，也就是代替物来进一步解释、定义。</p>
+<p>举个例子：在中文语法里，一个句子一般由“主语”、“谓语”和“宾语”组成，主语可以是名词或者代词，谓语一般是动词，宾语可以使形容词，名词或者代词。那么“主语”、“谓语”和“宾语”就是非终止符，因为还可以继续由“名词”、“代词”、“动词”、“形容词”等替代。</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">例1. &lt;句子> ::= &lt;主语>&lt;谓语>&lt;宾语>
 
-<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211116185453.png" alt="控制台输出"></p>
-<h2 id="案例–新增列表项的动画效果"><a href="#案例–新增列表项的动画效果" class="headerlink" title="案例–新增列表项的动画效果"></a>案例–新增列表项的动画效果</h2><p>具体的细节和效果用到的时候再去官网看就行了，还有很多细节和用法，就不在这赘述了。。。</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+例2. &lt;主语> ::= &lt;名词>|&lt;代词>
 
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>width=device-width, initial-scale=1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>ie=edge<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style"><span class="token language-css">
-    <span class="token selector">li</span> <span class="token punctuation">&#123;</span>
-        <span class="token property">border</span><span class="token punctuation">:</span> 1px dashed #999<span class="token punctuation">;</span>
-        <span class="token property">margin</span><span class="token punctuation">:</span> 5px<span class="token punctuation">;</span>
-        <span class="token property">line-height</span><span class="token punctuation">:</span> 35px<span class="token punctuation">;</span>
-        <span class="token property">padding-left</span><span class="token punctuation">:</span> 5px<span class="token punctuation">;</span>
-        <span class="token property">font-size</span><span class="token punctuation">:</span> 12px<span class="token punctuation">;</span>
-        <span class="token property">width</span><span class="token punctuation">:</span> 100%<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+例3. &lt;谓语>::=&lt;动词>
 
-    <span class="token selector">li:hover</span> <span class="token punctuation">&#123;</span>
-        <span class="token property">background-color</span><span class="token punctuation">:</span> cornflowerblue<span class="token punctuation">;</span>
-        <span class="token property">transition</span><span class="token punctuation">:</span> all 1s ease<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+例4. &lt;宾语>::=&lt;形容词>|&lt;名词>|&lt;代词>
 
-    <span class="token selector">.v-enter,
-    .v-leave-to</span> <span class="token punctuation">&#123;</span>
-        <span class="token property">opacity</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
-        <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">translateY</span><span class="token punctuation">(</span>80px<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+例5. &lt;代词>::=&lt;我>
 
-    <span class="token selector">.v-enter-active,
-    .v-leave-active</span> <span class="token punctuation">&#123;</span>
-        <span class="token property">transition</span><span class="token punctuation">:</span> all 0.5s ease<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+例6. &lt;动词>::=&lt;吃>
 
-    <span class="token comment">/* 下面的 .v-move 和 .v-leave-active 配合使用，能够实现列表后续的元素，渐渐地飘上来的结果 */</span>
-    <span class="token selector">.v-move</span> <span class="token punctuation">&#123;</span>
-        <span class="token property">transition</span><span class="token punctuation">:</span> all 0.5s ease<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+例7. &lt;动词>::=&lt;喜欢>
 
-    <span class="token selector">.v-leave-active</span> <span class="token punctuation">&#123;</span>
-        <span class="token property">position</span><span class="token punctuation">:</span> absolute<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>
+例8. &lt;名词>::=&lt;车>
 
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>app<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>label</span><span class="token punctuation">></span></span>
-                学号:
-                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">v-model</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>label</span><span class="token punctuation">></span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>label</span><span class="token punctuation">></span></span>
-                姓名:
-                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">v-model</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>label</span><span class="token punctuation">></span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>添加<span class="token punctuation">"</span></span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>add<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+例9. &lt;名词>::=&lt;肉><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">></span></span>
-            <span class="token comment">&lt;!-- 在实现列表过渡的时候，如果需要过渡的元素，是通过 v-for 循环渲染出来的，不能使用 transition 包裹，需要使用 transitionGroup --></span>
-            <span class="token comment">&lt;!-- 如果要为 v-for 循环创建的元素设置动画，必须为每一个元素设置：key 属性 --></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>transition-group</span> <span class="token attr-name">appear</span><span class="token punctuation">></span></span>
-                <span class="token comment">&lt;!-- 删除需要传入i --></span>
-                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">v-for</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>(item, i) in list<span class="token punctuation">"</span></span> <span class="token attr-name">:key</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>item.id<span class="token punctuation">"</span></span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>del(i)<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-                    &#123;&#123; item.id &#125;&#125; --- &#123;&#123; item.name &#125;&#125;
-                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>transition-group</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<p>如上，在<code>::=</code>左边的就是<code>non-terminal</code>非终止符，右边的就是<code>replacement</code>，可以是一系列的非终止符，如例1中的<code>replacement</code>便是后面例234左边的非终止符，也可以是终止符，如例56789的右边，找不到别的符号来进一步代替。因此，终止符永远不会出现在左边。一旦我们看到了终止符，这个描述过程就结束了。</p>
+<h3 id="py高阶用法"><a href="#py高阶用法" class="headerlink" title="py高阶用法"></a>py高阶用法</h3><h4 id="可变参数-amp-amp-关键字参数"><a href="#可变参数-amp-amp-关键字参数" class="headerlink" title="可变参数&amp;&amp;关键字参数"></a>可变参数&amp;&amp;关键字参数</h4><p><strong>可变参数允许你传入0个或任意个参数，这些可变参数在函数调用时自动组装为一个tuple</strong>,而<strong>关键字参数允许你传入0个或任意个含参数名的参数，这些关键字参数在函数内部自动组装为一个dict。</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token operator">*</span>a<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+test<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">)</span>
 
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>../../js/vue.js<span class="token punctuation">"</span></span><span class="token attr-name">"</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span> text/javascript<span class="token punctuation">"</span></span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>utf-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
-    <span class="token keyword">var</span> vm <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-        el<span class="token operator">:</span> <span class="token string">'#app'</span><span class="token punctuation">,</span>
-        data<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-            id<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
-            name<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span><span class="token comment">//这两个是为添加学号和姓名而设置的</span>
-            list<span class="token operator">:</span> <span class="token punctuation">[</span>
-                <span class="token punctuation">&#123;</span> id<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span> name<span class="token operator">:</span> <span class="token string">'张三'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-                <span class="token punctuation">&#123;</span> id<span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span> name<span class="token operator">:</span> <span class="token string">'李四'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-                <span class="token punctuation">&#123;</span> id<span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span> name<span class="token operator">:</span> <span class="token string">'王五'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-                <span class="token punctuation">&#123;</span> id<span class="token operator">:</span> <span class="token number">4</span><span class="token punctuation">,</span> name<span class="token operator">:</span> <span class="token string">'赵四'</span> <span class="token punctuation">&#125;</span>
-            <span class="token punctuation">]</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-        methods<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-            <span class="token function">add</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                <span class="token keyword">this</span><span class="token punctuation">.</span>list<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span> id<span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>id<span class="token punctuation">,</span> name<span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-                <span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">""</span>
-            <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-            <span class="token function">del</span><span class="token punctuation">(</span><span class="token parameter">i</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                <span class="token comment">// 从 i 的地方删，删除一个</span>
-                <span class="token keyword">this</span><span class="token punctuation">.</span>list<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token operator">>></span><span class="token operator">></span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">test1</span><span class="token punctuation">(</span><span class="token operator">**</span>a<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+test1<span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"test"</span><span class="token punctuation">,</span>name1<span class="token operator">=</span><span class="token string">"test1"</span><span class="token punctuation">)</span>
+<span class="token operator">>></span><span class="token operator">></span> <span class="token punctuation">&#123;</span><span class="token string">'name'</span><span class="token punctuation">:</span> <span class="token string">'test'</span><span class="token punctuation">,</span> <span class="token string">'name1'</span><span class="token punctuation">:</span> <span class="token string">'test1'</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>除了函数的传参, 在赋值的语句中也会出现可选参数</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">a<span class="token punctuation">,</span>b<span class="token punctuation">,</span>c <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"a b c"</span><span class="token punctuation">,</span>a<span class="token punctuation">,</span>b<span class="token punctuation">,</span>c<span class="token punctuation">)</span>
+a<span class="token punctuation">,</span>b<span class="token punctuation">,</span>c<span class="token punctuation">,</span><span class="token operator">*</span>d <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"a b c d"</span><span class="token punctuation">,</span>a<span class="token punctuation">,</span>b<span class="token punctuation">,</span>c<span class="token punctuation">,</span>d<span class="token punctuation">)</span>
+
+<span class="token operator">>></span><span class="token operator">></span> a b c <span class="token number">1</span> <span class="token number">2</span> <span class="token number">3</span>
+<span class="token operator">>></span><span class="token operator">></span> a b c d <span class="token number">1</span> <span class="token number">2</span> <span class="token number">3</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="repr-函数"><a href="#repr-函数" class="headerlink" title="repr() 函数"></a>repr() 函数</h4><p>repr() 函数将对象转化为供解释器读取的形式。<br><strong>参数</strong><br>object – 对象。<br><strong>返回值</strong><br>返回一个对象的 string 格式。</p>
+<blockquote>
+<p>这个函数有一说一, 还是不理解到底用处是啥. 有的时候传参不加repr(a)会说a缺少某个属性, 但是repr(a)按照上面的理解的话, 也只是变成了一个字符串. 那为什么就莫名其妙不缺少这个属性了.~~</p>
+</blockquote>
+<h4 id="递归加循环的写法"><a href="#递归加循环的写法" class="headerlink" title="递归加循环的写法"></a>递归加循环的写法</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">all_terminals</span><span class="token punctuation">(</span>tree<span class="token punctuation">:</span> DerivationTree<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">str</span><span class="token punctuation">:</span>
+    <span class="token punctuation">(</span>symbol<span class="token punctuation">,</span> children<span class="token punctuation">)</span> <span class="token operator">=</span> tree
+    <span class="token keyword">if</span> children <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+        <span class="token comment"># This is a nonterminal symbol not expanded yet</span>
+        <span class="token keyword">return</span> symbol
+
+    <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>children<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        <span class="token comment"># This is a terminal symbol</span>
+        <span class="token keyword">return</span> symbol
+
+    <span class="token comment"># This is an expanded symbol:</span>
+    <span class="token comment"># Concatenate all terminal symbols from all children</span>
+    <span class="token keyword">return</span> <span class="token string">''</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">[</span>all_terminals<span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token keyword">for</span> c <span class="token keyword">in</span> children<span class="token punctuation">]</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="any-函数"><a href="#any-函数" class="headerlink" title="any()函数"></a>any()函数</h4><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211203211320.png" alt="any函数"></p>
+<h4 id="集合set"><a href="#集合set" class="headerlink" title="集合set()"></a>集合set()</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">a<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">&#125;</span>
+b<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">&#125;</span>
+c<span class="token operator">=</span> a<span class="token operator">|</span>b <span class="token comment"># 把a b集合拼接在一起,不重复的那种</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span>
+<span class="token operator">>></span><span class="token operator">></span><span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="print"><a href="#print" class="headerlink" title="print()"></a>print()</h4><blockquote>
+<p>我这是来学习fuzz的? 还是在重新学习python的详细编程?</p>
+</blockquote>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211204152407.png" alt="print()"></p>
 
                 
             </div>
@@ -690,7 +637,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://laobameishijia.github.io/2021/11/16/vue-xue-xi-5-guo-du-he-dong-hua/">https://laobameishijia.github.io/2021/11/16/vue-xue-xi-5-guo-du-he-dong-hua/</a>
+                    <a href="https://laobameishijia.github.io/2021/12/03/bi-she-fuzz-6/">https://laobameishijia.github.io/2021/12/03/bi-she-fuzz-6/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -728,8 +675,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tag/Vue/">
-                                    <span class="chip bg-color">Vue</span>
+                                <a href="/tag/Fuzz/">
+                                    <span class="chip bg-color">Fuzz</span>
                                 </a>
                             
                         </div>
@@ -1041,45 +988,47 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/11/17/ni-xiang-gong-cheng-he-xin-yuan-li-5-upackpe-wen-jian-tou-fen-xi/">
+                <a href="/2021/12/03/bi-she-fuzz-6/">
                     <div class="card-image">
                         
-                        <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211111205602.png" class="responsive-img" alt="逆向工程核心原理-5-UPackPE文件头分析">
+                        <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211119142134.png" class="responsive-img" alt="毕设-Fuzz-6">
                         
-                        <span class="card-title">逆向工程核心原理-5-UPackPE文件头分析</span>
+                        <span class="card-title">毕设-Fuzz-6</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            PE文件格式
+                            毕设是模糊测试相关的,提前了解
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-17
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-03
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    研究生预备学习
+                            <a href="/category/%E6%AF%95%E8%AE%BE/" class="post-category">
+                                    毕设
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tag/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86/">
-                        <span class="chip bg-color">逆向工程核心原理</span>
+                    <a href="/tag/Fuzz/">
+                        <span class="chip bg-color">Fuzz</span>
                     </a>
                     
                 </div>
@@ -1093,31 +1042,30 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/11/16/ge-lei-shu-ji-yue-du-qing-dan/">
+                <a href="/2021/12/01/dong-man-jin-ji-de-ju-ren/">
                     <div class="card-image">
                         
+                        <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211201110133.png" class="responsive-img" alt="动漫-进击的巨人">
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/6.jpg" class="responsive-img" alt="阅读清单">
-                        
-                        <span class="card-title">阅读清单</span>
+                        <span class="card-title">动漫-进击的巨人</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            整理已经看过的书/打算看的书
+                            看完巨人的结局,实在是没看懂,就在网上看别人的分析
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-16
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-01
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/category/%E8%AE%A1%E5%88%92/" class="post-category">
-                                    计划
+                            <a href="/category/%E5%8A%A8%E6%BC%AB/" class="post-category">
+                                    动漫
                                 </a>
                             
                             
@@ -1127,8 +1075,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tag/%E9%98%85%E8%AF%BB/">
-                        <span class="chip bg-color">阅读</span>
+                    <a href="/tag/%E8%BF%9B%E5%87%BB%E7%9A%84%E5%B7%A8%E4%BA%BA/">
+                        <span class="chip bg-color">进击的巨人</span>
                     </a>
                     
                 </div>
