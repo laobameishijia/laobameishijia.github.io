@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="赞赏, 老叭美食家">
+    <meta name="keywords" content="毕设-Fuzz-7, 老叭美食家">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>赞赏 | 老叭美食家</title>
+    <title>毕设-Fuzz-7 | 老叭美食家</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/awesome/css/all.css">
@@ -321,12 +321,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211119142134.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">赞赏</h1>
+                    <h1 class="description center-align post-title">毕设-Fuzz-7</h1>
                 </div>
             </div>
         </div>
@@ -440,12 +440,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tag/Fuzz/">
+                                <span class="chip bg-color">Fuzz</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/category/%E6%AF%95%E8%AE%BE/" class="post-category">
+                                毕设
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -454,7 +467,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-05-25
+                    2021-12-05
                 </div>
                 
 
@@ -468,7 +481,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    22
+                    425
                 </div>
                 
 
@@ -498,9 +511,21 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <blockquote>
-<p>如果喜欢博客，或者喜欢博客主题，可以考虑 Hexo - Live For Code</p>
+                <h1 id="NoteBook阅读"><a href="#NoteBook阅读" class="headerlink" title="NoteBook阅读"></a>NoteBook阅读</h1><h2 id="Grammar-Coverage"><a href="#Grammar-Coverage" class="headerlink" title="Grammar Coverage"></a>Grammar Coverage</h2><p>在之前, 按照语法去去扩展生成字符串的时候, <strong>总是把各种扩展被选择的可能性相等化</strong>. 但是呢, 对于产生详细的综合性测试数据来说, <strong>更看重种类的最大化.(不一次又一次地重复相同的扩展)</strong></p>
+<p>所以, 这小节就是为了解决这个问题. 当然, 在我们上一节的扩展中, 我们使用了<code>maxcost</code>和<code>mincost</code>两种方法, 也确实在一定程度上, 增大了种类的多样性,同时也避免了无限扩展的发生. 可能这一节会对这个问题展开更详细地解答把.</p>
+<blockquote>
+<p>毕竟从理论上来说, 更多地对产生输入数据路径的覆盖(<code>更高的语法覆盖率</code>)理论上会产生更高的<code>代码覆盖率</code>, 也就更有可能触发新的bug. 这也是这部分工作的意义</p>
 </blockquote>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211205200902.png" alt="三种方法的效果对比"></p>
+<h3 id="Synopsis"><a href="#Synopsis" class="headerlink" title="Synopsis"></a>Synopsis</h3><p>This chapter introduces <code>GrammarCoverageFuzzer</code>, an efficient grammar fuzzer extending <code>GrammarFuzzer</code> from the <a href="GrammarFuzzer.ipynb">chapter on efficient grammar fuzzing</a>.  It strives to <em>cover all expansions at least once,</em> thus ensuring coverage of functionality.</p>
+<p>In the following example, for instance, we use <code>GrammarCoverageFuzzer</code> to produce an expression. We see that the resulting expression <strong>covers all digits and all operators in a single expression.</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token operator">>></span><span class="token operator">>></span> <span class="token string">'-(2 + 3) * 4.5 / 6 - 2.0 / +8 + 7 + 3'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="Lessons-Learned"><a href="#Lessons-Learned" class="headerlink" title="Lessons Learned"></a>Lessons Learned</h3><ul>
+<li>Achieving <em>grammar coverage</em> quickly results in a large variety of inputs.</li>
+<li>Duplicating grammar rules allows to cover elements in specific <em>contexts</em>.–这个点,我是真的不太理解, 相当于复制了很多副本进来. 这样就能实现很覆盖语法路径?</li>
+<li>Achieving grammar coverage can help in obtaining <em>code coverage</em>.—这个东西, 要具体问题具体分析, 在有些问题上面, 语法覆盖率和代码覆盖率是正相关. 但并不代表所有的问题都是这样.</li>
+</ul>
 
                 
             </div>
@@ -517,7 +542,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">老叭美食家</a>
+                    <a href="/about" rel="external nofollow noreferrer">美食家李老叭</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -527,7 +552,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://laobameishijia.github.io/donate/index.html">https://laobameishijia.github.io/donate/index.html</a>
+                    <a href="https://laobameishijia.github.io/2021/12/05/bi-she-fuzz-7/">https://laobameishijia.github.io/2021/12/05/bi-she-fuzz-7/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -540,7 +565,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">老叭美食家</a>
+                    <a href="/about" target="_blank">美食家李老叭</a>
                     !
                 </span>
             </div>
@@ -564,7 +589,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tag/Fuzz/">
+                                    <span class="chip bg-color">Fuzz</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -879,34 +908,45 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/donate/index.html">
+                <a href="/2021/12/05/bi-she-fuzz-7/">
                     <div class="card-image">
                         
+                        <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211119142134.png" class="responsive-img" alt="毕设-Fuzz-7">
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/17.jpg" class="responsive-img" alt="赞赏">
-                        
-                        <span class="card-title">赞赏</span>
+                        <span class="card-title">毕设-Fuzz-7</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            毕设是模糊测试相关的,提前了解
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-25
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-05
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            老叭美食家
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/category/%E6%AF%95%E8%AE%BE/" class="post-category">
+                                    毕设
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
 
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tag/Fuzz/">
+                        <span class="chip bg-color">Fuzz</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -914,37 +954,47 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/donate/index.html">
+                <a href="/2021/12/03/bi-she-fuzz-6/">
                     <div class="card-image">
                         
+                        <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211119142134.png" class="responsive-img" alt="毕设-Fuzz-6">
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/17.jpg" class="responsive-img" alt="赞赏">
-                        
-                        <span class="card-title">赞赏</span>
+                        <span class="card-title">毕设-Fuzz-6</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            毕设是模糊测试相关的,提前了解
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-25
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-03
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            老叭美食家
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/category/%E6%AF%95%E8%AE%BE/" class="post-category">
+                                    毕设
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tag/Fuzz/">
+                        <span class="chip bg-color">Fuzz</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
