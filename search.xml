@@ -4,6 +4,58 @@
   
     
     <entry>
+      <title>毕设-Fuzz-AFLGo源码阅读-1</title>
+      <link href="/2021/12/15/bi-she-fuzz-aflgo-yuan-ma-yue-du-1/"/>
+      <url>/2021/12/15/bi-she-fuzz-aflgo-yuan-ma-yue-du-1/</url>
+      
+        <content type="html"><![CDATA[<h1 id="AFLGo源码阅读-1"><a href="#AFLGo源码阅读-1" class="headerlink" title="AFLGo源码阅读-1"></a>AFLGo源码阅读-1</h1><p>首先还是要从基础的C语言语句开始补起。</p><h2 id="C-知识"><a href="#C-知识" class="headerlink" title="C 知识"></a>C 知识</h2><h3 id="C-预处理"><a href="#C-预处理" class="headerlink" title="C 预处理"></a>C 预处理</h3><p>C 预处理器不是编译器的组成部分，但是它是编译过程中一个单独的步骤。简言之，C 预处理器只不过是一个文本替换工具而已，它们会指示编译器在实际编译之前完成所需的预处理。我们将把 C 预处理器（C Preprocessor）简写为 CPP。</p><p>所有的预处理器命令都是以井号（#）开头。它必须是第一个非空字符，为了增强可读性，预处理器指令应从第一列开始。下面列出了所有重要的预处理器指令：</p><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211215211258.png" alt="预处理指令列表"></p><p>其他的详见菜鸟教程。<br><a href="https://www.runoob.com/cprogramming/c-preprocessors.html">https://www.runoob.com/cprogramming/c-preprocessors.html</a></p><h3 id="C-C-中-volatile-关键字详解"><a href="#C-C-中-volatile-关键字详解" class="headerlink" title="C/C++ 中 volatile 关键字详解"></a>C/C++ 中 volatile 关键字详解</h3><p>C/C++ 中的 volatile 关键字和 const 对应，用来修饰变量，通常用于建立语言级别的 memory barrier。这是 BS 在 “The C++ Programming Language” 对 volatile 修饰词的说明：</p><blockquote><p>A volatile specifier is a hint to a compiler that an object may change its value in ways not specified by the language so that aggressive optimizations must be avoided.</p></blockquote><p>volatile 关键字是一种类型修饰符，用它声明的类型变量表示可以被某些编译器未知的因素更改，比如：操作系统、硬件或者其它线程等。遇到这个关键字声明的变量，编译器对访问该变量的代码就不再进行优化，从而可以提供对特殊地址的稳定访问。声明时语法：int volatile vInt; 当要求使用 volatile 声明的变量的值的时候，<strong>系统总是重新从它所在的内存读取数据</strong>，即使它前面的指令刚刚从该处读取过数据。而且读取的数据立刻被保存。例如:</p><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">volatile</span> <span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">;</span><span class="token keyword">int</span> a <span class="token operator">=</span> i<span class="token punctuation">;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token comment">// 其他代码，并未明确告诉编译器，对 i 进行过操作</span><span class="token keyword">int</span> b <span class="token operator">=</span> i<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>volatile 指出 i 是随时可能发生变化的，每次使用它的时候必须从 i的地址中读取，因而编译器生成的汇编代码会重新从i的地址读取数据放在 b 中。而<strong>优化</strong>做法是，由于编译器发现两次从 i读数据的代码之间的代码没有对 i 进行过操作，它会自动把上次读的数据放在 b 中。而不是重新从 i 里面读。这样以来，如果 i是一个寄存器变量或者表示一个端口数据就容易出错，所以说<strong>volatile 可以保证对特殊地址的稳定访问</strong>。</p><h2 id="概念知识"><a href="#概念知识" class="headerlink" title="概念知识"></a>概念知识</h2><h3 id="程序处理中的控制流图和调用图"><a href="#程序处理中的控制流图和调用图" class="headerlink" title="程序处理中的控制流图和调用图"></a>程序处理中的控制流图和调用图</h3><h4 id="控制流图–Control-Flow-Graph"><a href="#控制流图–Control-Flow-Graph" class="headerlink" title="控制流图–Control Flow Graph"></a>控制流图–Control Flow Graph</h4><p>控制流图(Control Flow Graph, CFG)也叫控制流程图，是一个过程或程序的抽象表现，是用在编译器中的一个抽象数据结构，由编译器在内部维护，代表了一个程序执行过程中会遍历到的所有路径。它用图的形式表示一个过程内所有基本块执行的可能流向, 也能反映一个过程的实时执行过程。Frances E. Allen于1970年提出控制流图的概念。此后，控制流图成为了编译器优化和静态分析的重要工具。</p><p>原文：<br>In a control-flow graph each node in the graph represents a basic block, i.e. a straight-line piece of code without any jumps or jump targets; jump targets start a block, and jumps end a block. Directed edges are used to represent jumps in the control flow. There are, in most presentations, two specially designated blocks: the entry block, through which control enters into the flow graph, and the exit block, through which all control flow leaves.<br>译文：<br>在控制流图中，图中的每个节点代表一个基本块，即一段没有任何跳转或跳转目标的直线代码；跳转目标开始一个块，而跳转结束一个块。有向边用来表示控制流中的跳转。在大多数演示中，有两个特别指定的块：入口块，控制通过它进入流程图；出口块，所有控制流通过它离开。</p><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211219105935.png" alt="控制流图的几种结构"></p><p><strong>特点</strong>:</p><ul><li>控制流程图是过程导向的</li><li>控制流程图显示了程序执行过程中可以遍历的所有路径</li><li>控制流程图是一个有向图</li><li>CFG 中的边描述控制流路径，节点描述基本块</li><li>每个控制流图都存在2个指定的块：Entry Block(输入块)，Exit Block(输出块)</li></ul><h4 id="函数调用图-Function-Call-Graph"><a href="#函数调用图-Function-Call-Graph" class="headerlink" title="函数调用图 Function Call Graph"></a>函数调用图 Function Call Graph</h4><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211219111655.png" alt="函数调用图"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 毕设 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Fuzz </tag>
+            
+            <tag> AFLGo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>毕设-Fuzz-论文1</title>
+      <link href="/2021/12/09/bi-she-fuzz-lun-wen-1/"/>
+      <url>/2021/12/09/bi-she-fuzz-lun-wen-1/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Directed-Greybox-Fuzzing"><a href="#Directed-Greybox-Fuzzing" class="headerlink" title="Directed Greybox Fuzzing"></a>Directed Greybox Fuzzing</h1><p>第一次完全从头看到尾的十六页的论文, 一方面是为了清楚AFLGo实现的原理, 另一方面是为开题报告积累一些材料. 后面, 还需要再把介绍AFL框架的论文看一遍. 因为AFLGo是以其为基础进行扩展的. 那想要了解地更深入, 就不可避免地要把基础搞懂.</p><p>这篇论文读下来, 发现AFLGo是在AFL的基础上添加了模拟退火算法. 其他的,因为看论文的时间过去了一段时间, 居然就都忘记了.</p><p>AFL重要的设计思想因为没有论文只能是去看项目中的txt, 很多东西也是看不太懂. 只能慢慢地硬啃了……</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 毕设 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Fuzz </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>毕设-Fuzz-8</title>
       <link href="/2021/12/06/bi-she-fuzz-8/"/>
       <url>/2021/12/06/bi-she-fuzz-8/</url>
@@ -383,7 +435,7 @@
       <link href="/2021/11/16/ge-lei-shu-ji-yue-du-qing-dan/"/>
       <url>/2021/11/16/ge-lei-shu-ji-yue-du-qing-dan/</url>
       
-        <content type="html"><![CDATA[<h1 id="书籍"><a href="#书籍" class="headerlink" title="书籍"></a>书籍</h1><h2 id="财经类"><a href="#财经类" class="headerlink" title="财经类"></a>财经类</h2><ul><li><p><input checked="" disabled="" type="checkbox">  货币战争4 战国时代 宋鸿兵</p><p>  <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211116202829.png" alt="货币战争4 战国时代"></p><blockquote><p>从国际角度出发去阐述国际金融格局和现象，感觉需要很多的金融背景知识。印象比较深刻地是作者对于华为公司的预言，还有一些关于其他国家和我们国家经济政策的见地。比较深奥，还不是本人理解的。。。👻</p></blockquote></li><li><p><input checked="" disabled="" type="checkbox">  解读基金: 我的投资观与实践(修订版) 季凯帆</p><p>  <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211116201850.png" alt="解读基金: 我的投资观与实践(修订版)"></p><blockquote><p>这本书主要是将作者本人是如何进行投资的，风险控制/基金组合/投资比例等等，主要是对投资基金的基础知识和常识进行了梳理。感觉我看完之后也没有记住多少东西。🙂</p></blockquote></li><li><p><input checked="" disabled="" type="checkbox">  货币 b站视频</p><p>  <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211116203328.png" alt="货币"></p><blockquote><p>从历史的角度上分析，货币的由来/作用，对人类社会产生的影响，当今社会面临的货币问题等等。也不算很深奥。但是好像也没有说记住很多东西。。😔</p></blockquote></li><li><p><input checked="" disabled="" type="checkbox">  指数基金投资指南 银行螺丝钉</p><p>  <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211116202410.png" alt="指数基金投资指南"></p><blockquote><p>我觉得这本书写的是比较清楚的，最起码在思路上比较明了。先给你一些建议，然后解释为什么选择指数基金？常见的指数基金的种类。之后是怎么挑选，采用什么方式买/以及用多少钱买等问题</p></blockquote></li></ul><h2 id="专业类"><a href="#专业类" class="headerlink" title="专业类"></a>专业类</h2><ul><li><p><input checked="" disabled="" type="checkbox">  汇编语言 王爽</p><p>  <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211116203804.png" alt="汇编语言"></p><blockquote><p>这本书真的是写的非常好了，我一个不怎么看的下去的人，都是把整本书的练习和实验做完了。感觉收获真的是非常大，也解决了我之前在上课的时候产生的很多疑问。非常nice！🐮</p></blockquote></li><li><p><input checked="" disabled="" type="checkbox">  程序是怎样运行的</p><p>  <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211117185605.png" alt="程序是怎样运行的"></p><blockquote><p>这个我觉得收获也是蛮大的，写的也是比较通俗易懂。</p></blockquote></li><li><p><input disabled="" type="checkbox">  逆向工程 核心原理 李承远</p><p>  <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211116204238.png" alt="逆向工程 核心原理"></p><blockquote><p>本书里面的实验和讲解也是比较清楚的。思想很好，什么弄不懂，就边学边弄，慢慢就会了~~~😁</p></blockquote></li><li><p><input disabled="" type="checkbox">  Vue应用程序开发 </p><blockquote><p>这不放图片了，反正网上一大堆。也基本上就是系统的浏览一下，好对Vue.js有个整体清晰地认识。</p></blockquote></li><li><p><input disabled="" type="checkbox">  Vue.js+Node.js全栈开发实践</p><blockquote><p>同上</p></blockquote></li></ul><h2 id="通识类"><a href="#通识类" class="headerlink" title="通识类"></a>通识类</h2><ul><li><p><input disabled="" type="checkbox">  零基础通识知识笔记 山形浩生</p><p>  没找到图就不放了。。。</p><blockquote><p>写的比较有意思，上面的插画很通俗易懂。就是在这上面知道了商汤公司—做Al图象识别的。后来，还在和大佬的谈话中听到了，他搞到了这个公司在上海总部的实习。~~~ 差距啊🚀</p></blockquote></li><li><p><input disabled="" type="checkbox">  幸福之路</p><p>  <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211203212843.png" alt="幸福之路"></p><blockquote><p>还没看完</p></blockquote></li></ul>]]></content>
+        <content type="html"><![CDATA[<h1 id="书籍"><a href="#书籍" class="headerlink" title="书籍"></a>书籍</h1><h2 id="财经类"><a href="#财经类" class="headerlink" title="财经类"></a>财经类</h2><ol><li>货币战争4 战国时代 宋鸿兵</li></ol><ul><li><p><input checked="" disabled="" type="checkbox">  货币战争4 战国时代 宋鸿兵</p><p>  <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211116202829.png" alt="货币战争4 战国时代"></p><blockquote><p>从国际角度出发去阐述国际金融格局和现象，感觉需要很多的金融背景知识。印象比较深刻地是作者对于华为公司的预言，还有一些关于其他国家和我们国家经济政策的见地。比较深奥，还不是本人理解的。。。👻</p></blockquote></li></ul><ol start="2"><li>解读基金: 我的投资观与实践(修订版) 季凯帆</li></ol><ul><li><p><input checked="" disabled="" type="checkbox">  解读基金: 我的投资观与实践(修订版) 季凯帆</p><p>  <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211116201850.png" alt="解读基金: 我的投资观与实践(修订版)"></p><blockquote><p>这本书主要是将作者本人是如何进行投资的，风险控制/基金组合/投资比例等等，主要是对投资基金的基础知识和常识进行了梳理。感觉我看完之后也没有记住多少东西。🙂</p></blockquote></li></ul><ol start="3"><li>货币 b站视频</li></ol><ul><li><p><input checked="" disabled="" type="checkbox">  货币 b站视频</p><p>  <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211116203328.png" alt="货币"></p><blockquote><p>从历史的角度上分析，货币的由来/作用，对人类社会产生的影响，当今社会面临的货币问题等等。也不算很深奥。但是好像也没有说记住很多东西。。😔</p></blockquote></li></ul><ol start="4"><li>指数基金投资指南 银行螺丝钉</li></ol><ul><li><p><input checked="" disabled="" type="checkbox">  指数基金投资指南 银行螺丝钉</p><p>  <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211116202410.png" alt="指数基金投资指南"></p><blockquote><p>我觉得这本书写的是比较清楚的，最起码在思路上比较明了。先给你一些建议，然后解释为什么选择指数基金？常见的指数基金的种类。之后是怎么挑选，采用什么方式买/以及用多少钱买等问题</p></blockquote></li></ul><h2 id="专业类"><a href="#专业类" class="headerlink" title="专业类"></a>专业类</h2><ol><li>汇编语言 王爽</li></ol><ul><li><p><input checked="" disabled="" type="checkbox">  汇编语言 王爽</p><p>  <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211116203804.png" alt="汇编语言"></p><blockquote><p>这本书真的是写的非常好了，我一个不怎么看的下去的人，都是把整本书的练习和实验做完了。感觉收获真的是非常大，也解决了我之前在上课的时候产生的很多疑问。非常nice！🐮</p></blockquote></li></ul><ol start="2"><li>程序是怎样运行的</li></ol><ul><li><p><input checked="" disabled="" type="checkbox">  程序是怎样运行的</p><p>  <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211117185605.png" alt="程序是怎样运行的"></p><blockquote><p>这个我觉得收获也是蛮大的，写的也是比较通俗易懂。</p></blockquote></li></ul><ol start="3"><li>逆向工程 核心原理 李承远</li></ol><ul><li><p><input disabled="" type="checkbox">  逆向工程 核心原理 李承远</p><p>  <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211116204238.png" alt="逆向工程 核心原理"></p><blockquote><p>本书里面的实验和讲解也是比较清楚的。思想很好，什么弄不懂，就边学边弄，慢慢就会了~~~😁</p></blockquote></li></ul><ol start="4"><li>Vue应用程序开发 </li></ol><ul><li><input disabled="" type="checkbox"> Vue应用程序开发 <blockquote><p>这不放图片了，反正网上一大堆。也基本上就是系统的浏览一下，好对Vue.js有个整体清晰地认识。</p></blockquote></li></ul><ol start="5"><li>Vue.js+Node.js全栈开发实践</li></ol><ul><li><input disabled="" type="checkbox"> Vue.js+Node.js全栈开发实践<blockquote><p>同上</p></blockquote></li></ul><h2 id="通识类"><a href="#通识类" class="headerlink" title="通识类"></a>通识类</h2><ol><li>零基础通识知识笔记 山形浩生</li></ol><ul><li><input disabled="" type="checkbox"> 零基础通识知识笔记 山形浩生  没找到图就不放了。。。<blockquote><p>写的比较有意思，上面的插画很通俗易懂。就是在这上面知道了商汤公司—做Al图象识别的。后来，还在和同学的谈话中听到了，他搞到了这个公司在上海总部的实习。~~~ 差距啊🚀</p></blockquote></li></ul><ol start="2"><li>幸福之路</li></ol><ul><li><p><input disabled="" type="checkbox">  幸福之路</p><p>  <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211203212843.png" alt="幸福之路"></p><blockquote><p>还没看完</p></blockquote></li></ul><h2 id="传记类"><a href="#传记类" class="headerlink" title="传记类"></a>传记类</h2><ol><li><p>知行合一: 王阳明传</p><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211217213559.png" alt="知行合一: 王阳明传"> </p><blockquote><p>这本书匆匆地看完，倒也没有对王阳明心学有什么很深刻的理解。更多的还是对于王阳明这个人的佩服吧，从小就知道自己的目标，有自己的主见。也确实经历了许多困难和磨砺，科举落选、遭刘瑾派人追杀、平定宁王朱宸濠叛乱有功却无实赏。 也正印证了那句话 <code>天将降大任与斯人也，必先苦其心智，劳其体肤，增益其所不能.</code> 关于他的作品和与人的对话印象比较深的是一句 <code>吾不以不及第为耻,吾以不及第动吾心为耻</code>, 自己看书可能很容易结合到自己的经历, 也不知道为什么, 每次会想起当初高考的失败, 心里总会有一种感激吧。倒不是因为复读的成功，更多的是因为自己心境的成长。 其实与王阳明的生死经历相对比，我经历的也不过是小巫见大巫吧。他太优秀了，以至于在他的那个年代，自己都显得格格不入。甚至我再想，如果他出生在我们这个年代，肯定也是院士级别人物吧。<code>吾心自有光明月 千古团圆永无缺</code>，希望先生的人格魅力能像明月一样，永远的照亮后人的心。</p></blockquote></li></ol>]]></content>
       
       
       <categories>
