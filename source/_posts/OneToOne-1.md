@@ -7,7 +7,7 @@ top: false
 hide: false
 cover: false
 coverImg: 
-password: 
+password: 123456.0
 toc: true
 mathjax: false
 summary: 跟狗子打单挑的记录
