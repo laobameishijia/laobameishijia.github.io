@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="逆向工程核心原理-1, 老叭美食家">
+    <meta name="keywords" content="毕设-Fuzz-AFLGo源码阅读-3, 老叭美食家">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>逆向工程核心原理-1 | 老叭美食家</title>
+    <title>毕设-Fuzz-AFLGo源码阅读-3 | 老叭美食家</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/awesome/css/all.css">
@@ -334,12 +334,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211111205602.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211119142134.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">逆向工程核心原理-1</h1>
+                    <h1 class="description center-align post-title">毕设-Fuzz-AFLGo源码阅读-3</h1>
                 </div>
             </div>
         </div>
@@ -455,8 +455,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tag/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86/">
-                                <span class="chip bg-color">逆向工程核心原理</span>
+                            <a href="/tag/Fuzz/">
+                                <span class="chip bg-color">Fuzz</span>
+                            </a>
+                        
+                            <a href="/tag/AFLGo/">
+                                <span class="chip bg-color">AFLGo</span>
                             </a>
                         
                     </div>
@@ -467,8 +471,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                研究生预备学习
+                            <a href="/category/%E6%AF%95%E8%AE%BE/" class="post-category">
+                                毕设
                             </a>
                         
                     </div>
@@ -480,7 +484,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-11-06
+                    2022-01-02
                 </div>
                 
 
@@ -494,7 +498,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    515
+                    453
                 </div>
                 
 
@@ -524,18 +528,16 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="软件使用方面"><a href="#软件使用方面" class="headerlink" title="软件使用方面"></a>软件使用方面</h2><p>这些天主要就是跟着书本上的案例,使用OllyDbg对程序进行逆向分析。</p>
-<p>跟着书上做，总体过程还是比较顺利，但是对于大段的汇编代码，阅读起来实在是费劲。这还是在有注释的情况下进行分析。如果连课本的引导和注释都没有的话，想必难度会成指数增长。如果有机会真的想了解那些做外挂的是怎么弄的。</p>
-<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><h3 id="为什么32位计算机或者64位计算机可以兼容以前16位版本的程序"><a href="#为什么32位计算机或者64位计算机可以兼容以前16位版本的程序" class="headerlink" title="为什么32位计算机或者64位计算机可以兼容以前16位版本的程序"></a>为什么32位计算机或者64位计算机可以兼容以前16位版本的程序</h3><p>从汇编的角度上来看的话,16位、32位、64位 <code>AX BX AL AH</code> 等寄存器的含义都是一样的。唯一不同的地方体现在<code>EAX</code>是32位的。<code>RAX</code>是64位的。</p>
-<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211111210432.png" alt="x64寄存器的命名规则"></p>
-<h3 id="LEA-Load-Effective-Address-指令和MOV指令的区别"><a href="#LEA-Load-Effective-Address-指令和MOV指令的区别" class="headerlink" title="LEA(Load Effective Address )指令和MOV指令的区别"></a>LEA(Load Effective Address )指令和MOV指令的区别</h3><p>参考链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/3e89d834df85">https://www.jianshu.com/p/3e89d834df85</a></p>
-<p>LEA 指令要求原操作数必须是存储单元，而且目的操作数必须是一个除段寄存器之外的16位或32位寄存器。当目的操作数是16位通用寄存器时，那么只装入有效地址的低16位。使用时要注意它与MOV指令的区别，MOV指令传送的一般是源操作数中的内容而不是地址。</p>
-<blockquote>
-<p>假设 SI=1000H, DS=5000H, (51000H)=1234H<br>执行指令 <code>LEA BX, [SI]</code> 后 BX=1000H<br>执行指令 <code>MOV BX,[SI]</code> 后 BX=1234H<br><code>LEA BX,XXX</code>可以用 <code>MOV BX,OFFSET XXX</code>来替代</p>
-</blockquote>
-<p><strong>但有些时候,必须要用LEA指令来完成某些功能，不能用MOV指令来实现，必须用LEA指令。</strong></p>
-<p>如 <code>LEA BX,6[DI]</code></p>
-<p>解释: 某数组含20个元素，每个元素占一个字节，序号为0~19。设DI指向数组开头处，如果把序号为6的元素的偏移地址送到BX中。就必须使用LEA指令。因为<strong>OFFSET 运算符只能返回数据标号的偏移量</strong>,然而并不是所有的内存单元都有数据标号。</p>
+                <h1 id="毕设-Fuzz-AFLGo源码阅读-3"><a href="#毕设-Fuzz-AFLGo源码阅读-3" class="headerlink" title="毕设-Fuzz-AFLGo源码阅读-3"></a>毕设-Fuzz-AFLGo源码阅读-3</h1><h2 id="AFL框架"><a href="#AFL框架" class="headerlink" title="AFL框架"></a>AFL框架</h2><h3 id="共享内存中的bitmap结构-amp-amp-forkserver机制"><a href="#共享内存中的bitmap结构-amp-amp-forkserver机制" class="headerlink" title="共享内存中的bitmap结构 &amp;&amp; forkserver机制"></a>共享内存中的bitmap结构 &amp;&amp; forkserver机制</h3><p>不太好描述，就直接放图上来了。  —其他的都写到注释里面了</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220118215515.jpg" alt="共享内存中的bitmap结构&amp;&amp;forkserver机制"></p>
+<h2 id="Linux-C"><a href="#Linux-C" class="headerlink" title="Linux C"></a>Linux C</h2><h3 id="进程之间的信号是如何进行传递的"><a href="#进程之间的信号是如何进行传递的" class="headerlink" title="进程之间的信号是如何进行传递的"></a>进程之间的信号是如何进行传递的</h3><p>直接看下面的链接把</p>
+<p><a target="_blank" rel="noopener" href="https://www.bookstack.cn/read/linux-c/5016547c13b140cc.md#6b906b">https://www.bookstack.cn/read/linux-c/5016547c13b140cc.md#6b906b</a></p>
+<h3 id="控制台和终端的关系"><a href="#控制台和终端的关系" class="headerlink" title="控制台和终端的关系"></a>控制台和终端的关系</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sparkdev/p/11460821.html">https://www.cnblogs.com/sparkdev/p/11460821.html</a></p>
+<p>在计算机里，把那套直接连接在电脑上的键盘和显示器就叫做控制台。而终端是通过串口连接上的，不是计算机自身的设备，而控制台是计算机本身就有的设备，一个计算机只有一个控制台。计算机启动的时候，所有的信息都会显示到控制台上，而不会显示到终端上。这同样说明，控制台是计算机的基本设备，而终端是附加设备。计算机操作系统中，与终端不相关的信息，比如内核消息，后台服务消息，都可以显示到控制台上，但不会显示到终端上。比如在启动和关闭 Linux 系统时，我们可以在控制台上看到很多的内核信息(下图来自 vSphere Client 中的 “Virtual Machine Console”)</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220103170553.png" alt="控制台"></p>
+<p>现在终端和控制台都由硬件概念，逐渐演化成了软件的概念。<strong>简单的说，能直接显示系统消息的那个终端称为控制台，其他的则称为终端(控制台也是一个终端)。或者我们在平时的使用中压根就不区分 Linux 中的终端与控制台。</strong></p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220103171552.png" alt="Linux上的终端"></p>
+<h3 id="dev-urandom-dev-null"><a href="#dev-urandom-dev-null" class="headerlink" title="/dev/urandom /dev/null"></a>/dev/urandom /dev/null</h3><p>一个是随机数生成器, 另一个相当于空文件, 所有定向到这个地方的输入都会消失。</p>
 
                 
             </div>
@@ -562,7 +564,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://laobameishijia.github.io/2021/11/06/ni-xiang-gong-cheng-he-xin-yuan-li-1/">https://laobameishijia.github.io/2021/11/06/ni-xiang-gong-cheng-he-xin-yuan-li-1/</a>
+                    <a href="https://laobameishijia.github.io/2022/01/02/bi-she-fuzz-aflgo-yuan-ma-yue-du-3/">https://laobameishijia.github.io/2022/01/02/bi-she-fuzz-aflgo-yuan-ma-yue-du-3/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -600,8 +602,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tag/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86/">
-                                    <span class="chip bg-color">逆向工程核心原理</span>
+                                <a href="/tag/Fuzz/">
+                                    <span class="chip bg-color">Fuzz</span>
+                                </a>
+                            
+                                <a href="/tag/AFLGo/">
+                                    <span class="chip bg-color">AFLGo</span>
                                 </a>
                             
                         </div>
@@ -917,30 +923,30 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/11/06/vue-xue-xi-1-vue-ru-men/">
+                <a href="/2022/01/06/da-si-shang-han-jia-ji-hua/">
                     <div class="card-image">
                         
-                        <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211106094659.png" class="responsive-img" alt="Vue学习-1-Vue入门">
+                        <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220106205404.png" class="responsive-img" alt="大四上寒假计划">
                         
-                        <span class="card-title">Vue学习-1-Vue入门</span>
+                        <span class="card-title">大四上寒假计划</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            基本的入门
+                            关于寒假想做的事情做一个计划
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-06
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-01-06
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    研究生预备学习
+                            <a href="/category/%E5%AF%92%E5%81%87%E8%AE%A1%E5%88%92/" class="post-category">
+                                    寒假计划
                                 </a>
                             
                             
@@ -950,8 +956,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tag/Vue/">
-                        <span class="chip bg-color">Vue</span>
+                    <a href="/tag/%E5%A4%A7%E5%9B%9B%E4%B8%8A/">
+                        <span class="chip bg-color">大四上</span>
                     </a>
                     
                 </div>
@@ -965,30 +971,30 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/11/04/hui-bian-yu-yan-xue-xi-ke-cheng-she-ji-2/">
+                <a href="/2021/12/22/bi-she-fuzz-aflgo-yuan-ma-yue-du-2/">
                     <div class="card-image">
                         
-                        <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211104102348.png" class="responsive-img" alt="汇编语言学习-课程设计2">
+                        <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211119142134.png" class="responsive-img" alt="毕设-Fuzz-AFLGo源码阅读-2">
                         
-                        <span class="card-title">汇编语言学习-课程设计2</span>
+                        <span class="card-title">毕设-Fuzz-AFLGo源码阅读-2</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            弄了差不多一周。。。终于给弄好了
+                            AFL框架的源码基本内容阅读
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-04
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-22
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    研究生预备学习
+                            <a href="/category/%E6%AF%95%E8%AE%BE/" class="post-category">
+                                    毕设
                                 </a>
                             
                             
@@ -998,8 +1004,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tag/%E6%B1%87%E7%BC%96/">
-                        <span class="chip bg-color">汇编</span>
+                    <a href="/tag/Fuzz/">
+                        <span class="chip bg-color">Fuzz</span>
+                    </a>
+                    
+                    <a href="/tag/AFLGo/">
+                        <span class="chip bg-color">AFLGo</span>
                     </a>
                     
                 </div>
