@@ -4,6 +4,58 @@
   
     
     <entry>
+      <title>中国政府与经济发展</title>
+      <link href="/2022/01/20/zhong-guo-zheng-fu-yu-jing-ji-fa-zhan/"/>
+      <url>/2022/01/20/zhong-guo-zheng-fu-yu-jing-ji-fa-zhan/</url>
+      
+        <content type="html"><![CDATA[<h1 id="中国政府与经济发展"><a href="#中国政府与经济发展" class="headerlink" title="中国政府与经济发展"></a>中国政府与经济发展</h1><p>探究中国经济的发展，不能割裂开政府的作用。因为在我国，政府不但影响蛋糕的分配，也参与蛋糕的生产。</p><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220120193437.png" alt="财税与政府行为"></p><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220123192820.png" alt="土地财政与土地金融"></p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><h3 id="关于债务到底在中国经济发展中起到了什么作用？"><a href="#关于债务到底在中国经济发展中起到了什么作用？" class="headerlink" title="关于债务到底在中国经济发展中起到了什么作用？"></a>关于债务到底在中国经济发展中起到了什么作用？</h3><p>举个例子，假如说</p><ul><li>A用100买了B的某个产品</li><li>B用这100支付给了C作为孩子上学的学费</li><li>C又用100发给了A作为工资</li></ul><p>那在这个过程中，经济发展了吗？</p><p>再比如</p><ul><li>A用100买了B的某个产品</li><li>B用这100支付给了C, 因为B之前欠C 100</li><li>C又用100发给了A作为工资</li></ul><p>在这个过程中，流通的钱还是100, 但是B已经还清了自己的债务。那这个过程中经济发展了吗？</p><h4 id="经济发展"><a href="#经济发展" class="headerlink" title="经济发展"></a>经济发展</h4><p>就当代经济而言，发展的含义相当丰富复杂。发展总是与发达、与工业化、与现代化、与增长之间交替使用。 一般来说，经济发展包括三层含义：<br>1.经济量的增长，即一个国家或地区产品和劳务的增加，它构成了经济发展的物质基础；<br>2.经济结构的改进和优化，即一个国家或地区的技术结构、产业结构、收入分配结构、消费结构以及人口结构等经济结构的变化；<br>3.经济质量的改善和提高，即一个国家和地区经济效益的提高、经济稳定程度、卫生健康状况的改善、自然环境和生态平衡以及政治、文化和人的现代化进程。<br>经济发展是通过经济结构的改进和优化、经济质量的改善和提高达到经济量的增长。</p><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220123200009.png" alt="图解GDP"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 财经 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 中国经济发展 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>毕设-Fuzz-AFLGo源码阅读-4</title>
+      <link href="/2022/01/19/bi-she-fuzz-aflgo-yuan-ma-yue-du-4/"/>
+      <url>/2022/01/19/bi-she-fuzz-aflgo-yuan-ma-yue-du-4/</url>
+      
+        <content type="html"><![CDATA[<h1 id="毕设-Fuzz-AFLGo源码阅读-4"><a href="#毕设-Fuzz-AFLGo源码阅读-4" class="headerlink" title="毕设-Fuzz-AFLGo源码阅读-4"></a>毕设-Fuzz-AFLGo源码阅读-4</h1><h2 id="AFLGo在AFL的基础上的改进"><a href="#AFLGo在AFL的基础上的改进" class="headerlink" title="AFLGo在AFL的基础上的改进"></a>AFLGo在AFL的基础上的改进</h2><p>添加了模拟退火算法, 根据种子距离目标节点的距离来</p><h3 id="1-具体的距离目标taget的距离是怎么计算的"><a href="#1-具体的距离目标taget的距离是怎么计算的" class="headerlink" title="1. 具体的距离目标taget的距离是怎么计算的"></a>1. 具体的距离目标taget的距离是怎么计算的</h3><h3 id="2-模拟退火算法-是如何逐步退火？-amp-amp-是怎么挑选种子的？"><a href="#2-模拟退火算法-是如何逐步退火？-amp-amp-是怎么挑选种子的？" class="headerlink" title="2. 模拟退火算法, 是如何逐步退火？&amp;&amp; 是怎么挑选种子的？"></a>2. 模拟退火算法, 是如何逐步退火？&amp;&amp; 是怎么挑选种子的？</h3><p>AFL 的calculate_score函数是对 seed 进行打分，打分的分数决定对 seed fuzzing的时间长度，按照直觉来说，距离越近的 seed，有更大的概率能够到达目标点，则应该分配更多的时间给这些 seed。但是这样就会陷入上面所说的局部最优的困局里，于是 AFLGo 采用时间作为一个划分阶段的 metric，当 fuzzing 的时间在预定的时间内时，让时间较为公平的分配给每个 seed 上，当 fuzzing 时间超过了预定的时间后，时间就集中分配给哪些距离较近的 seed 上。这样可以在前期避免还未广泛探索就过度集中的局部最优的情况。</p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++"> u64 cur_ms &#x3D; get_cur_time(); u64 t &#x3D; (cur_ms - start_time) &#x2F; 1000;&#x2F;&#x2F; 计算当前运行时间 double progress_to_tx &#x3D; ((double) t) &#x2F; ((double) t_x * 60.0);&#x2F;&#x2F; 进度条，距离利用阶段的比例还有多少 double T; &#x2F;&#x2F;TODO Substitute functions of exp and log with faster bitwise operations on integers&#x2F;&#x2F; 这里根据fuzzing前的选项选择冷却时间的模型，是log函数，还是线性，还是指数等等 switch (cooling_schedule) &#123;   case SAN_EXP:     T &#x3D; 1.0 &#x2F; pow(20.0, progress_to_tx);     break;   case SAN_LOG:     &#x2F;&#x2F; alpha &#x3D; 2 and exp(19&#x2F;2) - 1 &#x3D; 13358.7268297     T &#x3D; 1.0 &#x2F; (1.0 + 2.0 * log(1.0 + progress_to_tx * 13358.7268297));     break;   case SAN_LIN:     T &#x3D; 1.0 &#x2F; (1.0 + 19.0 * progress_to_tx);     break;   case SAN_QUAD:     T &#x3D; 1.0 &#x2F; (1.0 + 19.0 * pow(progress_to_tx, 2));     break;   default:     PFATAL (&quot;Unkown Power Schedule for Directed Fuzzing&quot;); &#125; double power_factor &#x3D; 1.0; if (q-&gt;distance &gt; 0) &#123;    &#x2F;&#x2F; 首先归一化距离   double normalized_d &#x3D; 0; &#x2F;&#x2F; when &quot;max_distance &#x3D;&#x3D; min_distance&quot;, we set the normalized_d to 0 so that we can sufficiently explore those testcases whose distance &gt;&#x3D; 0.   if (max_distance !&#x3D; min_distance)     normalized_d &#x3D; (q-&gt;distance - min_distance) &#x2F; (max_distance - min_distance);   if (normalized_d &gt;&#x3D; 0) &#123;       double p &#x3D; (1.0 - normalized_d) * (1.0 - T) + 0.5 * T;&#x2F;&#x2F; 计算p值，由距离和时间共同决定       power_factor &#x3D; pow(2.0, 2.0 * (double) log2(MAX_FACTOR) * (p - 0.5));&#x2F;&#x2F; 最后根据p值计算得到factor，   &#125;&#x2F;&#x2F; else WARNF (&quot;Normalized distance negative: %f&quot;, normalized_d); &#125; perf_score *&#x3D; power_factor;&#x2F;&#x2F; 乘上factor得到最后的score<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><blockquote><p>也就是说，得分score计算的公式是由距离和时间共同决定的，你要搞清楚，<strong>并不是每一次fuzz都会选择score分数最高的种子，而是分配更多的havoc时间给这样的seed</strong>。刚开始种子是比较公平的分配到每个seed，这类似–无差别探索阶段。后来，当预定的时间已过。距离较近的seed就会拥有更高的分数，从而在固定的时间段内占有更长时间的havoc，以增加到达taget的几率。</p></blockquote><h3 id="3-我应该怎么设计我的算法？"><a href="#3-我应该怎么设计我的算法？" class="headerlink" title="3. 我应该怎么设计我的算法？"></a>3. 我应该怎么设计我的算法？</h3><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><h3 id="sudo"><a href="#sudo" class="headerlink" title="sudo"></a>sudo</h3><p>Sudo 的全称为：super user do。 顾名思义：干超级用户才能干的事！所以Sudo最常用的功能就是提升一个命名的执行权限。</p><h2 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h2><h3 id="Vector"><a href="#Vector" class="headerlink" title="Vector"></a>Vector</h3><p>向量（Vector）是一个封装了动态大小数组的顺序容器（Sequence Container）。跟任意其它类型容器一样，它能够存放各种类型的对象。可以简单的认为，向量是一个能够存放任意类型的动态数组。</p><h3 id="程序是如何保留debug信息的呢？"><a href="#程序是如何保留debug信息的呢？" class="headerlink" title="程序是如何保留debug信息的呢？"></a>程序是如何保留debug信息的呢？</h3>]]></content>
+      
+      
+      <categories>
+          
+          <category> 毕设 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Fuzz </tag>
+            
+            <tag> AFLGo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>OneToOne-1</title>
       <link href="/2022/01/06/onetoone-1/"/>
       <url>/2022/01/06/onetoone-1/</url>
