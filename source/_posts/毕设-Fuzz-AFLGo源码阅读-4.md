@@ -89,7 +89,61 @@ AFL 的calculate_score函数是对 seed 进行打分，打分的分数决定对 
 
 > 也就是说，得分score计算的公式是由距离和时间共同决定的，你要搞清楚，**并不是每一次fuzz都会选择score分数最高的种子，而是分配更多的havoc时间给这样的seed**。刚开始种子是比较公平的分配到每个seed，这类似--无差别探索阶段。后来，当预定的时间已过。距离较近的seed就会拥有更高的分数，从而在固定的时间段内占有更长时间的havoc，以增加到达taget的几率。
 
-### 3. 我应该怎么设计我的算法？
+### 3. 一个是函数距离，一个是基本块之间的距离，这两个距离之间是如何作用的呢？
+
+先看一下什么叫做控制流图
+
+![控制流图CFG(Control Flow Graph)](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220207203351.png)
+
+这两个是从源码角度分析的
+
+![函数距离计算公式](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220207211040.png)
+
+![BB-Distance距离计算公式](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220207211712.png)
+
+> 结合的地方
+> Also, for each basic block in control flow graph of current function, we collect all functions it calls using `BBcalls.txt`. Among these functions that have `cg_distance`, AFLGO get the minimum of these and set `bb_distance` to it.
+
+下面这两个估计是从论文角度分析的，那可能源码在实现上和论文有一定的区别。
+
+![函数层面距离计算](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220207212823.png)
+
+![基本块层面距离计算](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220207212850.png)
+
+
+### 4. 我应该怎么设计我的算法？
+
+四个阶段
+
+基于距离的模拟退火算法
+
+- 无差别探索阶段 Undifferentiated Exploration
+- 短路径优先阶段 Short Path Priority
+
+基于基本块距离的模拟退火算法
+
+- 长路径探索    Long Path Exploration
+- 长路径优先    Long Path Priority
+
+1. 设置`bb_passed` 记录当前种子经过的基本块的数量
+2. 设置`is_longpathexploration` 当前这个种子是不是在长路径探索阶段被探索过
+
+
+
+## 问题
+
+### calibrate_case 函数
+
+里面 this calculates cur_distance这个看不懂啊，has_new_bits函数中包括了下面计算max_distance和min_distance的代码，为什么这里又再次包含了一遍。
+
+### 程序中所谓的seed到底是什么？
+
+**是不同的测试文件**，不是像你像的那样，从这个测试文件中读取内容然后再将一条条的内容进行测试
+
+### 为什么按照步骤执行ReadMe中的测试步骤，却不能生成dot文件呢？
+
+![无法生成dot文件](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220221171732.png)
+
 
 ## Linux
 
