@@ -491,21 +491,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-02-02
+                    2022-02-25
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    888
+                    1.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    5 分
                 </div>
                 
 
@@ -589,7 +589,36 @@
 <blockquote>
 <p>也就是说，得分score计算的公式是由距离和时间共同决定的，你要搞清楚，<strong>并不是每一次fuzz都会选择score分数最高的种子，而是分配更多的havoc时间给这样的seed</strong>。刚开始种子是比较公平的分配到每个seed，这类似–无差别探索阶段。后来，当预定的时间已过。距离较近的seed就会拥有更高的分数，从而在固定的时间段内占有更长时间的havoc，以增加到达taget的几率。</p>
 </blockquote>
-<h3 id="3-我应该怎么设计我的算法？"><a href="#3-我应该怎么设计我的算法？" class="headerlink" title="3. 我应该怎么设计我的算法？"></a>3. 我应该怎么设计我的算法？</h3><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><h3 id="sudo"><a href="#sudo" class="headerlink" title="sudo"></a>sudo</h3><p>Sudo 的全称为：super user do。 顾名思义：干超级用户才能干的事！所以Sudo最常用的功能就是提升一个命名的执行权限。</p>
+<h3 id="3-一个是函数距离，一个是基本块之间的距离，这两个距离之间是如何作用的呢？"><a href="#3-一个是函数距离，一个是基本块之间的距离，这两个距离之间是如何作用的呢？" class="headerlink" title="3. 一个是函数距离，一个是基本块之间的距离，这两个距离之间是如何作用的呢？"></a>3. 一个是函数距离，一个是基本块之间的距离，这两个距离之间是如何作用的呢？</h3><p>先看一下什么叫做控制流图</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220207203351.png" alt="控制流图CFG(Control Flow Graph)"></p>
+<p>这两个是从源码角度分析的</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220207211040.png" alt="函数距离计算公式"></p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220207211712.png" alt="BB-Distance距离计算公式"></p>
+<blockquote>
+<p>结合的地方<br>Also, for each basic block in control flow graph of current function, we collect all functions it calls using <code>BBcalls.txt</code>. Among these functions that have <code>cg_distance</code>, AFLGO get the minimum of these and set <code>bb_distance</code> to it.</p>
+</blockquote>
+<p>下面这两个估计是从论文角度分析的，那可能源码在实现上和论文有一定的区别。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220207212823.png" alt="函数层面距离计算"></p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220207212850.png" alt="基本块层面距离计算"></p>
+<h3 id="4-我应该怎么设计我的算法？"><a href="#4-我应该怎么设计我的算法？" class="headerlink" title="4. 我应该怎么设计我的算法？"></a>4. 我应该怎么设计我的算法？</h3><p>四个阶段</p>
+<p>基于距离的模拟退火算法</p>
+<ul>
+<li>无差别探索阶段 Undifferentiated Exploration</li>
+<li>短路径优先阶段 Short Path Priority</li>
+</ul>
+<p>基于基本块距离的模拟退火算法</p>
+<ul>
+<li>长路径探索    Long Path Exploration</li>
+<li>长路径优先    Long Path Priority</li>
+</ul>
+<ol>
+<li>设置<code>bb_passed</code> 记录当前种子经过的基本块的数量</li>
+<li>设置<code>is_longpathexploration</code> 当前这个种子是不是在长路径探索阶段被探索过</li>
+</ol>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><h3 id="calibrate-case-函数"><a href="#calibrate-case-函数" class="headerlink" title="calibrate_case 函数"></a>calibrate_case 函数</h3><p>里面 this calculates cur_distance这个看不懂啊，has_new_bits函数中包括了下面计算max_distance和min_distance的代码，为什么这里又再次包含了一遍。</p>
+<h3 id="程序中所谓的seed到底是什么？"><a href="#程序中所谓的seed到底是什么？" class="headerlink" title="程序中所谓的seed到底是什么？"></a>程序中所谓的seed到底是什么？</h3><p><strong>是不同的测试文件</strong>，不是像你像的那样，从这个测试文件中读取内容然后再将一条条的内容进行测试</p>
+<h3 id="为什么按照步骤执行ReadMe中的测试步骤，却不能生成dot文件呢？"><a href="#为什么按照步骤执行ReadMe中的测试步骤，却不能生成dot文件呢？" class="headerlink" title="为什么按照步骤执行ReadMe中的测试步骤，却不能生成dot文件呢？"></a>为什么按照步骤执行ReadMe中的测试步骤，却不能生成dot文件呢？</h3><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220221171732.png" alt="无法生成dot文件"></p>
+<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><h3 id="sudo"><a href="#sudo" class="headerlink" title="sudo"></a>sudo</h3><p>Sudo 的全称为：super user do。 顾名思义：干超级用户才能干的事！所以Sudo最常用的功能就是提升一个命名的执行权限。</p>
 <h2 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h2><h3 id="Vector"><a href="#Vector" class="headerlink" title="Vector"></a>Vector</h3><p>向量（Vector）是一个封装了动态大小数组的顺序容器（Sequence Container）。跟任意其它类型容器一样，它能够存放各种类型的对象。可以简单的认为，向量是一个能够存放任意类型的动态数组。</p>
 <h3 id="程序是如何保留debug信息的呢？"><a href="#程序是如何保留debug信息的呢？" class="headerlink" title="程序是如何保留debug信息的呢？"></a>程序是如何保留debug信息的呢？</h3>
                 
@@ -1209,7 +1238,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">78.7k</span>
+                        class="white-color">83.3k</span>
             
             
             

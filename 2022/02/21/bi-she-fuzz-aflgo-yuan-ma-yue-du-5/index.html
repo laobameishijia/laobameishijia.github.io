@@ -1,0 +1,1824 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="keywords" content="毕设-Fuzz-AFLGo源码阅读-5, 老叭美食家">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>毕设-Fuzz-AFLGo源码阅读-5 | 老叭美食家</title>
+    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//css/matery.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//css/my.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="老叭美食家" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+
+   <style>
+    body{
+       background-image: url(https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/static/image/header/home.jpg);
+       background-repeat:no-repeat;
+       background-size:cover;
+       background-attachment:fixed;
+    }
+</style>
+
+
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">老叭美食家</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>主页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>联系</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友链</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">老叭美食家</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			主页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			联系
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友链
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211119142134.png')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">毕设-Fuzz-AFLGo源码阅读-5</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tag/Fuzz/">
+                                <span class="chip bg-color">Fuzz</span>
+                            </a>
+                        
+                            <a href="/tag/AFLGo/">
+                                <span class="chip bg-color">AFLGo</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/category/%E6%AF%95%E8%AE%BE/" class="post-category">
+                                毕设
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-02-21
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-02-25
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.7k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    14 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="AFLGo源码阅读"><a href="#AFLGo源码阅读" class="headerlink" title="AFLGo源码阅读"></a>AFLGo源码阅读</h1><ul>
+<li><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">AFLGo源码阅读</a><ul>
+<li><a href="#%E6%8C%89%E7%85%A7main%E5%87%BD%E6%95%B0%E4%B8%AD%E7%9A%84%E9%A1%BA%E5%BA%8F">按照Main函数中的顺序</a><ul>
+<li><a href="#setup_signal_handlers">setup_signal_handlers</a></li>
+<li><a href="#check_asan_opts">check_asan_opts()</a></li>
+<li><a href="#fix_up_sync--%E4%B8%8D%E7%9F%A5%E9%81%93%E5%85%B7%E4%BD%93%E7%94%A8%E9%80%94">fix_up_sync()–不知道具体用途</a></li>
+<li><a href="#save_cmdlineargc-argv">save_cmdline(argc, argv)</a></li>
+<li><a href="#fix_up_bannerargvoptind">fix_up_banner(argv[optind])</a></li>
+<li><a href="#check_if_tty">check_if_tty()</a></li>
+<li><a href="#get_core_count">get_core_count()</a></li>
+<li><a href="#bind_to_free_cpu">bind_to_free_cpu()</a></li>
+<li><a href="#check_crash_handling">check_crash_handling()</a></li>
+<li><a href="#check_cpu_governor">check_cpu_governor()</a></li>
+<li><a href="#setup_post">setup_post()</a></li>
+<li><a href="#setup_shm">setup_shm()</a></li>
+<li><a href="#init_count_class16">init_count_class16()</a></li>
+<li><a href="#setup_dirs_fds">setup_dirs_fds()</a></li>
+<li><a href="#read_testcases">read_testcases()</a></li>
+<li><a href="#load_auto">load_auto()</a></li>
+<li><a href="#pivot_inputs">pivot_inputs()</a><ul>
+<li><a href="#c%E8%AF%AD%E8%A8%80%E7%9F%A5%E8%AF%86">C语言知识</a></li>
+</ul>
+</li>
+<li><a href="#load_extras">load_extras()</a></li>
+<li><a href="#find_timeout">find_timeout()</a></li>
+<li><a href="#detect_file_args">detect_file_args()</a><ul>
+<li><a href="#c%E8%AF%AD%E8%A8%80%E7%9F%A5%E8%AF%86-1">C语言知识</a></li>
+</ul>
+</li>
+<li><a href="#setup_stdio_file">setup_stdio_file()</a></li>
+<li><a href="#check_binary">check_binary()</a></li>
+<li><a href="#get_qemu_argv">get_qemu_argv()</a></li>
+<li><a href="#perform_dry_run">perform_dry_run()</a><ul>
+<li><a href="#calibrate_case">calibrate_case()</a><ul>
+<li><a href="#count_bytes">count_bytes()</a></li>
+<li><a href="#update_bitmap_score">update_bitmap_score()</a></li>
+<li><a href="#minimize_bits">minimize_bits()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#cull_queue">cull_queue()</a><ul>
+<li><a href="#mark_as_redundant">mark_as_redundant</a></li>
+</ul>
+</li>
+<li><a href="#show_init_stats">show_init_stats()</a></li>
+<li><a href="#find_start_position">find_start_position()</a></li>
+<li><a href="#write_stats_file">write_stats_file()</a></li>
+<li><a href="#save_auto">save_auto()</a></li>
+<li><a href="#fuzz_one--while%E5%BE%AA%E7%8E%AF">fuzz_one &amp;&amp; while循环</a><ul>
+<li><a href="#calculate_score">calculate_score()</a></li>
+<li><a href="#common_fuzz_stuff">common_fuzz_stuff()</a></li>
+<li><a href="#run_target">run_target()</a><ul>
+<li><a href="#c-%E7%9F%A5%E8%AF%86">C 知识</a><ul>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E7%8A%B6%E6%80%81">进程状态</a></li>
+<li><a href="#setitimer">setitimer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#save_if_interesting">save_if_interesting</a></li>
+</ul>
+</li>
+<li><a href="#write_bitmap">write_bitmap()</a></li>
+<li><a href="#write_stats_file-1">write_stats_file()</a></li>
+<li><a href="#stop_fuzzing">stop_fuzzing:</a></li>
+</ul>
+</li>
+<li><a href="#aflgo%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%90%AF%E5%8A%A8%E5%8F%82%E6%95%B0">AFLgo命令行启动参数</a></li>
+<li><a href="#linux%E5%91%BD%E4%BB%A4">Linux命令</a></li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="按照Main函数中的顺序"><a href="#按照Main函数中的顺序" class="headerlink" title="按照Main函数中的顺序"></a>按照Main函数中的顺序</h2><h3 id="setup-signal-handlers"><a href="#setup-signal-handlers" class="headerlink" title="setup_signal_handlers"></a>setup_signal_handlers</h3><p>初始化各种信号量</p>
+<p>终止进程的、超时的等等</p>
+<h3 id="check-asan-opts"><a href="#check-asan-opts" class="headerlink" title="check_asan_opts()"></a>check_asan_opts()</h3><p>通过检查环境变量中的值来判断–检查ASAN设置</p>
+<h3 id="fix-up-sync-–不知道具体用途"><a href="#fix-up-sync-–不知道具体用途" class="headerlink" title="fix_up_sync()–不知道具体用途"></a>fix_up_sync()–不知道具体用途</h3><p>没理解</p>
+<h3 id="save-cmdline-argc-argv"><a href="#save-cmdline-argc-argv" class="headerlink" title="save_cmdline(argc, argv)"></a>save_cmdline(argc, argv)</h3><p>用<code>orig_cmdline</code>保存复制当前命令行</p>
+<h3 id="fix-up-banner-argv-optind"><a href="#fix-up-banner-argv-optind" class="headerlink" title="fix_up_banner(argv[optind])"></a>fix_up_banner(argv[optind])</h3><p>根据最后一个参数设置标头(banner)?</p>
+<h3 id="check-if-tty"><a href="#check-if-tty" class="headerlink" title="check_if_tty()"></a>check_if_tty()</h3><p>检查是不是在终端运行</p>
+<h3 id="get-core-count"><a href="#get-core-count" class="headerlink" title="get_core_count()"></a>get_core_count()</h3><p>从系统文件中获取cpu核的相关信息</p>
+<h3 id="bind-to-free-cpu"><a href="#bind-to-free-cpu" class="headerlink" title="bind_to_free_cpu()"></a>bind_to_free_cpu()</h3><p>把进程绑定在具体的内核上？</p>
+<h3 id="check-crash-handling"><a href="#check-crash-handling" class="headerlink" title="check_crash_handling()"></a>check_crash_handling()</h3><p>保证core dumps不会进入程序, 否则会增加将崩溃信息通过waitpid传递给fuzzer的延迟。</p>
+<h3 id="check-cpu-governor"><a href="#check-cpu-governor" class="headerlink" title="check_cpu_governor()"></a>check_cpu_governor()</h3><p>要把CPU频率调节的算法(可能忽视fuzz产生的短进程)关了，以提高aflgo-fuzz的效率。</p>
+<h3 id="setup-post"><a href="#setup-post" class="headerlink" title="setup_post()"></a>setup_post()</h3><p>不理解</p>
+<h3 id="setup-shm"><a href="#setup-shm" class="headerlink" title="setup_shm()"></a>setup_shm()</h3><p>配置共享内存和<code>virgin_bits</code>, 并且将共享内存的首地址赋值给<code>trace_bits</code>.</p>
+<h3 id="init-count-class16"><a href="#init-count-class16" class="headerlink" title="init_count_class16()"></a>init_count_class16()</h3><p>之所以用左移是为了加快速度</p>
+<p>最终初始化是下面这个样子。16位一个<br>        0-0 ….      128-0  -256个元素   :0-1-2-4-8-16-32-64-128<br>      ⬇ 0-1 ….<br>        0-2 ….<br>        0-2 ….<br>        0-4 ….<br>        0-4 ….<br>        ………….<br>        0-128….    128-128         一共 65536个 16bit</p>
+<h3 id="setup-dirs-fds"><a href="#setup-dirs-fds" class="headerlink" title="setup_dirs_fds()"></a>setup_dirs_fds()</h3><ol>
+<li><p>flock 了 out_dir_fd</p>
+</li>
+<li><p>创建了跟下面有关的目录</p>
+<ul>
+<li>queue </li>
+<li>crashes</li>
+<li>hangs<br>…. </li>
+</ul>
+</li>
+<li><p>还创建其他的fd(/dev/null&amp;/dev/urandom)方便后续使用</p>
+</li>
+</ol>
+<h3 id="read-testcases"><a href="#read-testcases" class="headerlink" title="read_testcases()"></a>read_testcases()</h3><p>从<code>input directory</code>中读取所有的测试用例，检测测试用例的大小，以及是否已经完成了<code>deterministic fuzzing</code>阶段，然后添加到queue中。</p>
+<p>初始化</p>
+<ul>
+<li>queued_at_start  Total number of initial inputs</li>
+<li>last_path_time   Time for most recent path (ms)</li>
+</ul>
+<h3 id="load-auto"><a href="#load-auto" class="headerlink" title="load_auto()"></a>load_auto()</h3><p>加载自动生成的附加组件</p>
+<h3 id="pivot-inputs"><a href="#pivot-inputs" class="headerlink" title="pivot_inputs()"></a>pivot_inputs()</h3><ul>
+<li>首先检查是不是之前跑过的<ul>
+<li>如果是的话，看一下id是不是一致。<ul>
+<li>id一致, 要改变对应entry的depth</li>
+</ul>
+</li>
+<li>如果不是，就起新名字 <code>id:%06u,orig:%s</code></li>
+<li>然后就是重新命名文件，并且更改<code>q-&gt;fname=nfn</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="C语言知识"><a href="#C语言知识" class="headerlink" title="C语言知识"></a>C语言知识</h4><p>strrchr和strchr类似，但是从右向左找字符c，找到字符c第一次出现的位置就返回，函数名中间多了一个字母r可以理解为Right-to-left。</p>
+<h3 id="load-extras"><a href="#load-extras" class="headerlink" title="load_extras()"></a>load_extras()</h3><p>这个没看懂是干啥的。<br>跟这些有关，但是不知道具体在fuzz的过程中起到了什么作用</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">struct extra_data &#123;
+  u8* data;                           &#x2F;* Dictionary token data            *&#x2F;
+  u32 len;                            &#x2F;* Dictionary token length          *&#x2F;
+  u32 hit_cnt;                        &#x2F;* Use count in the corpus          *&#x2F;
+&#125;;
+
+static struct extra_data* extras;     &#x2F;* Extra tokens to fuzz with        *&#x2F;
+static u32 extras_cnt;                &#x2F;* Total number of tokens read      *&#x2F;
+
+static struct extra_data* a_extras;   &#x2F;* Automatically selected extras    *&#x2F;
+static u32 a_extras_cnt;              &#x2F;* Total number of tokens available *&#x2F;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="find-timeout"><a href="#find-timeout" class="headerlink" title="find_timeout()"></a>find_timeout()</h3><p>只有在Resuming an older fuzzing job的情况下，才会使用。</p>
+<p>从状态目录中读取文件名, 并把<code>exec_timeout :</code>后面的值复制给<code>exec_tmout</code>, 将timeout_given赋值为3.</p>
+<h3 id="detect-file-args"><a href="#detect-file-args" class="headerlink" title="detect_file_args()"></a>detect_file_args()</h3><p>根据参数@@后面带的东西，更改文件名. 看的也不是很懂。</p>
+<h4 id="C语言知识-1"><a href="#C语言知识-1" class="headerlink" title="C语言知识"></a>C语言知识</h4><p>定义函数：char * getcwd(char * buf, size_t size);</p>
+<p>函数说明：getcwd()会将当前的工作目录绝对路径复制到参数buf 所指的内存空间，参数size 为buf 的空间大小。</p>
+<p>注：<br>1、在调用此函数时，buf 所指的内存空间要足够大。若工作目录绝对路径的字符串长度超过参数size 大小，则返回NULL，errno 的值则为ERANGE。<br>2、倘若参数buf 为NULL，getcwd()会依参数size 的大小自动配置内存(使用malloc())，如果参数size 也为0，则getcwd()会依工作目录绝对路径的字符串程度来决定所配置的内存大小，进程可以在使用完次字符串后利用free()来释放此空间。</p>
+<h3 id="setup-stdio-file"><a href="#setup-stdio-file" class="headerlink" title="setup_stdio_file()"></a>setup_stdio_file()</h3><p>如果没有用-f指定输出文件的话, 那就用默认的<code>.cur_input</code>创建</p>
+<h3 id="check-binary"><a href="#check-binary" class="headerlink" title="check_binary()"></a>check_binary()</h3><p>具体代码没看。。</p>
+<p>检查目标二进制文件是否存在，以及它是否是shell脚本。确保可以进行afl的插桩。</p>
+<h3 id="get-qemu-argv"><a href="#get-qemu-argv" class="headerlink" title="get_qemu_argv()"></a>get_qemu_argv()</h3><p>不知道干啥的</p>
+<h3 id="perform-dry-run"><a href="#perform-dry-run" class="headerlink" title="perform_dry_run()"></a>perform_dry_run()</h3><p>简单的把所有的测试用例都提前运行一遍，确保程序像预期的那样运行。如果不是的话，会有一些相应的提示。</p>
+<h4 id="calibrate-case"><a href="#calibrate-case" class="headerlink" title="calibrate_case()"></a>calibrate_case()</h4><p>测试一个entry，看看是不是有覆盖率、新的路径的添加等等变量是否正常工作啥的。</p>
+<p>关于<code>entry</code>属性里面的<code>var_behavior</code>的理解: 因为在<code>calibrate</code>的阶段中，是没有发生变异的，那么如果测试用例在经过不同次数的执行后，产生了不一样的<code>path</code>。那么就把这个<code>entry</code>标记为<code>variable</code>。<strong>这个属性并没有影响到后续的其他步骤</strong>。根据注释，应该只是简单的标注，方便能找到吧。</p>
+<h5 id="count-bytes"><a href="#count-bytes" class="headerlink" title="count_bytes()"></a>count_bytes()</h5><p>数一下有多少个字节不为零, 8位代表一个path, 不同的命中次数可能会导致8位中不同位置的bit置1</p>
+<h5 id="update-bitmap-score"><a href="#update-bitmap-score" class="headerlink" title="update_bitmap_score()"></a>update_bitmap_score()</h5><p>当某个entry触发了新的path, 我们要与之前的同样触发这个path的”最优”的entry进行一个比较。看看到底谁更优秀。</p>
+<p>所谓的<code>top_rated[]</code> 就是 <code>a minimal set of paths that trigger all the bits seen in the bitmap so far.</code></p>
+<h5 id="minimize-bits"><a href="#minimize-bits" class="headerlink" title="minimize_bits()"></a>minimize_bits()</h5><p>把<code>trace_bits</code>压缩为一个占用空间更小的数组。1位代表一个<code>path</code>现在。所以刚好是分配了<code>MAP_SIZE&gt;&gt;3</code>的空间。</p>
+<h3 id="cull-queue"><a href="#cull-queue" class="headerlink" title="cull_queue()"></a>cull_queue()</h3><p><code>top_rated[i]</code> 代表的就是发现路径序号为i的最优entry(fav_factor最小的) 而且<strong>关键的是top_rated[i] 指针指向的是queue中的特定的entry</strong>。所以在将<code>top_rated[i]-&gt;favored = 1 </code>时，原来<code>queue</code>中的<code>entry</code>的<code>favored</code>也同样被设置为1</p>
+<p>值得注意的是，并不是说<code>top_rated[]</code>中所有的<code>entry</code>都是<code>favored</code>的。当且仅当你发现的<code>path</code>是你之前<code>entry</code>都没有发现过的情况下，这个<code>entry</code>才会被设置为<code>favored</code></p>
+<blockquote>
+<p>我觉得这里有个值得深思的地方，程序这样设计的话，test_case的顺序会影响到其是否会被设置为favored. 这种随机性会不会对框架整体的性能产生一定的影响。</p>
+</blockquote>
+<h4 id="mark-as-redundant"><a href="#mark-as-redundant" class="headerlink" title="mark_as_redundant"></a>mark_as_redundant</h4><p>把对应的<code>entry</code>标记为<code>redundant</code>，其间还会创建一些目录，至于什么作用没看懂。</p>
+<h3 id="show-init-stats"><a href="#show-init-stats" class="headerlink" title="show_init_stats()"></a>show_init_stats()</h3><p>显示统计数据 Total calibration cycles\max_bits\min_bits\exec_us\len等等</p>
+<p>根据平均运行时间重新设置一个<code>timeout_given</code></p>
+<h3 id="find-start-position"><a href="#find-start-position" class="headerlink" title="find_start_position()"></a>find_start_position()</h3><p>当要恢复程序进程的时候，从<code>fuzzer_stats</code>目录的文件的文件名中读取相应的位置。</p>
+<h3 id="write-stats-file"><a href="#write-stats-file" class="headerlink" title="write_stats_file()"></a>write_stats_file()</h3><p>把用到的基本状态信息都写入到状态文件中，这些变量都会在终端页面显示中用到。</p>
+<h3 id="save-auto"><a href="#save-auto" class="headerlink" title="save_auto()"></a>save_auto()</h3><p>自动保存生成的extras，这个跟token有关系，但没看懂token到底有什么作用。</p>
+<h3 id="fuzz-one-amp-amp-while循环"><a href="#fuzz-one-amp-amp-while循环" class="headerlink" title="fuzz_one &amp;&amp; while循环"></a>fuzz_one &amp;&amp; while循环</h3><p>接下来是循环中的函数</p>
+<ul>
+<li><p>首先在进入循环之前, 要先cull_queue, 把favor的entry标记出来</p>
+</li>
+<li><p>判断queue_cur是否为空</p>
+<ul>
+<li>如果为空的话，说明是第一次进入循环。进行必要的初始化。</li>
+</ul>
+</li>
+<li><p>然后就是fuzz_one</p>
+<ul>
+<li>判断在当下的队列中，是否含有 <code>favored\non-fuzzed</code> 的<code>entry</code>，如果有那么会<strong>以99%的概率跳过那些已经被fuzz过或者不是favored</strong>的<code>entry</code>.</li>
+<li>如果没有上面所说的那种类型的<code>entry</code> 会以75%跳过not fuzzed ，以95%跳过fuzzed的<code>entry</code>。 </li>
+<li>然后将test case中的内容映射到内存中，这样文件中的位置直接就有对应的内存地址，对文件的读写可以直接用指针来做而不需要<code>read</code>\<code>write</code>函数。</li>
+<li>如果最初的calibration阶段失败了, 那现在要重新来一遍。</li>
+<li><code>trimming</code>阶段，<strong>这个阶段的作用，没看懂</strong>。 不明白为什么这个函数会调用run_taget</li>
+<li>计算entry分数</li>
+<li>看看是否要跳过<code>deterministic</code>变异阶段<ul>
+<li>如果skip_deterministic设置为1、或者entry fuzzed或者entry-&gt;passed_det设置为1)</li>
+<li>如果执行路径校验将其置于该主实例的范围之外，则跳过确定性模糊处理。</li>
+</ul>
+</li>
+<li>按照以下阶段进行变异 <ul>
+<li>simple bitflip</li>
+<li>arithmetic</li>
+<li>interst</li>
+<li>dictionary</li>
+<li>havoc</li>
+<li>splice<blockquote>
+<p>当然在这些变异阶段中, 大多都是每变异一次就进行<code>common_fuzz_stuff</code>。 还有很多为了保证程序效率(比如: 当变异出现的结果在之前的变异阶段已经被运行过的时候可以跳过、当对于某个字节的变异没有出现效果，那在以后的变异阶段就不会变异该字节了-相当于认为该字节对于提高程序效果没有太大的意义)</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p>循环结束后，回对sync_fuzzer进行一个操作，这个可以后面再看。</p>
+</li>
+</ul>
+<h4 id="calculate-score"><a href="#calculate-score" class="headerlink" title="calculate_score()"></a>calculate_score()</h4><p>计算得分,跟得分有关的因素</p>
+<ul>
+<li><code>exec_us</code> 和<code>avg_execc_us</code>的大小关系, <code>exec_us</code>相对越小, 得分肯定就越高</li>
+<li><code>bitmap_size</code>(发现的路径数) 和 <code>avg_bitmap_size</code>大小关系, <code>bitmap_size</code>相对越高, 得分越高</li>
+<li><code>handicap</code> 某个<code>testcase</code>可能是在程序运行的末尾才发现, 然后被添加到队列中。而这个时候，队列中前面的<code>entry</code>很有可能已经运行了很多<code>cycle</code>. 所以，这部分<strong>后来添加到队列中</strong>的<code>entry</code>得分更高。</li>
+<li><code>depth</code> 原文 <em>under the assumption that fuzzing deeper test cases is more likely to reveal stuff that can’t be discovered with traditional fuzzers.</em> <code>depth</code>的值越大，得分也就越高。也就是说, 一些变异的<code>entry</code>较大可能会是后面才添加进来的。所以假设越往后添加进来的越高。<strong>这个要跟上面的handicap相区别，depth反映的是队列中的entry数量, handicap是整体队列变异的cycle</strong></li>
+<li><code>cooling_schedule</code> 基于距离的模拟退火算法, 距离越近的随着时间的推移, <code>power_factor</code>会越来越高. 相对应的得分也就越高. <code>perf_score *= power_factor</code> </li>
+</ul>
+<blockquote>
+<p>具体的得分，跟确定性变异阶段的时间没有关系，得分越高，随机性变异阶段的时间也就越长。</p>
+</blockquote>
+<h4 id="common-fuzz-stuff"><a href="#common-fuzz-stuff" class="headerlink" title="common_fuzz_stuff()"></a>common_fuzz_stuff()</h4><p>把经过变异修改的文件重新写入testcase, 然后在进行<code>run_target()</code>。接着运行<code>save_if_interesting()</code>判断是否对变异的testcase进行统计或者其他操作</p>
+<h4 id="run-target"><a href="#run-target" class="headerlink" title="run_target()"></a>run_target()</h4><ul>
+<li>第一种情况: 独自运行exec, 等待子进程结束</li>
+<li>第二种情况: 通过管道和forkserver通信，forkserver fork出一个子进程进行fuzz，将子进程的状态写入通道。 父进程再通过通道中的信息, 对程序状态进行返回。<strong>当然在子进程进行fuzz的过程中 trace_bits会发生更新</strong></li>
+</ul>
+<h5 id="C-知识"><a href="#C-知识" class="headerlink" title="C 知识"></a>C 知识</h5><h6 id="进程状态"><a href="#进程状态" class="headerlink" title="进程状态"></a>进程状态</h6><ul>
+<li>WIFSIGNALED(status)为非0 表明进程异常终止 <strong>用来判断crash</strong></li>
+<li>WIFSTOPPED(status)为非0 表明进程处于暂停状态 <strong>用来判断fork server是否正常进行, 此时因为fork server是处于循环当中，所以对应的状态是处于暂停。</strong></li>
+<li>WTERMSIG(status) 获取程序退出的信号(比如:<code>SIGKILL</code>)</li>
+</ul>
+<h6 id="setitimer"><a href="#setitimer" class="headerlink" title="setitimer"></a>setitimer</h6><p>关于这个，详细的内容网上都有。 但是没搞清楚这个时间定时到底是阻塞的还是非阻塞的。？？</p>
+<h4 id="save-if-interesting"><a href="#save-if-interesting" class="headerlink" title="save_if_interesting"></a>save_if_interesting</h4><p>看一下当前的testcase是否触发了新的路径, 如果触发了新的路径，需要把这个testcase添加到当前的队列里面。并且要在queue中以<code>(&quot;%s/queue/id:%06u,%llu,%s&quot;, out_dir, queued_paths, get_cur_time() - start_time ,describe_op(hnb))</code>这样的形式命名。</p>
+<p>根据<code>run_target()</code>的返回值，处理timeout、crash、error的情况</p>
+<h3 id="write-bitmap"><a href="#write-bitmap" class="headerlink" title="write_bitmap()"></a>write_bitmap()</h3><p>把当前共享内存中的bitmap写到文件中去</p>
+<h3 id="write-stats-file-1"><a href="#write-stats-file-1" class="headerlink" title="write_stats_file()"></a>write_stats_file()</h3><p>更新状态文件中的数据</p>
+<h3 id="stop-fuzzing"><a href="#stop-fuzzing" class="headerlink" title="stop_fuzzing:"></a>stop_fuzzing:</h3><p>程序的终止是需要用户自己按下<code>ctrl+c</code> 循环不会自己退出</p>
+<p>对占有的内存空间进行释放, 退出程序</p>
+<h2 id="AFLgo命令行启动参数"><a href="#AFLgo命令行启动参数" class="headerlink" title="AFLgo命令行启动参数"></a>AFLgo命令行启动参数</h2><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>i</td>
+<td>输入目录</td>
+</tr>
+<tr>
+<td>o</td>
+<td>输出目录</td>
+</tr>
+<tr>
+<td>M</td>
+<td>master sync ID</td>
+</tr>
+<tr>
+<td>S</td>
+<td>master sync ID</td>
+</tr>
+<tr>
+<td>f</td>
+<td>目标文件</td>
+</tr>
+<tr>
+<td>x</td>
+<td>字典目录</td>
+</tr>
+<tr>
+<td>t</td>
+<td>超时时间设定</td>
+</tr>
+<tr>
+<td>m</td>
+<td>内存限制</td>
+</tr>
+<tr>
+<td>d</td>
+<td>是否跳过确定性变异阶段</td>
+</tr>
+<tr>
+<td>B</td>
+<td>加载bitmap</td>
+</tr>
+<tr>
+<td>C</td>
+<td>Crash模式</td>
+</tr>
+<tr>
+<td>T</td>
+<td>banner</td>
+</tr>
+<tr>
+<td>Q</td>
+<td>QEMU模式</td>
+</tr>
+<tr>
+<td>z</td>
+<td>模拟退火算法选定</td>
+</tr>
+<tr>
+<td>c</td>
+<td>退火算法的运行时间</td>
+</tr>
+</tbody></table>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Required parameters:
+
+  -i <span class="token function">dir</span>        - input directory with <span class="token builtin class-name">test</span> cases
+  -o <span class="token function">dir</span>        - output directory <span class="token keyword">for</span> fuzzer findings
+
+Directed fuzzing specific settings:
+
+  -z schedule   - temperature-based power schedules
+                  <span class="token punctuation">&#123;</span>exp, log, lin, quad<span class="token punctuation">&#125;</span> <span class="token punctuation">(</span>Default: exp<span class="token punctuation">)</span>
+  -c min        - <span class="token function">time</span> from start when SA enters exploitation
+                  <span class="token keyword">in</span> secs <span class="token punctuation">(</span>s<span class="token punctuation">)</span>, mins <span class="token punctuation">(</span>m<span class="token punctuation">)</span>, hrs <span class="token punctuation">(</span>h<span class="token punctuation">)</span>, or days <span class="token punctuation">(</span>d<span class="token punctuation">)</span>
+
+Execution control settings:
+
+  -f <span class="token function">file</span>       - location <span class="token builtin class-name">read</span> by the fuzzed program <span class="token punctuation">(</span>stdin<span class="token punctuation">)</span>
+  -t msec       - <span class="token function">timeout</span> <span class="token keyword">for</span> each run <span class="token punctuation">(</span>auto-scaled, <span class="token number">50</span>-1000 ms<span class="token punctuation">)</span>
+  -m megs       - memory limit <span class="token keyword">for</span> child process <span class="token punctuation">(</span><span class="token number">50</span> MB<span class="token punctuation">)</span>
+  -Q            - use binary-only instrumentation <span class="token punctuation">(</span>QEMU mode<span class="token punctuation">)</span>
+
+Fuzzing behavior settings:
+
+  -d            - quick <span class="token operator">&amp;</span> dirty mode <span class="token punctuation">(</span>skips deterministic steps<span class="token punctuation">)</span>
+  -n            - fuzz without instrumentation <span class="token punctuation">(</span>dumb mode<span class="token punctuation">)</span>
+  -x <span class="token function">dir</span>        - optional fuzzer dictionary <span class="token punctuation">(</span>see README<span class="token punctuation">)</span>
+
+Other stuff:
+
+  -T text       - text banner to show on the <span class="token function">screen</span>
+  -M / -S <span class="token function">id</span>    - distributed mode <span class="token punctuation">(</span>see parallel_fuzzing.txt<span class="token punctuation">)</span>
+  -C            - crash exploration mode <span class="token punctuation">(</span>the peruvian rabbit thing<span class="token punctuation">)</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="Linux命令"><a href="#Linux命令" class="headerlink" title="Linux命令"></a>Linux命令</h2><ul>
+<li><p><strong>export</strong></p>
+<p>为shell变量或函数设置导出属性。它们会成为环境变量, 可以在脚本中访问它们，尤其是脚本中调用的子进程需要时。</p>
+</li>
+<li><p><strong>echo</strong></p>
+<p>echo命令 用于在shell中打印shell变量的值，或者直接输出指定的字符串。linux的echo命令，在shell编程中极为常用, 在终端下打印变量value的时候也是常常用到的，因此有必要了解下echo的用法echo命令的功能是在显示器上显示一段文字，一般起到一个提示的作用。</p>
+</li>
+<li><p><strong>mkdir</strong></p>
+<p>创建目录</p>
+</li>
+<li><p><strong>cat</strong></p>
+<p>连接多个文件并打印到标准输出</p>
+</li>
+<li><p><strong>cut</strong></p>
+<p>cut命令用来显示行中的指定部分，删除文件中指定字段。说明：该命令有两项功能，其一是用来显示文件的内容，它依次读取由参数 file 所指 明的文件，将它们的内容输出到标准输出上；其二是连接两个或多个文件，如cut fl f2 &gt; f3将把文件 fl 和 f2 的内容合并起来，然后通过输出重定向符“&gt;”的作用，将它们放入文件 f3 中。</p>
+</li>
+<li><p><strong>rev</strong></p>
+<p>将文件内容以字符为单位反序输出—也就是每行的字符都到过来</p>
+</li>
+<li><p><strong>cp</strong></p>
+<p>将源文件或目录复制到目标文件或目录中</p>
+</li>
+<li><p><strong>pushd&amp;&amp;popd</strong></p>
+<p>倒可以简单地把这个命令理解为切换/再换回来目录的命令。</p>
+</li>
+<li><p><strong>chmod</strong></p>
+<p>用来变更文件或目录的权限</p>
+</li>
+<li><p><strong>mv</strong></p>
+<p>mv命令 用来对文件或目录重新命名，或者将文件从一个目录移到另一个目录中。source表示源文件或目录，target表示目标文件或目录。如果将一个文件移到一个已经存在的目标文件中，则目标文件的内容将被覆盖</p>
+</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a target="_blank" rel="noopener" href="http://rk700.github.io/2018/01/04/afl-mutations/">http://rk700.github.io/2018/01/04/afl-mutations/</a></li>
+<li><a target="_blank" rel="noopener" href="https://rk700.github.io/2017/12/28/afl-internals/#%E5%88%86%E6%94%AF%E4%BF%A1%E6%81%AF%E7%9A%84%E5%88%86%E6%9E%90">https://rk700.github.io/2017/12/28/afl-internals/#%E5%88%86%E6%94%AF%E4%BF%A1%E6%81%AF%E7%9A%84%E5%88%86%E6%9E%90</a></li>
+<li><a target="_blank" rel="noopener" href="https://paper.seebug.org/496/#_2">https://paper.seebug.org/496/#_2</a></li>
+<li><a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-265936.htm#msg_header_h1_2">https://bbs.pediy.com/thread-265936.htm#msg_header_h1_2</a>  </li>
+<li><a target="_blank" rel="noopener" href="https://paper.seebug.org/1732/#afl-afl-asc">https://paper.seebug.org/1732/#afl-afl-asc</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/250540#h2-5">https://www.anquanke.com/post/id/250540#h2-5</a></li>
+<li><a target="_blank" rel="noopener" href="https://linux.cmsblogs.cn/">https://linux.cmsblogs.cn/</a>    —-查询linux命令的网站</li>
+</ol>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">美食家李老叭</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://laobameishijia.github.io/2022/02/21/bi-she-fuzz-aflgo-yuan-ma-yue-du-5/">https://laobameishijia.github.io/2022/02/21/bi-she-fuzz-aflgo-yuan-ma-yue-du-5/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">美食家李老叭</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tag/Fuzz/">
+                                    <span class="chip bg-color">Fuzz</span>
+                                </a>
+                            
+                                <a href="/tag/AFLGo/">
+                                    <span class="chip bg-color">AFLGo</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/valine/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'q5k1wXexowy7MeNN0CrLYpoK-gzGzoHsz',
+        appKey: 'YmFtstASS0GUVRowdQQl4LPb',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2022/02/21/bi-she-fuzz-aflgo-yuan-ma-yue-du-5/">
+                    <div class="card-image">
+                        
+                        <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211119142134.png" class="responsive-img" alt="毕设-Fuzz-AFLGo源码阅读-5">
+                        
+                        <span class="card-title">毕设-Fuzz-AFLGo源码阅读-5</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            AFL框架的源码基本内容阅读
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-21
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/category/%E6%AF%95%E8%AE%BE/" class="post-category">
+                                    毕设
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tag/Fuzz/">
+                        <span class="chip bg-color">Fuzz</span>
+                    </a>
+                    
+                    <a href="/tag/AFLGo/">
+                        <span class="chip bg-color">AFLGo</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/01/20/zhong-guo-zheng-fu-yu-jing-ji-fa-zhan/">
+                    <div class="card-image">
+                        
+                        <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211119142134.png" class="responsive-img" alt="中国政府与经济发展">
+                        
+                        <span class="card-title">中国政府与经济发展</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            关于《置身事外:中国政府与经济发展》的读书总结
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-20
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/category/%E8%B4%A2%E7%BB%8F/" class="post-category">
+                                    财经
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tag/%E4%B8%AD%E5%9B%BD%E7%BB%8F%E6%B5%8E%E5%8F%91%E5%B1%95/">
+                        <span class="chip bg-color">中国经济发展</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('3'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2022</span>
+            
+            <span id="year">2021</span>
+            <a href="/about" target="_blank">老叭美食家</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">83.3k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2021";
+                        var startMonth = "5";
+                        var startDate = "21";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/laobameishijia" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:994291043@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=994291043" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 994291043" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2021, 05, 21, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " +diffYears+" 年 "+diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</body>
+
+</html>
