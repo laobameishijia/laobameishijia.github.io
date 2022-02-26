@@ -76,55 +76,93 @@ tags:
 
 ### setup_signal_handlers
 
+[回到目录](#aflgo源码阅读)
+
 初始化各种信号量
 
 终止进程的、超时的等等
 
 ### check_asan_opts()
 
+[回到目录](#aflgo源码阅读)
+
+
 通过检查环境变量中的值来判断--检查ASAN设置
 
 ### fix_up_sync()--不知道具体用途
+
+[回到目录](#aflgo源码阅读)
+
 
 没理解
 
 ### save_cmdline(argc, argv)
 
+[回到目录](#aflgo源码阅读)
+
+
 用`orig_cmdline`保存复制当前命令行
 
 ### fix_up_banner(argv[optind])
+
+[回到目录](#aflgo源码阅读)
+
 
 根据最后一个参数设置标头(banner)?
 
 ### check_if_tty()
 
+[回到目录](#aflgo源码阅读)
+
+
 检查是不是在终端运行
 
 ### get_core_count()
+
+[回到目录](#aflgo源码阅读)
+
 
 从系统文件中获取cpu核的相关信息
 
 ### bind_to_free_cpu()
 
+[回到目录](#aflgo源码阅读)
+
+
 把进程绑定在具体的内核上？
 
 ### check_crash_handling()
+
+[回到目录](#aflgo源码阅读)
+
 
 保证core dumps不会进入程序, 否则会增加将崩溃信息通过waitpid传递给fuzzer的延迟。
 
 ### check_cpu_governor()
 
+[回到目录](#aflgo源码阅读)
+
+
 要把CPU频率调节的算法(可能忽视fuzz产生的短进程)关了，以提高aflgo-fuzz的效率。
 
 ### setup_post()
+
+[回到目录](#aflgo源码阅读)
+
 
 不理解
 
 ### setup_shm()
 
+[回到目录](#aflgo源码阅读)
+
+
 配置共享内存和`virgin_bits`, 并且将共享内存的首地址赋值给`trace_bits`.
 
 ### init_count_class16()
+
+[回到目录](#aflgo源码阅读)
+
 
 之所以用左移是为了加快速度
 
@@ -140,6 +178,9 @@ tags:
 
 ### setup_dirs_fds()
 
+[回到目录](#aflgo源码阅读)
+
+
 1. flock 了 out_dir_fd
 
 2. 创建了跟下面有关的目录
@@ -152,6 +193,9 @@ tags:
 
 ### read_testcases()
 
+[回到目录](#aflgo源码阅读)
+
+
 从`input directory`中读取所有的测试用例，检测测试用例的大小，以及是否已经完成了`deterministic fuzzing`阶段，然后添加到queue中。
 
 初始化
@@ -161,12 +205,16 @@ tags:
 
 ### load_auto()
 
+[回到目录](#aflgo源码阅读)
+
+
 加载自动生成的附加组件
 
 
-
-
 ### pivot_inputs()
+
+[回到目录](#aflgo源码阅读)
+
 
 - 首先检查是不是之前跑过的
   - 如果是的话，看一下id是不是一致。
@@ -179,6 +227,9 @@ tags:
 strrchr和strchr类似，但是从右向左找字符c，找到字符c第一次出现的位置就返回，函数名中间多了一个字母r可以理解为Right-to-left。
 
 ### load_extras()
+
+[回到目录](#aflgo源码阅读)
+
 
 这个没看懂是干啥的。
 跟这些有关，但是不知道具体在fuzz的过程中起到了什么作用
@@ -200,11 +251,17 @@ static u32 a_extras_cnt;              /* Total number of tokens available */
 
 ### find_timeout()
 
+[回到目录](#aflgo源码阅读)
+
+
 只有在Resuming an older fuzzing job的情况下，才会使用。
 
 从状态目录中读取文件名, 并把`exec_timeout :`后面的值复制给`exec_tmout`, 将timeout_given赋值为3.
 
 ### detect_file_args()
+
+[回到目录](#aflgo源码阅读)
+
 
 根据参数@@后面带的东西，更改文件名. 看的也不是很懂。
 
@@ -221,9 +278,15 @@ static u32 a_extras_cnt;              /* Total number of tokens available */
 
 ### setup_stdio_file()
 
+[回到目录](#aflgo源码阅读)
+
+
 如果没有用-f指定输出文件的话, 那就用默认的`.cur_input`创建
 
 ### check_binary()
+
+[回到目录](#aflgo源码阅读)
+
 
 具体代码没看。。
 
@@ -231,9 +294,15 @@ static u32 a_extras_cnt;              /* Total number of tokens available */
 
 ### get_qemu_argv()
 
+[回到目录](#aflgo源码阅读)
+
+
 不知道干啥的
 
 ### perform_dry_run()
+
+[回到目录](#aflgo源码阅读)
+
 
 简单的把所有的测试用例都提前运行一遍，确保程序像预期的那样运行。如果不是的话，会有一些相应的提示。
 
@@ -260,6 +329,9 @@ static u32 a_extras_cnt;              /* Total number of tokens available */
 
 ### cull_queue()
 
+[回到目录](#aflgo源码阅读)
+
+
 `top_rated[i]` 代表的就是发现路径序号为i的最优entry(fav_factor最小的) 而且**关键的是top_rated[i] 指针指向的是queue中的特定的entry**。所以在将`top_rated[i]->favored = 1 `时，原来`queue`中的`entry`的`favored`也同样被设置为1
 
 值得注意的是，并不是说`top_rated[]`中所有的`entry`都是`favored`的。当且仅当你发现的`path`是你之前`entry`都没有发现过的情况下，这个`entry`才会被设置为`favored`
@@ -274,23 +346,37 @@ static u32 a_extras_cnt;              /* Total number of tokens available */
 
 ### show_init_stats()
 
+[回到目录](#aflgo源码阅读)
+
+
 显示统计数据 Total calibration cycles\max_bits\min_bits\exec_us\len等等
 
 根据平均运行时间重新设置一个`timeout_given`
 
 ### find_start_position()
 
+[回到目录](#aflgo源码阅读)
+
+
 当要恢复程序进程的时候，从`fuzzer_stats`目录的文件的文件名中读取相应的位置。
 
 ### write_stats_file()
+
+[回到目录](#aflgo源码阅读)
+
 
 把用到的基本状态信息都写入到状态文件中，这些变量都会在终端页面显示中用到。
 
 ### save_auto()
 
+[回到目录](#aflgo源码阅读)
+
+
 自动保存生成的extras，这个跟token有关系，但没看懂token到底有什么作用。
 
 ### fuzz_one && while循环
+
+[回到目录](#aflgo源码阅读)
 
 接下来是循环中的函数
 
@@ -319,6 +405,7 @@ static u32 a_extras_cnt;              /* Total number of tokens available */
     - havoc
     - splice
     >当然在这些变异阶段中, 大多都是每变异一次就进行`common_fuzz_stuff`。 还有很多为了保证程序效率(比如: 当变异出现的结果在之前的变异阶段已经被运行过的时候可以跳过、当对于某个字节的变异没有出现效果，那在以后的变异阶段就不会变异该字节了-相当于认为该字节对于提高程序效果没有太大的意义)
+    > 还有`common_fuzz_stuff`阶段产生出来的*新的变异enrty*会根据`save_if_interetring`函数来决定是否加入到队列中。加入队列的方式是**头插法！**
 
   循环结束后，回对sync_fuzzer进行一个操作，这个可以后面再看。
 
@@ -366,13 +453,22 @@ static u32 a_extras_cnt;              /* Total number of tokens available */
 
 ### write_bitmap()
 
+[回到目录](#aflgo源码阅读)
+
+
 把当前共享内存中的bitmap写到文件中去
 
 ### write_stats_file()
 
+[回到目录](#aflgo源码阅读)
+
+
 更新状态文件中的数据
 
 ### stop_fuzzing:
+
+[回到目录](#aflgo源码阅读)
+
 
 程序的终止是需要用户自己按下`ctrl+c` 循环不会自己退出
 
@@ -380,6 +476,9 @@ static u32 a_extras_cnt;              /* Total number of tokens available */
 
 
 ## AFLgo命令行启动参数
+
+[回到目录](#aflgo源码阅读)
+
 
 
 |参数  |含义  |
@@ -439,6 +538,9 @@ Other stuff:
 
 ## Linux命令
 
+[回到目录](#aflgo源码阅读)
+
+
 - **export**
   
   为shell变量或函数设置导出属性。它们会成为环境变量, 可以在脚本中访问它们，尤其是脚本中调用的子进程需要时。
@@ -480,6 +582,9 @@ Other stuff:
   mv命令 用来对文件或目录重新命名，或者将文件从一个目录移到另一个目录中。source表示源文件或目录，target表示目标文件或目录。如果将一个文件移到一个已经存在的目标文件中，则目标文件的内容将被覆盖
 
 ## 参考
+
+[回到目录](#aflgo源码阅读)
+
 
 1. http://rk700.github.io/2018/01/04/afl-mutations/
 2. https://rk700.github.io/2017/12/28/afl-internals/#%E5%88%86%E6%94%AF%E4%BF%A1%E6%81%AF%E7%9A%84%E5%88%86%E6%9E%90
