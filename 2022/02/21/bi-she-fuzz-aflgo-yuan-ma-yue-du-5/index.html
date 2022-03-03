@@ -491,21 +491,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-02-25
+                    2022-03-03
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.7k
+                    3.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    14 分
+                    15 分
                 </div>
                 
 
@@ -602,22 +602,36 @@
 </ul>
 </li>
 </ul>
-<h2 id="按照Main函数中的顺序"><a href="#按照Main函数中的顺序" class="headerlink" title="按照Main函数中的顺序"></a>按照Main函数中的顺序</h2><h3 id="setup-signal-handlers"><a href="#setup-signal-handlers" class="headerlink" title="setup_signal_handlers"></a>setup_signal_handlers</h3><p>初始化各种信号量</p>
+<h2 id="按照Main函数中的顺序"><a href="#按照Main函数中的顺序" class="headerlink" title="按照Main函数中的顺序"></a>按照Main函数中的顺序</h2><h3 id="setup-signal-handlers"><a href="#setup-signal-handlers" class="headerlink" title="setup_signal_handlers"></a>setup_signal_handlers</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>初始化各种信号量</p>
 <p>终止进程的、超时的等等</p>
-<h3 id="check-asan-opts"><a href="#check-asan-opts" class="headerlink" title="check_asan_opts()"></a>check_asan_opts()</h3><p>通过检查环境变量中的值来判断–检查ASAN设置</p>
-<h3 id="fix-up-sync-–不知道具体用途"><a href="#fix-up-sync-–不知道具体用途" class="headerlink" title="fix_up_sync()–不知道具体用途"></a>fix_up_sync()–不知道具体用途</h3><p>没理解</p>
-<h3 id="save-cmdline-argc-argv"><a href="#save-cmdline-argc-argv" class="headerlink" title="save_cmdline(argc, argv)"></a>save_cmdline(argc, argv)</h3><p>用<code>orig_cmdline</code>保存复制当前命令行</p>
-<h3 id="fix-up-banner-argv-optind"><a href="#fix-up-banner-argv-optind" class="headerlink" title="fix_up_banner(argv[optind])"></a>fix_up_banner(argv[optind])</h3><p>根据最后一个参数设置标头(banner)?</p>
-<h3 id="check-if-tty"><a href="#check-if-tty" class="headerlink" title="check_if_tty()"></a>check_if_tty()</h3><p>检查是不是在终端运行</p>
-<h3 id="get-core-count"><a href="#get-core-count" class="headerlink" title="get_core_count()"></a>get_core_count()</h3><p>从系统文件中获取cpu核的相关信息</p>
-<h3 id="bind-to-free-cpu"><a href="#bind-to-free-cpu" class="headerlink" title="bind_to_free_cpu()"></a>bind_to_free_cpu()</h3><p>把进程绑定在具体的内核上？</p>
-<h3 id="check-crash-handling"><a href="#check-crash-handling" class="headerlink" title="check_crash_handling()"></a>check_crash_handling()</h3><p>保证core dumps不会进入程序, 否则会增加将崩溃信息通过waitpid传递给fuzzer的延迟。</p>
-<h3 id="check-cpu-governor"><a href="#check-cpu-governor" class="headerlink" title="check_cpu_governor()"></a>check_cpu_governor()</h3><p>要把CPU频率调节的算法(可能忽视fuzz产生的短进程)关了，以提高aflgo-fuzz的效率。</p>
-<h3 id="setup-post"><a href="#setup-post" class="headerlink" title="setup_post()"></a>setup_post()</h3><p>不理解</p>
-<h3 id="setup-shm"><a href="#setup-shm" class="headerlink" title="setup_shm()"></a>setup_shm()</h3><p>配置共享内存和<code>virgin_bits</code>, 并且将共享内存的首地址赋值给<code>trace_bits</code>.</p>
-<h3 id="init-count-class16"><a href="#init-count-class16" class="headerlink" title="init_count_class16()"></a>init_count_class16()</h3><p>之所以用左移是为了加快速度</p>
+<h3 id="check-asan-opts"><a href="#check-asan-opts" class="headerlink" title="check_asan_opts()"></a>check_asan_opts()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>通过检查环境变量中的值来判断–检查ASAN设置</p>
+<h3 id="fix-up-sync-–不知道具体用途"><a href="#fix-up-sync-–不知道具体用途" class="headerlink" title="fix_up_sync()–不知道具体用途"></a>fix_up_sync()–不知道具体用途</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>没理解</p>
+<h3 id="save-cmdline-argc-argv"><a href="#save-cmdline-argc-argv" class="headerlink" title="save_cmdline(argc, argv)"></a>save_cmdline(argc, argv)</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>用<code>orig_cmdline</code>保存复制当前命令行</p>
+<h3 id="fix-up-banner-argv-optind"><a href="#fix-up-banner-argv-optind" class="headerlink" title="fix_up_banner(argv[optind])"></a>fix_up_banner(argv[optind])</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>根据最后一个参数设置标头(banner)?</p>
+<h3 id="check-if-tty"><a href="#check-if-tty" class="headerlink" title="check_if_tty()"></a>check_if_tty()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>检查是不是在终端运行</p>
+<h3 id="get-core-count"><a href="#get-core-count" class="headerlink" title="get_core_count()"></a>get_core_count()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>从系统文件中获取cpu核的相关信息</p>
+<h3 id="bind-to-free-cpu"><a href="#bind-to-free-cpu" class="headerlink" title="bind_to_free_cpu()"></a>bind_to_free_cpu()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>把进程绑定在具体的内核上？</p>
+<h3 id="check-crash-handling"><a href="#check-crash-handling" class="headerlink" title="check_crash_handling()"></a>check_crash_handling()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>保证core dumps不会进入程序, 否则会增加将崩溃信息通过waitpid传递给fuzzer的延迟。</p>
+<h3 id="check-cpu-governor"><a href="#check-cpu-governor" class="headerlink" title="check_cpu_governor()"></a>check_cpu_governor()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>要把CPU频率调节的算法(可能忽视fuzz产生的短进程)关了，以提高aflgo-fuzz的效率。</p>
+<h3 id="setup-post"><a href="#setup-post" class="headerlink" title="setup_post()"></a>setup_post()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>不理解</p>
+<h3 id="setup-shm"><a href="#setup-shm" class="headerlink" title="setup_shm()"></a>setup_shm()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>配置共享内存和<code>virgin_bits</code>, 并且将共享内存的首地址赋值给<code>trace_bits</code>.</p>
+<h3 id="init-count-class16"><a href="#init-count-class16" class="headerlink" title="init_count_class16()"></a>init_count_class16()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>之所以用左移是为了加快速度</p>
 <p>最终初始化是下面这个样子。16位一个<br>        0-0 ….      128-0  -256个元素   :0-1-2-4-8-16-32-64-128<br>      ⬇ 0-1 ….<br>        0-2 ….<br>        0-2 ….<br>        0-4 ….<br>        0-4 ….<br>        ………….<br>        0-128….    128-128         一共 65536个 16bit</p>
-<h3 id="setup-dirs-fds"><a href="#setup-dirs-fds" class="headerlink" title="setup_dirs_fds()"></a>setup_dirs_fds()</h3><ol>
+<h3 id="setup-dirs-fds"><a href="#setup-dirs-fds" class="headerlink" title="setup_dirs_fds()"></a>setup_dirs_fds()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<ol>
 <li><p>flock 了 out_dir_fd</p>
 </li>
 <li><p>创建了跟下面有关的目录</p>
@@ -630,14 +644,17 @@
 <li><p>还创建其他的fd(/dev/null&amp;/dev/urandom)方便后续使用</p>
 </li>
 </ol>
-<h3 id="read-testcases"><a href="#read-testcases" class="headerlink" title="read_testcases()"></a>read_testcases()</h3><p>从<code>input directory</code>中读取所有的测试用例，检测测试用例的大小，以及是否已经完成了<code>deterministic fuzzing</code>阶段，然后添加到queue中。</p>
+<h3 id="read-testcases"><a href="#read-testcases" class="headerlink" title="read_testcases()"></a>read_testcases()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>从<code>input directory</code>中读取所有的测试用例，检测测试用例的大小，以及是否已经完成了<code>deterministic fuzzing</code>阶段，然后添加到queue中。</p>
 <p>初始化</p>
 <ul>
 <li>queued_at_start  Total number of initial inputs</li>
 <li>last_path_time   Time for most recent path (ms)</li>
 </ul>
-<h3 id="load-auto"><a href="#load-auto" class="headerlink" title="load_auto()"></a>load_auto()</h3><p>加载自动生成的附加组件</p>
-<h3 id="pivot-inputs"><a href="#pivot-inputs" class="headerlink" title="pivot_inputs()"></a>pivot_inputs()</h3><ul>
+<h3 id="load-auto"><a href="#load-auto" class="headerlink" title="load_auto()"></a>load_auto()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>加载自动生成的附加组件</p>
+<h3 id="pivot-inputs"><a href="#pivot-inputs" class="headerlink" title="pivot_inputs()"></a>pivot_inputs()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<ul>
 <li>首先检查是不是之前跑过的<ul>
 <li>如果是的话，看一下id是不是一致。<ul>
 <li>id一致, 要改变对应entry的depth</li>
@@ -649,7 +666,8 @@
 </li>
 </ul>
 <h4 id="C语言知识"><a href="#C语言知识" class="headerlink" title="C语言知识"></a>C语言知识</h4><p>strrchr和strchr类似，但是从右向左找字符c，找到字符c第一次出现的位置就返回，函数名中间多了一个字母r可以理解为Right-to-left。</p>
-<h3 id="load-extras"><a href="#load-extras" class="headerlink" title="load_extras()"></a>load_extras()</h3><p>这个没看懂是干啥的。<br>跟这些有关，但是不知道具体在fuzz的过程中起到了什么作用</p>
+<h3 id="load-extras"><a href="#load-extras" class="headerlink" title="load_extras()"></a>load_extras()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>这个没看懂是干啥的。<br>跟这些有关，但是不知道具体在fuzz的过程中起到了什么作用</p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">struct extra_data &#123;
   u8* data;                           &#x2F;* Dictionary token data            *&#x2F;
   u32 len;                            &#x2F;* Dictionary token length          *&#x2F;
@@ -663,35 +681,47 @@ static struct extra_data* a_extras;   &#x2F;* Automatically selected extras    *
 static u32 a_extras_cnt;              &#x2F;* Total number of tokens available *&#x2F;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="find-timeout"><a href="#find-timeout" class="headerlink" title="find_timeout()"></a>find_timeout()</h3><p>只有在Resuming an older fuzzing job的情况下，才会使用。</p>
+<h3 id="find-timeout"><a href="#find-timeout" class="headerlink" title="find_timeout()"></a>find_timeout()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>只有在Resuming an older fuzzing job的情况下，才会使用。</p>
 <p>从状态目录中读取文件名, 并把<code>exec_timeout :</code>后面的值复制给<code>exec_tmout</code>, 将timeout_given赋值为3.</p>
-<h3 id="detect-file-args"><a href="#detect-file-args" class="headerlink" title="detect_file_args()"></a>detect_file_args()</h3><p>根据参数@@后面带的东西，更改文件名. 看的也不是很懂。</p>
+<h3 id="detect-file-args"><a href="#detect-file-args" class="headerlink" title="detect_file_args()"></a>detect_file_args()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>根据参数@@后面带的东西，更改文件名. 看的也不是很懂。</p>
 <h4 id="C语言知识-1"><a href="#C语言知识-1" class="headerlink" title="C语言知识"></a>C语言知识</h4><p>定义函数：char * getcwd(char * buf, size_t size);</p>
 <p>函数说明：getcwd()会将当前的工作目录绝对路径复制到参数buf 所指的内存空间，参数size 为buf 的空间大小。</p>
 <p>注：<br>1、在调用此函数时，buf 所指的内存空间要足够大。若工作目录绝对路径的字符串长度超过参数size 大小，则返回NULL，errno 的值则为ERANGE。<br>2、倘若参数buf 为NULL，getcwd()会依参数size 的大小自动配置内存(使用malloc())，如果参数size 也为0，则getcwd()会依工作目录绝对路径的字符串程度来决定所配置的内存大小，进程可以在使用完次字符串后利用free()来释放此空间。</p>
-<h3 id="setup-stdio-file"><a href="#setup-stdio-file" class="headerlink" title="setup_stdio_file()"></a>setup_stdio_file()</h3><p>如果没有用-f指定输出文件的话, 那就用默认的<code>.cur_input</code>创建</p>
-<h3 id="check-binary"><a href="#check-binary" class="headerlink" title="check_binary()"></a>check_binary()</h3><p>具体代码没看。。</p>
+<h3 id="setup-stdio-file"><a href="#setup-stdio-file" class="headerlink" title="setup_stdio_file()"></a>setup_stdio_file()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>如果没有用-f指定输出文件的话, 那就用默认的<code>.cur_input</code>创建</p>
+<h3 id="check-binary"><a href="#check-binary" class="headerlink" title="check_binary()"></a>check_binary()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>具体代码没看。。</p>
 <p>检查目标二进制文件是否存在，以及它是否是shell脚本。确保可以进行afl的插桩。</p>
-<h3 id="get-qemu-argv"><a href="#get-qemu-argv" class="headerlink" title="get_qemu_argv()"></a>get_qemu_argv()</h3><p>不知道干啥的</p>
-<h3 id="perform-dry-run"><a href="#perform-dry-run" class="headerlink" title="perform_dry_run()"></a>perform_dry_run()</h3><p>简单的把所有的测试用例都提前运行一遍，确保程序像预期的那样运行。如果不是的话，会有一些相应的提示。</p>
+<h3 id="get-qemu-argv"><a href="#get-qemu-argv" class="headerlink" title="get_qemu_argv()"></a>get_qemu_argv()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>不知道干啥的</p>
+<h3 id="perform-dry-run"><a href="#perform-dry-run" class="headerlink" title="perform_dry_run()"></a>perform_dry_run()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>简单的把所有的测试用例都提前运行一遍，确保程序像预期的那样运行。如果不是的话，会有一些相应的提示。</p>
 <h4 id="calibrate-case"><a href="#calibrate-case" class="headerlink" title="calibrate_case()"></a>calibrate_case()</h4><p>测试一个entry，看看是不是有覆盖率、新的路径的添加等等变量是否正常工作啥的。</p>
 <p>关于<code>entry</code>属性里面的<code>var_behavior</code>的理解: 因为在<code>calibrate</code>的阶段中，是没有发生变异的，那么如果测试用例在经过不同次数的执行后，产生了不一样的<code>path</code>。那么就把这个<code>entry</code>标记为<code>variable</code>。<strong>这个属性并没有影响到后续的其他步骤</strong>。根据注释，应该只是简单的标注，方便能找到吧。</p>
 <h5 id="count-bytes"><a href="#count-bytes" class="headerlink" title="count_bytes()"></a>count_bytes()</h5><p>数一下有多少个字节不为零, 8位代表一个path, 不同的命中次数可能会导致8位中不同位置的bit置1</p>
 <h5 id="update-bitmap-score"><a href="#update-bitmap-score" class="headerlink" title="update_bitmap_score()"></a>update_bitmap_score()</h5><p>当某个entry触发了新的path, 我们要与之前的同样触发这个path的”最优”的entry进行一个比较。看看到底谁更优秀。</p>
 <p>所谓的<code>top_rated[]</code> 就是 <code>a minimal set of paths that trigger all the bits seen in the bitmap so far.</code></p>
 <h5 id="minimize-bits"><a href="#minimize-bits" class="headerlink" title="minimize_bits()"></a>minimize_bits()</h5><p>把<code>trace_bits</code>压缩为一个占用空间更小的数组。1位代表一个<code>path</code>现在。所以刚好是分配了<code>MAP_SIZE&gt;&gt;3</code>的空间。</p>
-<h3 id="cull-queue"><a href="#cull-queue" class="headerlink" title="cull_queue()"></a>cull_queue()</h3><p><code>top_rated[i]</code> 代表的就是发现路径序号为i的最优entry(fav_factor最小的) 而且<strong>关键的是top_rated[i] 指针指向的是queue中的特定的entry</strong>。所以在将<code>top_rated[i]-&gt;favored = 1 </code>时，原来<code>queue</code>中的<code>entry</code>的<code>favored</code>也同样被设置为1</p>
+<h3 id="cull-queue"><a href="#cull-queue" class="headerlink" title="cull_queue()"></a>cull_queue()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p><code>top_rated[i]</code> 代表的就是发现路径序号为i的最优entry(fav_factor最小的) 而且<strong>关键的是top_rated[i] 指针指向的是queue中的特定的entry</strong>。所以在将<code>top_rated[i]-&gt;favored = 1 </code>时，原来<code>queue</code>中的<code>entry</code>的<code>favored</code>也同样被设置为1</p>
 <p>值得注意的是，并不是说<code>top_rated[]</code>中所有的<code>entry</code>都是<code>favored</code>的。当且仅当你发现的<code>path</code>是你之前<code>entry</code>都没有发现过的情况下，这个<code>entry</code>才会被设置为<code>favored</code></p>
 <blockquote>
 <p>我觉得这里有个值得深思的地方，程序这样设计的话，test_case的顺序会影响到其是否会被设置为favored. 这种随机性会不会对框架整体的性能产生一定的影响。</p>
 </blockquote>
 <h4 id="mark-as-redundant"><a href="#mark-as-redundant" class="headerlink" title="mark_as_redundant"></a>mark_as_redundant</h4><p>把对应的<code>entry</code>标记为<code>redundant</code>，其间还会创建一些目录，至于什么作用没看懂。</p>
-<h3 id="show-init-stats"><a href="#show-init-stats" class="headerlink" title="show_init_stats()"></a>show_init_stats()</h3><p>显示统计数据 Total calibration cycles\max_bits\min_bits\exec_us\len等等</p>
+<h3 id="show-init-stats"><a href="#show-init-stats" class="headerlink" title="show_init_stats()"></a>show_init_stats()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>显示统计数据 Total calibration cycles\max_bits\min_bits\exec_us\len等等</p>
 <p>根据平均运行时间重新设置一个<code>timeout_given</code></p>
-<h3 id="find-start-position"><a href="#find-start-position" class="headerlink" title="find_start_position()"></a>find_start_position()</h3><p>当要恢复程序进程的时候，从<code>fuzzer_stats</code>目录的文件的文件名中读取相应的位置。</p>
-<h3 id="write-stats-file"><a href="#write-stats-file" class="headerlink" title="write_stats_file()"></a>write_stats_file()</h3><p>把用到的基本状态信息都写入到状态文件中，这些变量都会在终端页面显示中用到。</p>
-<h3 id="save-auto"><a href="#save-auto" class="headerlink" title="save_auto()"></a>save_auto()</h3><p>自动保存生成的extras，这个跟token有关系，但没看懂token到底有什么作用。</p>
-<h3 id="fuzz-one-amp-amp-while循环"><a href="#fuzz-one-amp-amp-while循环" class="headerlink" title="fuzz_one &amp;&amp; while循环"></a>fuzz_one &amp;&amp; while循环</h3><p>接下来是循环中的函数</p>
+<h3 id="find-start-position"><a href="#find-start-position" class="headerlink" title="find_start_position()"></a>find_start_position()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>当要恢复程序进程的时候，从<code>fuzzer_stats</code>目录的文件的文件名中读取相应的位置。</p>
+<h3 id="write-stats-file"><a href="#write-stats-file" class="headerlink" title="write_stats_file()"></a>write_stats_file()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>把用到的基本状态信息都写入到状态文件中，这些变量都会在终端页面显示中用到。</p>
+<h3 id="save-auto"><a href="#save-auto" class="headerlink" title="save_auto()"></a>save_auto()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>自动保存生成的extras，这个跟token有关系，但没看懂token到底有什么作用。</p>
+<h3 id="fuzz-one-amp-amp-while循环"><a href="#fuzz-one-amp-amp-while循环" class="headerlink" title="fuzz_one &amp;&amp; while循环"></a>fuzz_one &amp;&amp; while循环</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>接下来是循环中的函数</p>
 <ul>
 <li><p>首先在进入循环之前, 要先cull_queue, 把favor的entry标记出来</p>
 </li>
@@ -720,7 +750,7 @@ static u32 a_extras_cnt;              &#x2F;* Total number of tokens available *
 <li>dictionary</li>
 <li>havoc</li>
 <li>splice<blockquote>
-<p>当然在这些变异阶段中, 大多都是每变异一次就进行<code>common_fuzz_stuff</code>。 还有很多为了保证程序效率(比如: 当变异出现的结果在之前的变异阶段已经被运行过的时候可以跳过、当对于某个字节的变异没有出现效果，那在以后的变异阶段就不会变异该字节了-相当于认为该字节对于提高程序效果没有太大的意义)</p>
+<p>当然在这些变异阶段中, 大多都是每变异一次就进行<code>common_fuzz_stuff</code>。 还有很多为了保证程序效率(比如: 当变异出现的结果在之前的变异阶段已经被运行过的时候可以跳过、当对于某个字节的变异没有出现效果，那在以后的变异阶段就不会变异该字节了-相当于认为该字节对于提高程序效果没有太大的意义)<br>还有<code>common_fuzz_stuff</code>阶段产生出来的<em>新的变异enrty</em>会根据<code>save_if_interetring</code>函数来决定是否加入到队列中。加入队列的方式是<strong>头插法！</strong></p>
 </blockquote>
 </li>
 </ul>
@@ -753,11 +783,15 @@ static u32 a_extras_cnt;              &#x2F;* Total number of tokens available *
 <h6 id="setitimer"><a href="#setitimer" class="headerlink" title="setitimer"></a>setitimer</h6><p>关于这个，详细的内容网上都有。 但是没搞清楚这个时间定时到底是阻塞的还是非阻塞的。？？</p>
 <h4 id="save-if-interesting"><a href="#save-if-interesting" class="headerlink" title="save_if_interesting"></a>save_if_interesting</h4><p>看一下当前的testcase是否触发了新的路径, 如果触发了新的路径，需要把这个testcase添加到当前的队列里面。并且要在queue中以<code>(&quot;%s/queue/id:%06u,%llu,%s&quot;, out_dir, queued_paths, get_cur_time() - start_time ,describe_op(hnb))</code>这样的形式命名。</p>
 <p>根据<code>run_target()</code>的返回值，处理timeout、crash、error的情况</p>
-<h3 id="write-bitmap"><a href="#write-bitmap" class="headerlink" title="write_bitmap()"></a>write_bitmap()</h3><p>把当前共享内存中的bitmap写到文件中去</p>
-<h3 id="write-stats-file-1"><a href="#write-stats-file-1" class="headerlink" title="write_stats_file()"></a>write_stats_file()</h3><p>更新状态文件中的数据</p>
-<h3 id="stop-fuzzing"><a href="#stop-fuzzing" class="headerlink" title="stop_fuzzing:"></a>stop_fuzzing:</h3><p>程序的终止是需要用户自己按下<code>ctrl+c</code> 循环不会自己退出</p>
+<h3 id="write-bitmap"><a href="#write-bitmap" class="headerlink" title="write_bitmap()"></a>write_bitmap()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>把当前共享内存中的bitmap写到文件中去</p>
+<h3 id="write-stats-file-1"><a href="#write-stats-file-1" class="headerlink" title="write_stats_file()"></a>write_stats_file()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>更新状态文件中的数据</p>
+<h3 id="stop-fuzzing"><a href="#stop-fuzzing" class="headerlink" title="stop_fuzzing:"></a>stop_fuzzing:</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<p>程序的终止是需要用户自己按下<code>ctrl+c</code> 循环不会自己退出</p>
 <p>对占有的内存空间进行释放, 退出程序</p>
-<h2 id="AFLgo命令行启动参数"><a href="#AFLgo命令行启动参数" class="headerlink" title="AFLgo命令行启动参数"></a>AFLgo命令行启动参数</h2><table>
+<h2 id="AFLgo命令行启动参数"><a href="#AFLgo命令行启动参数" class="headerlink" title="AFLgo命令行启动参数"></a>AFLgo命令行启动参数</h2><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<table>
 <thead>
 <tr>
 <th>参数</th>
@@ -860,7 +894,8 @@ Other stuff:
 
 
 
-<h2 id="Linux命令"><a href="#Linux命令" class="headerlink" title="Linux命令"></a>Linux命令</h2><ul>
+<h2 id="Linux命令"><a href="#Linux命令" class="headerlink" title="Linux命令"></a>Linux命令</h2><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<ul>
 <li><p><strong>export</strong></p>
 <p>为shell变量或函数设置导出属性。它们会成为环境变量, 可以在脚本中访问它们，尤其是脚本中调用的子进程需要时。</p>
 </li>
@@ -892,7 +927,8 @@ Other stuff:
 <p>mv命令 用来对文件或目录重新命名，或者将文件从一个目录移到另一个目录中。source表示源文件或目录，target表示目标文件或目录。如果将一个文件移到一个已经存在的目标文件中，则目标文件的内容将被覆盖</p>
 </li>
 </ul>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
+<ol>
 <li><a target="_blank" rel="noopener" href="http://rk700.github.io/2018/01/04/afl-mutations/">http://rk700.github.io/2018/01/04/afl-mutations/</a></li>
 <li><a target="_blank" rel="noopener" href="https://rk700.github.io/2017/12/28/afl-internals/#%E5%88%86%E6%94%AF%E4%BF%A1%E6%81%AF%E7%9A%84%E5%88%86%E6%9E%90">https://rk700.github.io/2017/12/28/afl-internals/#%E5%88%86%E6%94%AF%E4%BF%A1%E6%81%AF%E7%9A%84%E5%88%86%E6%9E%90</a></li>
 <li><a target="_blank" rel="noopener" href="https://paper.seebug.org/496/#_2">https://paper.seebug.org/496/#_2</a></li>
@@ -1525,7 +1561,7 @@ Other stuff:
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">83.3k</span>
+                        class="white-color">83.7k</span>
             
             
             
