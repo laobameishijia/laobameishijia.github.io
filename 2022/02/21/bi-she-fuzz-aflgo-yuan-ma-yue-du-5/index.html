@@ -491,7 +491,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-03
+                    2022-03-16
                 </div>
                 
 
@@ -698,7 +698,8 @@ static u32 a_extras_cnt;              &#x2F;* Total number of tokens available *
 <p>不知道干啥的</p>
 <h3 id="perform-dry-run"><a href="#perform-dry-run" class="headerlink" title="perform_dry_run()"></a>perform_dry_run()</h3><p><a href="#aflgo%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB">回到目录</a></p>
 <p>简单的把所有的测试用例都提前运行一遍，确保程序像预期的那样运行。如果不是的话，会有一些相应的提示。</p>
-<h4 id="calibrate-case"><a href="#calibrate-case" class="headerlink" title="calibrate_case()"></a>calibrate_case()</h4><p>测试一个entry，看看是不是有覆盖率、新的路径的添加等等变量是否正常工作啥的。</p>
+<h4 id="calibrate-case"><a href="#calibrate-case" class="headerlink" title="calibrate_case()"></a>calibrate_case()</h4><p>测试一个entry，看看是不是有覆盖率、新的路径的添加等等变量是否正常工作啥的。 </p>
+<p>这里会运行<code>run_target</code>来计算<code>distance</code>, 这是对已经加入队列的entry而言的。</p>
 <p>关于<code>entry</code>属性里面的<code>var_behavior</code>的理解: 因为在<code>calibrate</code>的阶段中，是没有发生变异的，那么如果测试用例在经过不同次数的执行后，产生了不一样的<code>path</code>。那么就把这个<code>entry</code>标记为<code>variable</code>。<strong>这个属性并没有影响到后续的其他步骤</strong>。根据注释，应该只是简单的标注，方便能找到吧。</p>
 <h5 id="count-bytes"><a href="#count-bytes" class="headerlink" title="count_bytes()"></a>count_bytes()</h5><p>数一下有多少个字节不为零, 8位代表一个path, 不同的命中次数可能会导致8位中不同位置的bit置1</p>
 <h5 id="update-bitmap-score"><a href="#update-bitmap-score" class="headerlink" title="update_bitmap_score()"></a>update_bitmap_score()</h5><p>当某个entry触发了新的path, 我们要与之前的同样触发这个path的”最优”的entry进行一个比较。看看到底谁更优秀。</p>
@@ -750,7 +751,7 @@ static u32 a_extras_cnt;              &#x2F;* Total number of tokens available *
 <li>dictionary</li>
 <li>havoc</li>
 <li>splice<blockquote>
-<p>当然在这些变异阶段中, 大多都是每变异一次就进行<code>common_fuzz_stuff</code>。 还有很多为了保证程序效率(比如: 当变异出现的结果在之前的变异阶段已经被运行过的时候可以跳过、当对于某个字节的变异没有出现效果，那在以后的变异阶段就不会变异该字节了-相当于认为该字节对于提高程序效果没有太大的意义)<br>还有<code>common_fuzz_stuff</code>阶段产生出来的<em>新的变异enrty</em>会根据<code>save_if_interetring</code>函数来决定是否加入到队列中。加入队列的方式是<strong>头插法！</strong></p>
+<p>当然在这些变异阶段中, 大多都是每变异一次就进行<code>common_fuzz_stuff</code>。 还有很多为了保证程序效率(比如: 当变异出现的结果在之前的变异阶段已经被运行过的时候可以跳过、当对于某个字节的变异没有出现效果，那在以后的变异阶段就不会变异该字节了-相当于认为该字节对于提高程序效果没有太大的意义)<br>还有<code>common_fuzz_stuff</code>阶段产生出来的<em>新的变异enrty</em>会根据<code>save_if_interetring</code>函数来决定是否加入到队列中。加入队列的方式是<strong>尾插法！</strong>只不过把刚刚添加进队列的<code>entry</code>看作是<code>queue_top</code></p>
 </blockquote>
 </li>
 </ul>
@@ -1318,29 +1319,28 @@ Other stuff:
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/02/21/bi-she-fuzz-aflgo-yuan-ma-yue-du-5/">
+                <a href="/2022/02/25/bi-she-fuzz-aflgo-yuan-ma-xiu-gai-1/">
                     <div class="card-image">
                         
-                        <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211119142134.png" class="responsive-img" alt="毕设-Fuzz-AFLGo源码阅读-5">
+                        <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211119142134.png" class="responsive-img" alt="毕设-Fuzz-AFLGo源码修改.md">
                         
-                        <span class="card-title">毕设-Fuzz-AFLGo源码阅读-5</span>
+                        <span class="card-title">毕设-Fuzz-AFLGo源码修改.md</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            AFL框架的源码基本内容阅读
+                            AFL框架的源码修改效果提升
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-21
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-02-25
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1353,7 +1353,6 @@ Other stuff:
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1561,7 +1560,7 @@ Other stuff:
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">83.7k</span>
+                        class="white-color">85.7k</span>
             
             
             
