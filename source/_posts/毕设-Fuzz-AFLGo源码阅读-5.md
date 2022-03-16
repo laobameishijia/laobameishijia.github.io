@@ -308,7 +308,9 @@ static u32 a_extras_cnt;              /* Total number of tokens available */
 
 #### calibrate_case()
 
-测试一个entry，看看是不是有覆盖率、新的路径的添加等等变量是否正常工作啥的。
+测试一个entry，看看是不是有覆盖率、新的路径的添加等等变量是否正常工作啥的。 
+
+这里会运行`run_target`来计算`distance`, 这是对已经加入队列的entry而言的。
 
 关于`entry`属性里面的`var_behavior`的理解: 因为在`calibrate`的阶段中，是没有发生变异的，那么如果测试用例在经过不同次数的执行后，产生了不一样的`path`。那么就把这个`entry`标记为`variable`。**这个属性并没有影响到后续的其他步骤**。根据注释，应该只是简单的标注，方便能找到吧。
 
@@ -405,7 +407,7 @@ static u32 a_extras_cnt;              /* Total number of tokens available */
     - havoc
     - splice
     >当然在这些变异阶段中, 大多都是每变异一次就进行`common_fuzz_stuff`。 还有很多为了保证程序效率(比如: 当变异出现的结果在之前的变异阶段已经被运行过的时候可以跳过、当对于某个字节的变异没有出现效果，那在以后的变异阶段就不会变异该字节了-相当于认为该字节对于提高程序效果没有太大的意义)
-    > 还有`common_fuzz_stuff`阶段产生出来的*新的变异enrty*会根据`save_if_interetring`函数来决定是否加入到队列中。加入队列的方式是**头插法！**
+    > 还有`common_fuzz_stuff`阶段产生出来的*新的变异enrty*会根据`save_if_interetring`函数来决定是否加入到队列中。加入队列的方式是**尾插法！**只不过把刚刚添加进队列的`entry`看作是`queue_top`
 
   循环结束后，回对sync_fuzzer进行一个操作，这个可以后面再看。
 
