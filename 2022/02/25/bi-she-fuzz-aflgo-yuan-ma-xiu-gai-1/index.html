@@ -491,21 +491,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-16
+                    2022-04-22
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2k
+                    2.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    8 分
+                    10 分
                 </div>
                 
 
@@ -757,6 +757,31 @@ else&#123;
 <hr>
 <p><strong>解决方案就是, 当你在使用这两个指针的时候，记得判断一下是否为空。</strong></p>
 <p>如果都为空的话，直接返回上一个被选中的种子。</p>
+<h2 id="7"><a href="#7" class="headerlink" title="7"></a>7</h2><p>现在有一个问题就是, <code>queue_min_distance</code> 和 <code>queue_max_bb</code> 经常是空指针, 这样就说明种子好像根本没有进到程序当中。</p>
+<p>此外，cron的确是可以定时运行程序的，但是效果不是很好。一开始我是担心，cron启动的进程会不会在资源上有些受限，但是我再次在命令行运行之后，一个小时跑出来的结果居然才21. <strong>也就是说目前AFLGo的运行效果并不稳定，时好时坏</strong>。 </p>
+<blockquote>
+<p>还是要当面监控运行效果，否则很难发现问题到底出在什么地方</p>
+</blockquote>
+<p>短路径优先阶段中，<strong>没有发现更近的种子</strong> 和 <strong>没有发现新路径</strong> 这是两个不同的概念啊！</p>
+<blockquote>
+<p>我觉得对这个概念理解的不同直接导致了编写的算法中 偏向了路径发现。 通过对比和师兄论文中描述的实验对比，可以发现，在 <code>total_path</code> 这一指标上，很明显我的算法要比师兄的算法高。但这已经偏离了我们想要的效果。</p>
+</blockquote>
+<ul>
+<li><code>calibrate_case</code> 和 <code>add_to_queue</code> 这两个函数发生的时机</li>
+</ul>
+<blockquote>
+<p>我是这么理解的，<code>calibrate_case</code>进行的时候，是针对所有已经添加到队列中的种子了。所以我觉得并不需要考虑<code>calibrate_case</code>阶段中<code>min_distance</code>是否改变了。<code>save_if_interesting</code>中调用<code>add_to_queue</code>的时候我们需要看一下<code>min_distance</code>是否发生改变。</p>
+</blockquote>
+<ul>
+<li><code>select_shortest_from_longest</code>函数中的<code>min_distance_in_longest</code>变量是否要更改成<code>0xFFFFFFFF</code></li>
+</ul>
+<p>把前面说的问题都改了，发现改了还不如不改。。。。  不过shortest阶段确实有一些进步。主要是以前无差别探索阶段总是可以探索出好多，但是现在无差别探索阶段探索不出来很多了。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220320170715.png" alt="20220320170715"></p>
+<p>把短路径优先阶段直接改成–只接受更优解的情况之后，效果好了一些。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220321171916.png" alt="20220321171916"></p>
+<p>通过我的观察发现，短路径优阶段一直重复那两个种子。其他的种子得不到fuzz。——<strong>这个是因为current_entry除了第一阶段后面就没有再增加了</strong></p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220323110203.png" alt="20220323110203"></p>
+<p>着重看一下select_shortest阶段到底除了啥问题</p>
 
                 
             </div>
@@ -1138,29 +1163,28 @@ else&#123;
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/02/25/bi-she-fuzz-aflgo-yuan-ma-xiu-gai-1/">
+                <a href="/2022/04/21/bi-she-fuzz-aflgo-yuan-ma-yue-du-6/">
                     <div class="card-image">
                         
-                        <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211119142134.png" class="responsive-img" alt="毕设-Fuzz-AFLGo源码修改.md">
+                        <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211119142134.png" class="responsive-img" alt="毕设-Fuzz-AFLGo源码阅读-6">
                         
-                        <span class="card-title">毕设-Fuzz-AFLGo源码修改.md</span>
+                        <span class="card-title">毕设-Fuzz-AFLGo源码阅读-6</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            AFL框架的源码修改效果提升
+                            AFL框架的源码基本内容阅读
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-25
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-04-21
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1173,7 +1197,6 @@ else&#123;
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1385,7 +1408,7 @@ else&#123;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">85.7k</span>
+                        class="white-color">87.3k</span>
             
             
             
