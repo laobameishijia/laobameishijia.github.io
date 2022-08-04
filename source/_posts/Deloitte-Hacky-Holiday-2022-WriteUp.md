@@ -1,13 +1,25 @@
 ---
-title: Deloitte Hacky Holiday 2022 WriteUp
-tags:
-  - WriteUp
-categories: CTF
-urlname: deloitte-hacky-holiday-2022-writeup
-abbrlink: 29790
-date: 2022-07-29 08:00:21
+title: Deloitte-Hacky-Holiday-2022-WriteUp
+date: 2022-08-4 00:00:00
+# 文章出处名称 #
+from: 
+# 文章出处链接 #
+url: 
+# 文章作者名称 #
+author: 老叭美食家
+# 文章作者签名 #
+about: 不要因为没有掌声，就放弃你的梦想。
+# 文章作者头像 #
+avatar: 
+# 是否开启评论 #
+comments: true
+# 文章标签 #
+tags: CTF
+# 文章分类 #
+categories: Deloitte-Hacky-Holiday-2022
+# 文章摘要 #
+description: Deloitte-Hacky-Holiday-2022
 ---
-
 简介：
 
 本文Deloitte Hacky Holiday比赛的WriteUp，主办方的题目非常有质量而且梯度拉开非常友好。我们最终在2334只参赛队伍中取得了75名次的成绩，再接再厉！

@@ -1,3 +1,25 @@
+---
+title: CTF-PWN-1
+date: 2022-08-4 00:00:00
+# 文章出处名称 #
+from: 
+# 文章出处链接 #
+url: 
+# 文章作者名称 #
+author: 老叭美食家
+# 文章作者签名 #
+about: 不要因为没有掌声，就放弃你的梦想。
+# 文章作者头像 #
+avatar: 
+# 是否开启评论 #
+comments: true
+# 文章标签 #
+tags: CTF
+# 文章分类 #
+categories: PWN
+# 文章摘要 #
+description: PWN入门
+---
 # pwn
 
 ## 先检查保护机制
