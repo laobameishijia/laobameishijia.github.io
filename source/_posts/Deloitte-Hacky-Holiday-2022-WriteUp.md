@@ -1,6 +1,7 @@
 ---
 title: Deloitte-Hacky-Holiday-2022-WriteUp
 date: 2022-08-4 00:00:00
+img: https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220804184708.png
 # 文章出处名称 #
 from: 
 # 文章出处链接 #
@@ -81,7 +82,7 @@ CTF{493c709cff326b344f94acfb6f6cfd81}
 
 此题给出了网站的源码，通过简单的审计，猜测这是一道关于反序列漏洞的题目。如下所示，用户所传递的Cookie在没有经过其他过滤的情况下直接被反序列化，因此可能由此完成RCE。查看其完成反序列化操作的包为'node-serialize'并且版本为0.0.4，搜索后发现果然该版本的node-serialize存在反序列化漏洞CVE-2017-5941。
 
-![2](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image (1).png)
+![2](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image(1).png)
 
 此漏洞的代码存在于`node_modules/node-serialize/lib/serialize.js`中。我们可以看到，当反序列化对象的值为`string`并且以`FUNCFLAG(i.e. _$$ND_FUNC$$_)`开头时，则会调用eval函数。也就是说，如果我们传入的字符串例如:`{"rce":"_$$ND_FUNC$$_function(){console.log('xxx')}"}`，则该语句在截取字符串后就变成了`eval(function(){console.log('xxx')})`。接着，我们还需要该函数在定义后立即执行，所以在其最后加上括号表示使用IIFE立即调用执行，即可完成RCE。所以构造的目标字符串应该形如：`{"rce":"_$$ND_FUNC$$_function(){console.log('xxx')}()"}`.
 
@@ -138,11 +139,11 @@ var userInfo = serialize.unserialize(cookieValue);
 此时，我直接去搜索关于uftpd的相关信息，发现uftpd作为开源的ftp服务器已经更新到2.15版本，而目标机器停留在了2.10版本。接着，我找到了关于uftpd的相关漏洞，其中CVE-2020-5221路径穿越漏洞引起了我的注意，毕竟路径穿越就可以找到题目所说的敏感的stolen_data。
 
 
-![8](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image (6).png)
+![8](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image(6).png)
 
 根据，[此博客](https://arinerron.com/blog/posts/6)提供的POC，我们发现FTP中的若干命令(LIST, RETR)都存在路径穿越的漏洞。不过，回到之前的问题，作为带外传输的FTP协议，我们需要另外建立一个链接来传输数据。这有两种方式，默认为主动连接，即由服务器端主动连接客户端的某个端口，这需要首先使用PORT命令提供客户端开放的端口。但是由于服务器端无法穿越NAT直接连接到我的kali，所以我该用被动链接的方式，也就是由客户端主动连接到服务器中作为数据发送的端口。具体如下所示。
 
-![9](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image (7).png)需要说明的是，PASV使得ftp进入被动模式，给出的10,6,0,100,202,9的含义是开放10.6.0.100:202*256+9端口作为数据传输。所以我是用nc远程连接其51271端口。接着在passwd中我发现存在/var/backups目录，继续使用LIST该目录发现其中存在./DATA/flag1.txt文件。欣喜若狂，至此斩获一150分的大题。
+![9](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image(7).png)需要说明的是，PASV使得ftp进入被动模式，给出的10,6,0,100,202,9的含义是开放10.6.0.100:202*256+9端口作为数据传输。所以我是用nc远程连接其51271端口。接着在passwd中我发现存在/var/backups目录，继续使用LIST该目录发现其中存在./DATA/flag1.txt文件。欣喜若狂，至此斩获一150分的大题。
 
 ```
 CTF{F0rtREss_Br3@c#3d}
@@ -158,7 +159,7 @@ CTF{F0rtREss_Br3@c#3d}
 
 接着，使用反汇编一下查看其程序逻辑。发现程序逻辑非常简单，main函数中直接调用名为vuln的函数。而在vuln的函数中，首先声明了一个0x70大小的内存空间，接着使用gets()函数获取用户输入存在此内存空间。所以显然栈溢出漏洞就存在于此。
 
-![11](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image (8).png)
+![11](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image(8).png)
 
 要对漏洞进行利用，我们还需要知道程序所开启的保护。使用gdb-peda中自带的checksec或者下载的checksec脚本可以帮助我们查看该程序开启的保护措施。由下可见，ROPtheAI开启了Canary以及NX。简单来说，前者在弹栈前检查EBP下方的预置的Cookie是否被用户输入覆盖来判断是否存在栈溢出的情况。后者使得Data段(也就是栈所在的段)不具备执行权限，也就是说用户如果在栈中输入了shellcode也是无法执行的。
 
@@ -166,19 +167,19 @@ CTF{F0rtREss_Br3@c#3d}
 
 checksec脚本的原理是依赖于readelf工具查看目标程序(ELF，可执行可链接文件格式)的相关信息比如program headers(存储着程序Segment和Section的信息)、符号表(存储着程序中变量、函数名的类型、位置地址等)等。具体地，checksec对于Canary以及NX保护措施的查看方法如下所示，前者是查询符号表中是否存在__stack_chk_fail函数，后者是查询栈的执行权限。
 
-![13](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image (9).png)
+![13](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image(9).png)
 
 这种判断Canary的方法我们可以猜想会存在假阳性，毕竟存在__stack_chk_fail函数并其不意味着被链接进去。所以具体的情况我们还是要通过动态调试程序来看是否在程序的入口和弹栈时存在对应的汇编代码。这里可以参考[CTFWiki](https://ctf-wiki.org/pwn/linux/user-mode/mitigation/canary/)中对于Canary的具体讲解。本ROPtheAI就是这样一个例子，在调试时并没有发现有执行验证Cookie的汇编代码，所以我们无需思考如何绕过Canary。
 
 对于NX，在动态调试时可以通过vmmap查看栈是否存在可执行的权限。
 
- ![14](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image (10).png)
+ ![14](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image(10).png)
 
 在摸清程序的保护措施之后，我们首先通过动态调试查看栈的结构，确定缓冲区的大小；然后构造ROP链绕过NX保护。
 
 程序的栈结构以及入栈出栈的过程可以参考[此篇文章](https://www.cnblogs.com/clover-toeic/p/3755401.html)，介绍的非常细致。缓冲区的大小我们可以通过动态调试时查看RSP和RBP所指向的地址查看或者通过cyclic工具构造有规律的字符串，再判断溢出后RBP中所存储的内容判断偏移。由于本程序的汇编非常简单，通过调试我们可以看到栈中保存RET地址的位置距离输入点的偏移的0x70。
 
-![15](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image (11)-9054164.png)
+![15](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image(11)-9054164.png)
 
 由于NX保护的开启，我们无法通过最简单的利用gets函数在栈中嵌入一段shellcode，再将ret的地址指向该shellcode的地址，使其执行shellcode。因为存入的shellcode在data段中的栈中，该地址的指令与在text段中的指令不同，没有执行权限。
 
@@ -235,7 +236,7 @@ sh.interactive()
 
 最终成功拿到Shell。
 
-![17](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image (12).png)
+![17](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image(12).png)
 
 最后，其实在整个EXP编写的过程中并不会顺利，所以需要我们使用pwntools自带的gdb来调试我们的payload，查看问题出在哪里再修复，这一点非常重要。此外，通过gdb.debug的方式启用程序可能会由于环境变量，导致栈的内存地址的变化。通过gdb.attach的方式连接已经运行的程序则不会存在这样的问题。
 
@@ -357,7 +358,7 @@ CTF{7a0QfB8dr1cF293Oy5a9fk9dA01c}
 
 利用kali虚拟机生成包含4位数字的所有组合，再通过一样的解密过程，将密文解密出来。最终在发现1337即为PIN，也找到了最终的Flag。
 
-![25](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image (13).png)
+![25](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image(13).png)
 
 此题，思路并没有多大的问题，但是由于本人对基础知识的认识不够。所以走了很多弯路。
 
@@ -385,7 +386,7 @@ CTF{UGVwcGFpc2FwaWc}
 
 第二关为简单的密码解密题。根据前一题得到的解密结果，能够发现一定线索。
 
-![28](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image (2).png)
+![28](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image(2).png)
 
 其中第一个人是密码学家，并且搜索发现与之相关的密码加密方式为 "维吉尼亚密码" ，而改密码需要一个 Key 来帮助解密，句中提及他的中间名可以帮助，因此得到 " Battista "，最后进行解密得到 flag。（维吉尼亚解密）
 
@@ -395,7 +396,7 @@ CTF{QMVSBGFZB2LUDMVUDGVKDGhPC2NPCGHLCG}
 
 第三关**Uncompleted。**同样是密码解迷题。根据前一题得到的解密结果，能够发现一定线索。
 
-![29](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image (3).png)
+![29](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image(3).png)
 
 暂时猜测他 shuffle 的意思是某种换序加密，想到格栅密码，但是尝试并未找的 flag，同时认为他所提到的 cylinder 是某种轮盘加密，暂时不知道使用什么进行解密。
 
@@ -499,7 +500,7 @@ CTF{binary}
 
 第一关是一个数据流追踪的问题。根据题目名称我们可以推测出需要将分散的数据包进行追踪，同时我们可以发现大多为 TCP 数据包，因此我们将 TCP 流进行追踪（Wireshark：" 分析-->追踪流-->TCP" ），接着我们进行翻阅可以看到 flag。
 
-![34](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image (4).png)
+![34](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image(4).png)
 
 ```
 CTF{Hacky_Holidays_ICS}
@@ -527,7 +528,7 @@ CTF{ARP}
 
 第四关 寻找目标机器与外部机器之间沟通的报文，主要使用了(右键选择追踪流->追踪TCP流)，再不断增加流编号的过程中，发现了339流中存在HTTP协议报文。
 
-![35](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image (5).png)
+![35](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image(5).png)
 
 将该报文中的HTML源码复制到txt文件中再重新命名为html，打开之后即可得到flag--是一个由base64编码的图片。（筛选的过程中一度怀疑TSL协议流中蕴含着flag，想要通过数据包中传递的密钥破解数据包中加密传递的信息。但从理论上来说仅从数据包破解TSL协议的可能性不大，包中传递的也都是公钥。）
 
@@ -563,7 +564,7 @@ CTF{DGErbbodqEeHQhjeDs8g}
 
 连接数据库并间隔一定时间保存每个车辆的的位置，最后绘制多点的轨迹图，我们可以发现一串类似于flag的车辆轨迹如下所示。
 
-![40](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image (15).png)
+![40](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image(15).png)
 
 接着，为了看得更清楚，我通过点的移动距离可以筛选出构成flag的点，并且调小了时间间隔。同时由于该图是由车的轨迹构成，所以我自然而然想绘制动态图片来搞清楚此flag是如何绘制的，这可能有助于我猜测各个位置的字母和数字是什么。所以，我得到了如下的gif图片，我们可以隐约地看到flag，但是很多位置并不明确，只能靠猜。
 
@@ -571,7 +572,7 @@ CTF{DGErbbodqEeHQhjeDs8g}
 
 但是还是不明确，经过meishijia的提醒下，我把横纵坐标的比例调成了一致使得每个字母更加协调。此时可以猜测出大部分的字符，但是有些位置还是无法确定。
 
-![42](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image (14).png)
+![42](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/image(14).png)
 
 最后在meishijia的点拨下，我把轨迹图更换成了散点图，这样产生噪音的一些线条就被去除，最终得到了Flag。
 
