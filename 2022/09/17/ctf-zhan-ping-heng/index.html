@@ -487,21 +487,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-09-17
+                    2022-09-19
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    768
+                    2.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    10 分
                 </div>
                 
 
@@ -524,9 +524,9 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="栈溢出"><a href="#栈溢出" class="headerlink" title="栈溢出"></a>栈溢出</h1><p><strong>先说明，以下讨论均在32位机器下进行讨论！</strong></p>
+                <h1 id="栈溢出"><a href="#栈溢出" class="headerlink" title="栈溢出"></a>栈溢出</h1><h2 id="第一讲–初始"><a href="#第一讲–初始" class="headerlink" title="第一讲–初始"></a>第一讲–初始</h2><p><strong>先说明，以下讨论均在32位机器下进行讨论！</strong></p>
 <p>这个栈溢出的例子,我是从b站up主Innks那里看到的。因为有些细节不理解，所以动手敲了一遍。</p>
-<h2 id="改进之前"><a href="#改进之前" class="headerlink" title="改进之前"></a>改进之前</h2><p>改进之前由于没有平衡栈空间，导致栈空间被破坏，程序无法正确返回。</p>
+<h3 id="改进之前"><a href="#改进之前" class="headerlink" title="改进之前"></a>改进之前</h3><p>改进之前由于没有平衡栈空间，导致栈空间被破坏，程序无法正确返回。</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;Windows.h></span></span>
 
@@ -550,7 +550,7 @@
     <span class="token function">MessageBoxA</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">"恭喜你中毒了"</span><span class="token punctuation">,</span> <span class="token string">"你中毒了"</span><span class="token punctuation">,</span> MB_OK<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="改进之后"><a href="#改进之后" class="headerlink" title="改进之后"></a>改进之后</h2><p>改进之后，可以正确的让程序结束</p>
+<h3 id="改进之后"><a href="#改进之后" class="headerlink" title="改进之后"></a>改进之后</h3><p>改进之后，可以正确的让程序结束</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;Windows.h></span></span>
 
@@ -580,11 +580,11 @@
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h2 id="改进前后的栈帧对比"><a href="#改进前后的栈帧对比" class="headerlink" title="改进前后的栈帧对比"></a>改进前后的栈帧对比</h2><p>由于ipencil长时间不用，现在才发现已经被我摔坏了，以后不常用的东西还是保管好呢，不要满不在意，用的时候才发现坏了。</p>
+<h3 id="改进前后的栈帧对比"><a href="#改进前后的栈帧对比" class="headerlink" title="改进前后的栈帧对比"></a>改进前后的栈帧对比</h3><p>由于ipencil长时间不用，现在才发现已经被我摔坏了，以后不常用的东西还是保管好呢，不要满不在意，用的时候才发现坏了。</p>
 <p>所以我就直接用手写的图了，懒得画图了。</p>
 <p>也确实是该换手机了，手机前置摄像头找出来的照片有点黑。</p>
 <p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220917164427.jpg" alt="栈空间对比"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>因为我们采用栈溢出的方式调用了函数，那么应该<code>push到栈中的参数占的空间</code>占用了<code>其他栈帧的空间</code>。所以会导致后续程序流发生不可控制的变化。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>因为我们采用栈溢出的方式调用了函数，那么应该<code>push到栈中的参数占的空间</code>占用了<code>其他栈帧的空间</code>。所以会导致后续程序流发生不可控制的变化。</p>
 <p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220917164601.png" alt="MessageBoxA的汇编代码"></p>
 <p>汇编中的<code>retn 10h</code>就是为了平衡call函数之前push到栈里面的参数所占的空间。第一开始不理解的地方就在于此，我觉得<code>retn 10h</code>平衡的也就是<code>4个参数--16字节</code>。但是up主却用了五个<code>push ebp</code>。</p>
 <p>实际上，<code>retn 10h</code>使栈空间减少了20个字节的空间。</p>
@@ -595,6 +595,134 @@
 <p>除此之外呢，我还发现vs—debug编译模式和release模式，是非常不一样的。</p>
 <p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220917165306.png" alt="vs-debug&amp;release"></p>
 <p>debug简单来说是为了方便分析程序，release模式是发布程序。我使用ida反汇编之后发现，debug生成的exe的汇编代码中添加了很多关于栈空间和一些寄存器的检查工作。而release模式下，是没有这些检查函数的。</p>
+<h2 id="第二讲–改进"><a href="#第二讲–改进" class="headerlink" title="第二讲–改进"></a>第二讲–改进</h2><p>通过前面的第一讲，我们明白了要解决通过栈溢出调用函数而导致的栈平衡问题。</p>
+<p>up 还留了一个坑。 就是要采用什么样的方式去平衡栈，而不用写汇编。</p>
+<h3 id="预知识"><a href="#预知识" class="headerlink" title="预知识"></a>预知识</h3><p>函数调用有<code>__cdecl</code>、<code>__stdcall</code>。</p>
+<p>__cdecl 是C Declaration的缩写（declaration，声明），表示C语言默认的函数调用方法：所有参数从右到左依次入栈，这些参数由调用者清除，称为手动清栈。被调用函数不会要求调用者传递多少参数，调用者传递过多或者过少的参数，甚至完全不同的参数都不会产生编译阶段的错误。</p>
+<p>_stdcall 是StandardCall的缩写：所有参数从右到左依次入栈，如果是调用类成员的话，最后一个入栈的是this指针。这些堆栈中的参数由被调用的函数在返回后清除，使用的指令是 retnX，X表示参数占用的字节数，CPU在ret之后自动弹出X个字节的堆栈空间。称为自动清栈。函数在编译的时候就必须确定参数个数，并且调用者必须严格的控制参数的生成，不能多，不能少，否则返回后会出错。</p>
+<p>MessageBoxA显然属于_stdcall。由被调用函数自己清栈。这也是系统API的特点之一。这样做的好处就是，严格控制了传递参数的个数，或多或少都不行。<br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220919153649.png" alt="MessageBoxA"></p>
+<p>MsgBox 属于_cdecl调用方式，由调用者自己清栈，这个过程中你传递参数的个数可以变化，这也是为什么可以定义可变参数的原因把。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220919154006.png" alt="MsgBox"></p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>通过预知识的学习，我们知道了自定义函数和系统API调用采用的平栈方式不同，那么我们能不能利用这个特性来实现平栈呢？</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220919154545.png" alt="改进思路"></p>
+<p>通过上图可以发现，我们通过给自定义函数增加参数，实现的效果和<code>push ebp</code>的效果一致。但是仅仅是这样不能够平栈，因为系统调用的时候还是会<code>retn 10h</code>，而由于_cdecl平栈的特性，其还<code>add esp 14h</code>。所以也就相当于进行了两次平栈操作。</p>
+<p>那么 评论区大lao 的思路就是跳过 <code>add esp 14h</code>。由于这句指令是 3 字节，所以我们要在 <code>ary[4] = ary[3] + 3</code>。这样就跳到了下一条指令<code>push 0</code>的地址。</p>
+<pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">void MsgBox(int a, int b, int c, int d, int e)
+&#123;
+    int ary[2];
+    ary[4] &#x3D; ary[3] + 3 ; &#x2F;&#x2F;跳过 esp
+    ary[3] &#x3D; (int)MessageBoxA;
+    ary[5] &#x3D; 0;
+    ary[6] &#x3D; (int)&quot;NO_CALL 恭喜你中毒了&quot;;
+    ary[7] &#x3D; (int)&quot;NO_CALL 你中毒了&quot;;
+    ary[8] &#x3D; MB_OK;
+&#125;
+int main()
+&#123;
+    MsgBox(1,2,3,4,5);
+    MessageBoxA(0, &quot;恭喜你中毒了&quot;, &quot;你中毒了&quot;, MB_OK);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后up又对这个思路进行了改进。既然我们传递了一些参数，而且后续我们又把这些参数当作了MessageBoxA这个函数的参数，那么为什么不在传递参数的时候就把该传递的参数传进去呢。</p>
+<pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">void MsgBox(void* address,HWND hWnd,LPCSTR lpText,LPCSTR lpCaption,UINT uType)
+&#123;
+    int ary[2];
+    &#x2F;&#x2F;交换ary[3] 和ary [4] ----也就是把MessageBoxA的地址换上来，把返回地址换下去
+    ary[4] &#x3D; ary[3] ^ ary[4];
+    ary[3] &#x3D; ary[3] ^ ary[4];
+    ary[4] &#x3D; ary[3] ^ ary[4];
+
+    ary[4] &#x3D; ary[4] + 3;
+&#125;
+int main()
+&#123;
+    MsgBox(MessageBoxA,0, &quot;恭喜你中毒了&quot;, &quot;你中毒了&quot;, MB_OK);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="第三讲–完美"><a href="#第三讲–完美" class="headerlink" title="第三讲–完美"></a>第三讲–完美</h2><p>通过上述方式，我们知道了是需要跳过<code>_cdecl</code>或者是<code>_stdcall</code>两种平栈方式中的一种。那我们就可以利用这个欺骗编译器。</p>
+<p>在声明的时候不给函数参数，但是在调用的时候，欺骗编译器这是个<code>_stdcall</code>类型且带有4个参数的函数，那么编译器会帮助我们将参数压栈，并且消除了<code>add esp 14h</code>的影响。</p>
+<pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">&#x2F;&#x2F;完美版本
+void MsgBox() &#123;
+    int ary[2];
+    &#x2F;&#x2F;交换ary[3] 和ary [4] ----也就是把MessageBoxA的地址换上来，把返回地址换下去
+    ary[3] &#x3D; ary[3] ^ ary[4];
+    ary[4] &#x3D; ary[3] ^ ary[4];
+    ary[3] &#x3D; ary[3] ^ ary[4];
+&#125;&#x2F;&#x2F;ret----_cdecl 方式返回
+
+typedef int* (_stdcall* _hMessageBoxA)(void* address, HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType);
+&#x2F;&#x2F;这样做的好处是，代码可复用性强。后续只需要写写声明就可以了。
+typedef int* (_stdcall* _hMessageBoxW)(void* address, HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType);
+int main()W
+&#123;
+    &#x2F;&#x2F;完美版本
+    ((_hMessageBoxA)MsgBox) (MessageBoxA, 0, &quot;恭喜你中毒了&quot;, &quot;你中毒了&quot;, MB_OK);
+
+    ((_hMessageBoxA)MsgBox) (MessageBoxA, 0, &quot;恭喜你中毒了&quot;, &quot;你中毒了&quot;, MB_OK);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="所有的代码"><a href="#所有的代码" class="headerlink" title="所有的代码"></a>所有的代码</h2><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;iostream&gt;
+#include &lt;Windows.h&gt;
+
+#pragma optimize(&quot;&quot;,off)
+
+
+&#x2F;&#x2F; 初始版本
+void MsgBox1(int a, int b, int c, int d, int e)
+&#123;
+    int ary[2];
+    ary[4] &#x3D; ary[3]; &#x2F;&#x2F;相当于把ret返回地址复制了一遍
+    ary[3] &#x3D; (int)MessageBoxA;
+    &#x2F;&#x2F;ary[4] &#x3D; ary[3]; &#x2F;&#x2F;这条指令写到这个位置和写在上面一个位置是完全不一样的哟！
+    ary[5] &#x3D; 0;
+    ary[6] &#x3D; (int)&quot;NO_CALL 恭喜你中毒了&quot;;
+    ary[7] &#x3D; (int)&quot;NO_CALL 你中毒了&quot;;
+    ary[8] &#x3D; MB_OK;
+&#125;
+
+&#x2F;&#x2F;进阶版本
+void MsgBox2(int a, int b, int c, int d, int e)
+&#123;
+    int ary[2];
+    ary[4] &#x3D; ary[3] + 3; &#x2F;&#x2F;跳过 esp
+    ary[3] &#x3D; (int)MessageBoxA;
+    &#x2F;&#x2F;ary[4] &#x3D; ary[3]; &#x2F;&#x2F;这条指令写到这个位置和写在上面一个位置是完全不一样的哟！
+    ary[5] &#x3D; 0;
+    ary[6] &#x3D; (int)&quot;NO_CALL 恭喜你中毒了&quot;;
+    ary[7] &#x3D; (int)&quot;NO_CALL 你中毒了&quot;;
+    ary[8] &#x3D; MB_OK;
+&#125;
+&#x2F;&#x2F;进阶版本---改进
+void MsgBox2_1(void* address, HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType)
+&#123;
+    int ary[2];
+    &#x2F;&#x2F;交换ary[3] 和ary [4] ----也就是把MessageBoxA的地址换上来，把返回地址换下去
+    ary[4] &#x3D; ary[3] ^ ary[4];
+    ary[3] &#x3D; ary[3] ^ ary[4];
+    ary[4] &#x3D; ary[3] ^ ary[4];
+
+    ary[4] &#x3D; ary[4] + 3;
+&#125;
+&#x2F;&#x2F;完美版本
+void MsgBox() &#123;
+    int ary[2];
+    &#x2F;&#x2F;交换ary[3] 和ary [4] ----也就是把MessageBoxA的地址换上来，把返回地址换下去
+    ary[3] &#x3D; ary[3] ^ ary[4];
+    ary[4] &#x3D; ary[3] ^ ary[4];
+    ary[3] &#x3D; ary[3] ^ ary[4];
+&#125;&#x2F;&#x2F;ret----_cdecl 方式返回
+
+typedef int* (_stdcall* _hMessageBoxA)(void* address, HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType);
+
+int main()
+&#123;
+    &#x2F;&#x2F;完美版本
+    ((_hMessageBoxA)MsgBox) (MessageBoxA, 0, &quot;恭喜你中毒了&quot;, &quot;你中毒了&quot;, MB_OK);
+
+    ((_hMessageBoxA) MsgBox) (MessageBoxA, 0, &quot;恭喜你中毒了&quot;, &quot;你中毒了&quot;, MB_OK);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><p>不知道怎么说，自己的水平还是差了很多，up主所提到的安全思维也没有。很有可能做一辈子也是个普通人，但那又能怎么样呢? 一直学下去呗。不断丰富自己，最后不会太差哒！</p>
 
                 
             </div>
@@ -621,7 +749,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://laobameishijia.github.io/2022/09/17/guan-yu-zhan-yi-chu-de-li-zi/">https://laobameishijia.github.io/2022/09/17/guan-yu-zhan-yi-chu-de-li-zi/</a>
+                    <a href="https://laobameishijia.github.io/2022/09/17/ctf-zhan-ping-heng/">https://laobameishijia.github.io/2022/09/17/ctf-zhan-ping-heng/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -977,7 +1105,7 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2022/09/17/guan-yu-zhan-yi-chu-de-li-zi/">
+                <a href="/2022/09/17/ctf-zhan-ping-heng/">
                     <div class="card-image">
                         
                         <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220917162435.png" class="responsive-img" alt="CTF-PWN-平衡栈帧">
@@ -1211,7 +1339,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">107.9k</span>
+                        class="white-color">109.6k</span>
             
             
             
