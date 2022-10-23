@@ -494,14 +494,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.3k
+                    2.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    8 分
+                    11 分
                 </div>
                 
 
@@ -537,6 +537,134 @@
 <li>user32.dll Windows用户界面相关应用程序接口 user32.dll是Windows用户界面相关应用程序接口，用于包括Windows处理，基本用户界面等特性，如创建窗口和发送消息。</li>
 <li>ntdll.dll Windows NT内核级文件 ntdll.dll是重要的Windows NT内核级文件。描述了windows本地NTAPI的接口。当Windows启动时，ntdll.dll就驻留在内存中特定的写保护区域，使别的程序无法占用这个内存区域。</li>
 </ul>
+<h2 id="symkeygen"><a href="#symkeygen" class="headerlink" title="symkeygen"></a>symkeygen</h2><p>把生成密钥的程序，隐藏在数字或者字符串中。等程序真正运行地时候，在将这些数字或字符串，通过一系列操作转换为真正的程序逻辑。这种思想很值得借鉴。</p>
+<pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+&#x2F;*
+glibc 2.30, Ubuntu 64bit
+How to use password:
+$ openssl enc -aes256 -k &#123;PASSWORD&#125; -in secret.txt -out secret.bin
+*&#x2F;
+
+unsigned regs[4];
+int program[] &#x3D;&#123;593920, 598016, 602112, 593920, 598016, 328196, 655360, 205573, 659456, 397327, 405517, 663552, 139523, 593920, 143618, 667648, 598016, 663552, 593920, 593920, 405509, 139523, 663552, 659456, 602112, 397317, 270595, 340480, 667648, 593920, 598016, 602112, 593920, 598016, 328196, 655360, 205573, 659456, 397327, 405517, 663552, 139523, 593920, 143618, 667648, 598016, 663552, 593920, 593920, 405509, 139523, 663552, 659456, 602112, 397317, 270595, 340480, 667648&#125;;
+char stack[33] &#x3D;&quot;&quot;;
+	
+int pc &#x3D; 0;
+
+int ins &#x3D; 0;
+int reg1 &#x3D; 0;
+int reg2 &#x3D; 0;
+int reg3 &#x3D; 0;
+int imm &#x3D; 0;
+
+int fl &#x3D; 0;
+int sp &#x3D; 0;
+
+
+void decode(int instr)
+&#123;
+  ins  &#x3D; (instr &amp; 0xF0000) &gt;&gt; 16;
+  reg1 &#x3D; (instr &amp; 0xF000 ) &gt;&gt;  12;
+  reg2 &#x3D; (instr &amp; 0xF00  ) &gt;&gt;  8;
+  reg3 &#x3D; (instr &amp; 0xF   );
+  imm  &#x3D; (instr &amp; 0xFF  );
+&#125;
+
+int running &#x3D; 1;
+
+int fetch()&#123;
+	return program [pc++];
+&#125;
+
+void eval()
+&#123;
+	switch (ins)
+	&#123;
+		case 0:
+			&#x2F;&#x2F;ret
+			running &#x3D; 0;	
+			break;
+		case 1:
+			&#x2F;&#x2F;pop
+			regs[reg1] &#x3D; (int)stack[sp--];
+			fl &#x3D; 0;
+			break;
+		case 2:
+			&#x2F;&#x2F;sub
+			regs[reg1] &#x3D; regs[reg2] - regs[reg3];
+			fl &#x3D; regs[reg1];
+			break;
+		case 3:
+			&#x2F;&#x2F;subimm
+			regs[reg1] &#x3D; regs[reg2] - imm;
+			fl &#x3D; regs[reg1];
+			break;
+		case 4:
+			&#x2F;&#x2F;add
+			regs[reg1] &#x3D; regs[reg2] + regs[reg3];
+			fl &#x3D; 0;
+			break;
+		case 5:
+			&#x2F;&#x2F;addimm
+			regs[reg1] &#x3D; regs[reg2] + imm;
+			fl &#x3D;0;
+			break;
+		case 6:
+			&#x2F;&#x2F;loadi
+			regs[reg1] &#x3D; imm;
+			fl &#x3D; 0;
+		case 7:
+			&#x2F;&#x2F;jne
+			if (fl !&#x3D; 0)&#123;
+			pc &#x3D; imm;
+			&#125;
+			fl &#x3D; 0;	
+			break;
+		case 8:
+			&#x2F;&#x2F;jmp
+			pc &#x3D; imm;
+			fl &#x3D;0;
+			break;
+		case 9:
+			&#x2F;&#x2F;rand
+            regs[reg1] &#x3D; ((rand() % 16) +70);
+			break;
+        case 10:
+            &#x2F;&#x2F;push
+            stack[sp++] &#x3D; (char)regs[reg1];
+			fl &#x3D; 0;
+			
+	&#125;
+&#125;
+
+int run()&#123;
+	while(running)&#123;
+		int instr &#x3D; fetch();	
+		decode(instr);
+		eval();
+		&#125;
+	return imm;
+&#125;
+
+
+int main (int argc, char **argv) &#123;
+   
+	int i, n;
+	time_t t;
+    n &#x3D; 32;
+   
+  	srand((unsigned) time(&amp;t));
+  
+	printf(&quot;Beginning key generation at %lu\n&quot;, (unsigned long) t);
+    run();
+	printf(&quot;Your strong password is %s\n&quot;, stack); 
+
+   return(0);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h1 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><p>这个题是<code>jack</code>与我交流的时候讨论到的。里面有一个非常重要的点需要总结。</p>
 <p>以前我认为<code>call function_name</code>的时候，<code>function_name</code>必须要位于整个函数最开始的地方。</p>
 <p>但实际上，并不是如此。因为CPU也不知道你这个<code>function_name</code>到底是不是在整个函数最开始的地方。</p>
@@ -1262,7 +1390,7 @@ struct malloc_chunk &#123;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">115.9k</span>
+                        class="white-color">116.4k</span>
             
             
             
