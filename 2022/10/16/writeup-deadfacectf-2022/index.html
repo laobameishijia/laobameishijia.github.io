@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="汇编语言学习-call和ret指令, 老叭美食家">
+    <meta name="keywords" content="Writeup for DeadFaceCTF2022, 老叭美食家">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>汇编语言学习-call和ret指令 | 老叭美食家</title>
+    <title>Writeup for DeadFaceCTF2022 | 老叭美食家</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/awesome/css/all.css">
@@ -334,12 +334,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221016125700.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">汇编语言学习-call和ret指令</h1>
+                    <h1 class="description center-align post-title">Writeup for DeadFaceCTF2022</h1>
                 </div>
             </div>
         </div>
@@ -455,8 +455,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tag/%E6%B1%87%E7%BC%96/">
-                                <span class="chip bg-color">汇编</span>
+                            <a href="/tag/%E6%AF%94%E8%B5%9B/">
+                                <span class="chip bg-color">比赛</span>
                             </a>
                         
                     </div>
@@ -467,8 +467,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                研究生预备学习
+                            <a href="/category/CTF/" class="post-category">
+                                CTF
                             </a>
                         
                     </div>
@@ -480,7 +480,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-10-16
+                    2022-10-16
                 </div>
                 
 
@@ -494,14 +494,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    2.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    8 分
                 </div>
                 
 
@@ -524,315 +524,124 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="call和ret指令"><a href="#call和ret指令" class="headerlink" title="call和ret指令"></a>call和ret指令</h1><h2 id="思维导图"><a href="#思维导图" class="headerlink" title="思维导图"></a>思维导图</h2><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211016111954.png" alt="思维导图"></p>
-<p>关于使用栈来传递参数并用ret返回的实际例子还是需要多看才行。</p>
-<h2 id="综合实验"><a href="#综合实验" class="headerlink" title="综合实验"></a>综合实验</h2><h3 id="显示字符串"><a href="#显示字符串" class="headerlink" title="显示字符串"></a>显示字符串</h3><pre class="line-numbers language-text" data-language="text"><code class="language-text">名称：show_str
-功能：在指定的位置,用指定的颜色,显示一个用0结束的字符串
-参数：dh 行号(0-24), dl 列号 0-79, cl颜色, ds:si指向字符串的首地址
-返回: 无
-应用举例：在屏幕的8行3列,用绿色显示出data段中的字符串<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <h1 id="Rev"><a href="#Rev" class="headerlink" title="Rev"></a>Rev</h1><p>这次rev做出了两道题，没有什么困难的地方，通过反编译软件可以很清楚地看到源码。程序主题的逻辑也很清晰，主要是涉及了一些关于AES和异或的加密过程。</p>
+<h2 id="deadface2022-re05"><a href="#deadface2022-re05" class="headerlink" title="deadface2022_re05"></a>deadface2022_re05</h2><p>这个主逻辑也很清楚 先要求你输入一个字符串，然后对这个字符串进行sha3哈希，然后判断这个hash字符串和程序中保存的正确的hash字符串一不一样。如果一样的话，他会通过这个字符串来解密(异或操作)加密的字符串，最后返回正确的flag。</p>
+<p>解密的操作是通过hashcat来解密的，我看视频他用的是<code>3070ti</code>。当然还有一个字典，然后一下子就算出来了。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221019184046.png" alt="hash破解"></p>
+<h2 id="re03-another-fine-product"><a href="#re03-another-fine-product" class="headerlink" title="re03-another-fine-product"></a>re03-another-fine-product</h2><p>这是一个软件，通过软件中的点击操作获取到相应的信息。</p>
+<p><strong>此题和现实中的软件破解很类似，为了保护软件的收益，通常会采取用户验证的方式。而这部分验证的代码通常是非常复杂且不可见的。但是有些时候，我们可以修改程序流，使程序跳过验证的步骤，从而达到破解软件的效果。</strong></p>
+<h3 id="主要逻辑"><a href="#主要逻辑" class="headerlink" title="主要逻辑"></a>主要逻辑</h3><p>软件本身没有什么问题，就是简单的一些菜单和点击之后出现的弹窗。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221023144355.png" alt="软件截图"></p>
+<h3 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h3><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221023144745.png" alt="WindbgPreview"></p>
+<h3 id="基础的知识"><a href="#基础的知识" class="headerlink" title="基础的知识"></a>基础的知识</h3><ul>
+<li>user32.dll Windows用户界面相关应用程序接口 user32.dll是Windows用户界面相关应用程序接口，用于包括Windows处理，基本用户界面等特性，如创建窗口和发送消息。</li>
+<li>ntdll.dll Windows NT内核级文件 ntdll.dll是重要的Windows NT内核级文件。描述了windows本地NTAPI的接口。当Windows启动时，ntdll.dll就驻留在内存中特定的写保护区域，使别的程序无法占用这个内存区域。</li>
+</ul>
+<h1 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><p>这个题是<code>jack</code>与我交流的时候讨论到的。里面有一个非常重要的点需要总结。</p>
+<p>以前我认为<code>call function_name</code>的时候，<code>function_name</code>必须要位于整个函数最开始的地方。</p>
+<p>但实际上，并不是如此。因为CPU也不知道你这个<code>function_name</code>到底是不是在整个函数最开始的地方。</p>
+<h2 id="主体逻辑"><a href="#主体逻辑" class="headerlink" title="主体逻辑"></a>主体逻辑</h2><ol>
+<li><p>首先程序是运行在服务器端利用tcp套接字来与客户端进行交互，无任何保护措施，提供了上图的6个功能。<br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221016131314.png" alt="主题逻辑"></p>
+</li>
+<li><p><code>Make Target</code>功能，会通过用户的输入。利用malloc函数申请一个0x18的堆空间创建一个Target结构体。这个结构体的第二个成员是一个函数指针，指向一个删除结构体的函数。</p>
+</li>
+</ol>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221016131713.png" alt="delete_structure"></p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221016131744.png" alt="Target结构体"></p>
+<ol start="3">
+<li><code>Create an Exploit</code>功能，会通过用户输入。利用malloc函数申请一个0x18的堆空间创建Exploit结构体。</li>
+</ol>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221016131925.png" alt="Exploit结构体"></p>
+<ol start="4">
+<li><code>retrieve_admin_key</code>，验证用户输入的密码，正确则返回flag。</li>
+</ol>
+<pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">ssize_t retrieve_admin_key()
+&#123;
+  ssize_t result; &#x2F;&#x2F; eax
 
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:code
+  send(fork_sock, &quot;What is the password?\n&quot;, 0x17u, 0);
+  recv(fork_sock, &quot;aaaaaaaaaaaaaaaa&quot;, 0x10u, 0);
+  if ( !strcmp(&quot;ga*wi58Fw#o&amp;WOG9&quot;, &quot;aaaaaaaaaaaaaaaa&quot;) )
+    result &#x3D; send(fork_sock, &quot;flag&#123;--------------------------&#125;\n&quot;, 0x22u, 0);
+  else
+    result &#x3D; send(fork_sock, &quot;Bad Password\n&quot;, 0xEu, 0);
+  return result;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-data segment
-    db 'Welcome to masm!',0
-data ends
+<h2 id="堆利用"><a href="#堆利用" class="headerlink" title="堆利用"></a>堆利用</h2><p>Target结构体和Exploit结构体都是申请的堆空间上大小为0x18的空间。而且程序在这个过程中没有申请过其他堆块。此外delete_struct的函数里面的只是简单调用了<code>free</code>函数。<code>free</code>函数会操作堆块的头部，而不会清除此前保留在堆块中的数据。指向堆块的指针实际上还是指向的这个已经被释放的堆块的用户可以用空间首地址。但是这个时候注意，由于堆块已经释放，此前用户可用地址的前8个字节已经变成了指向前一个可用堆块和后一个可用堆块的指针。</p>
+<p>那么，我们通过创建一个Target然后再删除，然后创建一个<code>Exploit</code>结构体，这样的话，Exploit结构体申请到的堆空间与之前删除的Target结构体申请的堆空间是一致的。那么Delete_structure这个成员的内容就变成我们可以操控的了。接着就需要使用delete功能调用这个函数就行。</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">switch ( buf )
+ &#123;
+   case 0:
+   case 49:
+     v5 &#x3D; newS1(v7);
+     break;
+   case 50:
+     if ( v5 ) &#x2F;&#x2F; v5在调用delete函数之后，实际上还是指向的已经被释放的堆空间的地址。
+     &#x2F;&#x2F;所以，我们再exploit中构造函数指针之后，依然是可以调用我们修改的函数指针。
+       (*(void (__cdecl **)(int, int *))(v5 + 16))(v5, v7);
+     else
+       send(*v7, &quot;No target?\n&quot;, 0xCu, 0);
+     break;
+   case 51:
+     v6 &#x3D; newS2(v7);
+     break;
+   case 52:
+     check_compatability(v5, v6, v7);
+     break;
+   case 53:
+     retrieve_admin_key();
+     break;
+   default:
+     return __readgsdword(0x14u) ^ v9;
+ &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-code segment
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221016133405.png" alt="对比"></p>
+<p>该程序没有开启任何的保护机制，所以我们接下来要考虑的就是应该修改或者跳转到哪里？</p>
+<p>开始我一直以为，这个地址只能是函数的首地址。实际上通过我们最开始描述，这个地址不是首地址也可以。只不过可能后续程序就没办法正常运行了。</p>
+<p>所以我们直接跳到了下图所示位置，注意这个时候要保证send函数参数的正确性。注意寄存器里面的值前后的变化。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221016134322.png" alt="跳转位置"></p>
+<p>实际上，这个跳转位置并不是check_compatability函数的开始部分。因为我们无法知道这个正确的密码，只能是跳过验证的部分。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221016134429.png" alt="效果"></p>
+<h2 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h2><p>Target结构体申请到的堆空间</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221016134658.png" alt="Target结构体申请到的堆空间"></p>
+<p>创建Target结构体之后堆空间的内容</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221016141528.png" alt="创建Target结构体之后堆空间的内容"></p>
+<p>删除掉我们申请的Target时<br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221016135032.png" alt="delete_structure"></p>
+<p>删除掉Target之后，堆空间中的内容</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221016141136.png" alt="删除Target之后的堆块"></p>
+<p>创建Exploit结构体</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221016141808.png" alt="创建Exploit结构体"></p>
+<p>第二次，使用删除功能，可以发现之前指向堆空间的指针依然是指向的堆空间的用户可用地址。并没有被清零。实际只是堆块放到了空闲管理的堆块表里面去了。而且我们调用的call也只指向了retrieve_admin_key函数</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221016141940.png" alt="第二次，使用删除功能"></p>
+<p>当我们步入之后发现，call指令同样还是先把返回地址压栈，然后再将我们设置的指令地址弹出到eip中。<br><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221016142156.png" alt="第二次，使用删除功能"></p>
+<p>之后我们就能显示出flag。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221016142446.png" alt="效果"></p>
+<h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><h3 id="linux-堆块结构体"><a href="#linux-堆块结构体" class="headerlink" title="linux 堆块结构体"></a>linux 堆块结构体</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">&#x2F;*
+  This struct declaration is misleading (but accurate and necessary).
+  It declares a &quot;view&quot; into memory allowing access to necessary
+  fields at known offsets from a given base. See explanation below.
+*&#x2F;
+struct malloc_chunk &#123;
 
-start:
-    mov dh,8
-    mov dl,3
-    mov cl,2
-    mov ax,data
-    mov ds,ax
-    mov si,0
-    call show_str
-    
-    mov ax,4c00h
-    int 21h
+  INTERNAL_SIZE_T      prev_size;  &#x2F;* Size of previous chunk (if free).  *&#x2F;
+  INTERNAL_SIZE_T      size;       &#x2F;* Size in bytes, including overhead. *&#x2F;
 
-show_str:
-    push es
-    push bp
-    push bx
+  struct malloc_chunk* fd;         &#x2F;* double links -- used only if free. *&#x2F;
+  struct malloc_chunk* bk;
 
-    mov ax,0B800H
-    mov es,ax
+  &#x2F;* Only used for large blocks: pointer to next larger size.  *&#x2F;
+  struct malloc_chunk* fd_nextsize; &#x2F;* double links -- used only if free. *&#x2F;
+  struct malloc_chunk* bk_nextsize;
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-    ;找行号对应的内存地址
-    mov al,160
-    mul dh
-    mov bp,ax
-    sub bp,160
-    ;找列对应的内存地址
-    mov al,2
-    mul dl
-    mov di,ax
-    sub di,2
-    ;把颜色转移一下
-    mov bl,cl
-    push cx
-s: 
-    mov cl,ds:[si]
-    mov ch,0
-    jcxz ok
-    mov es:[bp+di],cl
-    mov es:[bp+di+1],bl
-
-    add di,2
-    add si,1
-    jmp short s
-
-ok:
-    pop cx
-    pop bx
-    pop bp
-    pop es
-    ret
-code ends
-end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="运行截图"><a href="#运行截图" class="headerlink" title="运行截图"></a>运行截图</h4><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211016112701.png" alt="显示字符串"></p>
-<h3 id="解决除法溢出的问题"><a href="#解决除法溢出的问题" class="headerlink" title="解决除法溢出的问题"></a>解决除法溢出的问题</h3><p>用div指令做出发的时候可能产生除法溢出,比如:1000000/10就不能用div指令来算</p>
-<pre class="line-numbers language-text" data-language="text"><code class="language-text">名称：divdw
-功能：进行不会产生溢出的除法运算,被除数为dword,除数为word.结果为dword
-参数: ax dword的低16位 | dx dword高16位 | cx除数
-返回: dx 结果的高16位, ax 结果的低16位, cx 余数
-应用举例：计算 1000000/10(F4240H/0AH)
-结果: dx = 0001H  ax = 86A0H cx = 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:codesg
-
-datasg segment
-
-datasg ends
-
-codesg segment
-
-start:
-    mov ax,4240H
-    mov dx,000FH
-    mov cx,0AH
-    call divdw
-    mov ax,4c00h
-    int 21h
-;这里面就是因为 div 被除数默认放在ax | dx(高)和ax(低)中,所以比较麻烦
-;除数可以放在寄存器里也可以放在内存单元里，有8/16两种, 8-AL商 AH余数 || 16-AX商 DX余数
-;再就是因为数据运算要符合相同的类型,同为16或同为8,在寄存器里面换来换去的就比较麻烦
-divdw:
-    push ax
-    mov ax,dx
-    div cl
-    mov bl,al
-    mov bh,00H
-    mov al,ah
-    mov ah,00H;bx保留商,ax保留余数
-
-    pop si
-    mov dx,si
-
-    mov dx,ax
-    mov ax,si
-    div cx;32/16 ax余数,dx商
-
-    mov si,bx
-    mov bx,dx
-    mov dx,si
-
-    mov cx,bx
-
-    ret
-
-codesg ends
-end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="运行截图-1"><a href="#运行截图-1" class="headerlink" title="运行截图"></a>运行截图</h4><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211016113513.png" alt="解决除法溢出的问题"></p>
-<h3 id="数值显示"><a href="#数值显示" class="headerlink" title="数值显示"></a>数值显示</h3><p>将12666以字符串的形式显示到显示器上</p>
-<pre class="line-numbers language-text" data-language="text"><code class="language-text">名称：dtoc
-功能：将word型数据转变为十进制的字符串,字符串以0为结尾符
-参数：ax word型数据
-    ds:si指向字符串的首地址
-返回：无
-应用举例: 将12666以十进制的形式在屏幕的8行3列,用绿色显示出来<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="改进前代码"><a href="#改进前代码" class="headerlink" title="改进前代码"></a>改进前代码</h4><p>改进前,主要是利用在内存中的位置,来对字符串进行逆向的输出。因为算余数的话,顺序是66621得倒过来才行</p>
-<pre class="line-numbers language-text" data-language="text"><code class="language-text">
-assume cs:code,ds:data
-
-data segment
-    db 10 dup(0)
-data ends
-
-code segment
-
-start:
-    mov ax,12666
-    mov bx,data
-    mov ds,bx
-    mov si,0
-    call dtoc
-    
-
-    mov dh,8
-    mov dl,3
-    mov cl,2
-    call show_str
-
-    mov ax,4c00h
-    int 21h
-
-dtoc:
-    mov dx,00
-    mov bh,00
-    mov bl,10;感觉逻辑没问题啊,商越界了 得用32/16的
-    div bx ;为什么会在这里卡住呢,感觉像是无限循环？？？
-    mov ch,00h
-    mov cl,dl
-    jcxz ok
-    add byte ptr cx,0030H
-    mov ds:[si],cx
-    inc si
-    jmp dtoc
-ok:
-    ;也不是不能操作栈,在之前push进去的,在这里都pop出来就不会有问题,要不然回影响ret指令pop IP
-    ;后面你可以再试试,这个程序还是有问题
-    sub si,1;运行完之后si=5,然而ds[si]此时刚好是0,所以你得减去个1才行
-    ret
-
-show_str:
-    push es
-    push bp
-    push bx
-
-    mov ax,0B800H
-    mov es,ax
-
-    ;找行号对应的内存地址
-    mov ah,00
-    mov al,160
-    mul dh
-    mov bp,ax
-    sub bp,160
-    ;找列对应的内存地址
-    mov ah,00
-    mov al,2
-    mul dl
-    mov di,ax
-    sub di,2
-    ;把颜色转移一下
-    mov bl,cl
-    push cx
-s: 
-    mov cl,ds:[si]
-    mov ch,0
-    jcxz ok1
-    mov es:[bp+di],cl
-    mov es:[bp+di+1],bl
-
-    add di,2
-    sub si,1
-    jmp short s
-
-ok1:
-    pop cx
-    pop bx
-    pop bp
-    pop es
-    ret    
-    
-code ends
-end start
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="改进后代码"><a href="#改进后代码" class="headerlink" title="改进后代码"></a>改进后代码</h4><p>改进之后,利用了栈的特性,先将算出来的余数入栈,然后再出栈写到内存里.这样就刚好倒过来了。不过需要注意的是,<code>在子程序中push进去的,在ret之前都要pop出来哦！</code></p>
-<pre class="line-numbers language-text" data-language="text"><code class="language-text">assume cs:code,ds:data
-
-data segment
-    db 10 dup(0)
-data ends
-
-code segment
-
-start:
-    mov ax,12666
-    mov bx,data
-    mov ds,bx
-    mov si,0
-    call dtoc
-    
-
-    mov dh,8
-    mov dl,3
-    mov cl,2
-    call show_str
-
-    mov ax,4c00h
-    int 21h
-
-dtoc:
-    mov dx,00
-    mov bh,00
-    mov bl,10;感觉逻辑没问题啊,商越界了 得用32/16的
-    div bx ;为什么会在这里卡住呢,感觉像是无限循环？？？
-    mov ch,00h
-    mov cl,dl
-    jcxz ok
-    add byte ptr cx,0030H
-    mov ds:[si],cx
-    inc si
-    jmp dtoc
-ok:
-    ;也不是不能操作栈,在之前push进去的,在这里都pop出来就不会有问题,要不然回影响ret指令pop IP
-    ;后面你可以再试试,这个程序还是有问题
-    sub si,1;运行完之后si=5,然而ds[si]此时刚好是0,所以你得减去个1才行
-    ret
-
-show_str:
-    push es
-    push bp
-    push bx
-
-    mov ax,0B800H
-    mov es,ax
-
-    ;找行号对应的内存地址
-    mov ah,00
-    mov al,160
-    mul dh
-    mov bp,ax
-    sub bp,160
-    ;找列对应的内存地址
-    mov ah,00
-    mov al,2
-    mul dl
-    mov di,ax
-    sub di,2
-    ;把颜色转移一下
-    mov bl,cl
-    push cx
-s: 
-    mov cl,ds:[si]
-    mov ch,0
-    jcxz ok1
-    mov es:[bp+di],cl
-    mov es:[bp+di+1],bl
-
-    add di,2
-    sub si,1
-    jmp short s
-
-ok1:
-    pop cx
-    pop bx
-    pop bp
-    pop es
-    ret    
-    
-code ends
-end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="运行截图-2"><a href="#运行截图-2" class="headerlink" title="运行截图"></a>运行截图</h4><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20211016114256.png" alt="数值显示"></p>
+<ul>
+<li>prev_size, 如果该 chunk 的物理相邻的前一地址 chunk（两个指针的地址差值为前一 chunk 大小）是空闲的话，那该字段记录的是前一个 chunk 的大小 (包括 chunk 头)。否则，该字段可以用来存储物理相邻的前一个 chunk 的数据。这里的前一 chunk 指的是较低地址的 chunk 。</li>
+<li>size ，该 chunk 的大小，大小必须是 2 * SIZE_SZ 的整数倍。如果申请的内存大小不是 2 * SIZE_SZ 的整数倍，会被转换满足大小的最小的 2 * SIZE_SZ 的倍数。32 位系统中，SIZE_SZ 是 4；64 位系统中，SIZE_SZ 是 8。 该字段的低三个比特位对 chunk 的大小没有影响，它们从高到低分别表示<br>NON_MAIN_ARENA，记录当前 chunk 是否不属于主线程，1 表示不属于，0 表示属于。<br>IS_MAPPED，记录当前 chunk 是否是由 mmap 分配的。<br>PREV_INUSE，记录前一个 chunk 块是否被分配。一般来说，堆中第一个被分配的内存块的 size 字段的 P 位都会被设置为 1，以便于防止访问前面的非法内存。当一个 chunk 的 size 的 P 位为 0 时，我们能通过 prev_size 字段来获取上一个 chunk 的大小以及地址。这也方便进行空闲 chunk 之间的合并。</li>
+<li>fd，bk。 chunk 处于分配状态时，从 fd 字段开始是用户的数据。chunk 空闲时，会被添加到对应的空闲管理链表中，其字段的含义如下<br>fd 指向下一个（非物理相邻）空闲的 chunk<br>bk 指向上一个（非物理相邻）空闲的 chunk<br>通过 fd 和 bk 可以将空闲的 chunk 块加入到空闲的 chunk 块链表进行统一管理</li>
+<li>fd_nextsize， bk_nextsize，也是只有 chunk 空闲的时候才使用，不过其用于较大的 chunk（large chunk）。<br>fd_nextsize 指向前一个与当前 chunk 大小不同的第一个空闲块，不包含 bin 的头指针。<br>bk_nextsize 指向后一个与当前 chunk 大小不同的第一个空闲块，不包含 bin 的头指针。<br>一般空闲的 large chunk 在 fd 的遍历顺序中，按照由大到小的顺序排列。这样做可以避免在寻找合适 chunk 时挨个遍历。</li>
+</ul>
+<h3 id="CALL指令"><a href="#CALL指令" class="headerlink" title="CALL指令"></a>CALL指令</h3><p>CALL（LCALL）指令执行时，进行两步操作：<br>（1）将程序下一条指令的位置的IP压入堆栈中；<br>（2）转移到调用的子程序。</p>
 
                 
             </div>
@@ -859,7 +668,7 @@ end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://laobameishijia.github.io/2021/10/16/hui-bian-yu-yan-xue-xi-call-he-ret-zhi-ling/">https://laobameishijia.github.io/2021/10/16/hui-bian-yu-yan-xue-xi-call-he-ret-zhi-ling/</a>
+                    <a href="https://laobameishijia.github.io/2022/10/16/writeup-deadfacectf-2022/">https://laobameishijia.github.io/2022/10/16/writeup-deadfacectf-2022/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -897,8 +706,8 @@ end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
                     
                         <div class="article-tag">
                             
-                                <a href="/tag/%E6%B1%87%E7%BC%96/">
-                                    <span class="chip bg-color">汇编</span>
+                                <a href="/tag/%E6%AF%94%E8%B5%9B/">
+                                    <span class="chip bg-color">比赛</span>
                                 </a>
                             
                         </div>
@@ -1210,46 +1019,47 @@ end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/10/18/hui-bian-yu-yan-xue-xi-ke-cheng-she-ji/">
+                <a href="/2022/10/16/writeup-deadfacectf-2022/">
                     <div class="card-image">
                         
+                        <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221016125700.png" class="responsive-img" alt="Writeup for DeadFaceCTF2022">
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/23.jpg" class="responsive-img" alt="汇编语言学习-课程设计">
-                        
-                        <span class="card-title">汇编语言学习-课程设计</span>
+                        <span class="card-title">Writeup for DeadFaceCTF2022</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            编写完整的汇编语言程序,用编译和连接程序将他们编译链接成为可执行文件
+                            CTF
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-18
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-16
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/category/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A2%84%E5%A4%87%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    研究生预备学习
+                            <a href="/category/CTF/" class="post-category">
+                                    CTF
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tag/%E6%B1%87%E7%BC%96/">
-                        <span class="chip bg-color">汇编</span>
+                    <a href="/tag/%E6%AF%94%E8%B5%9B/">
+                        <span class="chip bg-color">比赛</span>
                     </a>
                     
                 </div>
@@ -1263,31 +1073,30 @@ end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/10/16/mei-shi-pian-1-han-bao-dian/">
+                <a href="/2022/10/11/lou-dong-fu-xian-zhan-yi-chu-dui-yi-chu-sudo-ti-quan/">
                     <div class="card-image">
                         
+                        <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221011152144.png" class="responsive-img" alt="漏洞复现-栈溢出+堆溢出sudo提权">
                         
-                        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/featureimages/20.jpg" class="responsive-img" alt="美食篇-1-汉堡店">
-                        
-                        <span class="card-title">美食篇-1-汉堡店</span>
+                        <span class="card-title">漏洞复现-栈溢出+堆溢出sudo提权</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            把美食整理一下,也很不错。以后也可以把自己在厨房做的黑暗料理整理一下~~
+                            栈溢出+堆溢出sudo提权
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-16
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-11
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/category/%E7%BE%8E%E9%A3%9F/" class="post-category">
-                                    美食
+                            <a href="/category/%E6%BC%8F%E6%B4%9E%E6%B5%AE%E7%8E%B0/" class="post-category">
+                                    漏洞浮现
                                 </a>
                             
                             
@@ -1297,8 +1106,12 @@ end start<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tag/%E6%88%90%E9%83%BD/">
-                        <span class="chip bg-color">成都</span>
+                    <a href="/tag/%E6%A0%88%E6%BA%A2%E5%87%BA/">
+                        <span class="chip bg-color">栈溢出</span>
+                    </a>
+                    
+                    <a href="/tag/%E5%A0%86%E6%BA%A2%E5%87%BA/">
+                        <span class="chip bg-color">堆溢出</span>
                     </a>
                     
                 </div>
