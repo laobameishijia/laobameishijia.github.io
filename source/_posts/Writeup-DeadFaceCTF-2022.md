@@ -48,6 +48,137 @@ tags:
 - user32.dll Windows用户界面相关应用程序接口 user32.dll是Windows用户界面相关应用程序接口，用于包括Windows处理，基本用户界面等特性，如创建窗口和发送消息。
 - ntdll.dll Windows NT内核级文件 ntdll.dll是重要的Windows NT内核级文件。描述了windows本地NTAPI的接口。当Windows启动时，ntdll.dll就驻留在内存中特定的写保护区域，使别的程序无法占用这个内存区域。
 
+## symkeygen
+
+把生成密钥的程序，隐藏在数字或者字符串中。等程序真正运行地时候，在将这些数字或字符串，通过一系列操作转换为真正的程序逻辑。这种思想很值得借鉴。
+```C++
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+/*
+glibc 2.30, Ubuntu 64bit
+How to use password:
+$ openssl enc -aes256 -k {PASSWORD} -in secret.txt -out secret.bin
+*/
+
+unsigned regs[4];
+int program[] ={593920, 598016, 602112, 593920, 598016, 328196, 655360, 205573, 659456, 397327, 405517, 663552, 139523, 593920, 143618, 667648, 598016, 663552, 593920, 593920, 405509, 139523, 663552, 659456, 602112, 397317, 270595, 340480, 667648, 593920, 598016, 602112, 593920, 598016, 328196, 655360, 205573, 659456, 397327, 405517, 663552, 139523, 593920, 143618, 667648, 598016, 663552, 593920, 593920, 405509, 139523, 663552, 659456, 602112, 397317, 270595, 340480, 667648};
+char stack[33] ="";
+	
+int pc = 0;
+
+int ins = 0;
+int reg1 = 0;
+int reg2 = 0;
+int reg3 = 0;
+int imm = 0;
+
+int fl = 0;
+int sp = 0;
+
+
+void decode(int instr)
+{
+  ins  = (instr & 0xF0000) >> 16;
+  reg1 = (instr & 0xF000 ) >>  12;
+  reg2 = (instr & 0xF00  ) >>  8;
+  reg3 = (instr & 0xF   );
+  imm  = (instr & 0xFF  );
+}
+
+int running = 1;
+
+int fetch(){
+	return program [pc++];
+}
+
+void eval()
+{
+	switch (ins)
+	{
+		case 0:
+			//ret
+			running = 0;	
+			break;
+		case 1:
+			//pop
+			regs[reg1] = (int)stack[sp--];
+			fl = 0;
+			break;
+		case 2:
+			//sub
+			regs[reg1] = regs[reg2] - regs[reg3];
+			fl = regs[reg1];
+			break;
+		case 3:
+			//subimm
+			regs[reg1] = regs[reg2] - imm;
+			fl = regs[reg1];
+			break;
+		case 4:
+			//add
+			regs[reg1] = regs[reg2] + regs[reg3];
+			fl = 0;
+			break;
+		case 5:
+			//addimm
+			regs[reg1] = regs[reg2] + imm;
+			fl =0;
+			break;
+		case 6:
+			//loadi
+			regs[reg1] = imm;
+			fl = 0;
+		case 7:
+			//jne
+			if (fl != 0){
+			pc = imm;
+			}
+			fl = 0;	
+			break;
+		case 8:
+			//jmp
+			pc = imm;
+			fl =0;
+			break;
+		case 9:
+			//rand
+            regs[reg1] = ((rand() % 16) +70);
+			break;
+        case 10:
+            //push
+            stack[sp++] = (char)regs[reg1];
+			fl = 0;
+			
+	}
+}
+
+int run(){
+	while(running){
+		int instr = fetch();	
+		decode(instr);
+		eval();
+		}
+	return imm;
+}
+
+
+int main (int argc, char **argv) {
+   
+	int i, n;
+	time_t t;
+    n = 32;
+   
+  	srand((unsigned) time(&t));
+  
+	printf("Beginning key generation at %lu\n", (unsigned long) t);
+    run();
+	printf("Your strong password is %s\n", stack); 
+
+   return(0);
+}
+```
 
 # PWN
 
