@@ -42,7 +42,7 @@ tags:
 
 `ARM`架构下的代码比较好分析，就是一个循环的异或操作，本身没有什么困难的地方。
 
-`X86`架构下，则要困难一些，包含了两个解密操作。
+`X86`架构下，则要困难一些，包含了两个解密操作。   **The x64 has rc4  ---歪果仁说这个加密操作涉及RC4**
 
 第一个解密操作，按照正常汇编代码的逻辑，然后用c语言复现了一遍。
 
@@ -256,6 +256,79 @@ int main(){
 
 
 
+#### 其他做法
+
+丢到 IDA 各种架构一顿测试，发现为 `ARM64` 和 `x86-64`, 简单分析后发现基本逻辑都是解密后使用系统调用 print 出来直接使用 unicorn 模拟执行。
+
+ARM64部分
+
+```python
+from capstone import *
+from unicorn import *
+from unicorn.arm64_const import *
+
+cs = Cs(CS_ARCH_ARM64, UC_MODE_ARM)
+polyglot = open('./polyglot', 'rb')
+code = polyglot.read()
+polyglot.close()
+ADDRESS = 0
+STACK = 0x100000
+def hook_code(uc: Uc, address, size, user_data):
+    # print(">>> Tracing instruction at 0x%x, instruction size = 0x%x" % (address, size))
+    for i in cs.disasm(uc.mem_read(address, size), address):
+        print("0x%x:\t%s\t%s" % (i.address, i.mnemonic, i.op_str))
+        if i.mnemonic == 'svc':
+            call = uc.reg_read(UC_ARM64_REG_X8)
+            print(f">>> syscall num: {call}")
+            if call == 64:
+                print(f">>> {uc.mem_read(uc.reg_read(UC_ARM64_REG_X1), uc.reg_read(UC_ARM64_REG_X2))}")
+uc = Uc(UC_ARCH_ARM64, UC_MODE_ARM)
+uc.mem_map(ADDRESS, 0x100000)
+uc.mem_map(STACK, 0x1000)
+uc.mem_write(ADDRESS, code)
+uc.reg_write(UC_ARM64_REG_SP, STACK + 0x1000)
+uc.hook_add(UC_HOOK_CODE, hook_code)
+uc.emu_start(ADDRESS, ADDRESS + 0x44)
+```
+
+x86-64部分
+
+```python
+from capstone import *
+from unicorn import *
+from unicorn.x86_const import *
+
+cs = Cs(CS_ARCH_X86, CS_MODE_64)
+
+polyglot = open('./polyglot', 'rb')
+code = polyglot.read()
+polyglot.close()
+
+ADDRESS = 0
+STACK = 0x100000
+
+
+def hook_code(uc: Uc, address, size, user_data):
+    # print(">>> Tracing instruction at 0x%x, instruction size = 0x%x" % (address, size))
+    for i in cs.disasm(uc.mem_read(address, size), address):
+        print("0x%x:\t%s\t%s" % (i.address, i.mnemonic, i.op_str))
+        if i.mnemonic == 'syscall':
+            call = uc.reg_read(UC_X86_REG_RAX)
+            print(f">>> syscall num: {call}")
+            if call == 1:
+                print(f">>> arg1 = {uc.reg_read(UC_X86_REG_RDI)}, arg2 = {uc.mem_read(uc.reg_read(UC_X86_REG_RSI), uc.reg_read(UC_X86_REG_RDX))}")
+
+uc = Uc(UC_ARCH_X86, UC_MODE_64)
+uc.mem_map(ADDRESS, 0x100000)
+uc.mem_map(STACK, 0x1000)
+uc.mem_write(ADDRESS, code)
+uc.reg_write(UC_X86_REG_RSP, STACK + 0x1000)
+uc.hook_add(UC_HOOK_CODE, hook_code)
+uc.emu_start(ADDRESS, ADDRESS + 0x2a7)
+```
+
+
+
 
 
 ## **Sus Meow**
@@ -317,7 +390,109 @@ $xP6FknJVZBb = [Convert]::FromBase64String($cph8)
 
 
 
-之后就是反编译了，目前还没什么线索呢。
+之后就是反编译了，目前还没什么线索。
+
+
+
+- 在运行时，才会把调用真正的代码。反编译出来的，有一部分会收到`call  location+2` 这种 跳转指令的影响.
+
+  比如 `loc_11DE947`，ida在反编译的时候，会把 D9 90也理解为汇编指令，但实际上，这两个字节的数据是一个混淆的作用。
+
+  ```
+  .text:011DE939 C6 84 05 E7 DF FF FF 00       mov     byte ptr [ebp+eax-2019h], 0
+  .text:011DE941 74 04                         jz      short loc_11DE947
+  .text:011DE941
+  .text:011DE943 75 02                         jnz     short loc_11DE947
+  .text:011DE943
+  .text:011DE943                               ; ---------------------------------------------------------------------------
+  .text:011DE945 D9                            db 0D9h
+  .text:011DE946 90                            db  90h
+  .text:011DE947                               ; ---------------------------------------------------------------------------
+  .text:011DE947
+  .text:011DE947                               loc_11DE947:                            ; CODE XREF: .text:011DE941↑j
+  .text:011DE947                                                                       ; .text:011DE943↑j
+  .text:011DE947 74 04                         jz      short loc_11DE94D
+  .text:011DE947
+  .text:011DE949 75 02                         jnz     short loc_11DE94D
+  ```
+
+  
+
+> CRT：C Run-Time Libraries，平时我们使用Visual Studio编译的程序，都会链接CRT运行库，不然，我们的程序是无法运行的，它主要做一些程序运行前的初始化工作。例如全局变量，就是CRT库帮助我们在进入main之前提前初始化的，当然它做的不只这一点工作。
+>
+> 
+
+### 其他做法
+
+附件可以分离出一个流量包，分析流量包可以发现远程服务器先丢了个powershell脚本，脚本会创建一个exe并执行。exe有花指令je+jne，直接patch掉：
+
+```python
+from idaapi import *
+start_ea = 0x400000
+end_ea = 0x40EFA0
+
+for ea in range(start_ea,end_ea):
+    if get_bytes(ea,5) == b'\x74\x04\x75\x02\xd9':
+        patch_bytes(ea,b'\x90\x90\x90\x90\x90')
+```
+
+程序一开始先在402B80手动加载dll和获取dll函数地址并保存，直接下个断点就能拿到所有要用到的动态库函数。接着在401E20以http方式连接10.0.2.15:8080并接收数据。从流量包里拿到数据后base64解码得到一个json：
+
+```
+{"token": "ae02977a8737de6b040b8ad4551a0213b8b20674241eb8dd84c14e74cf337772", "key": "O9jfIvI9BIHK0rXOpXOm9eY+/VamMhLM8VOEhrQiGKZi6vTXiTj72ZLPzmOOAeU+azt4EjR3jdsrSe9QiwY2Sg=="}
+
+```
+
+接下来对json进行解析，获取字段数据。之后通过随机数生成AES的key和iv，拼在一起，并将其打包成一个json：
+
+```
+{"private": "15B627BBD8CAEE73125679E4C465253F08C9770576F6C47C734CF5A07A2E7A57", "port": 12345}
+
+```
+
+随后利用前面的key对json进行rc4加密，前面附上token，base64编码后通过12345端口以http方式发送给服务器。后面的流程就是服务器不断发送加密之后的指令，然后程序接收之后AES-CBC解密并根据command和arg执行命令，大概就是服务器查看当前目录，然后打开flag.txt并随机生成4字节密钥进行rc4加密，最后将其上传。所以在流量包找到最后程序上传到服务器的数据解密就得到flag：
+
+```python
+from base64 import b64decode
+from Crypto.Cipher import ARC4, AES
+from binascii import unhexlify
+
+#rc4_key = b64decode('O9jfIvI9BIHK0rXOpXOm9eY+/VamMhLM8VOEhrQiGKZi6vTXiTj72ZLPzmOOAeU+azt4EjR3jdsrSe9QiwY2Sg==')
+#rc4_cryptor = ARC4.new(rc4_key)
+#wired_json = rc4_cryptor.decrypt(b64decode('YWUwMjk3N2E4NzM3ZGU2YjA0MGI4YWQ0NTUxYTAyMTNiOGIyMDY3NDI0MWViOGRkODRjMTRlNzRjZjMzNzc3MvqKYi9C4ShnMCAW+ROz+r5VvDidfJYCtNDoPg0XB8qkRkSpx9XPIP7ktZfpn35KHJeUkFFUd5Bn+iGqHge2v+9sjDiPsugqKaDwdFTeD1yFvDmxhhHSfl0gucow/RI=')[64:])
+#print(wired_json)
+AES_key = unhexlify('15B627BBD8CAEE73125679E4C465253F08C9770576F6C47C734CF5A07A2E7A57'[:32])
+AES_iv = unhexlify('15B627BBD8CAEE73125679E4C465253F08C9770576F6C47C734CF5A07A2E7A57'[32:])
+#AES_cryptor = AES.new(AES_key, AES.MODE_CBC, AES_iv)
+#print(AES_cryptor.decrypt(b64decode('YWUwMjk3N2E4NzM3ZGU2YjA0MGI4YWQ0NTUxYTAyMTNiOGIyMDY3NDI0MWViOGRkODRjMTRlNzRjZjMzNzc3Mkx1xPsoSCKHaQSUHhFAEtmQw6V3Bxw3Y2XdsbG3/CVE')[64:]))
+#print(AES_cryptor.decrypt(b64decode('6ZnYHjOSTfzczMCaWwQkX699J7l1Dp7o0sV6EdujGH8=')))
+#print(AES_cryptor.decrypt(b64decode('tJ023I7QC4uPgU/w2aIUAc4sz/EdGbg1xQCEUVb2qD2S+f7ZCsmQ+Q91PeWv0JRf')))
+#print(AES_cryptor.decrypt(b64decode('jZOOa5bplXDXTEKBj873UI3kbp1z/IJcL9uxBCoQIdk=')))
+#print(AES_cryptor.decrypt(b64decode('6ZnYHjOSTfzczMCaWwQkX699J7l1Dp7o0sV6EdujGH8=')))
+#print(AES_cryptor.decrypt(b64decode('lF7EVQ5ZlA5m6fpvlaArIkjBK135u5ggbMqLiMbdcdweHYMUwgo4ss7XTBqpUQi3')))
+#print(AES_cryptor.decrypt(b64decode('7ufqZaQC+47ju2bBJ8sGURP2GVqO+H3W1DM7WgwTxFIy4uO8Slw5Vhw0DQLT4P7+')))
+
+enc = b64decode('+6pZVSFOV2hyrZuwZB7X/OIgUFVXzcjRsd0hpVM+Hs0NjT2SgrL+G/yHBujpw5Ax')
+AES_cryptor = AES.new(AES_key, AES.MODE_CBC, AES_iv)
+enc = AES_cryptor.decrypt(enc)
+table = list(b'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789')
+for a in table:
+    for b in table:
+        for c in table:
+            for d in table:
+                key = bytes([a,b,c,d])
+                rc4_cryptor = ARC4.new(key)
+                m = rc4_cryptor.decrypt(enc)
+                if b'idek{' in m:
+                    print(key)
+                    print(m)
+```
+
+### RC4
+
+RC4的原理非常简单，给定一个不超过256字节的密钥，根据密钥在算法中用伪随机数算法初始化一个长度为256、元素不重复的字节数组，之后逐字节读入待加密的数据，通过算法在S盒中取出一个字节并与明文字节进行位异或运算加密。
+
+https://zh.wikipedia.org/wiki/RC4
 
 
 
@@ -336,3 +511,4 @@ $xP6FknJVZBb = [Convert]::FromBase64String($cph8)
 
 - [https://stackoverflow.com/questions/21552153/is-it-possible-to-compile-a-binary-which-will-run-on-both-x86-and-arm](https://stackoverflow.com/questions/21552153/is-it-possible-to-compile-a-binary-which-will-run-on-both-x86-and-arm)
 - [https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md#x86-32_bit](https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md#x86-32_bit)
+- https://mp.weixin.qq.com/s/nBJU1jWaD2TFsij6OtM-_A
