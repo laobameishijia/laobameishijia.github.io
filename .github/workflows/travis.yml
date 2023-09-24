@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: '14'
 
+      - name: Install Hexo
+        run: npm install hexo-cli -g
+        
       - name: Install dependencies
         run: npm install
 
