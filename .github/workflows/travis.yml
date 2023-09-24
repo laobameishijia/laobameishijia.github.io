@@ -25,13 +25,17 @@ jobs:
         run: npm install
 
       - name: Configure Git
+        env:
+          U_NAME: ${{ secrets.U_NAME }}
+          U_EMAIL: ${{ secrets.U_EMAIL }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          git config user.name "${{ github-pages.U_NAME }}"
-          git config user.email "${{ github-pages.U_EMAIL }}"
+          git config user.name "${{ secrets.U_NAME }}"
+          git config user.email "${{ secrets.U_EMAIL }}"
 
       - name: Replace GitHub token in _config.yml
         run: |
-          sed -i "s/github_token/${{ github-pages.GH_TOKEN }}/g" _config.yml || exit 1
+          sed -i "s/github_token/${{ secrets.GH_TOKEN }}/g" _config.yml || exit 1
 
       - name: Clean and generate Hexo
         run: |
