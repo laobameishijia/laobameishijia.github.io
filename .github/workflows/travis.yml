@@ -25,6 +25,7 @@ jobs:
         run: npm install
 
       - name: Configure Git
+      
         env:
           U_NAME: ${{ secrets.U_NAME }}
           U_EMAIL: ${{ secrets.U_EMAIL }}
