@@ -304,3 +304,79 @@ print(res)
 ```
 
 ![20240606171440](https://laboratory-1304292449.cos.ap-nanjing.myqcloud.com/note/20240606171440.png)
+
+## 21.2
+
+第二关跟上面的一样，
+
+指令的组成形式由`arg_0 op arg_1`变成了`op arg_0 arg_1`，所以二进制指令的需要重新调整一下，另外模拟函数调用的字节特征也发生了变化，也需要进行相应的调整。
+
+```c++
+def write_binary_file(file_path, data_list):
+    # 以二进制写模式打开文件
+    with open(file_path, 'wb') as f:
+        for data in data_list:
+            # 将二进制数据写入文件
+            f.write(data)
+
+# 示例数据：将几个二进制块写入文件
+data_list = [
+
+    b'\x08\x10\x08',# imm a = 0x10
+    b'\x08\x2f\x02',# imm b = 0x2f
+    b'\x10\x02\x08',# stm *a = b
+
+    b'\x08\x11\x08',# imm a = 0x11
+    b'\x08\x66\x02',# imm b = 0x66
+    b'\x10\x02\x08',# stm *a = b
+
+
+    b'\x08\x12\x08',# imm a = 0x12
+    b'\x08\x6c\x02',# imm b = 0x6c
+    b'\x10\x02\x08',# stm *a = b
+    
+    
+    b'\x08\x13\x08',# imm a = 0x13
+    b'\x08\x61\x02',# imm b = 0x61
+    b'\x10\x02\x08',# stm *a = b
+    
+    b'\x08\x14\x08',# imm a = 0x14
+    b'\x08\x67\x02',# imm b = 0x67
+    b'\x10\x02\x08',# stm *a = b
+    
+    b'\x08\x15\x08',# imm a = 0x15
+    b'\x08\x00\x02',# imm b = 0x00
+    b'\x10\x02\x08',# stm *a = b
+
+  
+    b'\x08\x10\x08', # imm b = 0x00
+    b'\x08\x10\x02', # imm a = 0x10        
+    b'\x40\x08\x20', # open
+   
+    b'\x08\x60\x10', # imm c = 0x60  
+    b'\x08\x20\x02', # imm b = 0x20  
+    b'\x40\x08\x01', # read(a, b, c)
+    
+    b'\x08\x60\x10', # imm c = 0x60   
+    b'\x08\x01\x08', # imm a = 0x01 
+    b'\x40\x08\x08', # write
+    
+    b'\x40\x01\x10', #exit
+
+]
+
+
+# 目标文件路径
+file_path = r'/home/hacker/Test/output2'
+
+# 调用函数写入二进制数据
+write_binary_file(file_path, data_list)
+
+# 验证写入的数据
+with open(file_path, 'rb') as f:
+    content = f.read()
+    print(content)
+
+```
+
+![20240609214816](https://laboratory-1304292449.cos.ap-nanjing.myqcloud.com/note/20240609214816.png)
