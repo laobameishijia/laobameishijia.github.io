@@ -2,11 +2,11 @@
 title: PWN-College-WebSecurity-Writeup
 date: 2024-07-08 11:02:00
 author: 美食家李老叭
-img: 
+img: https://laboratory-1304292449.cos.ap-nanjing.myqcloud.com/note/20240606170337.png
 top: false
 hide: false
 cover: false
-coverImg: https://laboratory-1304292449.cos.ap-nanjing.myqcloud.com/note/20240606170337.png
+coverImg: 
 password: 
 toc: true
 mathjax: false
