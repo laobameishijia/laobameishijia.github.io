@@ -250,7 +250,64 @@ int execve(const char *pathname, char *const argv[], char *const envp[]);
 - 多任务处理：例如，一个文本编辑器在编辑文档的同时可以进行拼写检查和自动保存。这些任务可以在不同的线程中并行执行。
 - 网络服务：例如，一个Web服务器可以为每个客户端请求分配一个线程，以便同时处理多个请求，提高响应速度。
 
-###
+### 6. Linux系统中组的含义
+
+在Linux系统中，组（group）是用户的一种分类方式，用于管理用户的权限和访问控制。每个用户可以属于一个或多个组，进而影响该用户或进程对系统资源的访问权限。进程所属的组ID列表表示该进程的所有者用户所属的所有组ID。
+
+**组ID的含义**
+组ID（GID）：每个组都有一个唯一的组ID（GID）。组ID用于标识组，就像用户ID（UID）用于标识用户一样。
+
+**Groups 字段的含义**
+在 `/proc/[pid]/status` 文件中的 `Groups` 字段列出了进程所有者所属的所有组的组ID。这些组ID决定了进程在文件系统和系统资源访问权限方面的行为。例如，如果一个文件的组所有者与进程的组ID列表中的一个匹配，那么进程将使用文件的组权限进行访问。
+
+示例分析:
+
+假设你看到以下 Groups 字段：
+
+Groups: 4 24 27 30 46 122 135 136 1000
+这表示该进程的所有者用户属于以下组：
+```
+GID 4
+GID 24
+GID 27
+GID 30
+GID 46
+GID 122
+GID 135
+GID 136
+GID 1000
+```
+这些组ID对应的组名可以在 /etc/group 文件中找到。每行格式如下：group_name:x:GID:group_list
+
+示例：查看组名
+假设你有一个GID列表 4 24 27 30 46 122 135 136 1000，你想知道这些GID对应的组名，你可以查看 /etc/group 文件`cat /etc/group | grep -E ':(4|24|27|30|46|122|135|136|1000)`
+
+示例输出可能如下：
+```bash
+adm:x:4:syslog,lebron
+cdrom:x:24:lebron
+sudo:x:27:lebron
+dip:x:30:lebron
+plugdev:x:46:lebron
+lpadmin:x:122:lebron
+sambashare:x:135:lebron
+libvirt:x:136:lebron
+lebron:x:1000:
+```
+这样你就可以确定GID对应的组名了：
+```
+GID 4: adm
+GID 24: cdrom
+GID 27: sudo
+GID 30: dip
+GID 46: plugdev
+GID 122: lpadmin
+GID 135: sambashare
+GID 136: libvirt
+GID 1000: lebron
+```
+
+这些组信息对进程的访问控制有直接影响。如果某个文件的组权限设置为读/写/执行，并且该文件的组所有者是 cdrom（GID 24），那么任何属于 cdrom 组的用户（如 lebron）都可以根据组权限访问该文件。同样，如果进程需要访问某些受限资源（如设备文件），它必须运行在合适的组权限下。
 
 ### 
 
