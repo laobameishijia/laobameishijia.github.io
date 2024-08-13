@@ -1,5 +1,5 @@
 ---
-title: PWN-College-Shellcode-Injection-Writeup
+title: PWN-College-memory-errors-Writeup
 date: 2024-07-30 11:02:00
 author: 美食家李老叭
 img: https://laboratory-1304292449.cos.ap-nanjing.myqcloud.com/note/20240709193107.png
@@ -15,7 +15,7 @@ categories: CTF
 tags:
     - 逆向
 ---
-# pwn.college Memory
+# pwn.college memory-errors
 
 
 https://pwn.college/program-security/memory-errors/
