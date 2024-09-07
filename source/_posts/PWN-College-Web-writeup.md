@@ -21,71 +21,6 @@ https://pwn.college/intro-to-cybersecurity/talking-web/
 
 ## 有价值的问题
 
-### nc和curl工具的区别
-
-`nc` (Netcat) 和 `curl` 是两种不同的网络工具，虽然它们都可以用于网络通信，但它们的功能和用途有显著的区别。
-
-#### 1. **用途和功能**
-
-- **`nc` (Netcat):**
-  - **General-purpose network tool**: `nc` 是一个通用的网络工具，主要用于读写网络连接。它可以在 TCP 或 UDP 协议上工作，并且能够监听端口、创建反向 shell、传输文件，甚至可以用作简单的服务器。
-  - **Low-level operations**: `nc` 更接近于底层，它不会自动处理 HTTP 协议细节（如重定向、编码、解码），而是允许你直接发送和接收原始的网络数据包。
-  - **No built-in HTTP support**: 虽然可以用 `nc` 发送 HTTP 请求，但它不会自动生成 HTTP 头，也不会解析服务器的响应。
-- **`curl`:**
-  - **Dedicated for HTTP and other protocols**: `curl` 是一个专门用于与各种协议（如 HTTP, HTTPS, FTP, etc.）进行交互的工具。它主要用于下载文件、发送 HTTP 请求、处理 API 调用等。
-  - **High-level operations**: `curl` 封装了大量的高层操作，如自动跟随重定向、处理 cookies、支持表单数据提交、多种身份验证方法、SSL/TLS 支持等。它使得与 HTTP 协议交互变得非常简单。
-  - **Built-in support for many protocols**: `curl` 原生支持多种网络协议，不仅限于 HTTP/HTTPS。
-
-#### 2. **常见用途**
-
-- **`nc` (Netcat):**
-  - **Port scanning**: 可以用来扫描开放端口。
-  - **Simple server**: 通过监听指定端口，`nc` 可以作为一个简单的服务器来接收数据。
-  - **Reverse shell**: 在网络安全中，`nc` 经常用于创建反向 shell 以便于访问远程主机。
-  - **File transfer**: 可以用来在两台主机之间传输文件。
-- **`curl`:**
-  - **HTTP requests**: 用于发送各种类型的 HTTP 请求（GET, POST, PUT, DELETE 等）并处理响应。
-  - **File download/upload**: 通过 HTTP, FTP 等协议下载或上传文件。
-  - **API interaction**: 常用于与 RESTful APIs 进行交互，发送 JSON 数据，接收 JSON 响应。
-  - **Web scraping**: 在需要时可以通过 `curl` 来获取网页内容。
-
-#### 3. **协议支持**
-
-- **`nc` (Netcat):**
-  - **Protocols**: 支持 TCP 和 UDP 传输，但没有内置对高级协议（如 HTTP, FTP, SSL/TLS）的支持。
-- **`curl`:**
-  - **Protocols**: 支持多种高级协议，如 HTTP, HTTPS, FTP, FTPS, SCP, SFTP, SMTP, POP3, IMAP, SMB, TELNET, LDAP 等。
-
-#### 4. **使用难度**
-
-- **`nc` (Netcat):**
-  - **Learning curve**: 由于它的低级别和通用性，`nc` 需要用户对网络通信有较深的理解。它适合用于调试、网络探索或安全研究。
-  - **Manual operation**: 你需要手动构造请求、解析响应。
-- **`curl`:**
-  - **Ease of use**: `curl` 更加简单易用，尤其是处理 HTTP/HTTPS 请求时。大部分功能已经内置，你只需要使用相应的选项即可。
-  - **Automated operations**: 它自动处理了许多 HTTP 细节，如编码、重定向、身份验证等。
-
-#### 5. **示例对比**
-
-- **使用 `nc` 发送 HTTP 请求:**
-
-  ```bash
-  echo -e "GET / HTTP/1.1\r\nHost: example.com\r\nConnection: close\r\n\r\n" | nc example.com 80
-  ```
-
-- **使用 `curl` 发送 HTTP 请求:**
-
-  ```bash
-  curl http://example.com
-  ```
-
-#### 总结
-
-- **`nc`** 是一个功能强大的通用网络工具，适合低级网络任务，如端口扫描、简单服务器设置、文件传输等。
-- **`curl`** 是一个专注于处理多种网络协议的高层工具，特别擅长处理 HTTP 请求，适用于下载文件、与API交互等任务。
-
-`nc` 更加灵活但需要更多的手动操作，而 `curl` 更加简单且自动化，适合处理标准协议和任务。
-
 ### 1. 工具使用
 
 `curl`工具的用法
@@ -98,9 +33,13 @@ https://pwn.college/intro-to-cybersecurity/talking-web/
 - -d 传输的参数或数据
 - -c 保存网页传递过来的cookie
 - -b 读取文件中的cookie
+
 `nc`
 
 - 不支持自动重定向，需要手动检查
+- -l  是 **listen（监听）** 的缩写，表示让 Netcat 进入监听模式，等待连接进来。
+- -v verbose 使用这个选项后，Netcat 会在终端上打印出更多的连接细节，比如连接状态、IP 地址、端口等信息。
+
 
 
 ### 2. **服务器如何区分http包是由nc工具发送的，还是由python request库发送的呢？**
@@ -178,11 +117,74 @@ def validate(name, value, correct):
 
 4. echo -e 输出转义字符
 
-  转义字符指用反斜线字符“\”作为转义字符，来表示那些不可打印的ASCII控制符。譬如`\r \n`这些
-
-5. 
+  转义字符指用反斜线字符“\”作为转义字符，来表示那些不可打印的ASCII控制符。譬如 `\r \n`这些
 
 
+
+### 3. nc和curl工具的区别
+
+`nc` (Netcat) 和 `curl` 是两种不同的网络工具，虽然它们都可以用于网络通信，但它们的功能和用途有显著的区别。
+
+#### 1. **用途和功能**
+
+- **`nc` (Netcat):**
+  - **General-purpose network tool**: `nc` 是一个通用的网络工具，主要用于读写网络连接。它可以在 TCP 或 UDP 协议上工作，并且能够监听端口、创建反向 shell、传输文件，甚至可以用作简单的服务器。
+  - **Low-level operations**: `nc` 更接近于底层，它不会自动处理 HTTP 协议细节（如重定向、编码、解码），而是允许你直接发送和接收原始的网络数据包。
+  - **No built-in HTTP support**: 虽然可以用 `nc` 发送 HTTP 请求，但它不会自动生成 HTTP 头，也不会解析服务器的响应。
+- **`curl`:**
+  - **Dedicated for HTTP and other protocols**: `curl` 是一个专门用于与各种协议（如 HTTP, HTTPS, FTP, etc.）进行交互的工具。它主要用于下载文件、发送 HTTP 请求、处理 API 调用等。
+  - **High-level operations**: `curl` 封装了大量的高层操作，如自动跟随重定向、处理 cookies、支持表单数据提交、多种身份验证方法、SSL/TLS 支持等。它使得与 HTTP 协议交互变得非常简单。
+  - **Built-in support for many protocols**: `curl` 原生支持多种网络协议，不仅限于 HTTP/HTTPS。
+
+#### 2. **常见用途**
+
+- **`nc` (Netcat):**
+  - **Port scanning**: 可以用来扫描开放端口。
+  - **Simple server**: 通过监听指定端口，`nc` 可以作为一个简单的服务器来接收数据。
+  - **Reverse shell**: 在网络安全中，`nc` 经常用于创建反向 shell 以便于访问远程主机。
+  - **File transfer**: 可以用来在两台主机之间传输文件。
+- **`curl`:**
+  - **HTTP requests**: 用于发送各种类型的 HTTP 请求（GET, POST, PUT, DELETE 等）并处理响应。
+  - **File download/upload**: 通过 HTTP, FTP 等协议下载或上传文件。
+  - **API interaction**: 常用于与 RESTful APIs 进行交互，发送 JSON 数据，接收 JSON 响应。
+  - **Web scraping**: 在需要时可以通过 `curl` 来获取网页内容。
+
+#### 3. **协议支持**
+
+- **`nc` (Netcat):**
+  - **Protocols**: 支持 TCP 和 UDP 传输，但没有内置对高级协议（如 HTTP, FTP, SSL/TLS）的支持。
+- **`curl`:**
+  - **Protocols**: 支持多种高级协议，如 HTTP, HTTPS, FTP, FTPS, SCP, SFTP, SMTP, POP3, IMAP, SMB, TELNET, LDAP 等。
+
+#### 4. **使用难度**
+
+- **`nc` (Netcat):**
+  - **Learning curve**: 由于它的低级别和通用性，`nc` 需要用户对网络通信有较深的理解。它适合用于调试、网络探索或安全研究。
+  - **Manual operation**: 你需要手动构造请求、解析响应。
+- **`curl`:**
+  - **Ease of use**: `curl` 更加简单易用，尤其是处理 HTTP/HTTPS 请求时。大部分功能已经内置，你只需要使用相应的选项即可。
+  - **Automated operations**: 它自动处理了许多 HTTP 细节，如编码、重定向、身份验证等。
+
+#### 5. **示例对比**
+
+- **使用 `nc` 发送 HTTP 请求:**
+
+  ```bash
+  echo -e "GET / HTTP/1.1\r\nHost: example.com\r\nConnection: close\r\n\r\n" | nc example.com 80
+  ```
+
+- **使用 `curl` 发送 HTTP 请求:**
+
+  ```bash
+  curl http://example.com
+  ```
+
+#### 总结
+
+- **`nc`** 是一个功能强大的通用网络工具，适合低级网络任务，如端口扫描、简单服务器设置、文件传输等。
+- **`curl`** 是一个专注于处理多种网络协议的高层工具，特别擅长处理 HTTP 请求，适用于下载文件、与API交互等任务。
+
+`nc` 更加灵活但需要更多的手动操作，而 `curl` 更加简单且自动化，适合处理标准协议和任务。
 
 ## level2
 
@@ -286,10 +288,10 @@ curl http://127.0.0.1//ea218bfd%20a7e1e4ff/cc048c5a%201da3f711
 ## level 11
 
 同上，要用nc发
+
 ```bash
 echo -e "GET 路由 HTTP/1.1\r\nHost:127.0.0.1\r\n\r\n" | nc 127.0.0.1 80
 ```
-
 
 ## level 16
 
@@ -297,12 +299,10 @@ echo -e "GET 路由 HTTP/1.1\r\nHost:127.0.0.1\r\n\r\n" | nc 127.0.0.1 80
 curl "http://127.0.0.1:80/?a=66799705a636a300af5e48b8561fc084&b=5e5c813c%20f8bc26de%2626bd8630%23d7a6e240"
 ```
 
-
 - 因为在命令行中，`&`代表的含义是在后台执行命令，所以为了避免歧义，需要将url用双引号包含起来。
-- 然后在url传递参数的过程中，因为`#`、`&`、`?`等有特别含义，所以需要进行编码
+- 然后在url传递参数的过程中，因为 `#`、`&`、`?`等有特别含义，所以需要进行编码
 
 ![20240903103816](https://laboratory-1304292449.cos.ap-nanjing.myqcloud.com/note/20240903103816.png)
-
 
 ## level 19
 
@@ -315,20 +315,18 @@ curl "http://127.0.0.1:80/?a=66799705a636a300af5e48b8561fc084&b=5e5c813c%20f8bc2
 1. Content-Type:
 
 第一种请求：没有指定 `Content-Type`，默认的 `Content-Type` 为 `application/x-www-form-urlencoded`。这意味着数据将被编码为表单格式，即 `parameterName1=parameterValue1&parameterName2=parameterValue2 `这样的键值对。
-第二种请求：明确指定了`Content-Type: application/json`，表示请求体中的数据是JSON格式，即 `{"parameterName1":"parameterValue1","parameterName2":"parameterValue2"}`。
+第二种请求：明确指定了 `Content-Type: application/json`，表示请求体中的数据是JSON格式，即 `{"parameterName1":"parameterValue1","parameterName2":"parameterValue2"}`。
 
 2. 数据编码:
-第一种请求的数据在HTTP包中会以URL编码形式发送，类似表单提交。服务器通常会解析这种数据为键值对。
-第二种请求的数据以JSON格式的纯文本发送，服务器会将其解析为JSON对象。
-
+   第一种请求的数据在HTTP包中会以URL编码形式发送，类似表单提交。服务器通常会解析这种数据为键值对。
+   第二种请求的数据以JSON格式的纯文本发送，服务器会将其解析为JSON对象。
 3. 服务器解析:
-在第一种情况下，服务器会将数据解析为普通的表单数据`（application/x-www-form-urlencoded）`，一般用于简单的键值对数据传递。
-在第二种情况下，服务器会期望解析JSON格式的数据，用于传递更复杂的结构化数据。
+   在第一种情况下，服务器会将数据解析为普通的表单数据 `（application/x-www-form-urlencoded）`，一般用于简单的键值对数据传递。
+   在第二种情况下，服务器会期望解析JSON格式的数据，用于传递更复杂的结构化数据。
 
+## level 20
 
-## level 20 
-
-这个`Content-Length`的长度必须要对，不然会多加入`\r`和`\n`，或者少了一些字母。
+这个 `Content-Length`的长度必须要对，不然会多加入 `\r`和 `\n`，或者少了一些字母。
 
 ```bash
 hacker@talking-web~level20:~$ echo -e "POST / HTTP/1.0\r\nHost:127.0.0.1\r\nContent-Type:application/x-www-form-urlencoded\r\nContent-Length:34\r\n\r\na=3cd954dd825f6a417a2b4f91e739fcd7\r\n" | nc 127.0.0.1 80
@@ -343,12 +341,11 @@ pwn.college{Y4AFDukL3sK4hTBApxLHWCwphbD.ddDOyMDL0czNxEzW}
 
 ```
 
-
 ## level 29
 
 这种形式下不需要转义&，是因为传参不再是拼接到url里面进行传参了。
 
-至于为什么最后一行的`"`需要用`\"`是因为，想让shell将其当作字符串进行处理，而不是将其视为是字符串的结束标志。
+至于为什么最后一行的 `"`需要用 `\"`是因为，想让shell将其当作字符串进行处理，而不是将其视为是字符串的结束标志。
 
 ```bash
 echo -e "POST / HTTP/1.1\r\n\
@@ -361,13 +358,9 @@ Connection: close\r\n\
 
 ```
 
-
 ## level 34
 
 ```bash
 curl -c cookies.txt http://127.0.0.1:80 && curl -b cookies.txt http://127.0.0.1:80 
 curl -L -H "Cookie: cookie=6bdc50bc20a6b6dcd03710fd1b5db9a9" http://127.0.0.1:80
 ```
-
-
-## 

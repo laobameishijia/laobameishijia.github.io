@@ -17,7 +17,7 @@ tags:
 ---
 # pwn.college
 
-https://pwn.college/intro-to-cybersecurity/talking-web/
+https://pwn.college/intro-to-cybersecurity/building-a-web-server/
 
 ## 有价值的问题
 
@@ -36,7 +36,7 @@ https://pwn.college/intro-to-cybersecurity/talking-web/
 
 #### 子进程和父进程的状态：
 
-在`fork()`调用之后，子进程和父进程的状态**几乎一致**，但是有以下几点需要注意：
+在 `fork()`调用之后，子进程和父进程的状态**几乎一致**，但是有以下几点需要注意：
 
 1. **进程地址空间的复制**：
    - 子进程会复制父进程的整个地址空间，包括代码段、数据段、堆、栈等。但这种复制是**写时复制**（Copy-on-Write，COW），也就是说在子进程和父进程修改内存之前，它们共享同一块物理内存。一旦有进程对某块内存进行写操作，才会真正复制该内存块。
@@ -79,15 +79,13 @@ if (pid < 0) {
 
 ### 2. 一些汇编指令讲解
 
-| 指令             | 作用                                                         |
-| ---------------- | ------------------------------------------------------------ |
+| 指令             | 作用                                                                                                                                                                                                                                                                                       |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | testq %rax, %rax | 指令是用于执行按位逻辑**与**（AND）操作，但**不保存结果**，仅影响处理器的标志位（如零标志、符号标志等）。这条指令的作用是通过逻辑与操作来**检查寄存器的值**，并**更新处理器状态标志**（但不会修改寄存器的值本身）。结合条件跳转指令，je、jne、jg、jl等进行逻辑跳转 |
-| repe cmpsb       | `cmpsb` 用于比较两个字符串的字节。比较 `[ESI]` 和 `[EDI]` 的内容。无论结果如何，`cmpsb` 都会自动递增或递减 `ESI` 和 `EDI`，以指向下一个字节。增量或减量取决于方向标志（DF），默认是递增。`repe` 是字符串操作指令的前缀，表示 "Repeat while equal"（当相等时重复）。 |
-| stosb            | 将 `AL` 寄存器中的值存储到由 `EDI` 寄存器指向的内存地址中。  |
-| scasb            | 将`AL`寄存器中的字节与`RDI`或`EDI`所指向的内存字节进行比较   |
-| lodsb            | 从源内存位置`RSI`加载一个字节到AL寄存器中，并根据DF方向标志的值更新源指针RSI或ESI |
-
-
+| repe cmpsb       | `cmpsb` 用于比较两个字符串的字节。比较 `[ESI]` 和 `[EDI]` 的内容。无论结果如何，`cmpsb` 都会自动递增或递减 `ESI` 和 `EDI`，以指向下一个字节。增量或减量取决于方向标志（DF），默认是递增。`repe` 是字符串操作指令的前缀，表示 "Repeat while equal"（当相等时重复）。          |
+| stosb            | 将 `AL` 寄存器中的值存储到由 `EDI` 寄存器指向的内存地址中。                                                                                                                                                                                                                            |
+| scasb            | 将 `AL`寄存器中的字节与 `RDI`或 `EDI`所指向的内存字节进行比较                                                                                                                                                                                                                        |
+| lodsb            | 从源内存位置 `RSI`加载一个字节到AL寄存器中，并根据DF方向标志的值更新源指针RSI或ESI                                                                                                                                                                                                       |
 
 ```asm
 mov ecx, 5               # 需要比较的字节数
@@ -103,11 +101,6 @@ rep stosb           # 将 AL 中的值存入 [EDI] 开始的 100 个字节中
 
 
 ```
-
-
-
-
-
 
 ### 3. starce工具
 
@@ -403,7 +396,7 @@ get_handle:
     movq $3, %rax
     movq openfilefd(%rip), %rdi
     syscall
-    
+  
 
     # 写入响应1
     movq clientfd(%rip), %rdi
@@ -440,7 +433,7 @@ post_handle:
     movb $' ', endmark(%rip)
     leaq endmark(%rip), %r8           # 结束标志
     call find_get 
-    
+  
 
 
     movq $16, %rcx                     # 需要匹配 "POST " 的长度
@@ -451,15 +444,15 @@ post_handle:
     xor %r8, %r8
     movb $'\r', endmark(%rip)
     leaq endmark(%rip), %r8           # 结束标志
-    call find_get     
+    call find_get   
 
     movq %rsi, %r9
     leaq contentlenbuffer(%rip), %rsi
     movq $0, %rbx
-parse_content_length:    
+parse_content_length:  
     lodsb
     cmpb $0x00, %al        # 比较当前字符是否为空格
-    je end_parse                       # 如果是0x00，则结束拷贝    
+    je end_parse                       # 如果是0x00，则结束拷贝  
     subb $'0', %al
     imul $10, %rbx
     add %al, %bl
@@ -496,7 +489,7 @@ copy_file:
     movq $3, %rax
     movq openfilefd(%rip), %rdi
     syscall
-    
+  
 
     # 写入响应1
     movq clientfd(%rip), %rdi
@@ -635,7 +628,7 @@ _start:
     movq $19, %rdx
     movq $1, %rax
     syscall
-    
+  
     # 关闭这个套接字
     movq $3, %rax
     syscall
@@ -794,7 +787,7 @@ end_copy:
     movq $3, %rax
     movq openfilefd(%rip), %rdi
     syscall
-    
+  
 
     # 写入响应1
     movq clientfd(%rip), %rdi
