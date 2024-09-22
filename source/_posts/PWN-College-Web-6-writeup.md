@@ -33,6 +33,8 @@ print(int("deadbeef",16)) # 3735928559 十六进制字符串转 int
 print(int.from_bytes(bytes.fromhex("deadbeef"), "big")) # 3735928559 十六进制字符串转 int
 print(int.from_bytes(a.to_bytes(4), "big")) # 3735928559 字节  转 int
 print(a.to_bytes(4)) # b'\xde\xad\xbe\xef'  int 转 字节数据
+# 关于十六进制转字符串的问题
+b'\xde\xad'  <==> b'ab'在形式上是一样的，只不过它通过ASCII码解码了一下，以后见到b'',里面不带\x的字母一律当将其转换成字母的ASCII码表示。
 ```
 ![20240917122217](https://laboratory-1304292449.cos.ap-nanjing.myqcloud.com/note/20240917122217.png)
 
@@ -407,4 +409,42 @@ print("Collision (b64):", collision_b64)
 ```
 
 
-##
+## level 12
+
+`b'\xde\xad'  <==> b'ab' <==> b'\x61\x62'`
+
+```text
+# 关于十六进制转字符串的问题
+b'\xde\xad'  <==> b'ab'在形式上是一样的，只不过它通过ASCII码解码了一下，以后见到b'',里面不带\x的字母一律当将其转换成字母的ASCII码表示。
+```
+
+像你这种`hex(pow(test2,key.d, key.n)).encode()`，这种就是将原来的字符串按照ASCII编码了一遍。
+
+```python
+Python 3.11.9 (main, Apr  2 2024, 08:25:04) [GCC 13.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> "test".encode()
+b'test'
+>>> bytes.fromhex("test")
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ValueError: non-hexadecimal number found in fromhex() arg at position 0
+>>> bytes.fromhex("6162")
+b'ab'
+>>> 
+
+```
+
+
+## level 13
+
+python中大小端序的区别
+
+1024 转换为
+- 大端序（**最高有效字节存放在内存地址的最低位置**）是 `\x04\x00`
+- 小端序（**最低有效字节存放在内存中地址最低的位置**）是 `\x00\x04`
+
+如果加密的过程中密文是以小端序加载的，那么解密的过程中，密文也要以小端序加载。一定要对应上。
+
+## 
+
