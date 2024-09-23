@@ -141,6 +141,13 @@ print(dict1 == dict2)  # 输出: True
 
 
 
+
+### 7. diffie-Hallman
+diffie-Hallman
+
+![diffie-Hallman](https://laboratory-1304292449.cos.ap-nanjing.myqcloud.com/note/20240923110157.png)
+
+
 ## level 5
 
 通过flag文件的大小可以知道flag文件的长度是57。
@@ -446,5 +453,176 @@ python中大小端序的区别
 
 如果加密的过程中密文是以小端序加载的，那么解密的过程中，密文也要以小端序加载。一定要对应上。
 
-## 
+## level 14
+
+ In this challenge you will perform a simplified Transport Layer Security (TLS) handshake, acting as the server.    
+
+   You will be provided with Diffie-Hellman parameters, a self-signed root certificate, and the root private key.
+    The client will request to establish a secure channel with a particular name, and initiate a Diffie-Hellman key exchange.
+    The server must complete the key exchange, and derive an AES-128 key from the exchanged secret.
+    Then, using the encrypted channel, the server must supply the requested user certificate, signed by root.
+    Finally, using the encrypted channel, the server must sign the handshake to prove ownership of the private user key.
+
+首先是client和server通过Diffie-Hellman 密钥交换，获得共享密钥。然后通过共享密钥生成的AES对称加密的密钥。
+
+之后client向服务器发送证书（用AES对称加密），证书签名（用AES对证书哈希以后的字符串用server的RSA私钥签名），以及用户签名（对Diffie-Hellman 密钥中的A、B以及用户名，使用AES对称加密，再用client的RSA私钥签名）
+
+然后就是server的验证，使用AES解密证书，使用server的公钥验证证书签名，使用user的公钥验证用户签名。
+
+```python
+
+from Crypto.Cipher import AES
+from Crypto.Hash.SHA256 import SHA256Hash
+from Crypto.PublicKey import RSA
+from Crypto.Random import get_random_bytes
+import base64
+import json
+from Crypto.Random import get_random_bytes
+from Crypto.Random.random import getrandbits, randrange
+from Crypto.Util.Padding import pad, unpad
+
+
+def show(name, value, *, b64=True):
+    print(f"{name}: {value}")
+
+
+def show_b64(name, value):
+    show(f"{name} (b64)", base64.b64encode(value).decode())
+
+def show_hex_block(name, value, byte_block_size=16):
+    value_to_show = ""
+
+    for i in range(0, len(value), byte_block_size):
+        value_to_show += f"{value[i:i+byte_block_size].hex()}"
+        value_to_show += " "
+    show(f"{name} (hex)", value_to_show)
+
+
+def show_hex(name, value):
+    show(name, hex(value))
+
+p = int.from_bytes(bytes.fromhex(
+    "FFFFFFFF FFFFFFFF C90FDAA2 2168C234 C4C6628B 80DC1CD1 "
+    "29024E08 8A67CC74 020BBEA6 3B139B22 514A0879 8E3404DD "
+    "EF9519B3 CD3A431B 302B0A6D F25F1437 4FE1356D 6D51C245 "
+    "E485B576 625E7EC6 F44C42E9 A637ED6B 0BFF5CB6 F406B7ED "
+    "EE386BFB 5A899FA5 AE9F2411 7C4B1FE6 49286651 ECE45B3D "
+    "C2007CB8 A163BF05 98DA4836 1C55D39A 69163FA8 FD24CF5F "
+    "83655D23 DCA3AD96 1C62F356 208552BB 9ED52907 7096966D "
+    "670C354E 4ABC9804 F1746C08 CA18217C 32905E46 2E36CE3B "
+    "E39E772C 180E8603 9B2783A2 EC07A28F B5C55DF0 6F4C52C9 "
+    "DE2BCBF6 95581718 3995497C EA956AE5 15D22618 98FA0510 "
+    "15728E5A 8AACAA68 FFFFFFFF FFFFFFFF"
+), "big")
+
+g = 2
+
+
+b = getrandbits(2048)
+B = pow(g, b, p)
+show_hex("B", B)
+A = int("cf9c1a7ab2a232bc7bd00767d47b80c6a7060a4be6ed1e300d2fc221ecb5f03b99ecace9ca410dd54f3ce2c7bc6c01562bde8fe33802db3f1bf3ec9eea6e5b94e83b026c1b4eaebc6c93e1d7dffb510ca178f13cd8a0282dcde62298f9927e731deccba33846900ce8ba27064bd825d6a8e9866f044d9a133cb25b86c490ba9dd69f98f87b0811e6bae42bbe8ec5b39e4ba70ef587ceac023419199e5d59fef16d32ce0c71ca87955a7be8e576c6ab37967db4085e80eca4d8914dbcf0129ccc0a25fd4027d42b2b52284738867bbcfa381deadcd259f323b7fec341a37b36b6d3bf91b3b8dab3797ecab100905181f75d34e23f96bb1817706c2a2a3e24267b",16)
+s = pow(A, b, p)
+key = SHA256Hash(s.to_bytes(256, "little")).digest()[:16]
+print(f"key : {key}")
+
+
+cipher_encrypt = AES.new(key=key, mode=AES.MODE_CBC, iv=b"\0"*16)
+cipher_decrypt = AES.new(key=key, mode=AES.MODE_CBC, iv=b"\0"*16)
+def encrypt_input_b64(data):
+    data = base64.b64decode(data)
+    try:
+        return unpad(cipher_encrypt.encrypt(data), cipher_encrypt.block_size)
+    except ValueError as e:
+        print(f"{e}", file=sys.stderr)
+        exit(1)
+
+import IPython
+IPython.embed()
+
+```
+
+
+
+```python
+
+from Crypto.Cipher import AES
+from Crypto.Hash.SHA256 import SHA256Hash
+from Crypto.PublicKey import RSA
+from Crypto.Random import get_random_bytes
+import base64
+import json
+from Crypto.Random import get_random_bytes
+from Crypto.Random.random import getrandbits, randrange
+from Crypto.Util.Padding import pad, unpad
+
+user_key = RSA.generate(1024)
+user_certificate = {
+    "name": "gjgdlbujheoykcwn",
+    "key": {
+        "e" : user_key.e,
+        "n" : user_key.n
+    },
+    "signer": "root"
+}
+
+root_certificate_b64 = "eyJuYW1lIjogInJvb3QiLCAia2V5IjogeyJlIjogNjU1MzcsICJuIjogMTgyMTgzMjEzMjMwMTU1Mzk2NDIxMzg5MzkwODI4NDY5MTcyMDAzMjc0ODY5NDE3NTcxNzIxOTE2NDgzMzIwNjAyMDUwNDE2NTAxOTM2NDE3NDc5MzAyNjYxODEyOTUxMzMxOTcyMDEzODI2MzEzODY1NDk0MzUyMTU5MTEwNjY2NjQyNTUzMDE3MjcyMzc3ODYzMDA0MTY4NTg5MDc0MzYyODcxMzU2NzI2NzgxODM4MjMzNDE5NzMwMTM5Mjg2MDMxMjEyOTM2OTE1OTU1OTExMDY3OTQ2NTg0OTE5OTU1ODUyOTAzNTk3NTc0MjE4ODg0MTk3ODQ0ODU5MjU0NDA0Nzg0NDg0NDM2NTk3ODMxNjI1MzUyNDQ2MjM3NTg2MTQ0MjU4MDA4MjE4MDQxODE0MDczOTM3ODk0Mjg1ODQwMTk5MDY0MzM0OTQyMDc0ODk3MTU3NDE3NDM5OTIyOTk5MDYzMTIxNDYzMjM3NDUwMTgxMzM3MjkzOTA1NjQ1NjkzNjAyODQ4MDEwNTE0NjE0NzA4MDU4ODU3MDIwNDAxMDM2NDI3NTAyMTYyNzY5NzEyMDQ4MjYyODk3NjA5Nzk1NDgwNjA1NjgyMDQ0NDc4MDMwNzc1OTE3ODk4MDczNTY4MDIwNDQ4MTY5MjA3MTgxODM2NjYxNjM5Njk3NjgyMzI4ODk1Mzg5MzAwNTkyODgwNjU5MDY4ODA0Nzk1MjA1MjE1MjA4NjUwNTgxMzY2MDU5Nzk0NzcxMTgzOTQyNDkxMzUwNDMwNjA1MzcwOTI0ODUyOTQ4Mzc3ODE4MzIxMDc1OTA0NDN9LCAic2lnbmVyIjogInJvb3QifQ=="
+root_certificate = json.loads(base64.b64decode(root_certificate_b64))
+print(root_certificate)
+
+root_certificate["key"]["d"] = int("34cbf94a5f0a864b565e660227f48d2e0981b477d1ad4a8aca1f7400e0f528fd1499d23fe34091e6047bd24a876e37083fb7853dec1e20fd5cb743068e6ca520dc791efeba3b23f5dad1ef279d74aa408e148933be82e5f9ff1d5a53fbc6991882794989d481a4ce64378e52d78ac3d30bf37976aebed1f65e9dea0b46d98afd0cd27a32df9942a1b498babdc8edfcfa825431b465236d72c919f9db850c9a8c3d2edaaa3174012933c229adaf2557502eb3cdd9335faf4ce2b37e08ae5f0391dafbed7346a58461d2db1c0e56414942fef0de3c37a5a9a1050f604df8528ba3724d91a776009380c1e705ab06108d7903a681e30f6a1d3065fd0ecb8d9a8141", 16)
+
+
+A = int("cf9c1a7ab2a232bc7bd00767d47b80c6a7060a4be6ed1e300d2fc221ecb5f03b99ecace9ca410dd54f3ce2c7bc6c01562bde8fe33802db3f1bf3ec9eea6e5b94e83b026c1b4eaebc6c93e1d7dffb510ca178f13cd8a0282dcde62298f9927e731deccba33846900ce8ba27064bd825d6a8e9866f044d9a133cb25b86c490ba9dd69f98f87b0811e6bae42bbe8ec5b39e4ba70ef587ceac023419199e5d59fef16d32ce0c71ca87955a7be8e576c6ab37967db4085e80eca4d8914dbcf0129ccc0a25fd4027d42b2b52284738867bbcfa381deadcd259f323b7fec341a37b36b6d3bf91b3b8dab3797ecab100905181f75d34e23f96bb1817706c2a2a3e24267b", 16)
+B = int("3a495db7bc61c676709f7f661a4ea9d50fcd5240b40231be53353cf8d4ab454158b286a4b5c828be6a13a82078d3c15fb7ff060a54ca26c38aac81d20040fd7aa44d84f2fddcff1da2a8dffc2a9c460506cd6e19915e6dc4d99ce6f2d84016b79f2221f53d7eca442ba9e6e360e5bdf316ace4bbc8305fceeaa9aa0fd12c8371e480e7bfd7ed2be3c5de1d7fa2e8d23bbc12598a2c9b6d4d20b93762b74fe1a1fbf936f57b519ecda128f54c4aa496a02e3f5f71c2290c1f5d1e5c0fd69172d3d8f67f849a5f6e44384f958200e2e54d3156c73db4cf354a85e0badd6a4eedfb9a4a11d4412dd389392e0dc4538a67b59584ca2e83650aee6d1df91f8f1e5d80", 16)
+user_signature_data = (
+    "gjgdlbujheoykcwn".encode().ljust(256, b"\0") +
+    A.to_bytes(256, "little") +
+    B.to_bytes(256, "little")
+)
+user_signature_hash = SHA256Hash(user_signature_data).digest()
+user_signature = pow(
+    int.from_bytes(user_signature_hash, "little"),
+    user_key.d,
+    user_key.n
+).to_bytes(256, "little")
+
+
+key = b'\x06\x87G=\xb4<\x85\x9d&\xd5\x17.\xb4\xf4\xb6o'
+print(f"key : {key}")
+cipher_encrypt = AES.new(key=key, mode=AES.MODE_CBC, iv=b"\0"*16)
+cipher_decrypt = AES.new(key=key, mode=AES.MODE_CBC, iv=b"\0"*16)
+def encrypt_input_b64(data):
+    data = cipher_encrypt.encrypt(pad(data, cipher_encrypt.block_size))
+    try:
+        return base64.b64encode(data)
+    except ValueError as e:
+        print(f"{e}", file=sys.stderr)
+        exit(1)
+
+user_certificate_hash = SHA256Hash(json.dumps(user_certificate).encode()).digest()
+user_certificate_signature = pow(
+    int.from_bytes(user_certificate_hash, "little"),
+    root_certificate["key"]["d"],
+    root_certificate["key"]["n"]
+).to_bytes(256, "little")
+
+print(json.dumps(user_certificate).encode())
+user_certificate_data = encrypt_input_b64(json.dumps(user_certificate).encode())
+user_certificate_signature = encrypt_input_b64(user_certificate_signature)
+user_signature = encrypt_input_b64(user_signature)
+
+print(f"user_certificate_data:{user_certificate_data}")
+print(f"user_certificate_signature:{user_certificate_signature}")
+print(f"user_signature:{user_signature}")
+
+
+import IPython
+IPython.embed()
+
+
+
+```
+
+
 
