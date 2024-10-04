@@ -171,11 +171,43 @@ error:
 ## level 4
 
 
+
 ## level 5
+
+### 系统调用参数
+
+`linkat`的函数原型是：
+
+```c
+int linkat(int olddirfd, const char *oldpath, int newdirfd, const char *newpath, int flags);
+```
+
+- `olddirfd`: 指向旧目录文件描述符（可以是`AT_FDCWD`，表示当前工作目录）。
+- `oldpath`: 指向要链接的源路径的指针。
+- `newdirfd`: 指向新目录文件描述符（可以是`AT_FDCWD`，表示当前工作目录）。
+- `newpath`: 指向目标路径的指针。
+- `flags`: 链接时的标志。
+
+
 
 
 ## level 6
 
+`fchdir`是一个系统调用，用于更改当前工作目录到由文件描述符指定的目录。与`chdir`不同，`fchdir`是通过一个打开的文件描述符进行操作，而不直接使用路径名。
 
+### 函数原型
+
+```c
+int fchdir(int dirfd);
+```
+
+### 参数
+
+- `dirfd`: 指向要设置为当前工作目录的目录的文件描述符。这个文件描述符必须是一个有效的目录。如果使用`AT_FDCWD`作为参数，则表示使用当前工作目录。
+
+### 返回值
+
+- 如果成功，返回`0`。
+- 如果失败，返回`-1`，并将`errno`设置为表示错误的代码。
 
 ## level 7
