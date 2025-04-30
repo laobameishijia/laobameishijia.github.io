@@ -1,0 +1,2233 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="keywords" content="PWN-College-Web-2-Writeup, 老叭美食家">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>PWN-College-Web-2-Writeup | 老叭美食家</title>
+    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//css/matery.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//css/my.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="老叭美食家" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+
+   <style>
+    body{
+       background-image: url(https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/static/image/header/home.jpg);
+       background-repeat:no-repeat;
+       background-size:cover;
+       background-attachment:fixed;
+    }
+</style>
+
+
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">老叭美食家</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>主页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>联系</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友链</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">老叭美食家</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			主页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			联系
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友链
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://laboratory-1304292449.cos.ap-nanjing.myqcloud.com/note/20240606170337.png')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">PWN-College-Web-2-Writeup</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tag/Web/">
+                                <span class="chip bg-color">Web</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/category/CTF/" class="post-category">
+                                CTF
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2024-09-04
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2025-04-30
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    5.9k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    25 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="pwn-college"><a href="#pwn-college" class="headerlink" title="pwn.college"></a>pwn.college</h1><p><a target="_blank" rel="noopener" href="https://pwn.college/intro-to-cybersecurity/building-a-web-server/">https://pwn.college/intro-to-cybersecurity/building-a-web-server/</a></p>
+<h2 id="有价值的问题"><a href="#有价值的问题" class="headerlink" title="有价值的问题"></a>有价值的问题</h2><h3 id="1-fork调用"><a href="#1-fork调用" class="headerlink" title="1. fork调用"></a>1. fork调用</h3><p><code>fork()</code> 系统调用会创建一个新的进程，称为<strong>子进程</strong>。这个子进程是父进程的几乎完全复制品，因此，<code>fork()</code> 具有“一次调用，两个返回”的特点。</p>
+<h4 id="fork-的工作原理："><a href="#fork-的工作原理：" class="headerlink" title="fork() 的工作原理："></a><code>fork()</code> 的工作原理：</h4><ol>
+<li><strong>调用一次</strong>：在父进程中调用 <code>fork()</code> 系统调用。</li>
+<li>返回两次：<ul>
+<li>在父进程中，<code>fork()</code> 返回<strong>子进程的进程ID</strong>（<code>PID</code>），这是一个正整数。</li>
+<li>在子进程中，<code>fork()</code> 返回<strong>0</strong>。</li>
+</ul>
+</li>
+</ol>
+<p>因此，<code>fork()</code> 一次调用会在两个不同的进程中分别返回不同的值。</p>
+<h4 id="子进程和父进程的状态："><a href="#子进程和父进程的状态：" class="headerlink" title="子进程和父进程的状态："></a>子进程和父进程的状态：</h4><p>在 <code>fork()</code>调用之后，子进程和父进程的状态<strong>几乎一致</strong>，但是有以下几点需要注意：</p>
+<ol>
+<li><strong>进程地址空间的复制</strong>：<ul>
+<li>子进程会复制父进程的整个地址空间，包括代码段、数据段、堆、栈等。但这种复制是<strong>写时复制</strong>（Copy-on-Write，COW），也就是说在子进程和父进程修改内存之前，它们共享同一块物理内存。一旦有进程对某块内存进行写操作，才会真正复制该内存块。</li>
+</ul>
+</li>
+<li><strong>文件描述符</strong>：<ul>
+<li>子进程继承父进程的文件描述符表。子进程中的文件描述符与父进程中的文件描述符指向相同的文件，且文件的偏移量和权限也是相同的。不过，两者是独立的，父进程和子进程可以独立关闭这些文件描述符。</li>
+</ul>
+</li>
+<li><strong>不同点</strong>：<ul>
+<li><strong>进程ID</strong>：子进程拥有与父进程不同的进程ID (<code>PID</code>)。父进程可以通过 <code>fork()</code> 的返回值（子进程的 <code>PID</code>）来区分自己和子进程。</li>
+<li>**父进程ID (<code>PPID</code>)**：子进程的父进程ID为调用 <code>fork()</code> 的父进程的进程ID。</li>
+<li><strong>返回值不同</strong>：如上所述，父进程的 <code>fork()</code> 返回子进程的PID，而子进程返回值是 0，用于区分它们。</li>
+</ul>
+</li>
+<li><strong>进程的独立性</strong>：<ul>
+<li>子进程和父进程在 <code>fork()</code> 后是两个独立的进程，彼此不受影响。它们可以独立执行代码，并且对变量和内存的修改不会互相影响（除非通过某些共享内存机制）。</li>
+</ul>
+</li>
+</ol>
+<h4 id="fork-的返回值判断流程："><a href="#fork-的返回值判断流程：" class="headerlink" title="fork() 的返回值判断流程："></a><code>fork()</code> 的返回值判断流程：</h4><p>通常情况下，<code>fork()</code> 的返回值用于区分父进程和子进程，典型的处理方式如下：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token class-name">pid_t</span> pid <span class="token operator">=</span> <span class="token function">fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span>pid <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 发生错误，fork() 失败</span>
+    <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"fork failed"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>pid <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 这是子进程</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"This is the child process with PID %d\n"</span><span class="token punctuation">,</span> <span class="token function">getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 这是父进程，pid 是子进程的 PID</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"This is the parent process, child PID is %d\n"</span><span class="token punctuation">,</span> pid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>通过这个机制，程序可以在 <code>fork()</code> 之后让父进程和子进程执行不同的逻辑。</p>
+<h4 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h4><ul>
+<li><code>fork()</code> 会创建一个几乎与父进程相同的子进程。</li>
+<li>父进程返回子进程的 <code>PID</code>，子进程返回 0。</li>
+<li>父子进程的内存、文件描述符等初始状态是相同的，但它们是独立的进程，可以执行不同的代码逻辑。</li>
+</ul>
+<h3 id="2-一些汇编指令讲解"><a href="#2-一些汇编指令讲解" class="headerlink" title="2. 一些汇编指令讲解"></a>2. 一些汇编指令讲解</h3><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>testq %rax, %rax</td>
+<td>指令是用于执行按位逻辑<strong>与</strong>（AND）操作，但<strong>不保存结果</strong>，仅影响处理器的标志位（如零标志、符号标志等）。这条指令的作用是通过逻辑与操作来<strong>检查寄存器的值</strong>，并<strong>更新处理器状态标志</strong>（但不会修改寄存器的值本身）。结合条件跳转指令，je、jne、jg、jl等进行逻辑跳转</td>
+</tr>
+<tr>
+<td>repe cmpsb</td>
+<td><code>cmpsb</code> 用于比较两个字符串的字节。比较 <code>[ESI]</code> 和 <code>[EDI]</code> 的内容。无论结果如何，<code>cmpsb</code> 都会自动递增或递减 <code>ESI</code> 和 <code>EDI</code>，以指向下一个字节。增量或减量取决于方向标志（DF），默认是递增。<code>repe</code> 是字符串操作指令的前缀，表示 “Repeat while equal”（当相等时重复）。</td>
+</tr>
+<tr>
+<td>stosb</td>
+<td>将 <code>AL</code> 寄存器中的值存储到由 <code>EDI</code> 寄存器指向的内存地址中。</td>
+</tr>
+<tr>
+<td>scasb</td>
+<td>将 <code>AL</code>寄存器中的字节与 <code>RDI</code>或 <code>EDI</code>所指向的内存字节进行比较</td>
+</tr>
+<tr>
+<td>lodsb</td>
+<td>从源内存位置 <code>RSI</code>加载一个字节到AL寄存器中，并根据DF方向标志的值更新源指针RSI或ESI</td>
+</tr>
+</tbody></table>
+<pre class="line-numbers language-asm" data-language="asm"><code class="language-asm">mov ecx, 5               # 需要比较的字节数
+mov esi, source_string   # 第一个字符串的地址
+mov edi, target_string   # 第二个字符串的地址
+repe cmpsb               # 比较这两个字符串
+
+
+mov al, 0x00        # 将字节 0 载入 AL
+mov edi, buffer     # 将缓冲区地址加载到 EDI
+mov ecx, 100        # 设置要存储的字节数
+rep stosb           # 将 AL 中的值存入 [EDI] 开始的 100 个字节中
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="3-starce工具"><a href="#3-starce工具" class="headerlink" title="3. starce工具"></a>3. starce工具</h3><p>starce用于追踪和现实一个进程或多个进程的系统调用。</p>
+<h3 id="4-as与nasm的区别？"><a href="#4-as与nasm的区别？" class="headerlink" title="4. as与nasm的区别？"></a>4. as与nasm的区别？</h3><p><code>as</code> 和 <code>nasm</code> 是两种不同的汇编器，它们使用不同的语法和指令集。以下是它们的主要区别：</p>
+<h4 id="1-语法风格"><a href="#1-语法风格" class="headerlink" title="1. 语法风格"></a>1. <strong>语法风格</strong></h4><ul>
+<li><strong><code>as</code> (GNU Assembler)</strong>:<ul>
+<li><strong>语法风格</strong>: <code>as</code> 默认使用 AT&amp;T 语法。</li>
+<li><strong>寄存器</strong>: 在 AT&amp;T 语法中，寄存器名前面带有 <code>%</code> 符号。例如，<code>%eax</code>、<code>%ebx</code>。</li>
+<li><strong>操作数顺序</strong>: AT&amp;T 语法中，操作数的顺序是 <code>源, 目的</code>。例如，<code>mov %eax, %ebx</code> 将 <code>eax</code> 的值移动到 <code>ebx</code>。</li>
+<li><strong>常量</strong>: 常量前面带有 <code>$</code> 符号。例如，<code>$1</code> 表示常量 <code>1</code>。</li>
+</ul>
+</li>
+<li><strong><code>nasm</code> (Netwide Assembler)</strong>:<ul>
+<li><strong>语法风格</strong>: <code>nasm</code> 使用 Intel 语法。</li>
+<li><strong>寄存器</strong>: 在 Intel 语法中，寄存器名不带任何前缀。例如，<code>eax</code>、<code>ebx</code>。</li>
+<li><strong>操作数顺序</strong>: Intel 语法中，操作数的顺序是 <code>目的, 源</code>。例如，<code>mov ebx, eax</code> 将 <code>eax</code> 的值移动到 <code>ebx</code>。</li>
+<li><strong>常量</strong>: 常量直接写出，不需要前缀。例如，<code>1</code> 表示常量 <code>1</code>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-伪指令和宏"><a href="#2-伪指令和宏" class="headerlink" title="2. 伪指令和宏"></a>2. <strong>伪指令和宏</strong></h4><ul>
+<li><strong><code>as</code></strong>:<ul>
+<li>使用 <code>.section</code> 来定义数据段和代码段。</li>
+<li>使用 <code>.equ</code> 来定义常量。</li>
+<li>支持更复杂的伪指令和宏指令。</li>
+</ul>
+</li>
+<li><strong><code>nasm</code></strong>:<ul>
+<li>使用 <code>section</code> 来定义数据段和代码段。</li>
+<li>使用 <code>equ</code> 来定义常量。</li>
+<li>提供了一些不同的宏功能和伪指令，比如 <code>%define</code>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-目标文件格式"><a href="#3-目标文件格式" class="headerlink" title="3. 目标文件格式"></a>3. <strong>目标文件格式</strong></h4><ul>
+<li><code>as</code>:<ul>
+<li><code>as</code> 默认生成 ELF 格式的目标文件 (<code>.o</code>)，但可以通过选项指定其他格式。</li>
+</ul>
+</li>
+<li><code>nasm</code>:<ul>
+<li><code>nasm</code> 可以生成多种格式的目标文件，包括 ELF、COFF、PE、Mach-O 等，可以通过 <code>-f</code> 选项指定，例如 <code>nasm -f elf file.asm</code>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-系统调用和调用约定"><a href="#4-系统调用和调用约定" class="headerlink" title="4. 系统调用和调用约定"></a>4. <strong>系统调用和调用约定</strong></h4><ul>
+<li><code>as</code>:<ul>
+<li>在 Linux 下，<code>as</code> 的语法更接近 Unix 系统原生使用的汇编代码，尤其是涉及系统调用、链接和调试时。</li>
+</ul>
+</li>
+<li><code>nasm</code>:<ul>
+<li><code>nasm</code> 的 Intel 语法更加简洁易读，尤其对于编写裸机代码或 Windows 下的程序。</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-编译和链接流程"><a href="#5-编译和链接流程" class="headerlink" title="5. 编译和链接流程"></a>5. <strong>编译和链接流程</strong></h4><ul>
+<li><strong><code>as</code></strong>:<ul>
+<li>通常与 <code>gcc</code> 或 <code>ld</code> 配合使用，直接生成目标文件。</li>
+<li>例子：<code>as source.s -o source.o</code> 然后 <code>ld source.o -o output</code>。</li>
+</ul>
+</li>
+<li><strong><code>nasm</code></strong>:<ul>
+<li>可以生成各种格式的目标文件，需指定格式。</li>
+<li>例子：<code>nasm -f elf32 source.asm -o source.o</code> 然后 <code>ld -m elf_i386 source.o -o output</code>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p><code>as</code> 和 <code>nasm</code> 都是强大的汇编器，但它们适用于不同的场景和风格。<code>as</code> 更适合与 GNU 工具链配合使用，尤其在 Linux 系统编程中；<code>nasm</code> 则以其简洁的 Intel 语法受到许多编写裸机代码和跨平台开发者的青睐。选择哪一个主要取决于你的项目需求和个人偏好。</p>
+<h3 id="5-汇编语言的中包含系统调用，在ld进行编译的时候，都会链接什么文件？"><a href="#5-汇编语言的中包含系统调用，在ld进行编译的时候，都会链接什么文件？" class="headerlink" title="5. 汇编语言的中包含系统调用，在ld进行编译的时候，都会链接什么文件？"></a>5. 汇编语言的中包含系统调用，在ld进行编译的时候，都会链接什么文件？</h3><p>在使用 <code>ld</code> 对包含系统调用的汇编语言代码进行编译时，链接器会将你的汇编代码与一些标准的系统库和启动代码（startup code）进行链接。以下是 <code>ld</code> 链接时通常涉及的文件和步骤：</p>
+<h4 id="1-启动代码-Startup-Code"><a href="#1-启动代码-Startup-Code" class="headerlink" title="1. 启动代码 (Startup Code)"></a>1. <strong>启动代码 (Startup Code)</strong></h4><ul>
+<li><p>启动代码</p>
+<p>是在程序开始执行前，由操作系统加载并调用的一段代码。它负责初始化程序的执行环境，如设置堆栈、清除数据段、调用构造函数等。启动代码的典型文件是：</p>
+<ul>
+<li><strong><code>crt1.o</code></strong> (C runtime): 这个文件包含程序的入口点代码 (<code>_start</code>)，它最终会调用程序的 <code>main</code> 函数（如果是 C 代码）或直接开始执行汇编代码。</li>
+<li><strong><code>crti.o</code> 和 <code>crtn.o</code></strong>: 这些文件包含初始化和终止代码，它们会在程序开始执行之前和程序结束时运行。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-系统调用接口"><a href="#2-系统调用接口" class="headerlink" title="2. 系统调用接口"></a>2. <strong>系统调用接口</strong></h4><ul>
+<li><strong>系统调用 (syscall) 接口</strong> 是由内核提供的，用于程序与操作系统交互。它们通常是由汇编语言直接调用的，或通过 C 标准库进行封装。</li>
+<li>如果你在汇编代码中使用了系统调用，例如 <code>int 0x80</code>（对于旧版 x86 Linux 系统），你直接与内核交互，不需要额外链接什么特别的库文件。</li>
+<li><strong>标准 C 库 (<code>libc.so</code>)</strong>: 如果你使用了标准库中的函数（如 <code>printf</code>），则会链接到标准 C 库。这通常是动态链接库。</li>
+</ul>
+<h4 id="3-动态链接器-Dynamic-Linker"><a href="#3-动态链接器-Dynamic-Linker" class="headerlink" title="3. 动态链接器 (Dynamic Linker)"></a>3. <strong>动态链接器 (Dynamic Linker)</strong></h4><ul>
+<li>如果你链接了动态库，例如 <code>libc.so</code>，那么链接器会在最终的可执行文件中嵌入指向动态链接器的引用（如 <code>/lib/ld-linux.so.x</code>），它会在程序启动时运行，加载动态链接库。</li>
+</ul>
+<h4 id="4-标准库文件"><a href="#4-标准库文件" class="headerlink" title="4. 标准库文件"></a>4. <strong>标准库文件</strong></h4><ul>
+<li><strong>libc.so</strong>: 标准 C 库（动态或静态），包含大量常用函数和系统调用封装。</li>
+<li><strong>ld-linux.so.x</strong>: 动态链接器，在运行时加载和链接动态库。</li>
+<li><strong>libgcc.a</strong> 或 <strong>libgcc_s.so</strong>: GCC 的运行时支持库，提供某些平台相关的低级支持功能。</li>
+</ul>
+<h4 id="5-符号表-Symbol-Table"><a href="#5-符号表-Symbol-Table" class="headerlink" title="5. 符号表 (Symbol Table)"></a>5. <strong>符号表 (Symbol Table)</strong></h4><ul>
+<li>链接器会解析所有未定义的符号，确保它们能在已链接的文件中找到定义。如果找不到符号定义，链接器会报错（未定义符号错误）。</li>
+</ul>
+<h4 id="6-链接器脚本-Linker-Script"><a href="#6-链接器脚本-Linker-Script" class="headerlink" title="6. 链接器脚本 (Linker Script)"></a>6. <strong>链接器脚本 (Linker Script)</strong></h4><ul>
+<li>链接器脚本控制链接器的行为。默认情况下，<code>ld</code> 使用一个标准链接器脚本，定义了内存布局和段分配，但你也可以编写自定义的链接器脚本来控制细节。</li>
+</ul>
+<h4 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h4><p>当你使用 <code>ld</code> 来链接包含系统调用的汇编程序时，主要会链接以下内容：</p>
+<ol>
+<li><strong>启动代码文件</strong> (<code>crt1.o</code>, <code>crti.o</code>, <code>crtn.o</code>) - 初始化程序的执行环境。</li>
+<li><strong>系统调用接口或标准库</strong> (<code>libc.so</code>, <code>libgcc_s.so</code>) - 如果你使用了标准库中的函数。</li>
+<li><strong>动态链接器</strong> (<code>ld-linux.so.x</code>) - 在运行时加载和链接动态库。</li>
+<li><strong>符号解析</strong> - 确保所有符号在链接的库或对象文件中被正确解析。</li>
+</ol>
+<p>如果你的汇编程序直接调用系统调用，而没有依赖标准库函数，那么链接器可能只需要处理启动代码，而不需要链接到标准库。<br>5. AT&amp;T语法和Intel语法的区别</p>
+<h4 id="1-操作数顺序"><a href="#1-操作数顺序" class="headerlink" title="1. 操作数顺序"></a>1. <strong>操作数顺序</strong></h4><p>在 AT&amp;T 语法中，指令的源操作数在前，目标操作数在后。例如：</p>
+<ul>
+<li><strong>Intel 语法</strong>: <code>MOV EAX, EBX</code> （将 <code>EBX</code> 的值移动到 <code>EAX</code> 中）</li>
+<li><strong>AT&amp;T 语法</strong>: <code>movl %ebx, %eax</code> （将 <code>%ebx</code> 的值移动到 <code>%eax</code> 中）</li>
+</ul>
+<h4 id="2-寄存器和内存操作数的前缀"><a href="#2-寄存器和内存操作数的前缀" class="headerlink" title="2. 寄存器和内存操作数的前缀"></a>2. <strong>寄存器和内存操作数的前缀</strong></h4><p>AT&amp;T 语法中，寄存器名称以 <code>%</code> 开头，而内存操作数的寄存器名称以 <code>(%reg)</code> 的形式出现。</p>
+<ul>
+<li><strong>寄存器</strong>: <code>%eax</code>, <code>%ebx</code>, <code>%ecx</code>, <code>%edx</code>（32位寄存器）</li>
+<li><strong>内存</strong>: <code>(%eax)</code> 表示内存地址由 <code>eax</code> 寄存器指定</li>
+</ul>
+<h4 id="3-指令后缀"><a href="#3-指令后缀" class="headerlink" title="3. 指令后缀"></a>3. <strong>指令后缀</strong></h4><p>指令的后缀表示操作数的大小（字节、字、双字、四字）。常见的后缀包括：</p>
+<ul>
+<li><code>b</code> 表示字节（8位）</li>
+<li><code>w</code> 表示字（16位）</li>
+<li><code>l</code> 表示双字（32位）</li>
+<li><code>q</code> 表示四字（64位）</li>
+</ul>
+<p>例如：</p>
+<ul>
+<li><code>movb %al, %bl</code> （8位寄存器之间移动数据）</li>
+<li><code>movw %ax, %bx</code> （16位寄存器之间移动数据）</li>
+<li><code>movl %eax, %ebx</code> （32位寄存器之间移动数据）</li>
+<li><code>movq %rax, %rbx</code> （64位寄存器之间移动数据）</li>
+</ul>
+<h4 id="4-立即数和寄存器"><a href="#4-立即数和寄存器" class="headerlink" title="4. 立即数和寄存器"></a>4. <strong>立即数和寄存器</strong></h4><p>立即数（常数值）在 AT&amp;T 语法中以 <code>$</code> 开头。例如：</p>
+<ul>
+<li><code>movl $5, %eax</code> （将常数值 5 移动到 <code>%eax</code> 中）</li>
+</ul>
+<h4 id="5-内存地址模式"><a href="#5-内存地址模式" class="headerlink" title="5. 内存地址模式"></a>5. <strong>内存地址模式</strong></h4><p>AT&amp;T 语法中的内存地址模式使用 <code>base + index*scale + displacement</code> 形式。例如：</p>
+<ul>
+<li><code>movl 8(%ebp), %eax</code> （将从 <code>%ebp</code> 寄存器偏移 8 字节的内存值移动到 <code>%eax</code> 中）</li>
+</ul>
+<h2 id="总体代码"><a href="#总体代码" class="headerlink" title="总体代码"></a>总体代码</h2><pre class="line-numbers language-asm" data-language="asm"><code class="language-asm">.section .data
+domain:    .int 2                # AF_INET
+type:      .int 1                # SOCK_STREAM
+protocol:  .int 0                # IPPROTO_IP
+socketfd:  .quad 0               # socketfd
+clientfd:  .quad 0               # clientfd
+openfilefd:  .quad 0              # openfilefd
+filecontentlen:  .quad 0          # filecontentlen
+contentlen:  .quad 0              # contentlen
+
+
+
+response:  .asciz &quot;HTTP&#x2F;1.0 200 OK\r\n\r\n&quot;
+responsefile:  .space 1000           # 文件请求中文件内容缓冲区
+filecontent:  .space 1000           # 文件请求中文件内容缓冲区
+contentlenbuffer: .space 10         # 请求包中文件长度的存储缓冲区
+
+filepath: .space 256            # 字符串长度
+buffer:    .space 1000           # 请求数据包缓冲区
+get_str:   .asciz &quot;GET &quot;         # &quot;GET &quot;字符串
+post_str:   .asciz &quot;POST &quot;       # &quot;POST &quot;字符串
+content_length_str: .asciz &quot;Content-Length: &quot;
+content_length_str_len: .quad 16
+endmark: .space 1            # 空格字符
+
+
+
+.section .text
+.global _start
+
+_start:
+    # 创建套接字
+    movl $2, %edi                # 第一个参数: domain (AF_INET)
+    movl $1, %esi                # 第二个参数: type (SOCK_STREAM)
+    movl $0, %edx                # 第三个参数: protocol (IPPROTO_IP)
+    movl $41, %eax               # 系统调用号: socket (41 in x86_64)
+    syscall                      # 触发系统调用
+
+    # 保存套接字描述符
+    movq %rax, %rdi              # 将返回的文件描述符保存在rdi中
+    movq %rax, socketfd(%rip)          # 将文件描述符保存在socketfd中
+
+    # 准备sockaddr_in结构
+    movq $16, %rdx               # 第三个参数: struct sockaddr的长度
+    leaq sockaddr(%rip), %rsi    # 第二个参数: struct sockaddr指针
+
+    # 绑定套接字
+    movl $49, %eax               # 系统调用号: bind (49 in x86_64)
+    syscall                      # 触发系统调用
+
+listen:
+    # 监听
+    movq socketfd(%rip), %rdi
+    movq $0, %rsi                # listen(socketfd, max_listen_num)
+    movq $0x32, %rax             # 系统调用号 listen
+    syscall                      # 触发系统调用
+
+accept:
+    # 创建连接
+    movq $0x2B, %rax            # accept(socketfd, address, addrlen)
+    xor %rdx, %rdx
+    xor %rsi, %rsi
+    movq socketfd(%rip), %rdi
+    syscall
+
+    movq  %rax, clientfd(%rip)
+
+    # 创建子进程
+    movq $57, %rax             # 系统调用号 fork
+    syscall
+
+    testq %rax, %rax
+    jnz parent_process
+
+    call handle_client
+
+handle_client:
+    # 在子进程中关闭socketfd文件描述符
+    movq socketfd(%rip), %rdi
+    movq $3, %rax
+    syscall
+
+    # 读取响应
+    movq clientfd(%rip), %rdi
+    leaq buffer(%rip), %rsi    # read(fd, response, size(response))
+    movq $1000, %rdx
+    movq $0, %rax
+    syscall
+
+
+    movq $3, %rcx
+    leaq buffer(%rip), %rsi
+    leaq get_str(%rip), %rdi
+    movb $0, %al
+    repe cmpsb
+    je get_handle
+
+    movq $4, %rcx
+    leaq buffer(%rip), %rsi
+    leaq post_str(%rip), %rdi
+    movb $0, %al
+    repe cmpsb
+    je post_handle
+
+    # 子进程退出
+    movl $60, %eax               # 系统调用号: exit (60 in x86_64)
+    xorl %edi, %edi              # 返回代码0
+    syscall                      # 触发系统调用
+
+get_handle:
+    # 初始化指针和寄存器
+    movq $4, %rcx                     # 需要匹配 &quot;POST &quot; 的长度
+    movq %rcx, %r10                    # 保留rcx的副本
+    leaq buffer(%rip), %rsi           # rsi 指向 buffer  要查找的内容
+    leaq get_str(%rip), %rdi         # rdi 指向 &quot;POST &quot; 字符串
+    leaq filepath(%rip), %rdx         # 保存POST请求后面的文件路径---从匹配字符后到结束符号前，的字节数据的保存地址
+    xor %r8, %r8
+    movb $&#39; &#39;, endmark(%rip)
+    leaq endmark(%rip), %r8           # 结束标志
+    call find_get 
+
+     # 打开文件
+    leaq filepath(%rip), %rdi
+    movq $0, %rsi
+    movq $0, %rdx
+    movq $2, %rax
+    syscall
+    movq %rax, openfilefd(%rip)
+
+    # 读取文件
+    leaq filecontent(%rip), %rsi
+    movq %rax, %rdi
+    movq $1000, %rdx
+    movq $0, %rax
+    syscall
+    movq %rax, filecontentlen(%rip)
+
+    # 关闭文件
+    movq $3, %rax
+    movq openfilefd(%rip), %rdi
+    syscall
+  
+
+    # 写入响应1
+    movq clientfd(%rip), %rdi
+    leaq response(%rip), %rsi    # write(fd, response, size(response))
+    movq $19, %rdx
+    movq $1, %rax
+    syscall
+
+    # 写入响应2
+    movq clientfd(%rip), %rdi
+    leaq filecontent(%rip), %rsi    # write(fd, response, size(response))
+    movq filecontentlen(%rip), %rdx
+    movq $1, %rax
+    syscall
+
+    # 子进程退出
+    movq clientfd(%rip), %rdi
+    movq $3, %rax
+    syscall
+
+    movl $60, %eax               # 系统调用号: exit (60 in x86_64)
+    xorl %edi, %edi              # 返回代码0
+    syscall                      # 触发系统调用
+
+
+post_handle:
+    # 初始化指针和寄存器
+    movq $5, %rcx                     # 需要匹配 &quot;POST &quot; 的长度
+    movq %rcx, %r10                    # 保留rcx的副本
+    leaq buffer(%rip), %rsi           # rsi 指向 buffer  要查找的内容
+    leaq post_str(%rip), %rdi         # rdi 指向 &quot;POST &quot; 字符串
+    leaq filepath(%rip), %rdx         # 保存POST请求后面的文件路径---从匹配字符后到结束符号前，的字节数据的保存地址
+    xor %r8, %r8
+    movb $&#39; &#39;, endmark(%rip)
+    leaq endmark(%rip), %r8           # 结束标志
+    call find_get 
+  
+
+
+    movq $16, %rcx                     # 需要匹配 &quot;POST &quot; 的长度
+    movq %rcx, %r10                    # 保留rcx的副本
+    leaq buffer(%rip), %rsi           # rsi 指向 buffer  要查找的内容
+    leaq content_length_str(%rip), %rdi         # rdi 指向 &quot;POST &quot; 字符串
+    leaq contentlenbuffer(%rip), %rdx         # 保存POST请求后面的文件路径---从匹配字符后到结束符号前，的字节数据的保存地址
+    xor %r8, %r8
+    movb $&#39;\r&#39;, endmark(%rip)
+    leaq endmark(%rip), %r8           # 结束标志
+    call find_get   
+
+    movq %rsi, %r9
+    leaq contentlenbuffer(%rip), %rsi
+    movq $0, %rbx
+parse_content_length:  
+    lodsb
+    cmpb $0x00, %al        # 比较当前字符是否为空格
+    je end_parse                       # 如果是0x00，则结束拷贝  
+    subb $&#39;0&#39;, %al
+    imul $10, %rbx
+    add %al, %bl
+    jmp parse_content_length
+end_parse:
+    movq %rbx, contentlen(%rip)
+    movq %r9, %rsi
+    lea 3(%rsi), %rsi
+    leaq filecontent(%rip), %rdi
+copy_file:
+    lodsb
+    stosb
+    subq $1, %rbx
+    cmpq $0, %rbx
+    ja copy_file
+
+
+    # 打开文件
+    leaq filepath(%rip), %rdi
+    movq $0x41, %rsi
+    movq $0777, %rdx
+    movq $2, %rax
+    syscall
+    movq %rax, openfilefd(%rip)
+
+    # 写入文件内容
+    leaq filecontent(%rip), %rsi
+    movq %rax, %rdi
+    movq contentlen(%rip), %rdx
+    movq $1, %rax
+    syscall
+
+    # 关闭文件
+    movq $3, %rax
+    movq openfilefd(%rip), %rdi
+    syscall
+  
+
+    # 写入响应1
+    movq clientfd(%rip), %rdi
+    leaq response(%rip), %rsi    # write(fd, response, size(response))
+    movq $19, %rdx
+    movq $1, %rax
+    syscall
+
+    # 子进程退出
+    movl $60, %eax               # 系统调用号: exit (60 in x86_64)
+    xorl %edi, %edi              # 返回代码0
+    syscall                      # 触发系统调用
+
+
+find_get:
+    movb $0, %al                      # 将 AL 初始化为 NULL 终止符
+    repe cmpsb                        # 比较 buffer 和 &quot;GET &quot;
+    je found_get                      # 如果找到了 &quot;GET &quot;, 跳转
+    leaq content_length_str(%rip), %rdi
+    movq %r10, %rcx
+    jmp find_get
+
+found_get:
+    # 找到了 &quot;GET &quot;, 寻找下一个空格来分割路径
+    movq %rdx, %rdi         # rdi 指向 filepath
+
+copy_path:
+    lodsb                             # 读取 buffer 的下一个字符到 al 中
+    cmpb endmark(%rip), %al        # 比较当前字符是否为空格
+    je end_copy                       # 如果是空格，则结束拷贝
+    stosb                             # 否则将字符存储到 filepath 中
+    incq %rcx                         # 增加 filepath 的计数器
+    cmpq $255, %rcx                   # 检查是否超过 filepath 缓冲区大小
+    jne copy_path                     # 如果没有，继续拷贝
+
+end_copy:
+    movb $0, %al                      # 将 NULL 终止符加到 filepath 末尾
+    stosb
+    ret
+
+
+
+parent_process:
+    # 关闭这个客户端套接字
+    movq clientfd(%rip), %rdi
+    movq $3, %rax
+    syscall
+
+    jmp accept
+
+    # 退出
+    movl $60, %eax               # 系统调用号: exit (60 in x86_64)
+    xorl %edi, %edi              # 返回代码0
+    syscall                      # 触发系统调用
+
+
+# sockaddr_in 结构体
+sockaddr:
+    .short 0x0002                     # 地址族 (AF_INET)
+    .short 0x5000                # 端口号 (端口号80)
+    .long  0x00000000                     # IP地址 (INADDR_ANY, 绑定到任意地址)
+    .quad  0                     # 填充以达到16字节对齐
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="level-6"><a href="#level-6" class="headerlink" title="level 6"></a>level 6</h2><p>这个地方在建立连接之后，一直报错，结果是客户端发送过来的请求包的长度大于了服务器设置的缓冲器的长度。实际发送的长度是146，我第一开始设置的缓冲区的大小只是100</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span> Trace: Parent Process <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+<span class="token punctuation">[</span>✓<span class="token punctuation">]</span> execve<span class="token punctuation">(</span><span class="token string">"/proc/self/fd/3"</span>, <span class="token punctuation">[</span><span class="token string">"/proc/self/fd/3"</span><span class="token punctuation">]</span>, 0x7fed1c3f0a10 /* <span class="token number">0</span> vars */<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token punctuation">[</span>✓<span class="token punctuation">]</span> socket<span class="token punctuation">(</span>AF_INET, SOCK_STREAM, IPPROTO_IP<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">3</span>
+<span class="token punctuation">[</span>✓<span class="token punctuation">]</span> bind<span class="token punctuation">(</span><span class="token number">3</span>, <span class="token punctuation">&#123;</span>sa_family<span class="token operator">=</span>AF_INET, <span class="token assign-left variable">sin_port</span><span class="token operator">=</span>htons<span class="token punctuation">(</span><span class="token number">80</span><span class="token punctuation">)</span>, <span class="token assign-left variable">sin_addr</span><span class="token operator">=</span>inet_addr<span class="token punctuation">(</span><span class="token string">"0.0.0.0"</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span>, <span class="token number">16</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token punctuation">[</span>✓<span class="token punctuation">]</span> listen<span class="token punctuation">(</span><span class="token number">3</span>, <span class="token number">0</span><span class="token punctuation">)</span>                            <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token punctuation">[</span>✓<span class="token punctuation">]</span> accept<span class="token punctuation">(</span><span class="token number">3</span>, NULL, NULL<span class="token punctuation">)</span>                   <span class="token operator">=</span> <span class="token number">4</span>
+<span class="token punctuation">[</span>✓<span class="token punctuation">]</span> read<span class="token punctuation">(</span><span class="token number">4</span>, <span class="token string">"GET / HTTP/1.1<span class="token entity" title="\r">\r</span><span class="token entity" title="\n">\n</span>Host: localhost<span class="token entity" title="\r">\r</span><span class="token entity" title="\n">\n</span>User-Agent: python-requests/2.32.3<span class="token entity" title="\r">\r</span><span class="token entity" title="\n">\n</span>Accept-Encoding: gzip, deflate, zstd<span class="token entity" title="\r">\r</span><span class="token entity" title="\n">\n</span>Accept: */*<span class="token entity" title="\r">\r</span><span class="token entity" title="\n">\n</span>Connection: keep-alive<span class="token entity" title="\r">\r</span><span class="token entity" title="\n">\n</span><span class="token entity" title="\r">\r</span><span class="token entity" title="\n">\n</span>"</span>, <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">146</span>
+<span class="token punctuation">[</span>✓<span class="token punctuation">]</span> write<span class="token punctuation">(</span><span class="token number">4</span>, <span class="token string">"HTTP/1.0 200 OK<span class="token entity" title="\r">\r</span><span class="token entity" title="\n">\n</span><span class="token entity" title="\r">\r</span><span class="token entity" title="\n">\n</span>"</span>, <span class="token number">19</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">19</span>
+<span class="token punctuation">[</span>✓<span class="token punctuation">]</span> close<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>                                <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token punctuation">[</span>✓<span class="token punctuation">]</span> exit<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>                                 <span class="token operator">=</span> ?
+<span class="token punctuation">[</span>?<span class="token punctuation">]</span> +++ exited with <span class="token number">0</span> +++<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-asm" data-language="asm"><code class="language-asm">.section .data
+domain:    .int 2                # AF_INET
+type:      .int 1                # SOCK_STREAM
+protocol:  .int 0                # IPPROTO_IP
+socketfd:  .quad 0               # socket_fd
+response:  .asciz &quot;HTTP&#x2F;1.0 200 OK\r\n\r\n&quot;
+buffer:    .space 1000  # 就是这里，第一开我设置的是100
+
+.section .text
+.global _start
+
+_start:
+    # 创建套接字
+    movl $2, %edi                # 第一个参数: domain (AF_INET)
+    movl $1, %esi                # 第二个参数: type (SOCK_STREAM)
+    movl $0, %edx                # 第三个参数: protocol (IPPROTO_IP)
+    movl $41, %eax               # 系统调用号: socket (41 in x86_64)
+    syscall                      # 触发系统调用
+
+    # 保存套接字描述符
+    movq %rax, %rdi              # 将返回的文件描述符保存在rdi中
+    movq %rax, socketfd(%rip)          # 将文件描述符保存在socketfd中
+
+    # 准备sockaddr_in结构
+    movq $16, %rdx               # 第三个参数: struct sockaddr的长度
+    leaq sockaddr(%rip), %rsi    # 第二个参数: struct sockaddr指针
+
+    # 绑定套接字
+    movl $49, %eax               # 系统调用号: bind (49 in x86_64)
+    syscall                      # 触发系统调用
+
+    # 监听
+    movq $0, %rsi               # listen(socket_fd, max_listen_num)
+    movq $0x32, %rax             # 系统调用号 listen
+    syscall                      # 触发系统调用
+
+    # 创建连接
+    movq $0x2B, %rax            # accept(socket_fd, address, addrlen)
+    xor %rdx, %rdx
+    xor %rsi, %rsi
+    syscall
+
+    # 读取响应
+    movq %rax, %rdi
+    leaq buffer(%rip), %rsi    # read(fd, response, size(response))
+    movq $1000, %rdx
+    movq $0, %rax
+    syscall
+
+    # 写入响应
+    leaq response(%rip), %rsi    # write(fd, response, size(response))
+    movq $19, %rdx
+    movq $1, %rax
+    syscall
+  
+    # 关闭这个套接字
+    movq $3, %rax
+    syscall
+
+    # 退出
+    movl $60, %eax               # 系统调用号: exit (60 in x86_64)
+    xorl %edi, %edi              # 返回代码0
+    syscall                      # 触发系统调用
+
+# sockaddr_in 结构体
+sockaddr:
+    .short 0x0002                     # 地址族 (AF_INET)
+    .short 0x5000                # 端口号 (端口号80)
+    .long  0x00000000                     # IP地址 (INADDR_ANY, 绑定到任意地址)
+    .quad  0                     # 填充以达到16字节对齐
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="level-9"><a href="#level-9" class="headerlink" title="level 9"></a>level 9</h2><pre class="line-numbers language-asm" data-language="asm"><code class="language-asm">.section .data
+domain:    .int 2                # AF_INET
+type:      .int 1                # SOCK_STREAM
+protocol:  .int 0                # IPPROTO_IP
+socketfd:  .quad 0               # socketfd
+clientfd:  .quad 0               # clientfd
+openfilefd:  .quad 0              # openfilefd
+filecontentlen:  .quad 0              # filecontentlen
+
+
+
+response:  .asciz &quot;HTTP&#x2F;1.0 200 OK\r\n\r\n&quot;
+responsefile:  .space 1000           # 文件请求中文件内容缓冲区
+filecontent:  .space 1000           # 文件请求中文件内容缓冲区
+
+
+filepath: .space 256            # 字符串长度
+buffer:    .space 1000           # 请求数据包缓冲区
+get_str:   .asciz &quot;GET &quot;         # &quot;GET &quot;字符串
+space_char: .byte &#39; &#39;            # 空格字符
+
+
+.section .text
+.global _start
+
+_start:
+    # 创建套接字
+    movl $2, %edi                # 第一个参数: domain (AF_INET)
+    movl $1, %esi                # 第二个参数: type (SOCK_STREAM)
+    movl $0, %edx                # 第三个参数: protocol (IPPROTO_IP)
+    movl $41, %eax               # 系统调用号: socket (41 in x86_64)
+    syscall                      # 触发系统调用
+
+    # 保存套接字描述符
+    movq %rax, %rdi              # 将返回的文件描述符保存在rdi中
+    movq %rax, socketfd(%rip)          # 将文件描述符保存在socketfd中
+
+    # 准备sockaddr_in结构
+    movq $16, %rdx               # 第三个参数: struct sockaddr的长度
+    leaq sockaddr(%rip), %rsi    # 第二个参数: struct sockaddr指针
+
+    # 绑定套接字
+    movl $49, %eax               # 系统调用号: bind (49 in x86_64)
+    syscall                      # 触发系统调用
+
+listen:
+    # 监听
+    movq socketfd(%rip), %rdi
+    movq $0, %rsi                # listen(socketfd, max_listen_num)
+    movq $0x32, %rax             # 系统调用号 listen
+    syscall                      # 触发系统调用
+
+accept:
+    # 创建连接
+    movq $0x2B, %rax            # accept(socketfd, address, addrlen)
+    xor %rdx, %rdx
+    xor %rsi, %rsi
+    movq socketfd(%rip), %rdi
+    syscall
+
+    movq  %rax, clientfd(%rip)
+
+    # 创建子进程
+    movq $57, %rax             # 系统调用号 fork
+    syscall
+
+    testq %rax, %rax
+    jnz parent_process
+
+    call handle_client
+
+handle_client:
+    # 在子进程中关闭socketfd文件描述符
+    movq socketfd(%rip), %rdi
+    movq $3, %rax
+    syscall
+
+    # 读取响应
+    movq clientfd(%rip), %rdi
+    leaq buffer(%rip), %rsi    # read(fd, response, size(response))
+    movq $1000, %rdx
+    movq $0, %rax
+    syscall
+
+
+    # 初始化指针和寄存器
+    leaq buffer(%rip), %rsi           # rsi 指向 buffer
+    leaq filepath(%rip), %rdi         # rdi 指向 filepath
+    movq $0, %rcx                     # 用来计数 filepath 的长度
+    movb $0, %al                      # 将 AL 初始化为 NULL 终止符
+
+find_get:
+    movq $4, %rcx                     # 需要匹配 &quot;GET &quot; 的长度
+    leaq get_str(%rip), %rdi          # rdi 指向 &quot;GET &quot; 字符串
+
+find_loop:
+    repe cmpsb                        # 比较 buffer 和 &quot;GET &quot;
+    je found_get                      # 如果找到了 &quot;GET &quot;, 跳转
+    jmp find_get                      # 否则继续查找
+
+found_get:
+    # 找到了 &quot;GET &quot;, 寻找下一个空格来分割路径
+    leaq filepath(%rip), %rdi         # rdi 指向 filepath
+
+copy_path:
+    lodsb                             # 读取 buffer 的下一个字符到 al 中
+    cmpb space_char(%rip), %al        # 比较当前字符是否为空格
+    je end_copy                       # 如果是空格，则结束拷贝
+    stosb                             # 否则将字符存储到 filepath 中
+    incq %rcx                         # 增加 filepath 的计数器
+    cmpq $255, %rcx                   # 检查是否超过 filepath 缓冲区大小
+    jne copy_path                     # 如果没有，继续拷贝
+
+end_copy:
+    movb $0, %al                      # 将 NULL 终止符加到 filepath 末尾
+    stosb
+
+    # 打开文件
+    leaq filepath(%rip), %rdi
+    movq $0, %rsi
+    movq $0, %rdx
+    movq $2, %rax
+    syscall
+    movq %rax, openfilefd(%rip)
+
+    # 读取文件
+    leaq filecontent(%rip), %rsi
+    movq %rax, %rdi
+    movq $1000, %rdx
+    movq $0, %rax
+    syscall
+    movq %rax, filecontentlen(%rip)
+
+    # 关闭文件
+    movq $3, %rax
+    movq openfilefd(%rip), %rdi
+    syscall
+  
+
+    # 写入响应1
+    movq clientfd(%rip), %rdi
+    leaq response(%rip), %rsi    # write(fd, response, size(response))
+    movq $19, %rdx
+    movq $1, %rax
+    syscall
+
+    # 写入响应2
+    movq clientfd(%rip), %rdi
+    leaq filecontent(%rip), %rsi    # write(fd, response, size(response))
+    movq filecontentlen(%rip), %rdx
+    movq $1, %rax
+    syscall
+
+    # 子进程退出
+    movq clientfd(%rip), %rdi
+    movq $3, %rax
+    syscall
+
+    movl $60, %eax               # 系统调用号: exit (60 in x86_64)
+    xorl %edi, %edi              # 返回代码0
+    syscall                      # 触发系统调用
+
+
+parent_process:
+    # 关闭这个客户端套接字
+    movq clientfd(%rip), %rdi
+    movq $3, %rax
+    syscall
+
+    jmp accept
+
+    # 退出
+    movl $60, %eax               # 系统调用号: exit (60 in x86_64)
+    xorl %edi, %edi              # 返回代码0
+    syscall                      # 触发系统调用
+
+
+# sockaddr_in 结构体
+sockaddr:
+    .short 0x0002                     # 地址族 (AF_INET)
+    .short 0x5000                # 端口号 (端口号80)
+    .long  0x00000000                     # IP地址 (INADDR_ANY, 绑定到任意地址)
+    .quad  0                     # 填充以达到16字节对齐
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">美食家李老叭</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://laobameishijia.github.io/2024/09/04/pwn-college-web-2-writeup/">https://laobameishijia.github.io/2024/09/04/pwn-college-web-2-writeup/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">美食家李老叭</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tag/Web/">
+                                    <span class="chip bg-color">Web</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/valine/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'q5k1wXexowy7MeNN0CrLYpoK-gzGzoHsz',
+        appKey: 'YmFtstASS0GUVRowdQQl4LPb',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2024/09/07/pwn-college-web-4-writeup/">
+                    <div class="card-image">
+                        
+                        <img src="https://laboratory-1304292449.cos.ap-nanjing.myqcloud.com/note/20240606170337.png" class="responsive-img" alt="PWN-College-Web-4-Writeup">
+                        
+                        <span class="card-title">PWN-College-Web-4-Writeup</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            CTF
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-09-07
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/category/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tag/Web/">
+                        <span class="chip bg-color">Web</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2024/09/04/pwn-college-web-3-writeup/">
+                    <div class="card-image">
+                        
+                        <img src="https://laboratory-1304292449.cos.ap-nanjing.myqcloud.com/note/20240606170337.png" class="responsive-img" alt="PWN-College-Web-3-Writeup">
+                        
+                        <span class="card-title">PWN-College-Web-3-Writeup</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            CTF
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-09-04
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/category/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tag/Web/">
+                        <span class="chip bg-color">Web</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('3'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2025</span>
+            
+            <span id="year">2021</span>
+            <a href="/about" target="_blank">老叭美食家</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">256.3k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2021";
+                        var startMonth = "5";
+                        var startDate = "21";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/laobameishijia" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:994291043@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=994291043" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 994291043" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2021, 05, 21, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " +diffYears+" 年 "+diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/laobameishijia/laobameishijia.github.io@3.0/themes/hexo-theme-matery/source//libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</body>
+
+</html>
